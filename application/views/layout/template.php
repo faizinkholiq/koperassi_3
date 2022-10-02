@@ -40,25 +40,25 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item <?= $highlight_menu === 'dashboard' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Simpanan</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/pinjaman') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Pinjaman</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item <?= $highlight_menu === 'laporan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/laporan') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Laporan</span></a>
@@ -71,7 +71,7 @@
                 Master
             </div>
             
-            <li class="nav-item">
+            <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Anggota</span></a>
