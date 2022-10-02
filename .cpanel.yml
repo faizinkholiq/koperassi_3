@@ -1,6 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/nnfproco/koperasi.nnf-pro.com
-
-    - /usr/bin/cp -r * $DEPLOYPATH
