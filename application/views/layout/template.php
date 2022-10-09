@@ -21,6 +21,9 @@
     <link href="<?=base_url('assets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
     <link href="<?=base_url('assets/css/custom.css') ?>" rel="stylesheet">
 
+    <!-- JQuery -->
+    <script src="<?=base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
+
 </head>
 
 <body id="page-top">
@@ -181,14 +184,13 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="<?= site_url('user/logout') ?>">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="<?=base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
     <script src="<?=base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
     <!-- Core plugin JavaScript-->

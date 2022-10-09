@@ -1,3 +1,7 @@
+# Aplication Folders #
+application/config/database.php
+application/config/config.php
+
 .DS_Store
 
 application/cache/*
