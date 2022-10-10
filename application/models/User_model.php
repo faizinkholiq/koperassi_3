@@ -16,6 +16,10 @@
     public function login_check() {
         if ($this->session->userdata('sess_data')) {
             $data = $this->session->userdata('sess_data');
+            $user_detail = $this->detail($data["id"]);
+            
+            $data = array_merge($data, $user_detail);
+
             return $data;
         }else{
             redirect("user/login");
@@ -29,7 +33,25 @@
 
     public function detail($id)
     {
-        return $this->db->get_where('user', ['id'=>$id])->row_array();
+        return $this->db->select([
+            'user.id',
+            'user.username',
+            'user.role',
+            'user.active',
+            'user_detail.name',
+            'user_detail.nik',
+            'user_detail.tmk',
+            'user_detail.address',
+            'user_detail.phone',
+            'user_detail.email',
+            'user_detail.ktp',
+            'user_detail.avatar',
+        ])
+        ->from('user')
+        ->join('user_detail', 'user.id = user_detail.user_id', 'left')
+        ->where('user.id',$id)
+        ->get()
+        ->row_array();
     }
 
     public function create($data)

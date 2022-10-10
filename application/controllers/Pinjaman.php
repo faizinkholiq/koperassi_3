@@ -12,6 +12,7 @@ class Pinjaman extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
+        $d['title'] = "Pinjaman";
         $d['highlight_menu'] = "pinjaman";
         $d['content_view'] = 'pinjaman';
 

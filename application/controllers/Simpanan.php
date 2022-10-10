@@ -12,6 +12,7 @@ class Simpanan extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
+        $d['title'] = "Simpanan";
 		$d['highlight_menu'] = "simpanan";
 		$d['content_view'] = 'simpanan';
 

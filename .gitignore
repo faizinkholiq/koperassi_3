@@ -1,6 +1,7 @@
 # Aplication Folders #
 application/config/database.php
 application/config/config.php
+.vscode
 
 .DS_Store
 

@@ -12,6 +12,7 @@ class Anggota extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
+        $d['title'] = "Master Anggota";
         $d['highlight_menu'] = "anggota";
         $d['content_view'] = 'anggota';
 

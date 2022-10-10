@@ -12,6 +12,7 @@ class Laporan extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
+        $d['title'] = "Laporan";
         $d['highlight_menu'] = "laporan";
         $d['content_view'] = 'coming_soon';
 

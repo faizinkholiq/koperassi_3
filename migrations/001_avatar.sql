@@ -1,0 +1,1 @@
+ALTER TABLE `user_detail` ADD `avatar` TEXT NULL AFTER `ktp`;

@@ -1,6 +1,20 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
-<!-- DataTales Example -->
+<div class="card mb-4 shadow">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6 font-weight-bold border-right">
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp15.000.000</span></div>
+                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp10.000.000</span></div>
+            </div>
+            <div class="col-lg-6 font-weight-bold text-right">
+                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2">Rp15.000.000</span></div>
+                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2">Rp10.000.000</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Simpanan</h6>

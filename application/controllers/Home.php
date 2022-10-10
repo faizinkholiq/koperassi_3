@@ -12,6 +12,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
+        $d['title'] = "Dashboard";
         $d['highlight_menu'] = "dashboard";
         $d['content_view'] = 'dashboard';
 
