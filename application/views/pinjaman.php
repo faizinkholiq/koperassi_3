@@ -8,8 +8,7 @@
                 <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp10.000.000</span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2">Rp15.000.000</span></div>
-                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2">Rp10.000.000</span></div>
+                <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2">Rp1.000.000</span></div>
             </div>
         </div>
     </div>
