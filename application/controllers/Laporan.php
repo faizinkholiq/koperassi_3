@@ -16,7 +16,11 @@ class Laporan extends CI_Controller {
         $d['highlight_menu'] = "laporan";
         $d['content_view'] = 'coming_soon';
 
-        $this->load->view('layout/template', $d);
+		if (!check_permission('laporan', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
 	}
 	
 }

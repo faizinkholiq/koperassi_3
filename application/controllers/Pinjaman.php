@@ -16,7 +16,11 @@ class Pinjaman extends CI_Controller {
         $d['highlight_menu'] = "pinjaman";
         $d['content_view'] = 'pinjaman';
 
-        $this->load->view('layout/template', $d);
+        if (!check_permission('laporan', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
 	}
 
 }

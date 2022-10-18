@@ -16,7 +16,11 @@ class Anggota extends CI_Controller {
         $d['highlight_menu'] = "anggota";
         $d['content_view'] = 'anggota';
 
-        $this->load->view('layout/template', $d);
+        if (!check_permission('anggota', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
 	}
 
 }

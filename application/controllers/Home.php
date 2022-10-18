@@ -15,7 +15,7 @@ class Home extends CI_Controller {
         $d['title'] = "Dashboard";
         $d['highlight_menu'] = "dashboard";
         $d['content_view'] = 'dashboard';
-
+        
         $this->load->view('layout/template', $d);
 	}
 

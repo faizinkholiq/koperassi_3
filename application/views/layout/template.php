@@ -49,6 +49,8 @@
                     <span>Dashboard</span></a>
             </li>
 
+            <?php if ($role == 2): ?>
+
             <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan') ?>">
                     <i class="fas fa-fw fa-hand-holding-usd"></i>
@@ -67,11 +69,16 @@
                     <span>Laporan</span></a>
             </li>
 
+            <?php endif; ?>
+
+
+            <?php if ($role == 1): ?>
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Data Anggota</span></a>
             </li>
+            <?php endif; ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider">

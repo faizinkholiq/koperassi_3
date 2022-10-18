@@ -9,6 +9,20 @@ class User extends CI_Controller {
 		$this->load->model('user_model');
     }
 
+	public function index()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Data User";
+        $d['highlight_menu'] = "user";
+        $d['content_view'] = 'user';
+
+        if (!check_permission('user', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
+	}
+
     function login(){
 		if ($this->session->userdata('sess_data') == TRUE) {
             redirect('home');

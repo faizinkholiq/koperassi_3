@@ -16,7 +16,11 @@ class Simpanan extends CI_Controller {
 		$d['highlight_menu'] = "simpanan";
 		$d['content_view'] = 'simpanan';
 
-		$this->load->view('layout/template', $d);
+		if (!check_permission('simpanan', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
 	}
 
 }
