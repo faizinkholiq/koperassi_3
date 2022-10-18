@@ -51,34 +51,31 @@
 
             <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-hand-holding-usd"></i>
                     <span>Simpanan</span></a>
             </li>
 
             <li class="nav-item <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/pinjaman') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-file-invoice-dollar"></i>
                     <span>Pinjaman</span></a>
             </li>
 
             <li class="nav-item <?= $highlight_menu === 'laporan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/laporan') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-file-contract"></i>
                     <span>Laporan</span></a>
+            </li>
+
+            <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/anggota') ?>">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Data Anggota</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             
-            <div class="sidebar-heading">
-                Master
-            </div>
-            
-            <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/anggota') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Anggota</span></a>
-            </li>
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
