@@ -80,6 +80,14 @@
             </li>
             <?php endif; ?>
 
+            <!-- <?php if ($role == 1): ?>
+            <li class="nav-item <?= $highlight_menu === 'user' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/user') ?>">
+                    <i class="fas fa-fw fa-user-circle"></i>
+                    <span>Akun Pengguna</span></a>
+            </li>
+            <?php endif; ?> -->
+
             <!-- Divider -->
             <hr class="sidebar-divider">
             

@@ -38,17 +38,17 @@
             'user.username',
             'user.role',
             'user.active',
-            'user_detail.name',
-            'user_detail.nik',
-            'user_detail.tmk',
-            'user_detail.address',
-            'user_detail.phone',
-            'user_detail.email',
-            'user_detail.ktp',
-            'user_detail.avatar',
+            'person.name',
+            'person.nik',
+            'person.tmk',
+            'person.address',
+            'person.phone',
+            'person.email',
+            'person.ktp',
+            'person.avatar',
         ])
         ->from('user')
-        ->join('user_detail', 'user.id = user_detail.user_id', 'left')
+        ->join('person', 'user.id = person.user_id', 'left')
         ->where('user.id',$id)
         ->get()
         ->row_array();

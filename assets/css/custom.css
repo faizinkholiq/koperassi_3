@@ -1,3 +1,13 @@
 .my-bg-primary{
     background-color:#16a085;
 }
+
+.my-btn-primary{
+    background-color:#16a085;
+    color: white;
+}
+
+.my-btn-primary:hover{
+    background-color:#0c846c;
+    color: white;
+}

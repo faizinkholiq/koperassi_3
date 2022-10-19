@@ -2,116 +2,117 @@
 <div class="row">
     <div class="col-xl-4 col-md-6 mb-4" >
         <div class="card shadow" style="width:100%; background:#f1c40f;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Wajib
+            <div class="card-body" style="height:7rem; color:white; font-size:1rem;">
+                <div class="row mb-1">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Total Transaksi</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Jumlah Tagihan Bulan Ini</div>
+                </div>
             </div>
-            <div class="card-footer" style="background:#f39c12; border:none; color:white;">
-                Lihat Detail
+            <div class="card-footer font-weight-bold" style="background:#f39c12; border:none; color:white; font-size:1.3rem;">
+                Simpanan Sukarela
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#e74c3c;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Pokok
+            <div class="card-body" style="height:7rem; color:white; font-size:1rem;">
+                <div class="row mb-1">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Simpanan Anggota</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Penarikan Tunai</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Jumlah Simpanan</div>
+                </div>
             </div>
-            <div class="card-footer" style="background:#c0392b; border:none; color:white;">
-                Lihat Detail
+            <div class="card-footer font-weight-bold" style="background:#c0392b; border:none; color:white; font-size:1.3rem;">
+                Investasi
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#1abc9c;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Investasi
+        <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:1rem;">
+                <div class="row mb-1">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Debet</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Kredit</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Jumlah</div>
+                </div>
             </div>
-            <div class="card-footer" style="background:#16a085; border:none; color:white;">
-                Lihat Detail
+            <div class="card-footer font-weight-bold" style="background:#16a085; border:none; color:white; font-size:1.3rem;">
+                Total Saldo Rekening
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4 offset-2">
         <div class="card shadow" style="width:100%; background:#3498db;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Sukarela
+            <div class="card-body font-weight-bold" style="height:7rem; color:white;">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="row mb-2">
+                            <div class="col-lg-2">12</div>
+                            <div class="col-lg-10">Anggota Aktif</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">9</div>
+                            <div class="col-lg-10">Anggota Tidak Aktif</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 text-center">
+                        <div class="font-weight-bold" style="font-size:1.2rem">Total Anggota</div>
+                        <div class="font-weight-bold"  style="font-size:2.5rem">23</div>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer" style="background:#2980b9; border:none; color:white;">
-                Lihat Detail
+            <div class="card-footer font-weight-bold" style="background:#2980b9; border:none; color:white; font-size:1.3rem;">
+                Simpanan Pokok
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#9b59b6;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Sisa Pinjaman
+            <div class="card-body font-weight-bold" style="height:7rem; color:white;">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="row mb-2">
+                            <div class="col-lg-2">15</div>
+                            <div class="col-lg-10">User Aktif</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">3</div>
+                            <div class="col-lg-10">User Tidak Aktif</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 text-center">
+                        <div class="font-weight-bold" style="font-size:1.2rem">Total User</div>
+                        <div class="font-weight-bold"  style="font-size:2.5rem">18</div>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer" style="background:#8e44ad; border:none; color:white;">
-                Lihat Detail
+            <div class="card-footer font-weight-bold" style="background:#8e44ad; border:none; color:white; font-size:1.3rem;">
+                Simpanan Wajib
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
     </div>
 
-</div>
-
-<!-- Content Row -->
-<div class="row">
-
-    <div class="col-lg-12 mb-4">
-
-        <!-- Illustrations -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data Diri Anggota</h6>
-            </div>
-            <div class="card-body">
-                <div class="row mb-4 mt-2">
-                    <div class="col-lg-8">
-                        <div class="row mb-3">
-                            <div class="col-lg-2">NIK</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">01239485766</div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-2">TMK</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">220112232</div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-2">Nama</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">Fulan bin Fulan</div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-2">Alamat</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">Jl Manggis No.67, RT 10/RW 7, Ternate, Kec. Rote, Manokwari, Jayapura 10221</div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-2">No. Telephone</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">08975312384</div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-2">Email</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">fulland@gmail.com</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card bg-light text-black shadow mb-4" style="height: 15rem;width: 26rem;">
-                            <div class="card-body">
-                                <h2>Identity Card</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </div>
