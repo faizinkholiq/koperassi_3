@@ -12,9 +12,23 @@ class Anggota extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
-        $d['title'] = "Master Anggota";
+        $d['title'] = "Data Anggota";
         $d['highlight_menu'] = "anggota";
         $d['content_view'] = 'anggota';
+
+        if (!check_permission('anggota', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
+	}
+
+    public function detail()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Detail Anggota";
+        $d['highlight_menu'] = "anggota";
+        $d['content_view'] = 'detail_anggota';
 
         if (!check_permission('anggota', $d['role'])){
             redirect('home');
