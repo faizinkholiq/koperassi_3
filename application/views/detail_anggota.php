@@ -5,48 +5,55 @@
         <!-- Illustrations -->
         <div class="card shadow mb-4">
             <div class="card-body">
-                <h3 class="font-weight-bold mt-4">Data Diri</h3>
+                <a class="my-text-primary" href="<?=site_url('anggota')?>">
+                    <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
+                        data-toggle="tooltip" data-placement="top" title="Kembali"></i>
+                </a>
+                <h3 class="font-weight-bold mt-3">
+                    <i class="mr-2 fas fa-user"></i> 
+                    Data Diri
+                </h3>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
                             <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">01239485766</div>
+                            <div class="col-lg-8"><?=!empty($data["nik"])? $data["nik"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">TMK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">220112232</div>
+                            <div class="col-lg-8"><?=!empty($data["tmk"])? $data["tmk"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama Lengkap</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">Fulan bin Fulan</div>
+                            <div class="col-lg-8"><?=!empty($data["name"])? $data["name"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">Jl Manggis No.67, RT 10/RW 7, Ternate, Kec. Rote, Manokwari, Jayapura 10221</div>
+                            <div class="col-lg-8"><?=!empty($data["address"])? $data["address"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">No. Telephone</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">08975312384</div>
+                            <div class="col-lg-8"><?=!empty($data["phone"])? $data["phone"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Email</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">fulland@gmail.com</div>
+                            <div class="col-lg-8"><?=!empty($data["email"])? $data["email"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Keanggotaan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">21-05-2022</div>
+                            <div class="col-lg-8"><?=!empty($data["join_date"])? $data["join_date"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Status Keanggotaan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">Aktif</div>
+                            <div class="col-lg-8"><?=!empty($data["status"])? $data["status"] : '-'?></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -58,28 +65,28 @@
                     </div>
                 </div>
                 <hr/>
-                <h3 class="font-weight-bold mt-4">Hubungan Keluarga</h3>
+                <h3 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h3>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">Siti</div>
+                            <div class="col-lg-8"><?=!empty($data["name_family"])? $data["name_family"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">Jl Manggis No.67, RT 10/RW 7, Ternate, Kec. Rote, Manokwari, Jayapura 10221</div>
+                            <div class="col-lg-8"><?=!empty($data["address_family"])? $data["address_family"] : '-' ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">No. Telephone</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">08975312384</div>
+                            <div class="col-lg-8"><?=!empty($data["phone_family"])? $data["phone_family"] : '-' ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Status Hubungan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8">Istri</div>
+                            <div class="col-lg-8"><?=!empty($data["status_family"])? $data["status_family"] : '-' ?></div>
                         </div>
                     </div>
                 </div>

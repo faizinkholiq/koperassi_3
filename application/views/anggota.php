@@ -5,7 +5,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Data Anggota</h6>
     </div>
     <div class="card-body">
-        <button class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> Anggota</button>
+        <a href="<?=site_url('anggota/create') ?>" class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> Anggota</a>
         <hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="anggotaTable" width="100%" cellspacing="0">
@@ -22,19 +22,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($data as $key => $row): ?>
                     <tr>
-                        <td>1</td>
-                        <td>123456789</td>
-                        <td>986574</td>
-                        <td>Fulan</td>
-                        <td>089786321</td>
-                        <td>10-10-2022</td>
-                        <td>Aktif</td>
+                        <td><?=$key+1?></td>
+                        <td><?=$row["nik"]?></td>
+                        <td><?=$row["tmk"]?></td>
+                        <td><?=$row["name"]?></td>
+                        <td><?=$row["phone"]?></td>
+                        <td><?=$row["join_date"]?></td>
+                        <td><?=$row["status"]?></td>
                         <td>
-                            <button class="btn my-btn-primary">Ubah</button>
-                            <button class="btn btn-primary">Detail</button>
+                            <a href="<?=site_url('anggota/edit/'.$row["id"])?>" class="btn my-btn-primary">Ubah</a>
+                            <a href="<?=site_url('anggota/detail/'.$row["id"])?>" class="btn btn-primary">Detail</a>
                         </td>
                     </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -45,6 +47,10 @@
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 
 <script>
+    const url = {
+        "site": "<?= site_url() ?>",
+        "base": "<?= base_url() ?>",
+    }
 
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
