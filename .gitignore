@@ -2,6 +2,7 @@
 application/config/database.php
 application/config/config.php
 .vscode
+files/
 
 .DS_Store
 

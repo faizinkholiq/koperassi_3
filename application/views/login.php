@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Koperasi - Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
@@ -28,15 +28,25 @@
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-6 col-lg-6 col-md-9">
+        <div class="row justify-content-center" style="margin-top:8rem">
+            <div class="col-lg-7">
+                <img style="width:40rem" src="<?=base_url('assets/img/login-vector.png')?>" />
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                <div class="h4 row text-center" style="margin-bottom:3rem">
+                                    <div class="col-lg-4 text-right">
+                                        <img style="width:4.5rem" src="<?=base_url('assets/img/koperasi-logo.png')?>" />
+                                    </div>
+                                    <div class="my-text-primary text-left col-lg-6 font-weight-bold" style="font-size: 2rem">
+                                        Sistem<br/>
+                                        Koperasi
+                                    </div>
+                                </div>
                             </div>
                             <form class="user" method="POST" action="<?= site_url('user/login') ?>">
                                 <div class="form-group">
@@ -55,7 +65,7 @@
                                             Me</label>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn my-btn-primary btn-user btn-block">
                                     Login
                                 </button>
                             </form>
