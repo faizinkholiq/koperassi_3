@@ -52,4 +52,134 @@ class User extends CI_Controller {
         redirect('user/login');
 	}
 
+    public function get_data()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('user', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $data = $this->user_model->get();
+        }
+        
+        echo json_encode($data);
+	}
+
+    public function create()
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('username','Username','required');
+        $this->form_validation->set_rules('password','Password','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('user', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input();
+
+                $user_id = $this->user_model->create($nd);
+                if ($user_id) {
+
+                    $data['success'] = 1;
+                    $data['message'] = "Success !";
+                    redirect('user');
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Failed !";
+                }
+            }
+
+            // return $data;
+        }else{
+            $d['title'] = "Tambah User Baru";
+            $d['highlight_menu'] = "user";
+            $d['content_view'] = 'input_user';
+    
+            if (!check_permission('user', $d['role'])){
+                redirect('home');
+            }else{
+                $this->load->view('layout/template', $d);
+            }
+        }
+	}
+
+    public function edit($id)
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('username','Username','required');
+        $this->form_validation->set_rules('password','Password','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('user', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input();
+
+                $detail = $this->user_model->detail($id);
+                if ($detail) {
+                    $nd["id"] = $id;
+                    if ($this->user_model->edit($nd)) {
+    
+                        $data['success'] = 1;
+                        $data['message'] = "Success !";
+                        redirect('user');
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Failed !";
+                        print_r($data);
+                    }
+                }else{
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid ID !";
+                    print_r($data);
+                }
+            }
+
+            return $data;
+        }else{
+            $d['title'] = "Ubah User";
+            $d['highlight_menu'] = "user";
+            $d['content_view'] = 'input_user';
+
+            if (!check_permission('user', $d['role'])){
+                redirect('home');
+            }else{
+                $d["data"] = $this->user_model->detail($id);
+                $this->load->view('layout/template', $d);
+            }
+        }
+	}
+
+    public function delete($id) 
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('user', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            if ($this->user_model->delete($id)) {
+
+                $data['success'] = 1;
+                $data['message'] = "Success !";
+                redirect('user');
+            } else {
+                $data['success'] = 0;
+                $data['error'] = "Failed !";
+            }
+        }
+
+        return $data;
+    }
+
+    private function get_input()
+    {
+        $data["username"] = $this->input->post('username');
+        $data["password"] = $this->input->post('password');
+        $data["name"] = $this->input->post('name');
+
+        return $data;
+    }
+
 }

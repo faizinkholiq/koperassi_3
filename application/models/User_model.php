@@ -26,7 +26,7 @@
         }
     }
 
-    public function list()
+    public function get()
     {
         return $this->db->select()->from('user')->order_by('id', 'asc')->get()->result_array();
     }
@@ -67,7 +67,7 @@
         unset($data['id']);
         $this->db->update('user', $data);
 
-        return ($this->db->affected_rows()>0) ? true : false;
+        return ($this->db->error()["code"] == 0) ? true : false;
     }
 
     public function delete($id)
