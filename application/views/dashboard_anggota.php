@@ -1,22 +1,22 @@
 <!-- Content Row -->
 <div class="row">
-    <div class="col-xl-4 col-md-6 mb-4" >
-        <div class="card shadow" style="width:100%; background:#f1c40f;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Wajib
-            </div>
-            <div class="card-footer" style="background:#f39c12; border:none; color:white;">
-                Lihat Detail
-                <i class="float-right fa fa-chevron-right"></i>
-            </div>
-        </div>
-    </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#e74c3c;">
             <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
                 Simpanan Pokok
             </div>
             <div class="card-footer" style="background:#c0392b; border:none; color:white;">
+                Lihat Detail
+                <i class="float-right fa fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4" >
+        <div class="card shadow" style="width:100%; background:#f1c40f;">
+            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Simpanan Wajib
+            </div>
+            <div class="card-footer" style="background:#f39c12; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
@@ -82,9 +82,24 @@
                             <div class="col-lg-9">220112232</div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">Nama</div>
+                            <div class="col-lg-2">Nama Lengkap</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-9">Fulan bin Fulan</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-2">Jabatan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-9">Position</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-2">Depo/Stock Point</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-9">Depo 1</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-2">No. Rekening</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-9">12154284</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">Alamat</div>
@@ -103,11 +118,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card bg-light text-black shadow mb-4" style="height: 15rem;width: 26rem;">
-                            <div class="card-body">
-                                <h2>Identity Card</h2>
-                            </div>
-                        </div>
+                        <img class="img-ktp" src="<?= base_url('files/ktp_sample.jpg') ?>" />
                     </div>
                 </div>
             </div>

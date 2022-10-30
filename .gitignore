@@ -2,7 +2,8 @@
 application/config/database.php
 application/config/config.php
 .vscode
-files/
+files/*
+!files/*_sample.*
 
 .DS_Store
 

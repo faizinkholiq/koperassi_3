@@ -31,6 +31,21 @@
                             <div class="col-lg-8"><?=!empty($data["name"])? $data["name"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
+                            <div class="col-lg-3">Jabatan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-8"><?=!empty($data["position"])? $data["position"] : '-'?></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Depo/Stock Point</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-8"><?=!empty($data["depo"])? $data["depo"] : '-'?></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">No. Rekening</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-8"><?=!empty($data["acc_no"])? $data["acc_no"] : '-'?></div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8"><?=!empty($data["address"])? $data["address"] : '-'?></div>
@@ -56,12 +71,9 @@
                             <div class="col-lg-8"><?=!empty($data["status"])? $data["status"] : '-'?></div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="card bg-light text-black shadow mb-4" style="height: 18rem;width: 14rem;">
-                            <div class="card-body">
-                                <h2>Identity Card</h2>
-                            </div>
-                        </div>
+                    <div class="col-lg-4 text-center">
+                        <img class="detail-profile-photo" src="<?=base_url('files/profile_sample.jpg') ?>" /><br/>
+                        <button class="btn btn-info btn-lg mt-4"><i class="mr-2 fas fa-download"></i> Download File KTP</button>
                     </div>
                 </div>
                 <hr/>

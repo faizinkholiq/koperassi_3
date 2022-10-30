@@ -31,3 +31,17 @@
 .my-link-primary.active:hover{
     color:black!important;
 }
+
+.detail-profile-photo {
+    width: 13rem; 
+    height: 16rem; 
+    object-fit:cover; 
+    object-position:center;
+}
+
+.img-ktp {
+    height: 15rem;
+    width: 26rem;
+    object-fit:contain; 
+    object-position:center;
+}
