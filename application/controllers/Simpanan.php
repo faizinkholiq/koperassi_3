@@ -14,7 +14,7 @@ class Simpanan extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Simpanan";
 		$d['highlight_menu'] = "simpanan";
-		$d['content_view'] = 'simpanan';
+		$d['content_view'] = 'simpanan/index';
 
 		if (!check_permission('simpanan', $d['role'])){
             redirect('home');
@@ -34,17 +34,17 @@ class Simpanan extends CI_Controller {
 			switch($module){
 				case 'pokok':
 					$d['title'] = "Simpanan Pokok";
-					$d['content_view'] = 'simpanan_pokok';
+					$d['content_view'] = 'simpanan/pokok';
 					$d['highlight_menu'] = "simpanan_pokok";
 					break;
 				case 'wajib':
 					$d['title'] = "Simpanan Wajib";
-					$d['content_view'] = 'simpanan_wajib';
+					$d['content_view'] = 'simpanan/wajib';
 					$d['highlight_menu'] = "simpanan_wajib";
 					break;
 				case 'sukarela':
 					$d['title'] = "Simpanan Sukarela";
-					$d['content_view'] = 'simpanan_sukarela';
+					$d['content_view'] = 'simpanan/sukarela';
 					$d['highlight_menu'] = "simpanan_sukarela";
 					break;
 			}

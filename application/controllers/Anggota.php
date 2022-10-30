@@ -19,7 +19,7 @@ class Anggota extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Data Anggota";
         $d['highlight_menu'] = "anggota";
-        $d['content_view'] = 'anggota';
+        $d['content_view'] = 'anggota/index';
         
         if (!check_permission('anggota', $d['role'])){
             redirect('home');
@@ -47,7 +47,7 @@ class Anggota extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Detail Anggota";
         $d['highlight_menu'] = "anggota";
-        $d['content_view'] = 'detail_anggota';
+        $d['content_view'] = 'anggota/detail';
 
         if (!check_permission('anggota', $d['role'])){
             redirect('home');
@@ -90,7 +90,7 @@ class Anggota extends CI_Controller {
         }else{
             $d['title'] = "Tambah Anggota Baru";
             $d['highlight_menu'] = "anggota";
-            $d['content_view'] = 'input_anggota';
+            $d['content_view'] = 'anggota/input';
     
             if (!check_permission('anggota', $d['role'])){
                 redirect('home');
@@ -146,7 +146,7 @@ class Anggota extends CI_Controller {
         }else{
             $d['title'] = "Ubah Anggota";
             $d['highlight_menu'] = "anggota";
-            $d['content_view'] = 'input_anggota';
+            $d['content_view'] = 'anggota/input';
 
             if (!check_permission('anggota', $d['role'])){
                 redirect('home');

@@ -14,7 +14,7 @@ class Pinjaman extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Pinjaman";
         $d['highlight_menu'] = "pinjaman";
-        $d['content_view'] = 'pinjaman';
+        $d['content_view'] = 'pinjaman/index';
 
         if (!check_permission('laporan', $d['role'])){
             redirect('home');

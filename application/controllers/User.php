@@ -14,7 +14,7 @@ class User extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Data User";
         $d['highlight_menu'] = "user";
-        $d['content_view'] = 'user';
+        $d['content_view'] = 'user/index';
 
         if (!check_permission('user', $d['role'])){
             redirect('home');
@@ -94,7 +94,7 @@ class User extends CI_Controller {
         }else{
             $d['title'] = "Tambah User Baru";
             $d['highlight_menu'] = "user";
-            $d['content_view'] = 'input_user';
+            $d['content_view'] = 'user/input';
     
             if (!check_permission('user', $d['role'])){
                 redirect('home');
@@ -141,7 +141,7 @@ class User extends CI_Controller {
         }else{
             $d['title'] = "Ubah User";
             $d['highlight_menu'] = "user";
-            $d['content_view'] = 'input_user';
+            $d['content_view'] = 'user/input';
 
             if (!check_permission('user', $d['role'])){
                 redirect('home');
