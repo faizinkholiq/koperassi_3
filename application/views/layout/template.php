@@ -49,7 +49,9 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <?php if ($role == 2): ?>
+            <?php 
+                if ($role == 2): 
+            ?>
 
             <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan') ?>">
@@ -72,12 +74,31 @@
             <?php endif; ?>
 
 
-            <?php if ($role == 1): ?>
+            <?php 
+                if ($role == 1): 
+                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela","simpanan"]);
+            ?>
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Data Anggota</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link <?= $simpanan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseSimpanan"
+                    aria-expanded="true" aria-controls="collapseSimpanan">
+                    <i class="fas fa-fw fa-hand-holding-usd  <?= $simpanan ? 'text-white' : '' ?>"></i>
+                    <span>Simpanan Anggota</span>
+                </a>
+                <div id="collapseSimpanan" class="collapse <?= $simpanan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_pokok' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/pokok') ?>">Simpanan Pokok</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_wajib' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/wajib') ?>">Simpanan Wajib</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_sukarela' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/sukarela') ?>">Simpanan Sukarela</a>
+                    </div>
+                </div>
+            </li>
+
             <?php endif; ?>
 
             <!-- <?php if ($role == 1): ?>

@@ -23,4 +23,34 @@ class Simpanan extends CI_Controller {
         }
 	}
 
+	
+	public function page($module)
+	{	
+        $d = $this->user_model->login_check();
+		
+		if (!check_permission('simpanan_anggota', $d['role'])){
+			redirect('home');
+        }else{
+			switch($module){
+				case 'pokok':
+					$d['title'] = "Simpanan Pokok";
+					$d['content_view'] = 'simpanan_pokok';
+					$d['highlight_menu'] = "simpanan_pokok";
+					break;
+				case 'wajib':
+					$d['title'] = "Simpanan Wajib";
+					$d['content_view'] = 'simpanan_wajib';
+					$d['highlight_menu'] = "simpanan_wajib";
+					break;
+				case 'sukarela':
+					$d['title'] = "Simpanan Sukarela";
+					$d['content_view'] = 'simpanan_sukarela';
+					$d['highlight_menu'] = "simpanan_sukarela";
+					break;
+			}
+
+            $this->load->view('layout/template', $d);
+        }
+	}
+
 }

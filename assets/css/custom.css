@@ -6,7 +6,6 @@
     color:#16a085;
 }
 
-
 .my-btn-primary{
     background-color:#16a085;
     color: white;
@@ -15,4 +14,20 @@
 .my-btn-primary:hover{
     background-color:#0c846c;
     color: white;
+}
+
+.my-link-primary{
+    color:rgba(255,255,255,.8)!important;
+}
+
+.my-link-primary:hover{
+    color:black!important;
+}
+
+.my-link-primary.active{
+    color: white!important;
+}
+
+.my-link-primary.active:hover{
+    color:black!important;
 }
