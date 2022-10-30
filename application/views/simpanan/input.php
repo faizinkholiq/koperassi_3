@@ -29,7 +29,8 @@
                             <div class="col-lg-3">Anggota</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <select data-live-search="true" class="selectpicker form-control form-control-user">
+                                <select name="person" data-live-search="true" class="selectpicker form-control form-control-user">
+                                    <option value="">- Please Select -</option>
                                     <?php foreach($person_list as $key => $item): ?>
                                     <option value="<?= $item["id"] ?>"><?= $item["name"] ?></option>
                                     <?php endforeach; ?>
@@ -40,7 +41,7 @@
                             <div class="col-lg-3">Tanggal</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <input type="date" class="form-control form-control-user" id="tglAnggotaDateInput" name="tgl_anggota" 
+                                <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
                                     value="<?=(isset($data["join_date"]) && !empty($data["join_date"]))? $data["join_date"] : date('Y-m-d') ?>">
                             </div>
                         </div>
@@ -52,7 +53,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="jumlahTextInput" placeholder="...">
+                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="...">
                                 </div>
                             </div>
                         </div>

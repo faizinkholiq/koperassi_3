@@ -22,15 +22,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($data as $key => $row): ?>
                     <tr>
-                        <td>1</td>
-                        <td>12212312</td>
-                        <td>12121</td>
-                        <td>Fulan</td>
-                        <td>08343842</td>
-                        <td>02-02-2022</td>
-                        <td>50.000</td>
+                        <td><?=$key+1?></td>
+                        <td><?=$row["nik"]?></td>
+                        <td><?=$row["tmk"]?></td>
+                        <td><?=$row["name"]?></td>
+                        <td><?=$row["phone"]?></td>
+                        <td><?=$row["join_date"]?></td>
+                        <td><?=$row["balance"]?></td>
                     </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
