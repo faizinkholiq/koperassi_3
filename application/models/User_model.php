@@ -38,6 +38,7 @@
             'user.username',
             'user.role',
             'user.active',
+            'person.id person_id',
             'person.name',
             'person.nik',
             'person.tmk',

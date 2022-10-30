@@ -9,6 +9,7 @@ class Simpanan extends CI_Controller {
 		$this->load->model([
 			'user_model',
 			'anggota_model',
+			'simpanan_model',
 			'simpanan_pokok_model',
 			'simpanan_wajib_model',
 			'simpanan_sukarela_model',
@@ -27,7 +28,10 @@ class Simpanan extends CI_Controller {
 		if (!check_permission('simpanan', $d['role'])){
             redirect('home');
         }else{
-            $this->load->view('layout/template', $d);
+			$d['data']['summary'] = $this->simpanan_model->summary($d['person_id']);
+			$d['data']['rows'] = $this->simpanan_model->get($d['person_id']);
+
+			$this->load->view('layout/template', $d);
         }
 	}
 

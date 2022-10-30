@@ -6,7 +6,10 @@ class Pinjaman extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user_model');
+		$this->load->model([
+            'user_model',
+            'pinjaman_model',
+        ]);
     }
 
 	public function index()
@@ -19,6 +22,9 @@ class Pinjaman extends CI_Controller {
         if (!check_permission('laporan', $d['role'])){
             redirect('home');
         }else{
+            $d['data']['summary'] = $this->pinjaman_model->summary($d['person_id']);
+			$d['data']['rows'] = $this->pinjaman_model->get($d['person_id']);
+
             $this->load->view('layout/template', $d);
         }
 	}

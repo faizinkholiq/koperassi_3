@@ -4,11 +4,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp15.000.000</span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp10.000.000</span></div>
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= $data['summary']['plafon'] ?></span></div>
+                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= $data['summary']['limit'] ?></span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2">Rp1.000.000</span></div>
+                <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2">Rp<?= $data['summary']['sisa'] ?></span></div>
             </div>
         </div>
     </div>
@@ -24,8 +24,7 @@
                 <thead>
                     <tr>
                         <th width="10">No</th>
-                        <th class="text-center">Tahun</th>
-                        <th class="text-center">Bulan</th>
+                        <th class="text-center">Tanggal</th>
                         <th class="text-center">Cicilan</th>
                         <th class="text-center">Bunga</th>
                         <th class="text-center">Bayar</th>
@@ -34,56 +33,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($data['rows'] as $key => $row): ?>
                     <tr>
-                        <td>1</td>
-                        <td>2022</td>
-                        <td>Januari</td>
-                        <td>1.305.106</td>
-                        <td>395.752</td>
-                        <td>1.305.106</td>
-                        <td>0</td>
-                        <td>1.700.859</td>
+                        <td><?=$key+1?></td>
+                        <td><?=$row["date"]?></td>
+                        <td><?=$row["cicilan"]?></td>
+                        <td><?=$row["bunga"]?></td>
+                        <td><?=$row["bayar"]?></td>
+                        <td><?=$row["sisa"]?></td>
+                        <td><?=$row["gaji"]?></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2022</td>
-                        <td>Januari</td>
-                        <td>1.305.106</td>
-                        <td>395.752</td>
-                        <td>1.305.106</td>
-                        <td>0</td>
-                        <td>1.700.859</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2022</td>
-                        <td>Januari</td>
-                        <td>1.305.106</td>
-                        <td>395.752</td>
-                        <td>1.305.106</td>
-                        <td>0</td>
-                        <td>1.700.859</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>2022</td>
-                        <td>Januari</td>
-                        <td>1.305.106</td>
-                        <td>395.752</td>
-                        <td>1.305.106</td>
-                        <td>0</td>
-                        <td>1.700.859</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>2022</td>
-                        <td>Januari</td>
-                        <td>1.305.106</td>
-                        <td>395.752</td>
-                        <td>1.305.106</td>
-                        <td>0</td>
-                        <td>1.700.859</td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
