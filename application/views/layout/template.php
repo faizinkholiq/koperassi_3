@@ -24,6 +24,9 @@
     <!-- JQuery -->
     <script src="<?=base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
 
+    <!-- Bootstrap core JavaScript-->
+    <script src="<?=base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+
 </head>
 
 <body id="page-top">
@@ -224,9 +227,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="<?=base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="<?=base_url('assets/vendor/jquery-easing/jquery.easing.min.js') ?>"></script>

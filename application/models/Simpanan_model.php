@@ -8,15 +8,6 @@
         return $q->get()->result_array();
     }
 
-    public function list()
-    {
-        $q = $this->db->select()
-            ->from('person')
-            ->where('status', 'Aktif')
-            ->order_by('id', 'asc');
-        return $q->get()->result_array();
-    }
-
     public function detail($id)
     {
         return $this->db->select([

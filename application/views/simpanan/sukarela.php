@@ -5,7 +5,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Data Simpanan Sukarela</h6>
     </div>
     <div class="card-body">
-        <a href="#!" class="btn my-btn-primary mr-2"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
+        <a href="<?= site_url('simpanan/input/sukarela') ?>" class="btn my-btn-primary mr-2"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
         <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
         <hr>
         <div class="table-responsive">
