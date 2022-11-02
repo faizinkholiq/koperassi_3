@@ -88,12 +88,15 @@ class Simpanan extends CI_Controller {
 				
 				switch ($module) {
 					case 'pokok':
+						$nd["code"] = $this->simpanan_pokok_model->get_code();
 						$simpanan_id = $this->simpanan_pokok_model->create($nd);
 						break;
 					case 'wajib':
+						$nd["code"] = $this->simpanan_wajib_model->get_code();
 						$simpanan_id = $this->simpanan_wajib_model->create($nd);
 						break;
 					case 'sukarela':
+						$nd["code"] = $this->simpanan_sukarela_model->get_code();
 						$simpanan_id = $this->simpanan_sukarela_model->create($nd);
 						break;
 					default:
@@ -133,4 +136,5 @@ class Simpanan extends CI_Controller {
         
         return $data;
     }
+
 }

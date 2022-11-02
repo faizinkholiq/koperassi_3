@@ -26,6 +26,7 @@
                     <tr>
                         <th width="10">No</th>
                         <th class="text-center">Tanggal</th>
+                        <th class="text-center">Kode Transaksi</th>
                         <th class="text-center">Uraian</th>
                         <th class="text-center">Pemasukan</th>
                     </tr>
@@ -35,6 +36,7 @@
                     <tr>
                         <td><?=$key+1?></td>
                         <td><?=$row["date"]?></td>
+                        <td><?=$row["code"]?></td>
                         <td><?=$row["type"]?></td>
                         <td><?=$row["balance"]?></td>
                     </tr>

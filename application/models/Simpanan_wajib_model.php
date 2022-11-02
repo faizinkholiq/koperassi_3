@@ -53,4 +53,25 @@
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
 
+    public function get_code()
+    {
+        $row = $this->db->select("
+            CASE WHEN MAX(code) IS NOT NULL 
+                AND MAX(code) > 0 
+                AND MAX(code) != ''
+            THEN MAX(code) + 1 
+            ELSE '1000000001' END code
+        ")
+        ->from('simpanan_wajib')
+        ->order_by('code', 'DESC')
+        ->limit(1)
+        ->get()->row_array();
+
+        if ($row) {
+            return $row["code"];
+        }else{
+            return "1000000001";
+        }
+    }
+
 }

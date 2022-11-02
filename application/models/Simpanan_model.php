@@ -7,6 +7,7 @@
         $q_pokok = $this->db->select([
                 'simpanan_pokok.id',
                 'simpanan_pokok.person person_id',
+                'simpanan_pokok.code',
                 'person.name',
                 'person.nik',
                 'person.tmk',
@@ -24,6 +25,7 @@
         $q_wajib = $this->db->select([
             'simpanan_wajib.id',
             'simpanan_wajib.person person_id',
+            'simpanan_wajib.code',
             'person.name',
             'person.nik',
             'person.tmk',
@@ -41,6 +43,7 @@
         $q_sukarela = $this->db->select([
             'simpanan_sukarela.id',
             'simpanan_sukarela.person person_id',
+            'simpanan_sukarela.code',
             'person.name',
             'person.nik',
             'person.tmk',
