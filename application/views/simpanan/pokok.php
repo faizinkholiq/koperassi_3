@@ -77,14 +77,14 @@
                             <div class="col-lg-3">No. Anggota</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" id="noTextInput" name="no_anggota">
+                                <input type="text" class="form-control" id="noAnggotaTextInput" name="no_anggota" readonly="readonly">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama Anggota</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
-                                <select name="person" data-live-search="true" class="selectpicker form-control form-control-user">
+                                <select id="anggotaSelect" name="person" data-live-search="true" class="selectpicker form-control form-control-user">
                                     <option value="">- Please Select -</option>
                                     <?php foreach($person_list as $key => $item): ?>
                                     <option value="<?= $item["id"] ?>"><?= $item["name"] ?></option>
@@ -117,7 +117,7 @@
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
-                                <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea"></textarea>
+                                <textarea readonly="readonly" class="form-control form-control-user" name="alamat" id="alamatTextArea"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -148,7 +148,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
-                <button type="reset" class="btn btn-info mt-4 mb-4">Reset</button>
+                <button type="button" class="btn btn-info mt-4 mb-4" onclick="resetForm()">Reset</button>
                 <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
@@ -165,14 +165,36 @@
         site: '<?=site_url() ?>'
     };
 
+    const list_anggota = <?= json_encode($person_list); ?>
+
     $(document).ready(function() {
         $('.alert').alert()
         $('#simpananTable').DataTable();
+
+        $("#anggotaSelect").change(function () {
+            let person_id = this.value;
+            let person = list_anggota.filter(r => r.id == person_id)
+
+            if(person.length > 0){
+                $('#noAnggotaTextInput').val(person[0].tmk)
+                $('#jabatanTextInput').val(person[0].position)
+                $('#depoTextInput').val(person[0].depo)
+                $('#alamatTextArea').text(person[0].address)
+                $('#noRekTextInput').val(person[0].acc_no)
+            }
+        });
+
     });
 
     function showForm(){
         $('#inputModal').modal('show');
         $('#formSimpanan')[0].reset();
+        $('#alamatTextArea').text("")
+    }
+
+    function resetForm() {
+        $('#formSimpanan')[0].reset();
+        $('#alamatTextArea').text("")
     }
 
 </script>
