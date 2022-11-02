@@ -1,0 +1,1 @@
+ALTER TABLE `person` ADD `gaji` FLOAT NOT NULL DEFAULT '0' AFTER `join_date`;

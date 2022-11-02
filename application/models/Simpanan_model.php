@@ -68,12 +68,32 @@
         $data['limit'] = 0; 
         $data['gaji'] = 0; 
         $data['simpanan'] = $this->db->select([
-                'COALESCE(SUM(simpanan_pokok.balance), 0) + COALESCE(SUM(simpanan_wajib.balance), 0) + COALESCE(SUM(simpanan_sukarela.balance), 0) balance',
+                'COALESCE(simpanan_pokok.total, 0) 
+                + COALESCE(simpanan_wajib.total, 0) 
+                + COALESCE(simpanan_sukarela.total, 0) balance',
             ])
             ->from('person')
-            ->join('simpanan_pokok', 'person.id = simpanan_pokok.person', 'left')
-            ->join('simpanan_wajib', 'person.id = simpanan_wajib.person', 'left')
-            ->join('simpanan_sukarela', 'person.id = simpanan_sukarela.person', 'left')
+            ->join('(
+                SELECT 
+                    person, 
+                    SUM(balance) total 
+                FROM simpanan_pokok 
+                GROUP BY person
+            ) simpanan_pokok', 'person.id = simpanan_pokok.person', 'left')
+            ->join('(
+                SELECT 
+                    person, 
+                    SUM(balance) total 
+                FROM simpanan_wajib 
+                GROUP BY person
+            ) simpanan_wajib', 'person.id = simpanan_wajib.person', 'left')
+            ->join('(
+                SELECT 
+                    person, 
+                    SUM(balance) total 
+                FROM simpanan_sukarela 
+                GROUP BY person
+            ) simpanan_sukarela', 'person.id = simpanan_sukarela.person', 'left')
             ->where('person.id', $person)
             ->group_by('person.id')->get()->row_array()['balance'];
 
