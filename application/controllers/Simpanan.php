@@ -64,33 +64,6 @@ class Simpanan extends CI_Controller {
 					break;
 			}
 
-            $this->load->view('layout/template', $d);
-        }
-	}
-
-	public function input($module)
-	{	
-        $d = $this->user_model->login_check();
-		
-		if (!check_permission('simpanan_anggota', $d['role'])){
-			redirect('home');
-        }else{
-			switch($module){
-				case 'pokok':
-					$d['title'] = "Simpanan Pokok";
-					$d['highlight_menu'] = "simpanan_pokok";
-					break;
-				case 'wajib':
-					$d['title'] = "Simpanan Wajib";
-					$d['highlight_menu'] = "simpanan_wajib";
-					break;
-				case 'sukarela':
-					$d['title'] = "Simpanan Sukarela";
-					$d['highlight_menu'] = "simpanan_sukarela";
-					break;
-			}
-
-			$d['content_view'] = 'simpanan/input';
 			$d['module'] = $module;
 			
 			// List Data
@@ -126,28 +99,30 @@ class Simpanan extends CI_Controller {
 					default:
 						$data['success'] = 0;
 						$data['error'] = "Invalid module";
-						echo json_encode($data);
+						
+						$this->session->set_flashdata('msg', $data);
+						redirect('home');   
 						return;
+
 						break;
 				}
 
 				if ($simpanan_id) {
-
                     $data['success'] = 1;
-                    $data['message'] = "Success !";
-                    redirect('simpanan/page/'.$module);
+                    $data['message'] = "Data berhasil tersimpan !";
                 } else {
-                    $data['success'] = 0;
-                    $data['error'] = "Failed !";
-					echo json_encode($data);
+					$data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
                 }
             }
         }else{
 			$data['success'] = 0;
 			$data['error'] = "Invalid Input";
+
         }
 
-		echo json_encode($data);
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/page/'.$module);
 	}
 
 	private function get_input()
