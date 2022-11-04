@@ -40,7 +40,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea"><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <textarea class="form-control form-control-user" id="alamatKelTextArea" name="alamat_kel"><?=(isset($data["address_family"]) && !empty($data["address_family"]))? $data["address_family"] : '' ?></textarea>
                             </div>
                         </div>
