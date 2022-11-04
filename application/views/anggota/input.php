@@ -85,6 +85,13 @@
                                 <input type="file" class="form-control" id="ktpFile" name="ktp">
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Foto Profil</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-4">
+                                <input type="file" class="form-control" id="profileFile" name="profile_photo">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr/>
