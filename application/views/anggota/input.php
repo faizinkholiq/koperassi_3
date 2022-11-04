@@ -10,7 +10,7 @@
                     <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>
-                <h3 class="font-weight-bold mt-4"><i class="mr-2 fas fa-user"></i> Data Diri</h3>
+                <h4 class="font-weight-bold mt-4"><i class="mr-2 fas fa-user"></i> Data Diri</h4>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <hr/>
-                <h3 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h3>
+                <h4 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h4>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
@@ -130,8 +130,8 @@
                 </div>
             </div>
             <div class="card-footer text-right">
-                <a href="<?=site_url('anggota') ?>" class="btn btn-secondary btn-lg mt-4 mb-4">Kembali</a>
-                <button type="submit" class="btn btn-primary btn-lg mt-4 mb-4 ml-2 mr-4">Simpan Data Anggota <i class="ml-2 fas fa-chevron-right"></i></button>
+                <a href="<?=site_url('anggota') ?>" class="btn btn-secondary mt-4 mb-4">Kembali</a>
+                <button type="submit" class="btn btn-primary mt-4 mb-4 ml-2 mr-4">Simpan Data Anggota <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>
