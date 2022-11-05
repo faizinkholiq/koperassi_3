@@ -95,6 +95,15 @@ class Anggota extends CI_Controller {
                         $this->anggota_model->create_keluarga($nd["family"]);
                     }
 
+                    // Create user account
+                    $this->user_model->create([
+                        "username" => $nd["tmk"],
+                        "name" => $nd["name"],
+                        "role" => 2,
+                        "password" => $nd["nik"],
+                        "active" => ($nd["status"] == "Active")? 1 : 0,
+                    ]);
+
                     $data['success'] = 1;
                     $data['message'] = "Success !";
                 } else {
