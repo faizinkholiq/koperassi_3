@@ -86,8 +86,8 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control form-control-user" id="gajiTextInput" name="gaji" placeholder="..."
-                                        value="<?=(isset($data["phone"]) && !empty($data["phone"]))? $data["phone"] : '' ?>">
+                                    <input type="text" class="form-control form-control-user" id="gajiTextInput" name="salary" placeholder="..."
+                                        value="<?=(isset($data["salary"]) && !empty($data["salary"]))? $data["salary"] : '' ?>">
                                 </div>
                             </div>
                         </div>

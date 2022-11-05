@@ -69,6 +69,24 @@ class Anggota extends CI_Controller {
                 $data['error'] = "No Permission !";
             }else{
                 $nd = $this->get_input();
+                
+                if($_FILES['file']['error'] == 0) {
+                    $file = $_FILES['file'];
+                    $upload = $this->upload_file($file, 'Profile');
+
+                    if(!$upload['success']){
+                        $data = [
+                            'success' => 0,
+                            'message' => $upload['message'],
+                        ];
+
+                        $this->session->set_flashdata('msg', $data);
+                        redirect('anggota');   
+                        return;
+                    }else{
+                        $nd['avatar'] = $upload['file'];
+                    }
+                } 
 
                 $anggota_id = $this->anggota_model->create($nd["detail_anggota"]);
                 if ($anggota_id) {
@@ -79,14 +97,14 @@ class Anggota extends CI_Controller {
 
                     $data['success'] = 1;
                     $data['message'] = "Success !";
-                    redirect('anggota');
                 } else {
                     $data['success'] = 0;
                     $data['error'] = "Failed !";
                 }
             }
 
-            // return $data;
+            $this->session->set_flashdata('msg', $data);
+            redirect('anggota');
         }else{
             $d['title'] = "Tambah Anggota Baru";
             $d['highlight_menu'] = "anggota";
@@ -189,11 +207,40 @@ class Anggota extends CI_Controller {
         $data["detail_anggota"]["email"] = $this->input->post('email');
         $data["detail_anggota"]["join_date"] = $this->input->post('tgl_anggota');
         $data["detail_anggota"]["status"] = $this->input->post('status');
+        $data["detail_anggota"]["salary"] = $this->input->post('salary');
 
         $data["family"]["name"] = $this->input->post("nama_kel");
         $data["family"]["address"] = $this->input->post("alamat_kel");
         $data["family"]["phone"] = $this->input->post("no_telp_kel");
         $data["family"]["status"] = $this->input->post("status_kel");
+
+        return $data;
+    }
+
+    private function upload_file($file, $prefix)
+    {
+        $arr_filename = explode('.', $file['name']);
+        $filename = $prefix.'_'.date('YmdHis').'.'.$arr_filename[count($arr_filename) - 1];
+
+        $config['upload_path'] = './assets/files';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|svg';
+        $config['file_name'] = $filename;
+        $config['overwrite'] = true;
+        $config['max_size'] = 2000;
+        
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('file')) {
+            $data = [
+                'success' => 0,
+                'message' => $this->upload->display_errors(),
+            ];
+        }else{
+            $data = [
+                'success' => 1,
+                'message' => 'Upload success',
+                'file' => $filename,
+            ];
+        }
 
         return $data;
     }

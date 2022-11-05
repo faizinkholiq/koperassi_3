@@ -1,1 +1,1 @@
-ALTER TABLE `person` ADD `gaji` FLOAT NOT NULL DEFAULT '0' AFTER `join_date`;
+ALTER TABLE `person` ADD `salary` FLOAT NOT NULL DEFAULT '0' AFTER `join_date`;
