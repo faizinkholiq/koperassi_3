@@ -46,7 +46,7 @@
             'person.phone',
             'person.email',
             'person.ktp',
-            'person.avatar',
+            'person.profile_photo',
         ])
         ->from('user')
         ->join('person', 'user.id = person.user_id', 'left')

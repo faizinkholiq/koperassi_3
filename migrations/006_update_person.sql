@@ -1,1 +1,2 @@
 ALTER TABLE `person` ADD `salary` FLOAT NOT NULL DEFAULT '0' AFTER `join_date`;
+ALTER TABLE `person` CHANGE `avatar` `profile_photo` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;

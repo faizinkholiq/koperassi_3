@@ -1,4 +1,17 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
+
+<?php
+    if(!empty($this->session->flashdata('msg'))):
+        $msg = $this->session->flashdata('msg');
+?>
+<div class="alert <?= ($msg['success'])? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
+  <strong><?= $msg['message'] ?></strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<?php endif; ?>
+
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-body">

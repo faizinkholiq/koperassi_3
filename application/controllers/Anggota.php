@@ -69,24 +69,28 @@ class Anggota extends CI_Controller {
                 $data['error'] = "No Permission !";
             }else{
                 $nd = $this->get_input();
-                
-                if($_FILES['file']['error'] == 0) {
-                    $file = $_FILES['file'];
-                    $upload = $this->upload_file($file, 'Profile');
+                // Upload File
+                foreach ($_FILES as $key => $item) {
+                    if($item['error'] == 0) {
+                        $file = $item;
+                        $file["origin"] = $key;
 
-                    if(!$upload['success']){
-                        $data = [
-                            'success' => 0,
-                            'message' => $upload['message'],
-                        ];
-
-                        $this->session->set_flashdata('msg', $data);
-                        redirect('anggota');   
-                        return;
-                    }else{
-                        $nd['avatar'] = $upload['file'];
-                    }
-                } 
+                        $upload = $this->upload_file($file);
+    
+                        if(!$upload['success']){
+                            $data = [
+                                'success' => 0,
+                                'message' => $upload['message'],
+                            ];
+    
+                            $this->session->set_flashdata('msg', $data);
+                            redirect('anggota');   
+                            return;
+                        }else{
+                            $nd["detail_anggota"][$key] = $upload['file'];
+                        }
+                    } 
+                }
 
                 $anggota_id = $this->anggota_model->create($nd["detail_anggota"]);
                 if ($anggota_id) {
@@ -97,18 +101,18 @@ class Anggota extends CI_Controller {
 
                     // Create user account
                     $this->user_model->create([
-                        "username" => $nd["tmk"],
-                        "name" => $nd["name"],
+                        "username" => $nd["detail_anggota"]["tmk"],
+                        "name" => $nd["detail_anggota"]["name"],
                         "role" => 2,
-                        "password" => $nd["nik"],
-                        "active" => ($nd["status"] == "Active")? 1 : 0,
+                        "password" => $nd["detail_anggota"]["nik"],
+                        "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
                     ]);
 
                     $data['success'] = 1;
-                    $data['message'] = "Success !";
+                    $data['message'] = "Success Create New Data !";
                 } else {
                     $data['success'] = 0;
-                    $data['error'] = "Failed !";
+                    $data['error'] = "Failed Create New Data !";
                 }
             }
 
@@ -160,12 +164,10 @@ class Anggota extends CI_Controller {
                     } else {
                         $data['success'] = 0;
                         $data['error'] = "Failed !";
-                        print_r($data);
                     }
                 }else{
                     $data['success'] = 0;
                     $data['error'] = "Invalid ID !";
-                    print_r($data);
                 }
             }
 
@@ -217,6 +219,9 @@ class Anggota extends CI_Controller {
         $data["detail_anggota"]["join_date"] = $this->input->post('tgl_anggota');
         $data["detail_anggota"]["status"] = $this->input->post('status');
         $data["detail_anggota"]["salary"] = $this->input->post('salary');
+        $data["detail_anggota"]["position"] = $this->input->post('position');
+        $data["detail_anggota"]["depo"] = $this->input->post('depo');
+        $data["detail_anggota"]["acc_no"] = $this->input->post('acc_no');
 
         $data["family"]["name"] = $this->input->post("nama_kel");
         $data["family"]["address"] = $this->input->post("alamat_kel");
@@ -226,19 +231,20 @@ class Anggota extends CI_Controller {
         return $data;
     }
 
-    private function upload_file($file, $prefix)
+    private function upload_file($file)
     {
         $arr_filename = explode('.', $file['name']);
-        $filename = $prefix.'_'.date('YmdHis').'.'.$arr_filename[count($arr_filename) - 1];
+        $filename = ucfirst($file["origin"]).'_'.date('YmdHis').'.'.$arr_filename[count($arr_filename) - 1];
 
-        $config['upload_path'] = './assets/files';
+        $config['upload_path'] = './files';
         $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|svg';
         $config['file_name'] = $filename;
         $config['overwrite'] = true;
         $config['max_size'] = 2000;
-        
+
         $this->load->library('upload', $config);
-        if (!$this->upload->do_upload('file')) {
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($file["origin"])) {
             $data = [
                 'success' => 0,
                 'message' => $this->upload->display_errors(),
