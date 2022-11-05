@@ -4,7 +4,13 @@
 
     public function get()
     {
-        $q = $this->db->select()->from('person')->order_by('id', 'asc');
+        $q = $this->db->select([
+            'person.*',
+            'position.name position_name',
+        ])
+        ->from('person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->order_by('id', 'asc');
         return $q->get()->result_array();
     }
 
@@ -26,9 +32,11 @@
             'person_family.address address_family',
             'person_family.phone phone_family',
             'person_family.status status_family',
+            'position.name position_name',
         ])
         ->from('person')
         ->join('person_family', 'person.id = person_family.person_id', 'left')
+        ->join('position', 'person.position = position.id', 'left')
         ->where('person.id',$id)
         ->get()
         ->row_array();
@@ -94,6 +102,12 @@
         $this->db->delete('person_family');
         
         return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+
+    public function get_list_position()
+    {
+        $q = $this->db->select()->from('position')->order_by('id', 'desc');
+        return $q->get()->result_array();
     }
 
 }

@@ -26,6 +26,7 @@
                         <th class="text-center">TMK</th>
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">No. Telp</th>
+                        <th class="text-center">Jabatan</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Status Keanggotaan</th>
                         <th class="text-center">Aksi</th>
@@ -39,6 +40,7 @@
                         <td><?=$row["tmk"]?></td>
                         <td><?=$row["name"]?></td>
                         <td><?=$row["phone"]?></td>
+                        <td><?=$row["position_name"]?></td>
                         <td><?=$row["join_date"]?></td>
                         <td><?=$row["status"]?></td>
                         <td>

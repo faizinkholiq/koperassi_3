@@ -103,7 +103,7 @@ class Anggota extends CI_Controller {
                     $this->user_model->create([
                         "username" => $nd["detail_anggota"]["tmk"],
                         "name" => $nd["detail_anggota"]["name"],
-                        "role" => 2,
+                        "role" => ($nd["detail_anggota"]["position"] == 1)? 1 : 2,
                         "password" => $nd["detail_anggota"]["nik"],
                         "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
                     ]);
@@ -122,10 +122,10 @@ class Anggota extends CI_Controller {
             $d['title'] = "Tambah Anggota Baru";
             $d['highlight_menu'] = "anggota";
             $d['content_view'] = 'anggota/input';
-    
             if (!check_permission('anggota', $d['role'])){
                 redirect('home');
             }else{
+                $d['list_position'] = $this->anggota_model->get_list_position();
                 $this->load->view('layout/template', $d);
             }
         }
@@ -181,6 +181,8 @@ class Anggota extends CI_Controller {
                 redirect('home');
             }else{
                 $d["data"] = $this->anggota_model->detail($id);
+                $d['list_position'] = $this->anggota_model->get_list_position();
+
                 $this->load->view('layout/template', $d);
             }
         }

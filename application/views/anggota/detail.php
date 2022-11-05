@@ -33,7 +33,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Jabatan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?=!empty($data["position"])? $data["position"] : '-'?></div>
+                            <div class="col-lg-8"><?=!empty($data["position_name"])? $data["position_name"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Depo/Stock Point</div>
@@ -72,8 +72,8 @@
                         </div>
                     </div>
                     <div class="col-lg-4 text-center">
-                        <img class="detail-profile-photo" src="<?=base_url('files/profile_sample.jpg') ?>" /><br/>
-                        <button class="btn btn-info btn-lg mt-4"><i class="mr-2 fas fa-download"></i> Download File KTP</button>
+                        <img class="detail-profile-photo" src="<?=base_url('files/').$data['profile_photo'] ?>" /><br/>
+                        <a href="<?=base_url('files/').$data['ktp'] ?>" target="_blank" download class="btn btn-info btn-lg mt-4"><i class="mr-2 fas fa-download"></i> Download File KTP</a>
                     </div>
                 </div>
                 <hr/>

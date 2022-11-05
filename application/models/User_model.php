@@ -18,7 +18,9 @@
             $data = $this->session->userdata('sess_data');
             $user_detail = $this->detail($data["id"]);
             
-            $data = array_merge($data, $user_detail);
+            if(!empty($user_detail)){
+                $data = array_merge($data, $user_detail);
+            }
 
             return $data;
         }else{

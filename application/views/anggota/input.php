@@ -83,8 +83,9 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <select class="form-control form-control-user" id="positionCombo" name="position">
-                                    <option value="Administrator" <?=(isset($data["position"]) && $data["position"] == 'Administrator')? 'selected' : '' ?>>Administrator</option>
-                                    <option value="Staff" <?=(isset($data["position"]) && $data["position"] == 'Staff')? 'selected' : '' ?>>Staff</option>
+                                    <?php foreach($list_position as $key => $item): ?>
+                                    <option value="<?= $item["id"] ?>" <?=(isset($data["position"]) && $data["position"] == $item["id"])? 'selected' : '' ?>><?= $item["name"] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -104,7 +105,7 @@
                                     value="<?=(isset($data["acc_no"]) && !empty($data["acc_no"]))? $data["acc_no"] : '' ?>">
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-lg-3">Gaji</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
@@ -117,18 +118,42 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:100%;">
+                                <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:auto;">
+                                <div class="card shadow mt-2" style="height: 45vh; width: 100%;">
+                                    <div class="card-body">
+                                        <img src="<?= base_url('files/').$data["ktp"] ?>" 
+                                            style="
+                                                max-width: 100%;
+                                                max-height: 100%;
+                                                width: -webkit-fill-available;
+                                                height: -webkit-fill-available;
+                                                object-fit: contain;
+                                            "/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Foto Profil</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="file" class="form-control" id="profileFile" name="profile_photo" style="height:100%;">
+                                <input type="file" class="form-control form-control-user" id="profileFile" name="profile_photo" style="height:auto">
+                                <div class="card shadow mt-2" style="height: 60vh; width: 100%;">
+                                    <div class="card-body">
+                                        <img src="<?= base_url('files/').$data["profile_photo"] ?>" 
+                                            style="
+                                                max-width: 100%;
+                                                max-height: 100%;
+                                                width: -webkit-fill-available;
+                                                height: -webkit-fill-available;
+                                                object-fit: contain;
+                                            "/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
