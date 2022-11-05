@@ -16,7 +16,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK" 
                                     value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" required>
                             </div>
@@ -24,7 +24,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">TMK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="TMK"
                                     value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" required>
                             </div>
@@ -32,7 +32,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama Lengkap</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="namaTextInput" name="nama" placeholder="Nama"
                                     value="<?=(isset($data["name"]) && !empty($data["name"]))? $data["name"] : '' ?>" required>
                             </div>
@@ -40,14 +40,14 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-8">
                                 <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea" rows="5"><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">No. Telephone</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="noTelpTextInput" name="no_telp" placeholder="No. Telephone"
                                     value="<?=(isset($data["phone"]) && !empty($data["phone"]))? $data["phone"] : '' ?>">
                             </div>
@@ -55,7 +55,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Email</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="email" class="form-control form-control-user" id="emailTextInput" name="email" placeholder="Email"
                                     value="<?=(isset($data["email"]) && !empty($data["email"]))? $data["email"] : '' ?>">
                             </div>
@@ -63,7 +63,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Keanggotaan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="date" class="form-control form-control-user" id="tglAnggotaDateInput" name="tgl_anggota" 
                                     value="<?=(isset($data["join_date"]) && !empty($data["join_date"]))? $data["join_date"] : date('Y-m-d') ?>">
                             </div>
@@ -71,7 +71,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Status Keanggotaan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <select class="form-control form-control-user" id="statusCombo" name="status">
                                     <option value="Aktif" <?=(isset($data["status"]) && $data["status"] == 'Aktif')? 'selected' : '' ?>>Aktif</option>
                                     <option value="Tidak Aktif" <?=(isset($data["status"]) && $data["status"] == 'Tidak Aktif')? 'selected' : '' ?>>Tidak Aktif</option>
@@ -79,9 +79,35 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <div class="col-lg-3">Jabatan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <select class="form-control form-control-user" id="positionCombo" name="position">
+                                    <option value="Administrator" <?=(isset($data["position"]) && $data["position"] == 'Administrator')? 'selected' : '' ?>>Administrator</option>
+                                    <option value="Staff" <?=(isset($data["position"]) && $data["position"] == 'Staff')? 'selected' : '' ?>>Staff</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Depo/Stock Point</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control form-control-user" id="depoTextInput" name="depo" placeholder="Depo/Stock Point"
+                                    value="<?=(isset($data["depo"]) && !empty($data["depo"]))? $data["depo"] : '' ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">No. Rekening</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control form-control-user" id="accNoTextInput" name="acc_no" placeholder="No. Rekening"
+                                    value="<?=(isset($data["acc_no"]) && !empty($data["acc_no"]))? $data["acc_no"] : '' ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-lg-3">Gaji</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
@@ -94,14 +120,14 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:100%;">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Foto Profil</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="file" class="form-control" id="profileFile" name="profile_photo" style="height:100%;">
                             </div>
                         </div>
@@ -114,7 +140,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="namaKelTextInput" name="nama_kel" placeholder="Nama Anggota Keluarga"
                                 value="<?=(isset($data["name_family"]) && !empty($data["name_family"]))? $data["name_family"] : '' ?>">
                             </div>
@@ -122,14 +148,14 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-8">
                                 <textarea class="form-control form-control-user" id="alamatKelTextArea" name="alamat_kel" rows="5"><?=(isset($data["address_family"]) && !empty($data["address_family"]))? $data["address_family"] : '' ?></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">No. Telephone</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="noTelpKelTextInput" name="no_telp_kel" placeholder="No. Telp"
                                 value="<?=(isset($data["phone_family"]) && !empty($data["phone_family"]))? $data["phone_family"] : '' ?>">
                             </div>
@@ -137,7 +163,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Status Hubungan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <select class="form-control form-control-user" id="statusHubunganCombo" name="status_kel">
                                     <option value="">- Pilih Salah Satu -</option>
                                     <option value="Istri" <?=(isset($data["status_family"]) && $data["status_family"] == 'Istri')? 'selected' : '' ?>>Istri</option>
