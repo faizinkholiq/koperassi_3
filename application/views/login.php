@@ -29,7 +29,7 @@
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center" style="margin-top:8rem">
+        <div class="row justify-content-center" style="margin-top:2rem">
             <div class="col-lg-7">
                 <img style="width:40rem" src="<?=base_url('assets/img/login-vector.png')?>" />
             </div>
