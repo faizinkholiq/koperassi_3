@@ -1,9 +1,6 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Anggota</h6>
-    </div>
     <div class="card-body">
         <a href="<?=site_url('anggota/create') ?>" class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> Anggota</a>
         <hr>

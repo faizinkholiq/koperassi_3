@@ -10,7 +10,7 @@
                     <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>
-                <h4 class="font-weight-bold mt-4"><i class="mr-2 fas fa-user"></i> Data Diri</h4>
+                <h5 class="font-weight-bold mt-2"><i class="mr-2 fas fa-user"></i> Data Diri</h5>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
@@ -18,7 +18,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
                                 <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK" 
-                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>">
+                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -26,7 +26,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
                                 <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="TMK"
-                                    value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>">
+                                    value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -34,14 +34,14 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
                                 <input type="text" class="form-control form-control-user" id="namaTextInput" name="nama" placeholder="Nama"
-                                    value="<?=(isset($data["name"]) && !empty($data["name"]))? $data["name"] : '' ?>">
+                                    value="<?=(isset($data["name"]) && !empty($data["name"]))? $data["name"] : '' ?>" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea"><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
+                                <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea" rows="5"><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -79,23 +79,36 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <div class="col-lg-3">Gaji</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-4">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp</div>
+                                    </div>
+                                    <input type="text" class="form-control form-control-user" id="gajiTextInput" name="gaji" placeholder="..."
+                                        value="<?=(isset($data["phone"]) && !empty($data["phone"]))? $data["phone"] : '' ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <input type="file" class="form-control" id="ktpFile" name="ktp">
+                                <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:100%;">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Foto Profil</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <input type="file" class="form-control" id="profileFile" name="profile_photo">
+                                <input type="file" class="form-control" id="profileFile" name="profile_photo" style="height:100%;">
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr/>
-                <h4 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h4>
+                <h5 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h5>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
@@ -110,7 +123,7 @@
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <textarea class="form-control form-control-user" id="alamatKelTextArea" name="alamat_kel"><?=(isset($data["address_family"]) && !empty($data["address_family"]))? $data["address_family"] : '' ?></textarea>
+                                <textarea class="form-control form-control-user" id="alamatKelTextArea" name="alamat_kel" rows="5"><?=(isset($data["address_family"]) && !empty($data["address_family"]))? $data["address_family"] : '' ?></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -137,8 +150,8 @@
                 </div>
             </div>
             <div class="card-footer text-right">
-                <a href="<?=site_url('anggota') ?>" class="btn btn-secondary mt-4 mb-4">Kembali</a>
-                <button type="submit" class="btn btn-primary mt-4 mb-4 ml-2 mr-4">Simpan Data Anggota <i class="ml-2 fas fa-chevron-right"></i></button>
+                <a href="<?=site_url('anggota') ?>" class="btn btn-secondary mt-2 mb-2">Kembali</a>
+                <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2 mr-4">Simpan Data Anggota <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>

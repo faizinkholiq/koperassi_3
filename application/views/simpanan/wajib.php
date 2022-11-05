@@ -1,4 +1,5 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 <?php
     if(!empty($this->session->flashdata('msg'))):
@@ -84,12 +85,15 @@
                             <div class="col-lg-3">Nama Anggota</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
-                                <select id="anggotaSelect" name="person" data-live-search="true" class="selectpicker form-control form-control-user">
+                                <select id="anggotaSelect" name="person" data-live-search="true" class="selectpicker form-control form-control-user" required>
                                     <option value="">- Please Select -</option>
                                     <?php foreach($person_list as $key => $item): ?>
                                     <option value="<?= $item["id"] ?>"><?= $item["name"] ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                <small id="anggotaAlert" class="text-danger font-weight-bold mt-4">
+                                    * Silahkan pilih anggota terlebih dahulu
+                                </small>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -158,6 +162,7 @@
 
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <script>
     const url = {
@@ -170,17 +175,23 @@
     $(document).ready(function() {
         $('.alert').alert()
         $('#simpananTable').DataTable();
+        $('.selectpicker').selectpicker();
 
         $("#anggotaSelect").change(function () {
             let person_id = this.value;
             let person = list_anggota.filter(r => r.id == person_id)
 
             if(person.length > 0){
+                $('#anggotaAlert').fadeOut();
                 $('#noAnggotaTextInput').val(person[0].tmk)
                 $('#jabatanTextInput').val(person[0].position)
                 $('#depoTextInput').val(person[0].depo)
                 $('#alamatTextArea').text(person[0].address)
                 $('#noRekTextInput').val(person[0].acc_no)
+            }else{
+                $('#anggotaAlert').fadeIn();
+                $('#formSimpanan')[0].reset();
+                $('#alamatTextArea').text("")
             }
         });
 
