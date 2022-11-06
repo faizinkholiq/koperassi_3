@@ -9,10 +9,10 @@
                     <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>
-                <h3 class="font-weight-bold mt-3">
+                <h5 class="font-weight-bold mt-3">
                     <i class="mr-2 fas fa-user"></i> 
                     Data Diri
-                </h3>
+                </h5>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
@@ -73,11 +73,11 @@
                     </div>
                     <div class="col-lg-4 text-center">
                         <img class="detail-profile-photo" src="<?=base_url('files/').$data['profile_photo'] ?>" /><br/>
-                        <a href="<?=base_url('files/').$data['ktp'] ?>" target="_blank" download class="btn btn-info btn-lg mt-4"><i class="mr-2 fas fa-download"></i> Download File KTP</a>
+                        <a href="<?=base_url('files/').$data['ktp'] ?>" target="_blank" download class="btn btn-info mt-3"><i class="mr-2 fas fa-download"></i> Download File KTP</a>
                     </div>
                 </div>
                 <hr/>
-                <h3 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h3>
+                <h5 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h5>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
