@@ -198,10 +198,9 @@ class Anggota extends CI_Controller {
 
                     foreach ($remove_file as $key => $val) {
                         if ($val){
+                            $nd["detail_anggota"][$key] = null;
                             $path_to_file = './files/'.$detail[$key];
-                            if(unlink($path_to_file)) {
-                                $nd["detail_anggota"][$key] = null;
-                            }
+                            @unlink($path_to_file);
                         }
                     }
 

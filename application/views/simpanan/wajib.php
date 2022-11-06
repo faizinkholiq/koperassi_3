@@ -14,9 +14,6 @@
 <?php endif; ?>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Simpanan Wajib</h6>
-    </div>
     <div class="card-body">
         <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
         <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
