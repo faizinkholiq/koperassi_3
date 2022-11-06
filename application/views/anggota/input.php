@@ -123,7 +123,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:auto;">
-                                <div class="card shadow mt-2" style="height: 45vh; width: 100%;">
+                                <div class="card shadow mt-2" style="height: 30vh; width: 100%;">
                                     <div class="card-body">
                                         <img src="<?= base_url('files/').$data["ktp"] ?>" 
                                             style="
@@ -142,7 +142,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control form-control-user" id="profileFile" name="profile_photo" style="height:auto">
-                                <div class="card shadow mt-2" style="height: 60vh; width: 100%;">
+                                <div class="card shadow mt-2" style="height: 45vh; width: 100%;">
                                     <div class="card-body">
                                         <img src="<?= base_url('files/').$data["profile_photo"] ?>" 
                                             style="

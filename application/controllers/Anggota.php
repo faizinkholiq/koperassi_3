@@ -92,21 +92,30 @@ class Anggota extends CI_Controller {
                     } 
                 }
 
+                // Create user account
+                $user_id = $this->user_model->create([
+                    "username" => $nd["detail_anggota"]["tmk"],
+                    "name" => $nd["detail_anggota"]["name"],
+                    "role" => ($nd["detail_anggota"]["position"] == 1)? 1 : 2,
+                    "password" => $nd["detail_anggota"]["nik"],
+                    "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
+                ]);
+
+                if (!$user_id) {
+                    $data['success'] = 0;
+                    $data['error'] = "Failed Create Account User !";
+                    $this->session->set_flashdata('msg', $data);
+                    redirect('anggota');
+                    return;
+                }
+
+                $nd["detail_anggota"] = $user_id;
                 $anggota_id = $this->anggota_model->create($nd["detail_anggota"]);
                 if ($anggota_id) {
                     if (!empty($nd["family"]["name"])) {
                         $nd["family"]["person_id"] = $anggota_id;
                         $this->anggota_model->create_keluarga($nd["family"]);
                     }
-
-                    // Create user account
-                    $this->user_model->create([
-                        "username" => $nd["detail_anggota"]["tmk"],
-                        "name" => $nd["detail_anggota"]["name"],
-                        "role" => ($nd["detail_anggota"]["position"] == 1)? 1 : 2,
-                        "password" => $nd["detail_anggota"]["nik"],
-                        "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
-                    ]);
 
                     $data['success'] = 1;
                     $data['message'] = "Success Create New Data !";
