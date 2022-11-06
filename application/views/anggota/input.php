@@ -123,18 +123,29 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:auto;">
-                                <div class="card shadow mt-2" style="height: 30vh; width: 100%;">
-                                    <div class="card-body">
+                                <?php if(isset($data["ktp"]) && !empty($data['ktp'])): ?>
+                                <input type="hidden" id="remove_ktp" name="remove_ktp">
+                                <div id="card_ktp" class="card shadow mt-2" style="height: 30vh; width: 100%;">
+                                    <div class="card-body" style="display: flex; justify-content: space-between;">
                                         <img src="<?= base_url('files/').$data["ktp"] ?>" 
                                             style="
-                                                max-width: 100%;
+                                                max-width: 89%;
                                                 max-height: 100%;
                                                 width: -webkit-fill-available;
                                                 height: -webkit-fill-available;
                                                 object-fit: contain;
                                             "/>
+                                        <button type="button" class="btn btn-danger" 
+                                            onclick="removeFile('ktp')"
+                                            style="
+                                                height: fit-content;
+                                                width: fit-content;
+                                            ">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -142,18 +153,29 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control form-control-user" id="profileFile" name="profile_photo" style="height:auto">
-                                <div class="card shadow mt-2" style="height: 45vh; width: 100%;">
-                                    <div class="card-body">
+                                <?php if(isset($data["profile_photo"]) && !empty($data['profile_photo'])): ?>
+                                <input type="hidden" id="remove_profile_photo" name="remove_profile_photo">
+                                <div id="card_profile_photo" class="card shadow mt-2" style="height: 30vh; width: 60%;">
+                                    <div class="card-body" style="display: flex; justify-content: space-between;">
                                         <img src="<?= base_url('files/').$data["profile_photo"] ?>" 
                                             style="
                                                 max-width: 100%;
                                                 max-height: 100%;
-                                                width: -webkit-fill-available;
+                                                width: 80%;
                                                 height: -webkit-fill-available;
                                                 object-fit: contain;
                                             "/>
+                                        <button type="button" class="btn btn-danger"
+                                            onclick="removeFile('profile_photo')" 
+                                            style="
+                                                height: fit-content;
+                                                width: fit-content;
+                                            ">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -209,3 +231,10 @@
 
     </div>
 </div>
+
+<script>
+    function removeFile(name){
+        $('#remove_'+name).val(true);
+        $('#card_'+name).slideUp();
+    }
+</script>

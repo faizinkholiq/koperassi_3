@@ -109,7 +109,7 @@ class Anggota extends CI_Controller {
                     return;
                 }
 
-                $nd["detail_anggota"] = $user_id;
+                $nd["detail_anggota"]["user_id"] = $user_id;
                 $anggota_id = $this->anggota_model->create($nd["detail_anggota"]);
                 if ($anggota_id) {
                     if (!empty($nd["family"]["name"])) {
@@ -154,9 +154,66 @@ class Anggota extends CI_Controller {
                 $nd = $this->get_input();
 
                 $detail = $this->anggota_model->detail($id);
+
                 if ($detail) {
                     $nd["detail_anggota"]["id"] = $id;
+                    
+                    // Upload File
+                    foreach ($_FILES as $key => $item) {
+                        if($item['error'] == 0) {
+                            $file = $item;
+                            $file["origin"] = $key;
+
+                            $upload = $this->upload_file($file);
+        
+                            if(!$upload['success']){
+                                $data = [
+                                    'success' => 0,
+                                    'message' => $upload['message'],
+                                ];
+        
+                                $this->session->set_flashdata('msg', $data);
+                                redirect('anggota');   
+                                return;
+                            }else{
+                                $nd["detail_anggota"][$key] = $upload['file'];
+                                if(!empty($detail[$key])){
+                                    $path_to_file = './files/'.$detail[$key];
+                                    @unlink($path_to_file);
+                                }
+                            }
+                        } 
+                    }
+
+                    // Remove file
+                    $remove_file = [];
+
+                    if (!empty($this->input->post('remove_profile_photo'))){
+                        $remove_file["profile_photo"] = $this->input->post('remove_profile_photo'); 
+                    }
+
+                    if (!empty($this->input->post('remove_ktp'))){
+                        $remove_file["ktp"] = $this->input->post('remove_ktp'); 
+                    }
+
+                    foreach ($remove_file as $key => $val) {
+                        if ($val){
+                            $path_to_file = './files/'.$detail[$key];
+                            if(unlink($path_to_file)) {
+                                $nd["detail_anggota"][$key] = null;
+                            }
+                        }
+                    }
+
                     if ($this->anggota_model->edit($nd["detail_anggota"])) {
+                        // Update user account 
+                        $this->user_model->edit([
+                            "id" => $detail["user_id"],
+                            "name" => $nd["detail_anggota"]["name"],
+                            "role" => ($nd["detail_anggota"]["position"] == 1)? 1 : 2,
+                            "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
+                        ]);
+
                         if (!empty($nd["family"]["name"])) {
                             $nd["family"]["person_id"] = $id;
                             if (!empty($detail["id_family"])) {
