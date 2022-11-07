@@ -74,51 +74,51 @@
                         <div class="row mb-3">
                             <div class="col-lg-2">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">01239485766</div>
+                            <div class="col-lg-9"><?= isset($nik) && !empty($nik)? $nik : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">TMK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">220112232</div>
+                            <div class="col-lg-9"><?= isset($tmk) && !empty($tmk)? $tmk : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">Nama Lengkap</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">Fulan bin Fulan</div>
+                            <div class="col-lg-9"><?= isset($name) && !empty($name)? $name : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">Jabatan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">Position</div>
+                            <div class="col-lg-9"><?= isset($position) && !empty($position)? $position : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">Depo 1</div>
+                            <div class="col-lg-9"><?= isset($depo) && !empty($depo)? $depo : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">No. Rekening</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">12154284</div>
+                            <div class="col-lg-9"><?= isset($acc_no) && !empty($acc_no)? $acc_no : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">Jl Manggis No.67, RT 10/RW 7, Ternate, Kec. Rote, Manokwari, Jayapura 10221</div>
+                            <div class="col-lg-9"><?= isset($address) && !empty($address)? $address : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">No. Telephone</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">08975312384</div>
+                            <div class="col-lg-9"><?= isset($phone) && !empty($phone)? $phone : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-2">Email</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9">fulland@gmail.com</div>
+                            <div class="col-lg-9"><?= isset($email) && !empty($email)? $email : "-" ?></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <img class="img-ktp" src="<?= base_url('files/ktp_sample.jpg') ?>" />
+                        <img class="img-ktp" src="<?= isset($ktp) && !empty($ktp)? base_url('files/').$ktp : "-" ?>" />
                     </div>
                 </div>
             </div>
