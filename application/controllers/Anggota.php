@@ -327,4 +327,22 @@ class Anggota extends CI_Controller {
         return $data;
     }
 
+    public function settings()
+    {
+        $d = $this->user_model->login_check();
+        $d['title'] = "Ubah Data Akun";
+        $d['highlight_menu'] = "settings";
+        $d['content_view'] = 'user/settings';
+
+        if (!check_permission('settings', $d['role'])){
+            redirect('home');
+        }else{
+            $id = $this->session->userdata('sess_data')['id'];
+            $d["data"] = $this->anggota_model->detail($id);
+            $d['list_position'] = $this->anggota_model->get_list_position();
+
+            $this->load->view('layout/template', $d);
+        }
+    }
+
 }
