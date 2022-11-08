@@ -15,7 +15,7 @@
         <?php endif; ?>
         <!-- Illustrations -->
         <div class="card shadow mb-4">
-            <form action="<?=(isset($data))? site_url('anggota/edit/'.$data["id"]) : site_url('anggota/create') ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?=(isset($data))? site_url('user/edit/'.$data["id"]) : site_url('anggota/create') ?>" method="POST" enctype="multipart/form-data">
             <div class="card-body">
                 <a class="my-text-primary" href="<?=site_url('anggota')?>">
                 </a>
@@ -34,18 +34,20 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="password" class="form-control form-control-user" id="passwordTextInput" name="password" placeholder="Password" 
-                                    value="" required>
-                                <a href="#!">Ubah password? </a>
+                                    required disabled
+                                    value="<?=(isset($data["password"]) && !empty($data["password"]))? $data["password"] : '' ?>">
+                                <a href="#!" class="ml-2" onclick="showKonfPass()"><small>Ubah Password?</small></a>
                             </div>
                         </div>
-                        <!-- <div class="row mb-3">
+                        <div id="konfPass" class="row mb-3" style="display:none">
                             <div class="col-lg-3">Konfirmasi Password</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
-                                <input type="password" class="form-control form-control-user" id="passwordTextInput" name="password" placeholder="Konfirmasi Password" 
-                                    value="" required>
+                            <div class="col-lg-7" style="display:flex">
+                                <input type="password" class="form-control form-control-user" id="konfPasswordTextInput" name="konf_password" placeholder="Konfirmasi Password" 
+                                    value="" required style="width: 85%;">
+                                <a href="#!" class="mt-2 ml-2 text-danger" onclick="closeKonfPass()"><i class="fas fa-times"></i></a>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Foto Profil</div>
                             <div class="col-lg-1 text-right">:</div>
@@ -53,7 +55,7 @@
                                 <input type="file" class="form-control form-control-user" id="profileFile" name="profile_photo" style="height:auto">
                                 <?php if(isset($data["profile_photo"]) && !empty($data['profile_photo'])): ?>
                                 <input type="hidden" id="remove_profile_photo" name="remove_profile_photo">
-                                <div id="card_profile_photo" class="card shadow mt-2" style="height: 30vh; width: 60%;">
+                                <div id="card_profile_photo" class="card shadow mt-2" style="height: 40vh; width: 100%;">
                                     <div class="card-body" style="display: flex; justify-content: space-between;">
                                         <img src="<?= base_url('files/').$data["profile_photo"] ?>" 
                                             style="
@@ -89,8 +91,21 @@
 </div>
 
 <script>
+    let pass = "<?=(isset($data["password"]) && !empty($data["password"]))? $data["password"] : '' ?>";
     function removeFile(name){
         $('#remove_'+name).val(true);
         $('#card_'+name).slideUp();
+    }
+
+    function showKonfPass(){
+        $('#konfPass').fadeIn();
+        $('#passwordTextInput').removeAttr('disabled');
+        $('#passwordTextInput').val('');
+    }
+
+    function closeKonfPass(){
+        $('#konfPass').fadeOut();
+        $('#passwordTextInput').attr('disabled', 'disabled');
+        $('#passwordTextInput').val(pass);
     }
 </script>

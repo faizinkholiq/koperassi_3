@@ -38,6 +38,7 @@
         return $this->db->select([
             'user.id',
             'user.username',
+            'user.password',
             'user.role',
             'user.active',
             'person.id person_id',

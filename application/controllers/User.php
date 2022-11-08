@@ -108,7 +108,6 @@ class User extends CI_Controller {
 	{
         $d = $this->user_model->login_check();
         $this->form_validation->set_rules('username','Username','required');
-        $this->form_validation->set_rules('password','Password','required');
 
         if ($this->form_validation->run() == TRUE) {
             if (!check_permission('user', $d['role'])){
@@ -117,27 +116,37 @@ class User extends CI_Controller {
             }else{
                 $nd = $this->get_input();
 
+                
                 $detail = $this->user_model->detail($id);
                 if ($detail) {
+                    if (isset($nd["password"])){
+                        if ($nd["password"] != $this->input->post("konf_password")) {
+                            $data['success'] = 0;
+                            $data['error'] = "Password dan Konfirmasi Password tidak sama";
+
+                            $this->session->set_flashdata('msg', $data);
+                            redirect('user/settings');
+                            return;
+                        }
+                    }
+
                     $nd["id"] = $id;
                     if ($this->user_model->edit($nd)) {
-    
                         $data['success'] = 1;
-                        $data['message'] = "Success !";
-                        redirect('user');
+                        $data['message'] = "Perubahan berhasil disimpan ! !";
                     } else {
                         $data['success'] = 0;
-                        $data['error'] = "Failed !";
-                        print_r($data);
+                        $data['error'] = "Perubahan gagal disimpan ! !";
                     }
                 }else{
                     $data['success'] = 0;
-                    $data['error'] = "Invalid ID !";
-                    print_r($data);
+                    $data['error'] = "Invalid akun ID !";
                 }
             }
 
-            return $data;
+            $this->session->set_flashdata('msg', $data);
+            redirect('user/settings');
+            return;
         }else{
             $d['title'] = "Ubah User";
             $d['highlight_menu'] = "user";
@@ -176,8 +185,9 @@ class User extends CI_Controller {
     private function get_input()
     {
         $data["username"] = $this->input->post('username');
-        $data["password"] = $this->input->post('password');
-        $data["name"] = $this->input->post('name');
+        if (isset($_POST["konf_password"]) && !empty($this->input->post('konf_password'))) {
+            $data["password"] = $this->input->post('password');
+        }
 
         return $data;
     }
