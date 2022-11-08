@@ -330,14 +330,14 @@ class Anggota extends CI_Controller {
     public function settings()
     {
         $d = $this->user_model->login_check();
-        $d['title'] = "Ubah Data Akun";
-        $d['highlight_menu'] = "settings";
-        $d['content_view'] = 'user/settings';
+        $d['title'] = "Ubah Data Diri";
+        $d['highlight_menu'] = "anggota_settings";
+        $d['content_view'] = 'anggota/settings';
 
         if (!check_permission('settings', $d['role'])){
             redirect('home');
         }else{
-            $id = $this->session->userdata('sess_data')['id'];
+            $id = $this->session->userdata('sess_data')['person_id'];
             $d["data"] = $this->anggota_model->detail($id);
             $d['list_position'] = $this->anggota_model->get_list_position();
 

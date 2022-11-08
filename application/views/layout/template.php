@@ -74,9 +74,15 @@
                     <i class="fas fa-fw fa-file-contract"></i>
                     <span>Laporan</span></a>
             </li>
-            
-            <li class="nav-item <?= $highlight_menu === 'settings' ? 'active' : '' ?>">
+
+            <li class="nav-item <?= $highlight_menu === 'anggota_settings' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota/settings') ?>">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Ubah data diri</span></a>
+            </li>
+            
+            <li class="nav-item <?= $highlight_menu === 'user_settings' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/user/settings') ?>">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Pengaturan Akun</span></a>
             </li>
