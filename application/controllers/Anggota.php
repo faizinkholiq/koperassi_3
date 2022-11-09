@@ -345,4 +345,90 @@ class Anggota extends CI_Controller {
         }
     }
 
+    private function get_input_temp()
+    {
+        $data["nik"] = $this->input->post('nik');
+        $data["tmk"] = $this->input->post('tmk');
+        $data["name"] = $this->input->post('nama');
+        $data["address"] = $this->input->post('alamat');
+        $data["phone"] = $this->input->post('no_telp');
+        $data["email"] = $this->input->post('email');
+        $data["join_date"] = $this->input->post('tgl_anggota');
+        $data["status"] = $this->input->post('status');
+        $data["salary"] = $this->input->post('salary');
+        $data["position"] = $this->input->post('position');
+        $data["depo"] = $this->input->post('depo');
+        $data["acc_no"] = $this->input->post('acc_no');
+
+        return $data;
+    }
+
+    public function edit_temp($id)
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('nama','Nama','required');
+        $this->form_validation->set_rules('nik','NIK','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('anggota', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input_temp();
+
+                $detail = $this->anggota_model->detail($id);
+
+                if ($detail) {
+                    $nd["person_id"] = $id;
+
+                    if (!empty($this->input->post('remove_ktp'))){
+                        $nd["ktp"] = null;
+                    }else{
+                        $nd["ktp"] = $detail["ktp"];
+                    }
+
+                    // Upload File
+                    if($_FILES["ktp"]['error'] == 0) {
+                        $file = $_FILES["ktp"];
+                        $file["origin"] = "ktp";
+
+                        $upload = $this->upload_file($file);
+    
+                        if(!$upload['success']){
+                            $data = [
+                                'success' => 0,
+                                'message' => $upload['message'],
+                            ];
+    
+                            $this->session->set_flashdata('msg', $data);
+                            redirect('anggota/settings');   
+                            return;
+                        }else{
+                            $nd["ktp"] = $upload['file'];
+                        }
+                    }
+
+                    if ($this->anggota_model->create_temp($nd)) {
+                        $data['success'] = 1;
+                        $data['message'] = "Berhasil melakukan pengajuan perubahan !";
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Gagal melakukan pengajuan perubahan !";
+                    }
+                }else{
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid ID !";
+                }
+            }
+        }else{
+            $data['success'] = 0;
+            $data['error'] = "Failed Validation !";
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('user/settings');
+        return;
+
+	}
+
 }

@@ -15,7 +15,7 @@
         <?php endif; ?>
         <!-- Illustrations -->
         <div class="card shadow mb-4">
-            <form action="<?=(isset($data))? site_url('anggota/edit/'.$data["id"]) : site_url('anggota/create') ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= site_url('anggota/edit_temp/'.$data["id"]) ?>" method="POST" enctype="multipart/form-data">
             <div class="card-body">
                 <a class="my-text-primary" href="<?=site_url('anggota')?>">
                 </a>
@@ -70,35 +70,6 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">Tanggal Keanggotaan</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
-                                <input type="date" class="form-control form-control-user" id="tglAnggotaDateInput" name="tgl_anggota" 
-                                    value="<?=(isset($data["join_date"]) && !empty($data["join_date"]))? $data["join_date"] : date('Y-m-d') ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Status Keanggotaan</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
-                                <select class="form-control form-control-user" id="statusCombo" name="status">
-                                    <option value="Aktif" <?=(isset($data["status"]) && $data["status"] == 'Aktif')? 'selected' : '' ?>>Aktif</option>
-                                    <option value="Tidak Aktif" <?=(isset($data["status"]) && $data["status"] == 'Tidak Aktif')? 'selected' : '' ?>>Tidak Aktif</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Jabatan</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
-                                <select class="form-control form-control-user" id="positionCombo" name="position">
-                                    <?php foreach($list_position as $key => $item): ?>
-                                    <option value="<?= $item["id"] ?>" <?=(isset($data["position"]) && $data["position"] == $item["id"])? 'selected' : '' ?>><?= $item["name"] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
                             <div class="col-lg-3">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
@@ -133,36 +104,6 @@
                                             "/>
                                         <button type="button" class="btn btn-danger" 
                                             onclick="removeFile('ktp')"
-                                            style="
-                                                height: fit-content;
-                                                width: fit-content;
-                                            ">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Foto Profil</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-6">
-                                <input type="file" class="form-control form-control-user" id="profileFile" name="profile_photo" style="height:auto">
-                                <?php if(isset($data["profile_photo"]) && !empty($data['profile_photo'])): ?>
-                                <input type="hidden" id="remove_profile_photo" name="remove_profile_photo">
-                                <div id="card_profile_photo" class="card shadow mt-2" style="height: 30vh; width: 60%;">
-                                    <div class="card-body" style="display: flex; justify-content: space-between;">
-                                        <img src="<?= base_url('files/').$data["profile_photo"] ?>" 
-                                            style="
-                                                max-width: 100%;
-                                                max-height: 100%;
-                                                width: 80%;
-                                                height: -webkit-fill-available;
-                                                object-fit: contain;
-                                            "/>
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="removeFile('profile_photo')" 
                                             style="
                                                 height: fit-content;
                                                 width: fit-content;

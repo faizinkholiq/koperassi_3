@@ -70,54 +70,54 @@
             </div>
             <div class="card-body">
                 <div class="row mb-4 mt-2">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <div class="row mb-3">
-                            <div class="col-lg-2">NIK</div>
+                            <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($nik) && !empty($nik)? $nik : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($nik) && !empty($nik)? $nik : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">TMK</div>
+                            <div class="col-lg-3">TMK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($tmk) && !empty($tmk)? $tmk : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($tmk) && !empty($tmk)? $tmk : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">Nama Lengkap</div>
+                            <div class="col-lg-3">Nama Lengkap</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($name) && !empty($name)? $name : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($name) && !empty($name)? $name : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">Jabatan</div>
+                            <div class="col-lg-3">Jabatan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($position) && !empty($position)? $position : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($position) && !empty($position)? $position : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">Depo/Stock Point</div>
+                            <div class="col-lg-3">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($depo) && !empty($depo)? $depo : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($depo) && !empty($depo)? $depo : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">No. Rekening</div>
+                            <div class="col-lg-3">No. Rekening</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($acc_no) && !empty($acc_no)? $acc_no : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($acc_no) && !empty($acc_no)? $acc_no : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">Alamat</div>
+                            <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($address) && !empty($address)? $address : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($address) && !empty($address)? $address : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">No. Telephone</div>
+                            <div class="col-lg-3">No. Telephone</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($phone) && !empty($phone)? $phone : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($phone) && !empty($phone)? $phone : "-" ?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-2">Email</div>
+                            <div class="col-lg-3">Email</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-9"><?= isset($email) && !empty($email)? $email : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($email) && !empty($email)? $email : "-" ?></div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <img class="img-ktp" src="<?= isset($ktp) && !empty($ktp)? base_url('files/').$ktp : "-" ?>" />
                     </div>
                 </div>

@@ -189,22 +189,14 @@ class User extends CI_Controller {
                     $data['error'] = "Invalid akun ID !";
                 }
             }
-
-            $this->session->set_flashdata('msg', $data);
-            redirect('user/settings');
-            return;
         }else{
-            $d['title'] = "Ubah User";
-            $d['highlight_menu'] = "user";
-            $d['content_view'] = 'user/input';
-
-            if (!check_permission('user', $d['role'])){
-                redirect('home');
-            }else{
-                $d["data"] = $this->user_model->detail($id);
-                $this->load->view('layout/template', $d);
-            }
+            $data['success'] = 0;
+            $data['error'] = "Failed Validation !";
         }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('user/settings');
+        return;
 	}
 
     public function delete($id) 
