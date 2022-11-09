@@ -7,6 +7,8 @@ class User extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('user_model');
+		$this->load->model('anggota_model');
+        $this->load->library('form_validation');
     }
 
 	public function index()
@@ -110,33 +112,77 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('username','Username','required');
 
         if ($this->form_validation->run() == TRUE) {
-            if (!check_permission('user', $d['role'])){
+            if (!check_permission('settings', $d['role'])){
                 $data['success'] = 0;
                 $data['error'] = "No Permission !";
             }else{
                 $nd = $this->get_input();
-
                 
                 $detail = $this->user_model->detail($id);
                 if ($detail) {
-                    if (isset($nd["password"])){
-                        if ($nd["password"] != $this->input->post("konf_password")) {
+
+                    $nd_anggota = [];
+                    // Upload File
+                    if($_FILES["profile_photo"]['error'] == 0) {
+                        $file = $_FILES["profile_photo"];
+                        $file["origin"] = "profile_photo";
+
+                        $upload = $this->upload_file($file);
+    
+                        if(!$upload['success']){
+                            $data = [
+                                'success' => 0,
+                                'message' => $upload['message'],
+                            ];
+    
+                            $this->session->set_flashdata('msg', $data);
+                            redirect('user/settings');   
+                            return;
+                        }else{
+                            $nd_anggota["profile_photo"] = $upload['file'];
+                            if(!empty($detail["profile_photo"])){
+                                $path_to_file = './files/'.$detail["profile_photo"];
+                                @unlink($path_to_file);
+                            }
+                        }
+                    } 
+
+                    if (!empty($this->input->post('remove_profile_photo'))){
+                        $remove_file = $this->input->post('remove_profile_photo');
+                        if ($remove_file) {
+                            $nd_anggota["profile_photo"] = null;
+                            $path_to_file = './files/'.$detail["profile_photo"];
+                            @unlink($path_to_file);
+                        } 
+
+                    }
+
+                    if (isset($_POST["password"])){
+                        if ($this->input->post("password") != $this->input->post("konf_password")) {
                             $data['success'] = 0;
                             $data['error'] = "Password dan Konfirmasi Password tidak sama";
 
                             $this->session->set_flashdata('msg', $data);
                             redirect('user/settings');
                             return;
+                        }else{
+                            $nd["password"] = $this->input->post("password");
                         }
                     }
 
                     $nd["id"] = $id;
                     if ($this->user_model->edit($nd)) {
+
+                        if (!empty($nd_anggota)) {
+                            $nd_anggota["id"] = $detail["person_id"];
+                            $this->anggota_model->edit($nd_anggota);
+                        }
+
                         $data['success'] = 1;
-                        $data['message'] = "Perubahan berhasil disimpan ! !";
+                        $data['message'] = "Perubahan berhasil disimpan !";
                     } else {
                         $data['success'] = 0;
-                        $data['error'] = "Perubahan gagal disimpan ! !";
+                        $data['error'] = "Perubahan gagal disimpan !";
                     }
                 }else{
                     $data['success'] = 0;
@@ -185,9 +231,6 @@ class User extends CI_Controller {
     private function get_input()
     {
         $data["username"] = $this->input->post('username');
-        if (isset($_POST["konf_password"]) && !empty($this->input->post('konf_password'))) {
-            $data["password"] = $this->input->post('password');
-        }
 
         return $data;
     }
@@ -209,5 +252,33 @@ class User extends CI_Controller {
         }
     }
 
+    private function upload_file($file)
+    {
+        $arr_filename = explode('.', $file['name']);
+        $filename = ucfirst($file["origin"]).'_'.date('YmdHis').'.'.$arr_filename[count($arr_filename) - 1];
+
+        $config['upload_path'] = './files';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|svg';
+        $config['file_name'] = $filename;
+        $config['overwrite'] = true;
+        $config['max_size'] = 2000;
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($file["origin"])) {
+            $data = [
+                'success' => 0,
+                'message' => $this->upload->display_errors(),
+            ];
+        }else{
+            $data = [
+                'success' => 1,
+                'message' => 'Upload success',
+                'file' => $filename,
+            ];
+        }
+
+        return $data;
+    }
 
 }

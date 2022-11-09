@@ -6,8 +6,8 @@
             if(!empty($this->session->flashdata('msg'))):
                 $msg = $this->session->flashdata('msg');
         ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Perubahan berhasil disimpan !</strong>
+        <div class="alert <?= ($msg['success'])? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
+            <strong><?= ($msg['success'])? $msg["message"] : $msg["error"] ?></strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -15,7 +15,7 @@
         <?php endif; ?>
         <!-- Illustrations -->
         <div class="card shadow mb-4">
-            <form action="<?=(isset($data))? site_url('user/edit/'.$data["id"]) : site_url('anggota/create') ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= site_url('user/edit/'.$data["id"]) ?>" method="POST" enctype="multipart/form-data">
             <div class="card-body">
                 <a class="my-text-primary" href="<?=site_url('anggota')?>">
                 </a>
@@ -44,7 +44,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7" style="display:flex">
                                 <input type="password" class="form-control form-control-user" id="konfPasswordTextInput" name="konf_password" placeholder="Konfirmasi Password" 
-                                    value="" required style="width: 85%;">
+                                    value="" style="width: 85%;">
                                 <a href="#!" class="mt-2 ml-2 text-danger" onclick="closeKonfPass()"><i class="fas fa-times"></i></a>
                             </div>
                         </div>
