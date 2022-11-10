@@ -33,10 +33,12 @@
             'person_family.phone phone_family',
             'person_family.status status_family',
             'position.name position_name',
+            'user.id user_id'
         ])
         ->from('person')
         ->join('person_family', 'person.id = person_family.person_id', 'left')
         ->join('position', 'person.position = position.id', 'left')
+        ->join('user', 'person.user_id = user.id', 'left')
         ->where('person.id',$id)
         ->get()
         ->row_array();

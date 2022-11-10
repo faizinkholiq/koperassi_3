@@ -22,7 +22,7 @@
                 $data = array_merge($data, $user_detail);
             }
 
-            $data["notification"] = $this->get_notif($user_detail["person_id"]);
+            $data["notification"] = $this->get_notif($data["id"]);
             
             return $data;
         }else{
@@ -85,9 +85,15 @@
     }
 
     private function get_notif($id){
-        $data = $this->db->get_where('notification', ['person_id', $id]);
-        
+        $data = $this->db->from('notification')->where('user_id', $id)->order_by('time', 'DESC')->get()->result_array();
         return $data;
+    }
+
+    public function create_notif($data)
+    {
+        $this->db->insert('notification', $data);
+
+        return ($this->db->affected_rows()>0) ? true : false;
     }
 
 }

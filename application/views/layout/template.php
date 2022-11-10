@@ -160,7 +160,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span class="badge badge-danger badge-counter"><?= count($notification) ?></span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -168,11 +168,28 @@
                                 <h6 class="dropdown-header my-bg-primary my-border-primary">
                                     Notifikasi
                                 </h6>
-                                <?php foreach($notification as $key => $item): ?>
+                                <?php 
+                                    if (count($notification)):
+                                    foreach($notification as $key => $item):
+                                        switch($item["status"]){
+                                            case "Success":
+                                                $icon = "check";
+                                                $type = "success";
+                                            break;
+                                            case "Pending":
+                                                $icon = "clock";
+                                                $type = "warning";
+                                            break;
+                                            case "Failed":
+                                                $icon = "times";
+                                                $type = "danger";
+                                            break;
+                                        } 
+                                ?>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-<?= $item["type"] ?>">
-                                            <i class="fas fa-<?= $item["icon"] ?> text-white"></i>
+                                        <div class="icon-circle bg-<?= $type ?>">
+                                            <i class="fas fa-<?= $icon ?> text-white"></i>
                                         </div>
                                     </div>
                                     <div>
@@ -180,7 +197,16 @@
                                         <span class="font-weight-bold"><?= $item["message"] ?></span>
                                     </div>
                                 </a>
-                                <?php endforeach; ?>
+                                <?php 
+                                    endforeach; 
+                                    else:
+                                ?>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <strong>Tidak ada notifikasi</strong>
+                                </a>
+                                <?php 
+                                    endif; 
+                                ?>
                                 <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
                             </div>
                         </li>

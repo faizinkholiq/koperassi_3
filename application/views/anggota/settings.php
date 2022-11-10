@@ -16,8 +16,8 @@
         <?php
             if($data["temporary"]): 
         ?>
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Permintaan perubahan data sedang diproses, mohon tunggu hingga administrator menyetujui !</strong>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong><i class="fas fa-clock mr-2"></i> Perubahan data sedang diproses, mohon tunggu hingga administrator menyetujui !</strong>
         </div>
         <?php
             endif;

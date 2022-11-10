@@ -415,6 +415,13 @@ class Anggota extends CI_Controller {
                     }
 
                     if ($this->anggota_model->create_temp($nd)) {
+                        $this->user_model->create_notif([
+                            "user_id" => $detail["user_id"],
+                            "time" => date("Y-m-d"),
+                            "message" => "Pengajuan perubahan data diri sedang diproses",
+                            "status" => "Pending",
+                        ]);
+                        
                         $data['success'] = 1;
                         $data['message'] = "Pengajuan perubahan data berhasil, Harap tunggu hingga adminsitrator menyetujui perubahan data tersebut !";
                     } else {
