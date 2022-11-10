@@ -110,4 +110,32 @@
         return $q->get()->result_array();
     }
 
+    public function create_temp($data)
+    {
+        $this->db->insert('person_temp', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_temp($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('person_temp', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function detail_temp($id)
+    {
+        return $this->db->get_where('person_temp', ["person_id" => $id])->row_array();
+    }
+
+    public function delete_temp($id)
+    {
+        $this->db->where('person_id', $id);
+        $this->db->delete('person_temp');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
+    }
 }

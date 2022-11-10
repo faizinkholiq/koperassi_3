@@ -22,6 +22,8 @@
                 $data = array_merge($data, $user_detail);
             }
 
+            $data["notification"] = $this->get_notif($user_detail["person_id"]);
+            
             return $data;
         }else{
             redirect("user/login");
@@ -80,6 +82,12 @@
         $this->db->delete('user');
         
         return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+
+    private function get_notif($id){
+        $data = $this->db->get_where('notification', ['person_id', $id]);
+        
+        return $data;
     }
 
 }

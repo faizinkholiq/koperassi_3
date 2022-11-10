@@ -6,13 +6,22 @@
             if(!empty($this->session->flashdata('msg'))):
                 $msg = $this->session->flashdata('msg');
         ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Pengajuan perubahan data berhasil, Harap tunggu hingga adminsitrator menyetujui perubahan data tersebut !</strong>
+        <div class="alert <?= ($msg['success'])? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
+            <strong><?= ($msg['success'])? $msg["message"] : $msg["error"] ?></strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <?php endif; ?>
+        <?php
+            if($data["temporary"]): 
+        ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Permintaan perubahan data sedang diproses, mohon tunggu hingga administrator menyetujui !</strong>
+        </div>
+        <?php
+            endif;
+        ?>
         <!-- Illustrations -->
         <div class="card shadow mb-4">
             <form action="<?= site_url('anggota/edit_temp/'.$data["id"]) ?>" method="POST" enctype="multipart/form-data">
@@ -27,7 +36,8 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK" 
-                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" required>
+                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" 
+                                    <?= ($data["temporary"])? "disabled" : "" ?> required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -35,7 +45,8 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="TMK"
-                                    value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" required>
+                                    value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" 
+                                    <?= ($data["temporary"])? "disabled" : "" ?> required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -43,14 +54,17 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="namaTextInput" name="nama" placeholder="Nama"
-                                    value="<?=(isset($data["name"]) && !empty($data["name"]))? $data["name"] : '' ?>" required>
+                                    value="<?=(isset($data["name"]) && !empty($data["name"]))? $data["name"] : '' ?>" 
+                                    <?= ($data["temporary"])? "disabled" : "" ?> required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Alamat</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8">
-                                <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea" rows="5"><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
+                                <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea" rows="5"
+                                    <?= ($data["temporary"])? "disabled" : "" ?>
+                                ><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -58,7 +72,8 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="noTelpTextInput" name="no_telp" placeholder="No. Telephone"
-                                    value="<?=(isset($data["phone"]) && !empty($data["phone"]))? $data["phone"] : '' ?>">
+                                    value="<?=(isset($data["phone"]) && !empty($data["phone"]))? $data["phone"] : '' ?>"
+                                    <?= ($data["temporary"])? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -66,7 +81,8 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="email" class="form-control form-control-user" id="emailTextInput" name="email" placeholder="Email"
-                                    value="<?=(isset($data["email"]) && !empty($data["email"]))? $data["email"] : '' ?>">
+                                    value="<?=(isset($data["email"]) && !empty($data["email"]))? $data["email"] : '' ?>"
+                                    <?= ($data["temporary"])? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -74,7 +90,8 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="depoTextInput" name="depo" placeholder="Depo/Stock Point"
-                                    value="<?=(isset($data["depo"]) && !empty($data["depo"]))? $data["depo"] : '' ?>">
+                                    value="<?=(isset($data["depo"]) && !empty($data["depo"]))? $data["depo"] : '' ?>"
+                                    <?= ($data["temporary"])? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -82,14 +99,17 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="accNoTextInput" name="acc_no" placeholder="No. Rekening"
-                                    value="<?=(isset($data["acc_no"]) && !empty($data["acc_no"]))? $data["acc_no"] : '' ?>">
+                                    value="<?=(isset($data["acc_no"]) && !empty($data["acc_no"]))? $data["acc_no"] : '' ?>"
+                                    <?= ($data["temporary"])? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
+                                <?php if(!$data["temporary"]): ?>
                                 <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:auto;">
+                                <?php endif; ?>
                                 <?php if(isset($data["ktp"]) && !empty($data['ktp'])): ?>
                                 <input type="hidden" id="remove_ktp" name="remove_ktp">
                                 <div id="card_ktp" class="card shadow mt-2" style="height: 30vh; width: 100%;">
@@ -102,14 +122,16 @@
                                                 height: -webkit-fill-available;
                                                 object-fit: contain;
                                             "/>
-                                        <button type="button" class="btn btn-danger" 
-                                            onclick="removeFile('ktp')"
-                                            style="
-                                                height: fit-content;
-                                                width: fit-content;
-                                            ">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        <?php if(!$data["temporary"]): ?>
+                                            <button type="button" class="btn btn-danger" 
+                                                onclick="removeFile('ktp')"
+                                                style="
+                                                    height: fit-content;
+                                                    width: fit-content;
+                                                ">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <?php endif; ?>
@@ -126,7 +148,10 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2 mr-4 btn-lg">Ajukan Perubahan Data<i class="ml-2 fas fa-chevron-right"></i></button>
+                        <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2 mr-4 btn-lg"
+                        <?= ($data["temporary"])? "disabled" : "" ?>>
+                            Ajukan Perubahan Data<i class="ml-2 fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>

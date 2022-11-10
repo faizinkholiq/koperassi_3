@@ -1,5 +1,9 @@
 .my-bg-primary{
-    background-color:#16a085;
+    background-color:#16a085!important;
+}
+
+.my-border-primary{
+    border:#16a085!important;
 }
 
 .my-text-primary{

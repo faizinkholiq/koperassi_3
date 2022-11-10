@@ -15,7 +15,8 @@ class Home extends CI_Controller {
         $d['title'] = "Dashboard";
         $d['highlight_menu'] = "dashboard";
         $d['content_view'] = ($d['role'] == 1)? 'dashboard/admin' : 'dashboard/member';
-
+        print_r($d);
+        exit;
         $this->load->view('layout/template', $d);
 	}
 

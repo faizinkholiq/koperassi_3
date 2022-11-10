@@ -339,6 +339,11 @@ class Anggota extends CI_Controller {
         }else{
             $id = $this->session->userdata('sess_data')['person_id'];
             $d["data"] = $this->anggota_model->detail($id);
+            $d["data"]["temporary"] = false;
+            if($this->anggota_model->detail_temp($id)) {
+                $d["data"] = $this->anggota_model->detail_temp($id);
+                $d["data"]["temporary"] = true;
+            }
             $d['list_position'] = $this->anggota_model->get_list_position();
 
             $this->load->view('layout/template', $d);
@@ -346,19 +351,15 @@ class Anggota extends CI_Controller {
     }
 
     private function get_input_temp()
-    {
+    {   
+        $data["name"] = $this->input->post('nama');
         $data["nik"] = $this->input->post('nik');
         $data["tmk"] = $this->input->post('tmk');
-        $data["name"] = $this->input->post('nama');
         $data["address"] = $this->input->post('alamat');
-        $data["phone"] = $this->input->post('no_telp');
-        $data["email"] = $this->input->post('email');
-        $data["join_date"] = $this->input->post('tgl_anggota');
-        $data["status"] = $this->input->post('status');
-        $data["salary"] = $this->input->post('salary');
-        $data["position"] = $this->input->post('position');
         $data["depo"] = $this->input->post('depo');
         $data["acc_no"] = $this->input->post('acc_no');
+        $data["phone"] = $this->input->post('no_telp');
+        $data["email"] = $this->input->post('email');
 
         return $data;
     }
@@ -370,7 +371,7 @@ class Anggota extends CI_Controller {
         $this->form_validation->set_rules('nik','NIK','required');
 
         if ($this->form_validation->run() == TRUE) {
-            if (!check_permission('anggota', $d['role'])){
+            if (!check_permission('settings', $d['role'])){
                 $data['success'] = 0;
                 $data['error'] = "No Permission !";
             }else{
@@ -408,9 +409,14 @@ class Anggota extends CI_Controller {
                         }
                     }
 
+                    $detail_temp = $this->anggota_model->detail_temp($id);
+                    if($detail_temp){
+                        $this->anggota_model->delete_temp($id);
+                    }
+
                     if ($this->anggota_model->create_temp($nd)) {
                         $data['success'] = 1;
-                        $data['message'] = "Berhasil melakukan pengajuan perubahan !";
+                        $data['message'] = "Pengajuan perubahan data berhasil, Harap tunggu hingga adminsitrator menyetujui perubahan data tersebut !";
                     } else {
                         $data['success'] = 0;
                         $data['error'] = "Gagal melakukan pengajuan perubahan !";
@@ -426,7 +432,7 @@ class Anggota extends CI_Controller {
         }
 
         $this->session->set_flashdata('msg', $data);
-        redirect('user/settings');
+        redirect('anggota/settings');
         return;
 
 	}
