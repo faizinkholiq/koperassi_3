@@ -160,7 +160,9 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
+                                <?php if (count($notification) > 0): ?>
                                 <span class="badge badge-danger badge-counter"><?= count($notification) ?></span>
+                                <?php endif; ?>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"

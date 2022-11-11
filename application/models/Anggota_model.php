@@ -16,8 +16,12 @@
 
     public function list()
     {
-        $q = $this->db->select()
+        $q = $this->db->select([
+                "person.*",
+                "position.name position_name",
+            ])
             ->from('person')
+            ->join('position', 'position.id = person.position', 'left')
             ->where('status', 'Aktif')
             ->order_by('id', 'asc');
         return $q->get()->result_array();

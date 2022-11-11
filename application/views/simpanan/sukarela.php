@@ -181,7 +181,7 @@
             if(person.length > 0){
                 $('#anggotaAlert').fadeOut();
                 $('#noAnggotaTextInput').val(person[0].tmk)
-                $('#jabatanTextInput').val(person[0].position)
+                $('#jabatanTextInput').val(person[0].position_name)
                 $('#depoTextInput').val(person[0].depo)
                 $('#alamatTextArea').text(person[0].address)
                 $('#noRekTextInput').val(person[0].acc_no)
@@ -197,12 +197,18 @@
     function showForm(){
         $('#inputModal').modal('show');
         $('#formSimpanan')[0].reset();
-        $('#alamatTextArea').text("")
+        $('#alamatTextArea').text("");
+        $("#anggotaSelect").val('');
+        $("#anggotaSelect").selectpicker('refresh');
+        $('#anggotaAlert').show();
     }
 
     function resetForm() {
         $('#formSimpanan')[0].reset();
-        $('#alamatTextArea').text("")
+        $('#alamatTextArea').text("");
+        $("#anggotaSelect").val('');
+        $("#anggotaSelect").selectpicker('refresh');
+        $('#anggotaAlert').show();
     }
 
 </script>
