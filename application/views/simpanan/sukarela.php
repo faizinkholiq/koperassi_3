@@ -68,7 +68,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
                                 <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
-                                    value="<?=(isset($data["join_date"]) && !empty($data["join_date"]))? $data["join_date"] : date('Y-m-d') ?>">
+                                    value="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
                         <div class="row mb-3">

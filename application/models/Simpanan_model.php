@@ -13,12 +13,18 @@
                 'person.tmk',
                 'person.phone',
                 'person.join_date',
+                'person.depo',
+                'person.address',
+                'person.acc_no',
+                'person.position',
+                'position.name position_name',
                 '"Simpanan Pokok" type',
                 'simpanan_pokok.date',
                 'simpanan_pokok.balance',
             ])
             ->from('simpanan_pokok')
             ->join('person', 'person.id = simpanan_pokok.person')
+            ->join('position', 'person.position = position.id', 'left')
             ->where('person.id', $person)
             ->get_compiled_select();
         
@@ -31,12 +37,18 @@
             'person.tmk',
             'person.phone',
             'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
             '"Simpanan Wajib" type',
             'simpanan_wajib.date',
             'simpanan_wajib.balance',
         ])
         ->from('simpanan_wajib')
         ->join('person', 'person.id = simpanan_wajib.person')
+        ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
         ->get_compiled_select();
 
@@ -49,12 +61,18 @@
             'person.tmk',
             'person.phone',
             'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
             '"Simpanan Sukarela" type',
             'simpanan_sukarela.date',
             'simpanan_sukarela.balance',
         ])
         ->from('simpanan_sukarela')
         ->join('person', 'person.id = simpanan_sukarela.person')
+        ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
         ->get_compiled_select();
 
