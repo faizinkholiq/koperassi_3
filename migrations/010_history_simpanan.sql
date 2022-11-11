@@ -1,0 +1,2 @@
+CREATE TABLE `koperassi`.`history_simpanan` (`id` INT NOT NULL AUTO_INCREMENT , `date` DATE NOT NULL , `code` VARCHAR(20) NOT NULL , `type` ENUM("Pokok","Wajib","Sukarela") NOT NULL , `balance` FLOAT NOT NULL , `status` ENUM("Success","Pending","Failed") NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `history_simpanan` ADD `person_id` SMALLINT(6) NOT NULL AFTER `id`;

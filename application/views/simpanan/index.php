@@ -1,5 +1,17 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
+<?php
+    if(!empty($this->session->flashdata('msg'))):
+        $msg = $this->session->flashdata('msg');
+?>
+<div class="alert <?= ($msg['success'])? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
+    <strong><?= ($msg['success'])? $msg["message"] : $msg["error"] ?></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<?php endif; ?>
+
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
@@ -14,8 +26,8 @@
         </div>
     </div>
 </div>
-
-<div class="card shadow mb-4">
+<button type="button" class="btn btn-primary font-weight-bold" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history mr-2"></i> History Perubahan</button>
+<div class="card shadow mb-4 mt-2">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
@@ -26,7 +38,7 @@
                         <th class="text-center">Kode Transaksi</th>
                         <th class="text-center">Uraian</th>
                         <th class="text-center">Pemasukan</th>
-                        <th class="text-center" width="10"></th>
+                        <th class="text-center" width="80"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,11 +49,15 @@
                         <td><?=$row["code"]?></td>
                         <td><?=$row["type"]?></td>
                         <td><?=$row["balance"]?></td>
-                        <td>
+                        <td class="text-center">
                             <?php if($row["type"] == "Simpanan Sukarela"): ?>
                             <button type="button" onClick="showForm(<?=$row["id"]?>)" class="btn btn-primary">
                                 <i class="fas fa-edit"></i>
                             </button>
+                                <?php if($row["simpanan_temp_id"]): ?>
+                                    <i class="fas fa-clock text-warning text-lg ml-2" 
+                                        data-toggle="tooltip" data-placement="top" title="Pengajuan perubahan sedang diproses"></i>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -122,7 +138,7 @@
                             <div class="col-lg-3">Tipe</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
-                                <select class="form-control form-control-user" id="statusCombo" name="status" disabled="disabled">
+                                <select class="form-control form-control-user" id="statusCombo" name="type" readonly="readonly">
                                     <option value="Pokok">Simpanan Pokok</option>
                                     <option value="Wajib">Simpanan Wajib</option>
                                     <option value="Sukarela" selected>Simpanan Sukarela</option>
@@ -149,6 +165,42 @@
                 <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Ajukan Perubahan Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+
+ <!-- History Modal-->
+ <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="historyModalLabel"><i class="mr-2 fas fa-history"></i> History Perubahan Simpanan</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Kode Transaksi</th>
+                            <th>Uraian</th>
+                            <th>Pemasukkan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

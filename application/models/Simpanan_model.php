@@ -21,6 +21,7 @@
                 '"Simpanan Pokok" type',
                 'simpanan_pokok.date',
                 'simpanan_pokok.balance',
+                '0 simpanan_temp_id',
             ])
             ->from('simpanan_pokok')
             ->join('person', 'person.id = simpanan_pokok.person')
@@ -45,6 +46,7 @@
             '"Simpanan Wajib" type',
             'simpanan_wajib.date',
             'simpanan_wajib.balance',
+            '0 simpanan_temp_id',
         ])
         ->from('simpanan_wajib')
         ->join('person', 'person.id = simpanan_wajib.person')
@@ -69,10 +71,12 @@
             '"Simpanan Sukarela" type',
             'simpanan_sukarela.date',
             'simpanan_sukarela.balance',
+            'simpanan_temp.id simpanan_temp_id',
         ])
         ->from('simpanan_sukarela')
         ->join('person', 'person.id = simpanan_sukarela.person')
         ->join('position', 'person.position = position.id', 'left')
+        ->join('simpanan_temp', 'simpanan_temp.simpanan_id = simpanan_sukarela.id AND simpanan_temp.type = "Sukarela"', 'left')
         ->where('person.id', $person)
         ->get_compiled_select();
 
@@ -116,6 +120,67 @@
             ->group_by('person.id')->get()->row_array()['balance'];
 
         return $data;
+    }
+
+    public function create_temp($data)
+    {
+        $this->db->insert('simpanan_temp', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_temp($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('simpanan_temp', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function delete_temp($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('simpanan_temp');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+    
+    public function detail_temp($id)
+    {
+        return $this->db->get_where('simpanan_temp', ["simpanan_id" => $id])->row_array();
+    }
+
+    private function get_history($id){
+        $data = $this->db->from('history_simpanan')
+        ->where('person_id', $id)
+        ->order_by('id', 'DESC')
+        ->get()->result_array();
+        return $data;
+    }
+
+    public function create_history($data)
+    {
+        $this->db->insert('history_simpanan', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_history($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('history_simpanan', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function delete_history($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('history_simpanan');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
     }
 
 }

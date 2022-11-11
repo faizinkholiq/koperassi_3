@@ -85,7 +85,13 @@
     }
 
     private function get_notif($id){
-        $data = $this->db->from('notification')->where('user_id', $id)->order_by('time', 'DESC')->get()->result_array();
+        $data = $this->db->select([
+            "notification.*",
+            "DATE_FORMAT(notification.time, '%M %d, %Y') time"
+        ])->from('notification')
+        ->where('user_id', $id)
+        ->order_by('time', 'DESC')
+        ->get()->result_array();
         return $data;
     }
 
