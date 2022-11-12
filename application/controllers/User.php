@@ -112,7 +112,7 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('username','Username','required');
 
         if ($this->form_validation->run() == TRUE) {
-            if (!check_permission('settings', $d['role'])){
+            if (!check_permission('user_settings', $d['role'])){
                 $data['success'] = 0;
                 $data['error'] = "No Permission !";
             }else{
@@ -234,7 +234,7 @@ class User extends CI_Controller {
         $d['highlight_menu'] = "user_settings";
         $d['content_view'] = 'user/settings';
 
-        if (!check_permission('settings', $d['role'])){
+        if (!check_permission('user_settings', $d['role'])){
             redirect('home');
         }else{
             $id = $this->session->userdata('sess_data')['id'];

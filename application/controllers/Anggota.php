@@ -334,7 +334,7 @@ class Anggota extends CI_Controller {
         $d['highlight_menu'] = "anggota_settings";
         $d['content_view'] = 'anggota/settings';
 
-        if (!check_permission('settings', $d['role'])){
+        if (!check_permission('anggota_settings', $d['role'])){
             redirect('home');
         }else{
             $id = $this->session->userdata('sess_data')['person_id'];
@@ -371,7 +371,7 @@ class Anggota extends CI_Controller {
         $this->form_validation->set_rules('nik','NIK','required');
 
         if ($this->form_validation->run() == TRUE) {
-            if (!check_permission('settings', $d['role'])){
+            if (!check_permission('anggota_settings', $d['role'])){
                 $data['success'] = 0;
                 $data['error'] = "No Permission !";
             }else{
