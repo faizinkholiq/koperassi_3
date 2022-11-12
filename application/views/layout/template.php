@@ -86,6 +86,7 @@
             <?php 
                 if ($role == 1): 
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
+                $master = in_array($highlight_menu, ["depo","position","simpanan_settings"]);
             ?>
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
@@ -105,6 +106,21 @@
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_wajib' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/wajib') ?>">Simpanan Wajib</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_sukarela' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/sukarela') ?>">Simpanan Sukarela</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'investasi' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/investasi') ?>">Investasi</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link <?= $master ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseMaster"
+                    aria-expanded="true" aria-controls="collapseMaster">
+                    <i class="fas fa-fw fa-wrench  <?= $master ? 'text-white' : '' ?>"></i>
+                    <span>Master Data</span>
+                </a>
+                <div id="collapseMaster" class="collapse <?= $master ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'depo' ? 'active' : '' ?>" href="<?= site_url('/master/depo') ?>">Depo / Stock Point</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'position' ? 'active' : '' ?>" href="<?= site_url('/master/jabatan') ?>">Jabatan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_settings' ? 'active' : '' ?>" href="<?= site_url('/master/simpanan_settings') ?>">Pengaturan Simpanan</a>
                     </div>
                 </div>
             </li>
