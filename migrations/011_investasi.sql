@@ -1,0 +1,1 @@
+CREATE TABLE `investasi` (`id` INT NOT NULL AUTO_INCREMENT , `person` INT NOT NULL , `code` VARCHAR(20) NOT NULL , `date` DATE NOT NULL , `balance` FLOAT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

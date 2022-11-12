@@ -80,19 +80,12 @@
                     <i class="fas fa-fw fa-user"></i>
                     <span>Ubah data diri</span></a>
             </li>
-            
-            <li class="nav-item <?= $highlight_menu === 'user_settings' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/user/settings') ?>">
-                    <i class="fas fa-fw fa-cogs"></i>
-                    <span>Pengaturan Akun</span></a>
-            </li>
 
             <?php endif; ?>
 
-
             <?php 
                 if ($role == 1): 
-                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela","simpanan"]);
+                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
             ?>
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
@@ -111,19 +104,18 @@
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_pokok' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/pokok') ?>">Simpanan Pokok</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_wajib' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/wajib') ?>">Simpanan Wajib</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_sukarela' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/sukarela') ?>">Simpanan Sukarela</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'investasi' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/investasi') ?>">Investasi</a>
                     </div>
                 </div>
             </li>
 
             <?php endif; ?>
 
-            <!-- <?php if ($role == 1): ?>
-            <li class="nav-item <?= $highlight_menu === 'user' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/user') ?>">
-                    <i class="fas fa-fw fa-user-circle"></i>
-                    <span>Akun Pengguna</span></a>
+            <li class="nav-item <?= $highlight_menu === 'user_settings' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/user/settings') ?>">
+                    <i class="fas fa-fw fa-cogs"></i>
+                    <span>Pengaturan Akun</span></a>
             </li>
-            <?php endif; ?> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">

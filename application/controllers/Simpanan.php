@@ -13,6 +13,7 @@ class Simpanan extends CI_Controller {
 			'simpanan_pokok_model',
 			'simpanan_wajib_model',
 			'simpanan_sukarela_model',
+			'investasi_model',
 		]);
 
         $this->load->library('form_validation');
@@ -63,6 +64,12 @@ class Simpanan extends CI_Controller {
 					$d['highlight_menu'] = "simpanan_sukarela";
 					$d['data'] = $this->simpanan_sukarela_model->get();
 					break;
+				case 'investasi':
+					$d['title'] = "Investasi";
+					$d['content_view'] = 'simpanan/investasi';
+					$d['highlight_menu'] = "investasi";
+					$d['data'] = $this->investasi_model->get();
+					break;
 			}
 
 			$d['module'] = $module;
@@ -99,6 +106,10 @@ class Simpanan extends CI_Controller {
 					case 'sukarela':
 						$nd["code"] = $this->simpanan_sukarela_model->get_code();
 						$simpanan_id = $this->simpanan_sukarela_model->create($nd);
+						break;
+					case 'investasi':
+						$nd["code"] = $this->investasi_model->get_code();
+						$simpanan_id = $this->investasi_model->create($nd);
 						break;
 					default:
 						$data['success'] = 0;
