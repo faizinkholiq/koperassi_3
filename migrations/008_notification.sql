@@ -1,1 +1,1 @@
-CREATE TABLE `koperassi`.`notification` (`id` INT NOT NULL AUTO_INCREMENT , `user_id` SMALLINT(6) NOT NULL , `time` DATE NOT NULL , `message` TEXT NOT NULL , `status` ENUM("Success","Pending","Failed") NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `notification` (`id` INT NOT NULL AUTO_INCREMENT , `user_id` SMALLINT(6) NOT NULL , `time` DATE NOT NULL , `message` TEXT NOT NULL , `status` ENUM("Success","Pending","Failed") NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

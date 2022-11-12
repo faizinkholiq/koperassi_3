@@ -80,7 +80,32 @@
         ->where('person.id', $person)
         ->get_compiled_select();
 
-        $q_all = $this->db->query($q_pokok.' UNION ALL '.$q_wajib. ' UNION ALL '.$q_sukarela.' ORDER BY date DESC');
+        $q_investasi = $this->db->select([
+            'investasi.id',
+            'investasi.person person_id',
+            'investasi.code',
+            'person.name',
+            'person.nik',
+            'person.tmk',
+            'person.phone',
+            'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
+            '"Simpanan Wajib" type',
+            'investasi.date',
+            'investasi.balance',
+            '0 simpanan_temp_id',
+        ])
+        ->from('investasi')
+        ->join('person', 'person.id = investasi.person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->where('person.id', $person)
+        ->get_compiled_select();
+
+        $q_all = $this->db->query($q_pokok.' UNION ALL '.$q_wajib. ' UNION ALL '.$q_sukarela.' UNION ALL '.$q_investasi.' ORDER BY date DESC');
         return $q_all->result_array();
     }
 
@@ -92,7 +117,8 @@
         $data['simpanan'] = $this->db->select([
                 'COALESCE(simpanan_pokok.total, 0) 
                 + COALESCE(simpanan_wajib.total, 0) 
-                + COALESCE(simpanan_sukarela.total, 0) balance',
+                + COALESCE(simpanan_sukarela.total, 0)
+                + COALESCE(investasi.total, 0) balance',
             ])
             ->from('person')
             ->join('(
@@ -116,6 +142,13 @@
                 FROM simpanan_sukarela 
                 GROUP BY person
             ) simpanan_sukarela', 'person.id = simpanan_sukarela.person', 'left')
+            ->join('(
+                SELECT 
+                    person, 
+                    SUM(balance) total 
+                FROM investasi 
+                GROUP BY person
+            ) investasi', 'person.id = investasi.person', 'left')
             ->where('person.id', $person)
             ->group_by('person.id')->get()->row_array()['balance'];
 
