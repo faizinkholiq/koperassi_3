@@ -84,6 +84,7 @@
                     <div class="col-lg-12">
                         <input id="personTextInput" type="hidden" name="person_id" value="<?= $person_id; ?>">
                         <input id="simpananTextInput" type="hidden" name="simpanan_id" value="">
+                        <input id="kodeTextInput" type="hidden" name="code" value="">
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Bayar</div>
                             <div class="col-lg-1 text-right">:</div>
@@ -183,21 +184,41 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
-                            <th>Kode Transaksi</th>
-                            <th>Uraian</th>
-                            <th>Pemasukkan</th>
-                            <th>Status</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Kode Transaksi</th>
+                            <th class="text-center">Uraian</th>
+                            <th class="text-center">Pemasukkan</th>
+                            <th class="text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach($data['history'] as $key => $row): ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td class="text-center"><?= $row["date"] ?></td>
+                            <td class="text-center"><?= $row["code"] ?></td>
+                            <td class="text-center"><?= $row["type"] ?></td>
+                            <td class="text-center"><?= $row["balance"] ?></td>
+                            <td class="text-center"><?php 
+                                switch ($row["status"]){
+                                    case "Pending":
+                                        echo '<i class="fas fa-clock text-warning text-lg"
+                                            data-toggle="tooltip" data-placement="top" 
+                                            title="Pengajuan perubahan sedang diproses"></i>';
+                                        break;
+                                    case "Success":
+                                        echo '<i class="fas fa-check-circle text-success text-lg"
+                                            data-toggle="tooltip" data-placement="top" 
+                                            title="Admistrator telah menyetujui perubahan"></i>';
+                                        break;
+                                    case "Failed":
+                                        echo '<i class="fas fa-times-circle text-danger text-lg"
+                                            data-toggle="tooltip" data-placement="top" 
+                                            title="Pengajuan perubahan gagal, karena Administrator tidak menyetujui perubahan"></i>';
+                                        break;
+                                }
+                            ?></td>
                         </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -223,6 +244,7 @@
 
         if(simpanan.length > 0){
             
+            $('#kodeTextInput').val(simpanan[0].code);
             $('#simpananTextInput').val(simpanan[0].id);
             $('#namaAnggotaTextInput').val(simpanan[0].name);
             $('#noAnggotaTextInput').val(simpanan[0].tmk);

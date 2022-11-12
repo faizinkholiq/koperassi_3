@@ -30,8 +30,8 @@ class Simpanan extends CI_Controller {
         }else{
 			$d['data']['summary'] = $this->simpanan_model->summary($d['person_id']);
 			$d['data']['rows'] = $this->simpanan_model->get($d['person_id']);
+			$d['data']['history'] = $this->simpanan_model->get_history($d['person_id']);
 			$d['person_list'] = $this->anggota_model->list();
-
 			$this->load->view('layout/template', $d);
         }
 	}
@@ -169,6 +169,26 @@ class Simpanan extends CI_Controller {
 							"user_id" => $d["id"],
 							"time" => date("Y-m-d"),
 							"message" => "Pengajuan perubahan Simpanan Sukarela sedang diproses",
+							"status" => "Pending",
+						]);
+					}
+
+					// Record history
+        			$code = $this->input->post('code');
+					$detail_history = $this->simpanan_model->detail_history($nd["person_id"], $code, $nd["type"], "Pending");
+					if ($detail_history) {
+						$this->simpanan_model->edit_history([
+							"id" => $detail_history["id"],
+							"date" => date("Y-m-d"),
+							"balance" => $nd["balance"],
+						]);
+					}else{
+						$this->simpanan_model->create_history([
+							"person_id" => $nd["person_id"],
+							"date" => date("Y-m-d"),
+							"code" => $code,
+							"type" => $nd["type"],
+							"balance" => $nd["balance"],
 							"status" => "Pending",
 						]);
 					}

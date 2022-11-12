@@ -151,7 +151,7 @@
         return $this->db->get_where('simpanan_temp', ["simpanan_id" => $id])->row_array();
     }
 
-    private function get_history($id){
+    public function get_history($id){
         $data = $this->db->from('history_simpanan')
         ->where('person_id', $id)
         ->order_by('id', 'DESC')
@@ -181,6 +181,16 @@
         $this->db->delete('history_simpanan');
         
         return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+
+    public function detail_history($person, $code, $type, $status)
+    {
+        return $this->db->get_where('history_simpanan', [
+            "person_id" => $person, 
+            "code" => $code,
+            "type" => $type,
+            "status" => $status,
+        ])->row_array();
     }
 
 }
