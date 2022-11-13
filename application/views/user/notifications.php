@@ -17,14 +17,30 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<?php foreach ($notification as $key => $row): ?>
+<?php foreach ($notification_list as $key => $row): ?>
 <div class="card shadow mb-2">
     <div class="card shadow">
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-9" style="display:flex">
-                    <div class="bg-success text-center" style="width:4rem; height:100%; border-radius: 0.9rem;">
-                        <i class="fas fa-check mt-3 text-lg text-white"></i>
+                    <?php 
+                        switch($row['status']){
+                            case 'Success':
+                                $status = 'success';
+                                $icon = 'check';
+                                break;
+                            case 'Pending':
+                                $status = 'warning';
+                                $icon = 'clock';
+                                break;
+                            case 'Failed':
+                                $status = 'danger';
+                                $icon = 'times';
+                                break;
+                        }
+                    ?>
+                    <div class="bg-<?= $status ?> text-center" style="width:4rem; height:100%; border-radius: 0.9rem;">
+                        <i class="fas fa-<?= $icon ?> mt-3 text-lg text-white"></i>
                     </div>
                     <div class="ml-4">
                         <div class="small text-gray-500 mb-2 font-weight-bold"><?= $row["person_name"] ?> - <?= $row["time"] ?></div>
@@ -34,7 +50,7 @@
                 <div class="col-lg-1 text-right mt-2" style="font-size: 2rem!important;">
                     <a href="<?= site_url("user/notifications_detail/").$row["id"] ?>" class="text-info mr-2"><i class="fas fa-info-circle"></i></a>
                 </div>
-                <?php if($row["status"] == 'Pending'): ?>
+                <?php if($row["status"] == 'Pending' && $role == 1): ?>
                 <div class="col-lg-1 mt-2 border-left" style="font-size: 2rem!important;">
                     <a href="#!" 
                         onclick="doApprove(
@@ -74,8 +90,8 @@
             <div class="modal-footer">
                 <form action="<?= site_url('user/do_changes') ?>" method="post">
                     <input type="hidden" name="action" value="approve" />
-                    <input id="idApprove" type="text" name="id" value="" />
-                    <input id="userApprove" type="text" name="user_id" value="" />
+                    <input id="idApprove" type="hidden" name="id" value="" />
+                    <input id="userApprove" type="hidden" name="user_id" value="" />
                     <input id="moduleApprove" type="hidden" name="module" value="" />
                     <input id="changesIDApprove" type="hidden" name="changes_id" value="" />
                     <button type="button" class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -100,8 +116,8 @@
             <div class="modal-footer">
                 <form action="<?= site_url('user/do_changes') ?>" method="post">
                     <input type="hidden" name="action" value="decline" />
-                    <input id="idDecline" type="text" name="id" value="" />
-                    <input id="userDecline" type="text" name="user_id" value="" />
+                    <input id="idDecline" type="hidden" name="id" value="" />
+                    <input id="userDecline" type="hidden" name="user_id" value="" />
                     <input id="moduleDecline" type="hidden" name="module" value="" />
                     <input id="changesIDDecline" type="hidden" name="changes_id" value="" />
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>

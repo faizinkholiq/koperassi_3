@@ -173,8 +173,8 @@ if (!isset($highlight_menu)){
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <?php if (count($notification) > 0): ?>
-                                <span class="badge badge-danger badge-counter"><?= count($notification) ?></span>
+                                <?php if ($count_notification > 0): ?>
+                                <span class="badge badge-danger badge-counter"><?= ($count_notification > 3)? '3+' : $count_notification ?></span>
                                 <?php endif; ?>
                             </a>
                             <!-- Dropdown - Alerts -->

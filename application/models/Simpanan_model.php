@@ -110,7 +110,7 @@
     }
 
     public function summary($person)
-    {
+    {   
         $data['plafon'] = 0; 
         $data['limit'] = 0; 
         $data['gaji'] = 0; 
@@ -201,8 +201,8 @@
 
     public function edit_history($data)
     {   
-        $this->db->where('id', $data['id']);
-        unset($data['id']);
+        $this->db->where('code', $data['code']);
+        $this->db->where('status', 'Pending');
         $this->db->update('history_simpanan', $data);
 
         return ($this->db->error()["code"] == 0) ? true : false;

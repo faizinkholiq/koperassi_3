@@ -286,6 +286,7 @@ class User extends CI_Controller {
         if (!check_permission('notifications', $d['role'])){
             redirect('home');
         }else{
+            $d["notification_list"] = $this->user_model->get_notif($d["id"], $d["role"]);
             $this->load->view('layout/template', $d);
         }
 	}
@@ -341,7 +342,9 @@ class User extends CI_Controller {
                         $type = 'Sukarela';
                         $submit = $this->submit_simpanan($changes_id, $type);
                         break;
+
                     case 'Anggota':
+                        $type = 'Anggota';
                         $submit = $this->submit_anggota($changes_id);
                         break;
                     
@@ -356,14 +359,17 @@ class User extends CI_Controller {
                 }
     
                 if ($submit) {
-                    $this->user_model->edit_notif([
-                        "user_id" => $user,
-                        "time" => date("Y-m-d"),
-                        "message" => "Pengajuan perubahan Simpanan ".$type." telah disetujui oleh Administrator",
-                        "status" => "Success",
-                        "module" => "Simpanan ".$type,
-                        "changes_id" => $changes_id,
-                    ]);
+                    if ($type != 'Anggota'){
+                        $this->user_model->edit_notif([
+                            "id" => $id,
+                            "user_id" => $user,
+                            "time" => date("Y-m-d"),
+                            "message" => "Pengajuan perubahan Simpanan ".$type." telah disetujui oleh Administrator",
+                            "status" => "Success",
+                            "module" => "Simpanan ".$type,
+                            "changes_id" => $changes_id,
+                        ]);
+                    }
     
                     $data['success'] = 1;
                     $data['message'] = "Data berhasil tersimpan !";
@@ -376,8 +382,11 @@ class User extends CI_Controller {
                 switch ($module) {
                     case 'Simpanan Sukarela':
                         $type = 'Sukarela';
+                        $decline = $this->decline_simpanan($changes_id, $type);
                         break;
                     case 'Anggota':
+                        $type = 'Anggota';
+                        $decline = true;
                         break;
                     
                     default:
@@ -390,17 +399,25 @@ class User extends CI_Controller {
                         break;
                 }
 
-                $this->user_model->edit_notif([
-                    "user_id" => $user,
-                    "time" => date("Y-m-d"),
-                    "message" => "Pengajuan perubahan Simpanan ".$type." ditolak oleh Administrator",
-                    "status" => "Failed",
-                    "module" => "Simpanan ".$type,
-                    "changes_id" => $changes_id,
-                ]);
-
-                $data['success'] = 1;
-                $data['message'] = "Data berhasil tersimpan !";
+                if ($decline) {
+                    if ($type != 'Anggota'){
+                        $this->user_model->edit_notif([
+                            "id" => $id,
+                            "user_id" => $user,
+                            "time" => date("Y-m-d"),
+                            "message" => "Pengajuan perubahan Simpanan ".$type." ditolak oleh Administrator",
+                            "status" => "Failed",
+                            "module" => "Simpanan ".$type,
+                            "changes_id" => $changes_id,
+                        ]);
+                    }
+    
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                }else{
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
             }
         }
 
@@ -420,7 +437,7 @@ class User extends CI_Controller {
                         $nd["id"] = $id;
                         $nd["balance"] = $get_temp["balance"];
                         if($this->simpanan_sukarela_model->edit($nd)){
-                            $this->simpanan_model->create_history([
+                            $this->simpanan_model->edit_history([
                                 "person_id" => $detail["person"],
                                 "date" => date("Y-m-d"),
                                 "code" => $detail["code"],
@@ -434,6 +451,42 @@ class User extends CI_Controller {
                         }else{
                             return false;
                         }
+                    }else{
+                        return false;
+                    }
+                    break;
+
+                default:
+                    return false;
+                    break;
+            }
+    
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function decline_simpanan($id, $module){
+        $get_temp = $this->simpanan_model->detail_temp($id, $module);
+        
+        if ($get_temp) {
+            switch($module){
+                case 'Sukarela':
+                    $detail = $this->simpanan_sukarela_model->detail($id);
+
+                    if($detail){
+                        
+                        $this->simpanan_model->edit_history([
+                            "person_id" => $detail["person"],
+                            "date" => date("Y-m-d"),
+                            "code" => $detail["code"],
+                            "type" => "Sukarela",
+                            "balance" => $get_temp["balance"],
+                            "status" => "Failed",
+                        ]);
+
+                        $this->simpanan_model->delete_temp($get_temp["id"]);
                     }else{
                         return false;
                     }

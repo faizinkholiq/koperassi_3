@@ -51,7 +51,21 @@
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">Simpanan</div>
                     <div class="col-lg-1 text-right">:</div>
-                    <div class="col-lg-7"><span class="my-tag bg-danger text-white"><?= $before['balance'] ?></span><i class="fas fa-arrow-right mr-3 ml-3"></i><span class="my-tag bg-success text-white"><?= $after['balance'] ?></span></div>
+                    <div class="col-lg-7">
+                        <?php if(isset($after['balance'])): ?>
+                        <span class="my-tag bg-danger text-white">
+                            <?= $before['balance'] ?>
+                        </span>
+                        <i class="fas fa-arrow-right mr-3 ml-3"></i>
+                        <span class="my-tag bg-success text-white">
+                            <?= $after['balance'] ?>
+                        </span>
+                        <?php else: ?>
+                        <span class="my-tag bg-success text-white">
+                            <?= $before['balance'] ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
             <div class="card-footer mt-4">
@@ -59,10 +73,12 @@
                     <div class="col-lg-6">
                         <a href="<?=site_url('user/notifications') ?>" class="btn my-btn-secondary mt-2 mb-2 mr-4 font-weight-bold btn-lg shadow">Batal</a>
                     </div>
+                    <?php if($after && $role == 1): ?>
                     <div class="col-lg-6 text-right">
                         <button class="btn btn-danger font-weight-bold btn-lg mr-4 shadow"><i class="fas fa-times mr-2"></i>Tolak</button>
                         <button class="btn my-btn-primary font-weight-bold btn-lg shadow"><i class="fas fa-check mr-2"></i>Setuju</button>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

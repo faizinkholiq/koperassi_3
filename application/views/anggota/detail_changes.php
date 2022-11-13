@@ -70,10 +70,12 @@
                     <div class="col-lg-6">
                         <a href="<?=site_url('user/notifications') ?>" class="btn my-btn-secondary mt-2 mb-2 mr-4 font-weight-bold btn-lg shadow">Batal</a>
                     </div>
+                    <?php if($after && $role == 1): ?>
                     <div class="col-lg-6 text-right">
                         <button class="btn btn-danger font-weight-bold btn-lg mr-4 shadow"><i class="fas fa-times mr-2"></i>Tolak</button>
                         <button class="btn my-btn-primary font-weight-bold btn-lg shadow"><i class="fas fa-check mr-2"></i>Setuju</button>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
