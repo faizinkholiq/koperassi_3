@@ -305,12 +305,14 @@ class User extends CI_Controller {
                     case "Simpanan Sukarela":
                         $d["before"] = $this->simpanan_sukarela_model->detail($detail["changes_id"]);
                         $d["after"] = $this->simpanan_model->detail_temp($detail["changes_id"], 'Sukarela');
+                        $d["detail"] = $detail;
                         $d["type"] = "Simpanan Sukarela";
                         $d['content_view'] = 'simpanan/detail_changes';
                         break;
                     case "Anggota":
                         $d["before"] = $this->anggota_model->detail($detail["changes_id"]);
                         $d["after"] = $this->anggota_model->detail_temp($detail["changes_id"]);
+                        $d["detail"] = $detail;
                         $d['content_view'] = 'anggota/detail_changes';
                         break;
                 }

@@ -120,7 +120,6 @@
         ])->from('notification')
         ->join('person', 'person.user_id = notification.user_id')
         ->where('notification.id', $id)
-        ->order_by('time', 'DESC')
         ->get()->row_array();
         
         return $data;
