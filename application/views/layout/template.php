@@ -212,6 +212,7 @@ if (!isset($highlight_menu)){
                                         <span class="font-weight-bold"><?= $item["message"] ?></span>
                                     </div>
                                 </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a>
                                 <?php 
                                     endforeach; 
                                     else:
@@ -222,7 +223,6 @@ if (!isset($highlight_menu)){
                                 <?php 
                                     endif; 
                                 ?>
-                                <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a>
                             </div>
                         </li>
 
