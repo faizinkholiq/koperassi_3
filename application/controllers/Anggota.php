@@ -421,6 +421,7 @@ class Anggota extends CI_Controller {
                             "message" => "Pengajuan perubahan data diri sedang diproses",
                             "status" => "Pending",
                             "module" => "Anggota",
+                            "changes_id" => $id,
                         ]);
                         
                         $data['success'] = 1;

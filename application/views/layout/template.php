@@ -201,7 +201,7 @@ if (!isset($highlight_menu)){
                                             break;
                                         } 
                                 ?>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a href="<?= site_url('user/notifications_detail/').$item['id'] ?>" class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-<?= $type ?>">
                                             <i class="fas fa-<?= $icon ?> text-white"></i>

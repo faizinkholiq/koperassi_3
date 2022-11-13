@@ -22,9 +22,19 @@
 
     public function detail($id)
     {
-        return $this->db->select()
+        return $this->db->select([
+            "simpanan_sukarela.*",
+            "person.tmk",
+            "person.name",
+            "position.name position",
+            "person.depo",
+            "person.acc_no",
+            "person.address",
+        ])
         ->from('simpanan_sukarela')
-        ->where('id',$id)
+        ->join('person', 'person.id = simpanan_sukarela.person')
+        ->join('position', 'position.id = person.position', 'left')
+        ->where('simpanan_sukarela.id',$id)
         ->get()
         ->row_array();
     }

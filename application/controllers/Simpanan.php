@@ -182,6 +182,7 @@ class Simpanan extends CI_Controller {
 							"message" => "Pengajuan perubahan Simpanan ".$nd["type"]." sedang diproses",
 							"status" => "Pending",
 							"module" => "Simpanan ".$nd["type"],
+							"changes_id" => $simpanan_id,
 						]);
 					}
 
