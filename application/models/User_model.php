@@ -22,7 +22,7 @@
                 $data = array_merge($data, $user_detail);
             }
 
-            $data["notification"] = $this->get_notif($data["id"]);
+            $data["notification"] = $this->get_notif($data["id"], $data["role"]);
             
             return $data;
         }else{
@@ -84,14 +84,36 @@
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
 
-    private function get_notif($id){
+    private function get_notif($id, $role = 2){
         $data = $this->db->select([
             "notification.*",
-            "DATE_FORMAT(notification.time, '%M %d, %Y') time"
+            "DATE_FORMAT(notification.time, '%M %d, %Y') time",
+            "person.id person_id",
+            "person.name person_name",
         ])->from('notification')
-        ->where('user_id', $id)
+        ->join('person', 'person.user_id = notification.user_id')
         ->order_by('time', 'DESC')
         ->get()->result_array();
+        
+        if ($role == 2) {
+            $this->db->where('notification.user_id', $id);
+        }
+        
+        return $data;
+    }
+
+    public function detail_notif($id){
+        $data = $this->db->select([
+            "notification.*",
+            "DATE_FORMAT(notification.time, '%M %d, %Y') time",
+            "person.id person_id",
+            "person.name person_name",
+        ])->from('notification')
+        ->join('person', 'person.user_id = notification.user_id')
+        ->where('notification.id', $id)
+        ->order_by('time', 'DESC')
+        ->get()->row_array();
+        
         return $data;
     }
 

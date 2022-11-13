@@ -1,3 +1,8 @@
+<?php 
+if (!isset($highlight_menu)){
+    $highlight_menu = null;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -183,7 +188,7 @@
                                     foreach($notification as $key => $item):
                                         switch($item["status"]){
                                             case "Success":
-                                                $icon = "check";
+                                                $icon = "check-circle";
                                                 $type = "success";
                                             break;
                                             case "Pending":
@@ -191,7 +196,7 @@
                                                 $type = "warning";
                                             break;
                                             case "Failed":
-                                                $icon = "times";
+                                                $icon = "times-circle";
                                                 $type = "danger";
                                             break;
                                         } 
@@ -203,7 +208,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500"><?= $item["time"] ?></div>
+                                        <div class="small text-gray-500"><?= $item["person_name"] ?> - <?= $item["time"] ?></div>
                                         <span class="font-weight-bold"><?= $item["message"] ?></span>
                                     </div>
                                 </a>
@@ -217,7 +222,7 @@
                                 <?php 
                                     endif; 
                                 ?>
-                                <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
+                                <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a>
                             </div>
                         </li>
 

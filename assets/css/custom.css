@@ -20,6 +20,16 @@
     color: white;
 }
 
+.my-btn-secondary{
+    background-color:#fff;
+    color: #5d5d5d;
+}
+
+.my-btn-secondary:hover{
+    background-color:#fff;
+    color: #5d5d5d;
+}
+
 .my-link-primary{
     color:rgba(255,255,255,.8)!important;
 }
@@ -74,3 +84,9 @@
     background: #2e59d9;
     color: white;
 } */
+
+.my-tag{
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+}
+

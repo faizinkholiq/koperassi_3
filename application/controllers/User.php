@@ -6,8 +6,12 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user_model');
-		$this->load->model('anggota_model');
+		$this->load->model([
+            'user_model',
+            'anggota_model',
+            'simpanan_model',
+            'simpanan_sukarela_model',
+        ]);
         $this->load->library('form_validation');
     }
 
@@ -273,4 +277,46 @@ class User extends CI_Controller {
         return $data;
     }
 
+    public function notifications()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "List Notifikasi Perubahan";
+        $d['content_view'] = 'user/notifications';
+
+        if (!check_permission('notifications', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
+	}
+
+    public function notifications_detail($id)
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Detail Perubahan";
+        
+        if (!check_permission('notifications', $d['role'])){
+            redirect('home');
+        }else{
+            $detail = $this->user_model->detail_notif($id);
+            if($detail){
+                switch ($detail["module"]){
+                    case "Simpanan Sukarela":
+                        $d["before"] = $this->simpanan_sukarela_model->detail($detail["changes_id"]);
+                        $d["after"] = $this->simpanan_model->detail_temp_by_changes($detail["changes_id"], 'Sukarela');
+                        $d['content_view'] = 'simpanan/detail_changes';
+                        break;
+                    case "Anggota":
+                        $d["before"] = $this->anggota_model->detail($detail["changes_id"]);
+                        $d["after"] = $this->anggota_model->detail_temp_by_changes($detail["changes_id"]);
+                        $d['content_view'] = 'anggota/detail_changes';
+                        break;
+                }
+                
+                $this->load->view('layout/template', $d);
+            }else{
+                redirect('user/notifications');
+            }
+        }
+	}
 }

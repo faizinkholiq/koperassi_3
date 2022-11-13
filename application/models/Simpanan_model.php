@@ -184,6 +184,11 @@
         return $this->db->get_where('simpanan_temp', ["simpanan_id" => $id])->row_array();
     }
 
+    public function detail_temp_by_changes($id, $module)
+    {
+        return $this->db->get_where('simpanan_temp', ["simpanan_id" => $id, 'type' => $module])->row_array();
+    }
+
     public function get_history($id){
         $data = $this->db->from('history_simpanan')
         ->where('person_id', $id)

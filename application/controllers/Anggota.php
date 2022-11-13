@@ -420,6 +420,7 @@ class Anggota extends CI_Controller {
                             "time" => date("Y-m-d"),
                             "message" => "Pengajuan perubahan data diri sedang diproses",
                             "status" => "Pending",
+                            "module" => "Anggota",
                         ]);
                         
                         $data['success'] = 1;

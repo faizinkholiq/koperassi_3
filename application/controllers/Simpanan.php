@@ -179,8 +179,9 @@ class Simpanan extends CI_Controller {
 						$this->user_model->create_notif([
 							"user_id" => $d["id"],
 							"time" => date("Y-m-d"),
-							"message" => "Pengajuan perubahan Simpanan Sukarela sedang diproses",
+							"message" => "Pengajuan perubahan Simpanan ".$nd["type"]." sedang diproses",
 							"status" => "Pending",
+							"module" => "Simpanan ".$nd["type"],
 						]);
 					}
 

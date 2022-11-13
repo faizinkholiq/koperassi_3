@@ -137,6 +137,11 @@
         return $this->db->get_where('person_temp', ["person_id" => $id])->row_array();
     }
 
+    public function detail_temp_by_changes($id)
+    {
+        return $this->db->get_where('simpanan_temp', ["changes_id" => $id])->row_array();
+    }
+
     public function delete_temp($id)
     {
         $this->db->where('person_id', $id);
