@@ -179,12 +179,7 @@
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
     
-    public function detail_temp($id)
-    {
-        return $this->db->get_where('simpanan_temp', ["simpanan_id" => $id])->row_array();
-    }
-
-    public function detail_temp_by_changes($id, $module)
+    public function detail_temp($id, $module)
     {
         return $this->db->get_where('simpanan_temp', ["simpanan_id" => $id, 'type' => $module])->row_array();
     }

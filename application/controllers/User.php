@@ -303,7 +303,7 @@ class User extends CI_Controller {
                 switch ($detail["module"]){
                     case "Simpanan Sukarela":
                         $d["before"] = $this->simpanan_sukarela_model->detail($detail["changes_id"]);
-                        $d["after"] = $this->simpanan_model->detail_temp_by_changes($detail["changes_id"], 'Sukarela');
+                        $d["after"] = $this->simpanan_model->detail_temp($detail["changes_id"], 'Sukarela');
                         $d["type"] = "Simpanan Sukarela";
                         $d['content_view'] = 'simpanan/detail_changes';
                         break;
@@ -320,4 +320,141 @@ class User extends CI_Controller {
             }
         }
 	}
+
+    public function do_changes()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('simpanan_anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $user = $this->input->post('user_id');
+            $action = $this->input->post('action');
+            $changes_id = $this->input->post('changes_id');
+            $module = $this->input->post('module');
+
+            if($action == "approve"){
+
+                switch ($module) {
+                    case 'Simpanan Sukarela':
+                        $type = 'Sukarela';
+                        $submit = $this->submit_simpanan($changes_id, $type);
+                        break;
+                    case 'Anggota':
+                        $submit = $this->submit_anggota($changes_id);
+                        break;
+                    
+                    default:
+                        $data['success'] = 0;
+                        $data['error'] = "Invalid Action";
+    
+                        $this->session->set_flashdata('msg', $data);  
+                        redirect('user/notifications');            
+                        return;
+                        break;
+                }
+    
+                if ($submit) {
+                    $this->user_model->edit_notif([
+                        "user_id" => $user,
+                        "time" => date("Y-m-d"),
+                        "message" => "Pengajuan perubahan Simpanan ".$type." telah disetujui oleh Administrator",
+                        "status" => "Success",
+                        "module" => "Simpanan ".$type,
+                        "changes_id" => $changes_id,
+                    ]);
+    
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+
+            }else if($action == "decline"){
+                switch ($module) {
+                    case 'Simpanan Sukarela':
+                        $type = 'Sukarela';
+                        break;
+                    case 'Anggota':
+                        break;
+                    
+                    default:
+                        $data['success'] = 0;
+                        $data['error'] = "Invalid Action";
+    
+                        $this->session->set_flashdata('msg', $data);  
+                        redirect('user/notifications');            
+                        return;
+                        break;
+                }
+
+                $this->user_model->edit_notif([
+                    "user_id" => $user,
+                    "time" => date("Y-m-d"),
+                    "message" => "Pengajuan perubahan Simpanan ".$type." ditolak oleh Administrator",
+                    "status" => "Failed",
+                    "module" => "Simpanan ".$type,
+                    "changes_id" => $changes_id,
+                ]);
+
+                $data['success'] = 1;
+                $data['message'] = "Data berhasil tersimpan !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('user/notifications');
+	}
+
+    public function submit_simpanan($id, $module){
+        $get_temp = $this->simpanan_model->detail_temp($id, $module);
+        
+        if ($get_temp) {
+            switch($module){
+                case 'Sukarela':
+                    $detail = $this->simpanan_sukarela_model->detail($id);
+
+                    if($detail){
+                        $nd["id"] = $id;
+                        $nd["balance"] = $get_temp["balance"];
+                        if($this->simpanan_sukarela_model->edit($nd)){
+                            $this->simpanan_model->create_history([
+                                "person_id" => $detail["person"],
+                                "date" => date("Y-m-d"),
+                                "code" => $detail["code"],
+                                "type" => "Sukarela",
+                                "balance" => $nd["balance"],
+                                "status" => "Success",
+                            ]);
+
+                            $this->simpanan_model->delete_temp($get_temp["id"]);
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }else{
+                        return false;
+                    }
+                    break;
+
+                default:
+                    return false;
+                    break;
+            }
+    
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function submit_anggota($id){
+        $get_temp = $this->anggota_model->detail_temp($id);
+        print_r($get_temp);
+        exit;
+        return true;
+    }
+
 }

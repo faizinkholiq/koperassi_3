@@ -4,7 +4,11 @@
  
     public function check_user($data)
     {   
-        $check = $this->db->get_where('user', "username = '{$data['username']}' AND password= '{$data['password']}' AND active = 1");
+        $check = $this->db->get_where('user', [
+            "username"  => $data['username'], 
+            "password" => $data['password'], 
+            "active" => 1
+        ]);
 
         if($check->num_rows() > 0){
             return $check->row_array()['id'];
@@ -122,6 +126,15 @@
         $this->db->insert('notification', $data);
 
         return ($this->db->affected_rows()>0) ? true : false;
+    }
+
+    public function edit_notif($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('notification', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
     }
 
 }

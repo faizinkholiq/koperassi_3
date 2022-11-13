@@ -162,7 +162,7 @@ class Simpanan extends CI_Controller {
             }else{
                 $nd = $this->get_input_temp();
 
-				$detail = $this->simpanan_model->detail_temp($nd["simpanan_id"]);
+				$detail = $this->simpanan_model->detail_temp($nd["simpanan_id"], $nd["type"]);
 				if($detail){
 					$nd["id"] = $detail["id"];
 					if($this->simpanan_model->edit_temp($nd)){
