@@ -244,9 +244,121 @@ class Simpanan extends CI_Controller {
         if (!check_permission('master', $d['role'])){
             redirect('home');
         }else{
-            $d['data'] = $this->simpanan_model->get();
+            $d['data'] = $this->simpanan_model->get_settings();
             $this->load->view('layout/template', $d);
         }
 	}
+	
+    public function create_settings()
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('simpanan','Simpanan','required');
+        $this->form_validation->set_rules('nominal','Nominal','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('master', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input_settings();
+
+                $position_id = $this->simpanan_model->create_settings($nd);
+                if ($position_id) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil disimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Data gagal disimpan !";
+                }
+            }
+
+            $this->session->set_flashdata('msg', $data);
+            redirect('simpanan/settings');
+        }else{
+            $d['title'] = "Tambah Data Baru";
+            $d['highlight_menu'] = "simpanan_settings";
+            $d['content_view'] = 'simpanan/settings_input';
+            if (!check_permission('master', $d['role'])){
+                redirect('home');
+            }else{
+                $this->load->view('layout/template', $d);
+            }
+        }
+	}
+
+    public function edit_settings($id)
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('simpanan','Simpanan','required');
+        $this->form_validation->set_rules('nominal','Nominal','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('master', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input_settings();
+
+                $detail = $this->simpanan_model->detail_settings($id);
+                if ($detail) {
+                    $nd["id"] = $id;
+
+                    if ($this->simpanan_model->edit_settings($nd)) {
+                        $data['success'] = 1;
+                        $data['message'] = "Data berhasil diubah !";
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Data gagal diubah !";
+                    }
+                }else{
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid ID !";
+                }
+            }
+
+            $this->session->set_flashdata('msg', $data);
+            redirect('simpanan/settings');
+        }else{
+            $d['title'] = "Ubah Data Simpanan";
+            $d['highlight_menu'] = "simpanan_settings";
+            $d['content_view'] = 'simpanan/settings_input';
+
+            if (!check_permission('master', $d['role'])){
+                redirect('home');
+            }else{
+                $d["data"] = $this->simpanan_model->detail_settings($id);
+                $this->load->view('layout/template', $d);
+            }
+        }
+	}
+
+    public function delete_settings() 
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('master', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->get('id');
+            if ($this->simpanan_model->delete_settings($id)) {
+                $data['success'] = 1;
+                $data['message'] = "Berhasil menghapus data !";
+            } else {
+                $data['success'] = 0;
+                $data['error'] = "Gagal menghapus data !";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('simpanan/settings');
+    }
+
+    private function get_input_settings()
+    {
+        $data["simpanan"] = $this->input->post('simpanan');
+        $data["nominal"] = $this->input->post('nominal');
+        
+        return $data;
+    }
 
 }

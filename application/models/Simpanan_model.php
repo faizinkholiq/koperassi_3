@@ -226,4 +226,38 @@
         ])->row_array();
     }
 
+    public function get_settings()
+    {
+        return $this->db->get('simpanan_settings')->result_array();
+    }
+
+    public function detail_settings($id)
+    {
+        return $this->db->get_where('simpanan_settings', ["id" => $id])->row_array();
+    }
+
+    public function create_settings($data)
+    {
+        $this->db->insert('simpanan_settings', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_settings($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('simpanan_settings', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function delete_settings($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('simpanan_settings');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+
 }
