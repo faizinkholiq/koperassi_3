@@ -57,8 +57,8 @@
             <div class="modal-footer">
                 <form method="GET" action="<?= site_url('position/delete') ?>">
                     <input type="hidden" id="deletedID" name="id" />
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                     <button class="btn btn-danger ml-2" type="submit">Hapus</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                 </form>
             </div>
         </div>

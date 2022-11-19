@@ -19,7 +19,7 @@ class Depo extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Master Depo / Stock Point";
         $d['highlight_menu'] = "depo";
-        $d['content_view'] = 'master/depo';
+        $d['content_view'] = 'depo/index';
         
         if (!check_permission('master', $d['role'])){
             redirect('home');
@@ -42,22 +42,22 @@ class Depo extends CI_Controller {
             }else{
                 $nd = $this->get_input();
 
-                $anggota_id = $this->depo_model->create($nd);
-                if ($anggota_id) {
+                $depo_id = $this->depo_model->create($nd);
+                if ($depo_id) {
                     $data['success'] = 1;
-                    $data['message'] = "Success Create New Data !";
+                    $data['message'] = "Depo berhasil disimpan !";
                 } else {
                     $data['success'] = 0;
-                    $data['error'] = "Failed Create New Data !";
+                    $data['error'] = "Depo gagal disimpan !";
                 }
             }
 
             $this->session->set_flashdata('msg', $data);
-            redirect('anggota');
+            redirect('depo');
         }else{
             $d['title'] = "Tambah Depo Baru";
             $d['highlight_menu'] = "depo";
-            $d['content_view'] = 'master/depo';
+            $d['content_view'] = 'depo/input';
             if (!check_permission('master', $d['role'])){
                 redirect('home');
             }else{
@@ -85,23 +85,23 @@ class Depo extends CI_Controller {
 
                     if ($this->depo_model->edit($nd)) {
                         $data['success'] = 1;
-                        $data['message'] = "Success !";
-                        redirect('anggota');
+                        $data['message'] = "Depo berhasil diubah !";
                     } else {
                         $data['success'] = 0;
-                        $data['error'] = "Failed !";
+                        $data['error'] = "Depo gagal diubah !";
                     }
                 }else{
                     $data['success'] = 0;
-                    $data['error'] = "Invalid ID !";
+                    $data['error'] = "Invalid ID depo !";
                 }
             }
 
-            return $data;
+            $this->session->set_flashdata('msg', $data);
+            redirect('depo');
         }else{
             $d['title'] = "Ubah Depo";
             $d['highlight_menu'] = "depo";
-            $d['content_view'] = 'master/depo';
+            $d['content_view'] = 'depo/input';
 
             if (!check_permission('master', $d['role'])){
                 redirect('home');
@@ -112,25 +112,25 @@ class Depo extends CI_Controller {
         }
 	}
 
-    public function delete($id) 
+    public function delete() 
     {
         $d = $this->user_model->login_check();
         if (!check_permission('master', $d['role'])){
             $data['success'] = 0;
             $data['error'] = "No Permission !";
         }else{
+            $id = $this->input->get('id');
             if ($this->depo_model->delete($id)) {
-
                 $data['success'] = 1;
-                $data['message'] = "Success !";
-                redirect('master/depo');
+                $data['message'] = "Berhasil menghapus depo !";
             } else {
                 $data['success'] = 0;
-                $data['error'] = "Failed !";
+                $data['error'] = "Gagal menghapus depo !";
             }
         }
 
-        return $data;
+        $this->session->set_flashdata('msg', $data);
+        redirect('depo');
     }
 
     private function get_input()

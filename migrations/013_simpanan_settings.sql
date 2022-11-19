@@ -1,0 +1,1 @@
+CREATE TABLE `simpanan_settings` (`id` INT NOT NULL AUTO_INCREMENT , `simpanan` ENUM('Pokok','Wajib','Sukarela','Investasi') NOT NULL , `nominal` FLOAT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
