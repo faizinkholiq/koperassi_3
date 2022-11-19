@@ -123,9 +123,9 @@ if (!isset($highlight_menu)){
                 </a>
                 <div id="collapseMaster" class="collapse <?= $master ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'depo' ? 'active' : '' ?>" href="<?= site_url('/master/depo') ?>">Depo / Stock Point</a>
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'position' ? 'active' : '' ?>" href="<?= site_url('/master/jabatan') ?>">Jabatan</a>
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_settings' ? 'active' : '' ?>" href="<?= site_url('/master/simpanan_settings') ?>">Pengaturan Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_settings' ? 'active' : '' ?>" href="<?= site_url('/simpanan/settings') ?>">Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'position' ? 'active' : '' ?>" href="<?= site_url('/position') ?>">Jabatan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'depo' ? 'active' : '' ?>" href="<?= site_url('/depo') ?>">Depo / Stock Point</a>
                     </div>
                 </div>
             </li>

@@ -233,4 +233,20 @@ class Simpanan extends CI_Controller {
         return $data;
     }
 
+	// Pengaturan Simpanan
+	public function settings()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Master Simpanan";
+        $d['highlight_menu'] = "simpanan_settings";
+        $d['content_view'] = 'simpanan/settings';
+        
+        if (!check_permission('master', $d['role'])){
+            redirect('home');
+        }else{
+            $d['data'] = $this->simpanan_model->get();
+            $this->load->view('layout/template', $d);
+        }
+	}
+
 }

@@ -2,7 +2,7 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 function check_permission($module, $role) {
-    $admin = ['anggota', 'simpanan_anggota', 'user_settings', 'notifications']; 
+    $admin = ['anggota', 'simpanan_anggota', 'user_settings', 'notifications', 'master']; 
     $member = ['simpanan', 'pinjaman', 'laporan', 'anggota_settings', 'user_settings', 'notifications'];
 
     switch ($role) {
