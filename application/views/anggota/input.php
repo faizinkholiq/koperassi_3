@@ -4,7 +4,13 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
 <div class="row">
 
     <div class="col-lg-12 mb-4">
-
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Anggota dapat login ke akun masing-masing menggunakan data dibawah ini: 
+            <ul class="mt-2">
+                <li>Username = <strong>< NIK Anggota ></strong></li>
+                <li>Password = <strong>"member@koperasi123"</strong></li>
+            </ul>
+        </div>
         <!-- Illustrations -->
         <div class="card shadow mb-4">
             <form action="<?=(isset($data))? site_url('anggota/edit/'.$data["id"]) : site_url('anggota/create') ?>" method="POST" enctype="multipart/form-data">

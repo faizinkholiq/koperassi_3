@@ -97,10 +97,10 @@ class Anggota extends CI_Controller {
 
                 // Create user account
                 $user_id = $this->user_model->create([
-                    "username" => $nd["detail_anggota"]["tmk"],
+                    "username" => $nd["detail_anggota"]["nik"],
                     "name" => $nd["detail_anggota"]["name"],
                     "role" => $role,
-                    "password" => $nd["detail_anggota"]["nik"],
+                    "password" => "member@koperasi123",
                     "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
                 ]);
 
