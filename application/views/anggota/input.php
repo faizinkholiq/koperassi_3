@@ -1,3 +1,6 @@
+<?php
+$role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
+?>
 <div class="row">
 
     <div class="col-lg-12 mb-4">
@@ -6,13 +9,14 @@
         <div class="card shadow mb-4">
             <form action="<?=(isset($data))? site_url('anggota/edit/'.$data["id"]) : site_url('anggota/create') ?>" method="POST" enctype="multipart/form-data">
             <div class="card-body">
-                <a class="my-text-primary" href="<?=site_url('anggota')?>">
+                <a class="my-text-primary" href="<?= site_url('anggota').$role_params ?>">
                     <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>
                 <h5 class="font-weight-bold mt-2"><i class="mr-2 fas fa-user"></i> Data Diri</h5>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
+                        <input type="hidden" name="role" value="<?= (isset($_GET["role"]) && $_GET["role"] == 1)? 1 : 2 ?>">
                         <div class="row mb-3">
                             <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
@@ -224,7 +228,7 @@
             </div>
             <div class="card-footer text-right">
                 <a href="<?=site_url('anggota') ?>" class="btn btn-secondary mt-2 mb-2">Kembali</a>
-                <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2 mr-4">Simpan Data Anggota <i class="ml-2 fas fa-chevron-right"></i></button>
+                <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2 mr-4">Simpan Data <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>

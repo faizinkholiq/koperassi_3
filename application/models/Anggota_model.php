@@ -2,15 +2,23 @@
 
  class Anggota_model extends CI_Model {
 
-    public function get()
+    public function get($role = null)
     {
         $q = $this->db->select([
-            'person.*',
-            'position.name position_name',
+            "person.*",
+            "position.name position_name",
         ])
         ->from('person')
-        ->join('position', 'person.position = position.id', 'left')
-        ->order_by('id', 'asc');
+        ->join('user', 'user.id = person.user_id')
+        ->join('position', 'position.id = person.position', 'left')
+        ->order_by('person.id', 'asc');
+
+        if (!empty($role)){
+            $q->where('user.role', '1');
+        }else{
+            $q->where('user.role', '2');
+        }
+
         return $q->get()->result_array();
     }
 
@@ -21,9 +29,11 @@
                 "position.name position_name",
             ])
             ->from('person')
+            ->join('user', 'user.id = person.user_id')
             ->join('position', 'position.id = person.position', 'left')
-            ->where('status', 'Aktif')
-            ->order_by('id', 'asc');
+            ->where('person.status', 'Aktif')
+            ->where('user.role', '2')
+            ->order_by('person.id', 'asc');
         return $q->get()->result_array();
     }
 

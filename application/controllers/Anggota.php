@@ -17,14 +17,15 @@ class Anggota extends CI_Controller {
 	public function index()
 	{
         $d = $this->user_model->login_check();
-        $d['title'] = "Data Anggota";
-        $d['highlight_menu'] = "anggota";
         $d['content_view'] = 'anggota/index';
+        $role = isset($_GET['role'])? $_GET['role'] : null;
+        $d['highlight_menu'] = !empty($role)? "administrator" : "anggota";
+        $d['title'] = !empty($role)? "Data Administrator" : "Data Anggota";
         
         if (!check_permission('anggota', $d['role'])){
             redirect('home');
         }else{
-            $d['data'] = $this->anggota_model->get();
+            $d['data'] = $this->anggota_model->get($role);
             $this->load->view('layout/template', $d);
         }
 	}
@@ -45,9 +46,10 @@ class Anggota extends CI_Controller {
     public function detail($id)
 	{
         $d = $this->user_model->login_check();
-        $d['title'] = "Detail Anggota";
-        $d['highlight_menu'] = "anggota";
         $d['content_view'] = 'anggota/detail';
+        $role = isset($_GET['role'])? $_GET['role'] : null;
+        $d['highlight_menu'] = !empty($role)? "administrator" : "anggota";
+        $d['title'] = !empty($role)? "Detail Administrator" : "Detail Anggota";
 
         if (!check_permission('anggota', $d['role'])){
             redirect('home');
@@ -69,6 +71,7 @@ class Anggota extends CI_Controller {
                 $data['error'] = "No Permission !";
             }else{
                 $nd = $this->get_input();
+                $role = $this->input->post('role');
                 // Upload File
                 foreach ($_FILES as $key => $item) {
                     if($item['error'] == 0) {
@@ -96,7 +99,7 @@ class Anggota extends CI_Controller {
                 $user_id = $this->user_model->create([
                     "username" => $nd["detail_anggota"]["tmk"],
                     "name" => $nd["detail_anggota"]["name"],
-                    "role" => ($nd["detail_anggota"]["position"] == 1)? 1 : 2,
+                    "role" => $role,
                     "password" => $nd["detail_anggota"]["nik"],
                     "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
                 ]);
@@ -126,11 +129,17 @@ class Anggota extends CI_Controller {
             }
 
             $this->session->set_flashdata('msg', $data);
-            redirect('anggota');
+            if (!empty($role) && $role == 1) {
+                redirect('anggota?role=1');
+            }else{
+                redirect('anggota');
+            }
         }else{
-            $d['title'] = "Tambah Anggota Baru";
-            $d['highlight_menu'] = "anggota";
             $d['content_view'] = 'anggota/input';
+            $role = isset($_GET['role'])? $_GET['role'] : null;
+            $d['highlight_menu'] = !empty($role)? "administrator" : "anggota";
+            $d['title'] = !empty($role)? "Tambah Administrator Baru" : "Tambah Anggota Baru";
+
             if (!check_permission('anggota', $d['role'])){
                 redirect('home');
             }else{
@@ -152,6 +161,7 @@ class Anggota extends CI_Controller {
                 $data['error'] = "No Permission !";
             }else{
                 $nd = $this->get_input();
+                $role = $this->input->post('role');
 
                 $detail = $this->anggota_model->detail($id);
 
@@ -209,7 +219,7 @@ class Anggota extends CI_Controller {
                         $this->user_model->edit([
                             "id" => $detail["user_id"],
                             "name" => $nd["detail_anggota"]["name"],
-                            "role" => ($nd["detail_anggota"]["position"] == 1)? 1 : 2,
+                            "role" => $this->input->post('role'),
                             "active" => ($nd["detail_anggota"]["status"] == "Aktif")? 1 : 0,
                         ]);
 
@@ -224,11 +234,10 @@ class Anggota extends CI_Controller {
                         }
     
                         $data['success'] = 1;
-                        $data['message'] = "Success !";
-                        redirect('anggota');
+                        $data['message'] = "Success Update Data!";
                     } else {
                         $data['success'] = 0;
-                        $data['error'] = "Failed !";
+                        $data['error'] = "Failed Update Data !";
                     }
                 }else{
                     $data['success'] = 0;
@@ -236,11 +245,17 @@ class Anggota extends CI_Controller {
                 }
             }
 
-            return $data;
+            $this->session->set_flashdata('msg', $data);
+            if (!empty($role) && $role == 1) {
+                redirect('anggota?role=1');
+            }else{
+                redirect('anggota');
+            }
         }else{
-            $d['title'] = "Ubah Anggota";
-            $d['highlight_menu'] = "anggota";
             $d['content_view'] = 'anggota/input';
+            $role = isset($_GET['role'])? $_GET['role'] : null;
+            $d['highlight_menu'] = !empty($role)? "administrator" : "anggota";
+            $d['title'] = !empty($role)? "Ubah Administrator" : "Ubah Anggota";
 
             if (!check_permission('anggota', $d['role'])){
                 redirect('home');

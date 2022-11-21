@@ -1,3 +1,6 @@
+<?php
+    $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
+?>
 <div class="row">
 
     <div class="col-lg-12 mb-4">
@@ -5,7 +8,7 @@
         <!-- Illustrations -->
         <div class="card shadow mb-4">
             <div class="card-body">
-                <a class="my-text-primary" href="<?=site_url('anggota')?>">
+                <a class="my-text-primary" href="<?= site_url('anggota').$role_params ?>">
                     <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>

@@ -99,6 +99,12 @@ if (!isset($highlight_menu)){
                     <span>Data Anggota</span></a>
             </li>
 
+            <li class="nav-item <?= $highlight_menu === 'administrator' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/anggota?role=1') ?>">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>Administrator</span></a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link <?= $simpanan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseSimpanan"
                     aria-expanded="true" aria-controls="collapseSimpanan">
@@ -212,9 +218,11 @@ if (!isset($highlight_menu)){
                                         <span class="font-weight-bold"><?= $item["message"] ?></span>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a>
                                 <?php 
                                     endforeach; 
+                                ?>
+                                <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a>
+                                <?php
                                     else:
                                 ?>
                                 <a class="dropdown-item d-flex align-items-center" href="#">

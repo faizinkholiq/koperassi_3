@@ -1,6 +1,7 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
 <?php
+    $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
     if(!empty($this->session->flashdata('msg'))):
         $msg = $this->session->flashdata('msg');
 ?>
@@ -15,7 +16,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-body">
-        <a href="<?=site_url('anggota/create') ?>" class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> Anggota</a>
+        <a href="<?=site_url('anggota/create').$role_params ?>" class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> <?= (isset($_GET["role"]) && $_GET["role"] == 1)? "Administrator" : "Anggota" ?></a>
         <hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="anggotaTable" width="100%" cellspacing="0">
@@ -44,8 +45,8 @@
                         <td><?=$row["join_date"]?></td>
                         <td><?=$row["status"]?></td>
                         <td>
-                            <a href="<?=site_url('anggota/edit/'.$row["id"])?>" class="btn my-btn-primary">Ubah</a>
-                            <a href="<?=site_url('anggota/detail/'.$row["id"])?>" class="btn btn-primary">Detail</a>
+                            <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn my-btn-primary">Ubah</a>
+                            <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-primary">Detail</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
