@@ -69,7 +69,7 @@
     {
         $this->db->insert('user', $data);
 
-        return ($this->db->affected_rows()>0) ? true : false;
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
     }
 
     public function edit($data)
