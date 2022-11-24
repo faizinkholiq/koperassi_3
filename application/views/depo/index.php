@@ -35,8 +35,8 @@
                         <td><?= $row['code'] ?></td>
                         <td><?= $row['name'] ?></td>
                         <td class="text-center">
-                            <a href="<?=site_url('depo/edit/'.$row["id"])?>" class="btn btn-primary"><i class="fas fa-edit mr-2"></i>Ubah</a>
-                            <button type="button" onclick="DoDelete(<?= $row['id'] ?>)" class="btn btn-danger ml-2"><i class="fas fa-trash mr-2"></i>Hapus</button>
+                            <a href="<?=site_url('depo/edit/'.$row["id"])?>" class="btn btn-sm btn-primary"><i class="fas fa-edit mr-2"></i>Ubah</a>
+                            <button type="button" onclick="DoDelete(<?= $row['id'] ?>)" class="btn btn-sm btn-danger ml-2"><i class="fas fa-trash mr-2"></i>Hapus</button>
                         </td>
                     </tr>
                     <?php endforeach; ?>

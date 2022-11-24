@@ -44,9 +44,9 @@
                         <td><?=$row["position_name"]?></td>
                         <td><?=$row["join_date"]?></td>
                         <td><?=$row["status"]?></td>
-                        <td>
-                            <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn my-btn-primary">Ubah</a>
-                            <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-primary">Detail</a>
+                        <td class="text-center">
+                            <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn btn-sm my-btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
