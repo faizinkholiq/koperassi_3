@@ -290,6 +290,46 @@ class Anggota extends CI_Controller {
         return $data;
     }
 
+    public function reset_password($id)
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $nd = $this->get_input();
+            $role = $this->input->post('role');
+
+            $detail = $this->anggota_model->detail($id);
+            if ($detail) {
+                $nd["detail_anggota"]["id"] = $id;
+    
+                $edit = $this->user_model->edit([
+                    "id" => $detail["user_id"],
+                    "password" => "member@koperasi123",
+                ]);
+
+                if ($edit) {
+                    $data['success'] = 1;
+                    $data['message'] = "Password berhasil direset !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Password gagal direset !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid ID !";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        if (!empty($role) && $role == 1) {
+            redirect('anggota?role=1');
+        }else{
+            redirect('anggota');
+        }
+	}
+
     private function get_input()
     {
         $data["detail_anggota"]["nik"] = $this->input->post('nik');
