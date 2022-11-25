@@ -21,7 +21,9 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
                     <i class="fas fa-times float-right mr-3" style="font-size:2rem;" 
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>
-                <button class="btn btn-primary mr-4" style="float:right"><i class="fas fa-undo mr-2"></i> Reset Password</button>
+                <?php if(isset($data["id"])): ?>
+                    <button class="btn btn-primary mr-4" style="float:right" data-toggle="modal" data-target="#resetModal"><i class="fas fa-undo mr-2"></i> Reset Password</button>
+                <?php endif; ?>
                 <h5 class="font-weight-bold mt-2"><i class="mr-2 fas fa-user"></i> Data Diri</h5>
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
@@ -244,6 +246,29 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
 
     </div>
 </div>
+
+<?php if(isset($data["id"])): ?>
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetModalLabel">Reset Password</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Password akun anggota yang direset akan dikembalikan ke default password: member@koperasi123<strong></strong></div>
+            <div class="modal-footer">
+                <form method="GET" action="<?= site_url('anggota/reset_password/').$data["id"] ?>">
+                    <input type="hidden" id="resetID" name="id" />
+                    <button class="btn btn-danger ml-2" type="submit">Hapus</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
 
 <script>
     function removeFile(name){
