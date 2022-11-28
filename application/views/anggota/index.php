@@ -29,7 +29,8 @@
                         <th class="text-center">No. Telp</th>
                         <th class="text-center">Jabatan</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
-                        <th class="text-center">Status Keanggotaan</th>
+                        <th class="text-center">Status<br/>Keanggotaan</th>
+                        <th class="text-center">Pengajuan<br/>Perubahan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -43,10 +44,33 @@
                         <td><?=$row["phone"]?></td>
                         <td><?=$row["position_name"]?></td>
                         <td><?=$row["join_date"]?></td>
-                        <td><?=$row["status"]?></td>
+                        <td class="text-center"><?=$row["status"]?></td>
+                        <td class="text-center"><?php 
+                            if(!empty($row["status_perubahan"])){
+                                $tag = "-";
+                                switch($row["status_perubahan"]){
+                                    case "Pending":
+                                        $tag = "<span class='bg-warning text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-clock'></i> Pending</span>";
+                                        break;
+                                    case "Approved":
+                                        $tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-check'></i> DiVerifikasi</span>";
+                                        break;
+                                    case "Rejected":
+                                        $tag = "<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-times'></i> DiTolak</span>";
+                                        break;
+                                }
+                                echo $tag; 
+                            }else{
+                                echo "-";
+                            } 
+                        ?></td>
                         <td class="text-center">
-                            <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn btn-sm my-btn-primary"><i class="fas fa-edit"></i></a>
-                            <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+                            <?php if($row["status_perubahan"] == 'Pending'):?>
+                            <a href="#!" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></a>
+                            <a href="#!" class="btn btn-sm btn-danger mr-3" style="width: 2rem;"><i class="fas fa-times"></i></a>
+                            <?php endif; ?>
+                            <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn btn-sm my-btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>
+                            <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

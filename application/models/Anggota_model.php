@@ -7,10 +7,13 @@
         $q = $this->db->select([
             "person.*",
             "position.name position_name",
+            "person_temp.status status_perubahan",
+            "person_temp.reason",
         ])
         ->from('person')
         ->join('user', 'user.id = person.user_id')
         ->join('position', 'position.id = person.position', 'left')
+        ->join('person_temp', 'person_temp.person_id = person.id', 'left')
         ->order_by('person.id', 'asc');
 
         if (!empty($role)){
