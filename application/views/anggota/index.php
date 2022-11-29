@@ -31,7 +31,7 @@
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Status<br/>Keanggotaan</th>
                         <th class="text-center">Pengajuan<br/>Perubahan</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center" style="width: 150px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                         <td class="text-center">
                             <?php if($row["status_perubahan"] == 'Pending'):?>
                             <a href="#!" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></a>
-                            <a href="#!" class="btn btn-sm btn-danger mr-3" style="width: 2rem;"><i class="fas fa-times"></i></a>
+                            <a href="#!" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></a>
                             <?php endif; ?>
                             <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn btn-sm my-btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>
                             <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-eye"></i></a>
