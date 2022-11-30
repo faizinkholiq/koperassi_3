@@ -1,0 +1,811 @@
+UPDATE person SET nik='3273121202680003' WHERE user_id = '3';
+UPDATE person SET nik='3273125412680000' WHERE user_id = '4';
+UPDATE person SET nik='3278051103680007' WHERE user_id = '5';
+UPDATE person SET nik='3273301009700002' WHERE user_id = '6';
+UPDATE person SET nik='1050204401770001' WHERE user_id = '7';
+UPDATE person SET nik='3207070802900002' WHERE user_id = '8';
+UPDATE person SET nik='1217016909020002' WHERE user_id = '9';
+UPDATE person SET nik='3273120109860004' WHERE user_id = '10';
+UPDATE person SET nik='3211182003710002' WHERE user_id = '11';
+UPDATE person SET nik='3273134903710001' WHERE user_id = '12';
+UPDATE person SET nik='3273202509840001' WHERE user_id = '13';
+UPDATE person SET nik='3273166612870004' WHERE user_id = '14';
+UPDATE person SET nik='3273304807890001' WHERE user_id = '15';
+UPDATE person SET nik='3273122004850002' WHERE user_id = '16';
+UPDATE person SET nik='3273205709870004' WHERE user_id = '17';
+UPDATE person SET nik='3273287105890002' WHERE user_id = '18';
+UPDATE person SET nik='3273224109840001' WHERE user_id = '19';
+UPDATE person SET nik='3502072306900004' WHERE user_id = '20';
+UPDATE person SET nik='3201121307920004' WHERE user_id = '21';
+UPDATE person SET nik='3273241802920001' WHERE user_id = '22';
+UPDATE person SET nik='3204324102820003' WHERE user_id = '23';
+UPDATE person SET nik='3211153003920006' WHERE user_id = '24';
+UPDATE person SET nik='3273105210900004' WHERE user_id = '25';
+UPDATE person SET nik='3277031409880014' WHERE user_id = '26';
+UPDATE person SET nik='3204252102960003' WHERE user_id = '27';
+UPDATE person SET nik='0' WHERE user_id = '28';
+UPDATE person SET nik='3273260807790006' WHERE user_id = '29';
+UPDATE person SET nik='3273071608101278' WHERE user_id = '30';
+UPDATE person SET nik='3273240412720001' WHERE user_id = '31';
+UPDATE person SET nik='3273291510770002' WHERE user_id = '32';
+UPDATE person SET nik='3273090804110480' WHERE user_id = '33';
+UPDATE person SET nik='3273225707750004' WHERE user_id = '34';
+UPDATE person SET nik='3217062308740008' WHERE user_id = '35';
+UPDATE person SET nik='3204291805870001' WHERE user_id = '36';
+UPDATE person SET nik='3273261610880003' WHERE user_id = '37';
+UPDATE person SET nik='3204282210950002' WHERE user_id = '38';
+UPDATE person SET nik='3273252203850002' WHERE user_id = '39';
+UPDATE person SET nik='3211141207820019' WHERE user_id = '40';
+UPDATE person SET nik='3273241904920004' WHERE user_id = '41';
+UPDATE person SET nik='3204081107610001' WHERE user_id = '42';
+UPDATE person SET nik='3211151910890008' WHERE user_id = '43';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UPDATE person SET nik='3204292012690005' WHERE user_id = '72';
+UPDATE person SET nik='3273220505690002' WHERE user_id = '73';
+UPDATE person SET nik='3273260908760008' WHERE user_id = '74';
+
+UPDATE person SET nik='3273286701700002' WHERE user_id = '76';
+UPDATE person SET nik='3204261507740006' WHERE user_id = '77';
+UPDATE person SET nik='3204080210760003' WHERE user_id = '78';
+UPDATE person SET nik='3204100309710003' WHERE user_id = '79';
+UPDATE person SET nik='3217061109690001' WHERE user_id = '80';
+UPDATE person SET nik='3204290508760004' WHERE user_id = '81';
+UPDATE person SET nik='1050292008703005' WHERE user_id = '82';
+UPDATE person SET nik='3273290501780002' WHERE user_id = '83';
+UPDATE person SET nik='3273261107700007' WHERE user_id = '84';
+UPDATE person SET nik='3273012202700002' WHERE user_id = '85';
+UPDATE person SET nik='3273161609100947' WHERE user_id = '86';
+UPDATE person SET nik='3278052710750004' WHERE user_id = '87';
+UPDATE person SET nik='3204321805010004' WHERE user_id = '88';
+UPDATE person SET nik='3204291207820001' WHERE user_id = '89';
+UPDATE person SET nik='3209121906080055' WHERE user_id = '90';
+UPDATE person SET nik='3277020607740023' WHERE user_id = '91';
+UPDATE person SET nik='3204290803890005' WHERE user_id = '92';
+UPDATE person SET nik='3273242211820001' WHERE user_id = '93';
+UPDATE person SET nik='3273260703830002' WHERE user_id = '94';
+UPDATE person SET nik='3273221401840001' WHERE user_id = '95';
+UPDATE person SET nik='3205101917780002' WHERE user_id = '96';
+UPDATE person SET nik='3273011006740005' WHERE user_id = '97';
+UPDATE person SET nik='3273022407820002' WHERE user_id = '98';
+UPDATE person SET nik='3273170209790005' WHERE user_id = '99';
+UPDATE person SET nik='3273162611810011' WHERE user_id = '100';
+UPDATE person SET nik='3273222304900003' WHERE user_id = '101';
+UPDATE person SET nik='3273262706930002' WHERE user_id = '102';
+UPDATE person SET nik='3273301602920001' WHERE user_id = '103';
+UPDATE person SET nik='3204072204890003' WHERE user_id = '104';
+UPDATE person SET nik='3273256806950009' WHERE user_id = '105';
+UPDATE person SET nik='3273292808870001' WHERE user_id = '106';
+UPDATE person SET nik='3273291207860002' WHERE user_id = '107';
+UPDATE person SET nik='3273281412800001' WHERE user_id = '108';
+UPDATE person SET nik='3209211710890006' WHERE user_id = '109';
+UPDATE person SET nik='3204290808920013' WHERE user_id = '110';
+UPDATE person SET nik='3212102208950005' WHERE user_id = '111';
+UPDATE person SET nik='3205010811870003' WHERE user_id = '112';
+UPDATE person SET nik='3204070104880005' WHERE user_id = '113';
+UPDATE person SET nik='3217071501870012' WHERE user_id = '114';
+UPDATE person SET nik='3204083008910003' WHERE user_id = '115';
+UPDATE person SET nik='3204292601830002' WHERE user_id = '116';
+UPDATE person SET nik='3204290305900003' WHERE user_id = '117';
+UPDATE person SET nik='3217050508920008' WHERE user_id = '118';
+UPDATE person SET nik='3204291801860003' WHERE user_id = '119';
+UPDATE person SET nik='3273033105960005' WHERE user_id = '120';
+UPDATE person SET nik='3273260308880004' WHERE user_id = '121';
+UPDATE person SET nik='3273181301840002' WHERE user_id = '122';
+
+UPDATE person SET nik='3273281204930001' WHERE user_id = '124';
+UPDATE person SET nik='3273281802970002' WHERE user_id = '125';
+UPDATE person SET nik='3273250609920002' WHERE user_id = '126';
+UPDATE person SET nik='3273181908920004' WHERE user_id = '127';
+UPDATE person SET nik='3273291202960002' WHERE user_id = '128';
+UPDATE person SET nik='3205202301950001' WHERE user_id = '129';
+UPDATE person SET nik='3204290503950009' WHERE user_id = '130';
+UPDATE person SET nik='3273121904860004' WHERE user_id = '131';
+
+UPDATE person SET nik='3204070202980003' WHERE user_id = '133';
+UPDATE person SET nik='3273281809930001' WHERE user_id = '134';
+
+UPDATE person SET nik='3273290909880002' WHERE user_id = '136';
+UPDATE person SET nik='3273256406970001' WHERE user_id = '137';
+UPDATE person SET nik='3273160609930001' WHERE user_id = '138';
+UPDATE person SET nik='3204332101920002' WHERE user_id = '139';
+UPDATE person SET nik='3273031109910001' WHERE user_id = '140';
+
+UPDATE person SET nik='3211152410940004' WHERE user_id = '142';
+UPDATE person SET nik='3215011412930004' WHERE user_id = '143';
+
+UPDATE person SET nik='0' WHERE user_id = '145';
+UPDATE person SET nik='0' WHERE user_id = '146';
+UPDATE person SET nik='0' WHERE user_id = '147';
+UPDATE person SET nik='0' WHERE user_id = '148';
+
+UPDATE person SET nik='0' WHERE user_id = '150';
+UPDATE person SET nik='3273242601970001' WHERE user_id = '151';
+UPDATE person SET nik='3273241710890004' WHERE user_id = '152';
+UPDATE person SET nik='3204292608880002' WHERE user_id = '153';
+UPDATE person SET nik='0' WHERE user_id = '154';
+UPDATE person SET nik='0' WHERE user_id = '155';
+UPDATE person SET nik='0' WHERE user_id = '156';
+UPDATE person SET nik='0' WHERE user_id = '157';
+UPDATE person SET nik='0' WHERE user_id = '158';
+UPDATE person SET nik='3273191208950007' WHERE user_id = '159';
+UPDATE person SET nik='0' WHERE user_id = '160';
+UPDATE person SET nik='0' WHERE user_id = '161';
+UPDATE person SET nik='0' WHERE user_id = '162';
+
+UPDATE person SET nik='0' WHERE user_id = '164';
+UPDATE person SET nik='3273280307980004' WHERE user_id = '165';
+UPDATE person SET nik='3204291503720004' WHERE user_id = '166';
+UPDATE person SET nik='3204292310690004' WHERE user_id = '167';
+UPDATE person SET nik='3204291110700004' WHERE user_id = '168';
+UPDATE person SET nik='3204050801720006' WHERE user_id = '169';
+UPDATE person SET nik='3204281812780006' WHERE user_id = '170';
+UPDATE person SET nik='3204291204720004' WHERE user_id = '171';
+UPDATE person SET nik='3204290512800003' WHERE user_id = '172';
+UPDATE person SET nik='3211151509770010' WHERE user_id = '173';
+UPDATE person SET nik='3204252509840002' WHERE user_id = '174';
+UPDATE person SET nik='3205201505780003' WHERE user_id = '175';
+UPDATE person SET nik='3204337105900005' WHERE user_id = '176';
+UPDATE person SET nik='3204291801900004' WHERE user_id = '177';
+UPDATE person SET nik='3204282809850004' WHERE user_id = '178';
+UPDATE person SET nik='3273021407140008' WHERE user_id = '179';
+UPDATE person SET nik='3204340707900002' WHERE user_id = '180';
+UPDATE person SET nik='3273302505860004' WHERE user_id = '181';
+UPDATE person SET nik='3204340711850003' WHERE user_id = '182';
+UPDATE person SET nik='3204284610930002' WHERE user_id = '183';
+UPDATE person SET nik='3273123004880003' WHERE user_id = '184';
+UPDATE person SET nik='3274020410900001' WHERE user_id = '185';
+UPDATE person SET nik='3204301310900002' WHERE user_id = '186';
+UPDATE person SET nik='3204341501910004' WHERE user_id = '187';
+UPDATE person SET nik='3204291403840008' WHERE user_id = '188';
+UPDATE person SET nik='3204272408900003' WHERE user_id = '189';
+UPDATE person SET nik='3204292812920003' WHERE user_id = '190';
+UPDATE person SET nik='3204140103920003' WHERE user_id = '191';
+UPDATE person SET nik='3273122808850004' WHERE user_id = '192';
+UPDATE person SET nik='3204342608820001' WHERE user_id = '193';
+UPDATE person SET nik='34204340205960001' WHERE user_id = '194';
+UPDATE person SET nik='3204282111950010' WHERE user_id = '195';
+UPDATE person SET nik='3204342205900008' WHERE user_id = '196';
+UPDATE person SET nik='3204282006900012' WHERE user_id = '197';
+UPDATE person SET nik='3273122401940001' WHERE user_id = '198';
+
+
+UPDATE person SET nik='3273241704960001' WHERE user_id = '201';
+
+UPDATE person SET nik='3204342506930003' WHERE user_id = '203';
+UPDATE person SET nik='0' WHERE user_id = '204';
+UPDATE person SET nik='0' WHERE user_id = '205';
+UPDATE person SET nik='3205054311700001' WHERE user_id = '206';
+UPDATE person SET nik='3205122103710004' WHERE user_id = '207';
+UPDATE person SET nik='3205071508720001' WHERE user_id = '208';
+UPDATE person SET nik='3278021508700009' WHERE user_id = '209';
+UPDATE person SET nik='3205062706680002' WHERE user_id = '210';
+UPDATE person SET nik='3273122109690005' WHERE user_id = '211';
+UPDATE person SET nik='3278080803720008' WHERE user_id = '212';
+UPDATE person SET nik='3205050811760003' WHERE user_id = '213';
+UPDATE person SET nik='3205041003730005' WHERE user_id = '214';
+UPDATE person SET nik='3205193108700001' WHERE user_id = '215';
+UPDATE person SET nik='3205190203740001' WHERE user_id = '216';
+UPDATE person SET nik='3205192506710004' WHERE user_id = '217';
+UPDATE person SET nik='3205051006830004' WHERE user_id = '218';
+UPDATE person SET nik='3205012106820012' WHERE user_id = '219';
+UPDATE person SET nik='3205052504880014' WHERE user_id = '220';
+UPDATE person SET nik='3205192205920003' WHERE user_id = '221';
+UPDATE person SET nik='3205190611770001' WHERE user_id = '222';
+UPDATE person SET nik='3205012712810003' WHERE user_id = '223';
+UPDATE person SET nik='3205010204880002' WHERE user_id = '224';
+UPDATE person SET nik='3205196106870001' WHERE user_id = '225';
+UPDATE person SET nik='3205042803820005' WHERE user_id = '226';
+UPDATE person SET nik='3205090407940004' WHERE user_id = '227';
+UPDATE person SET nik='3205072006840006' WHERE user_id = '228';
+UPDATE person SET nik='3205191304830004' WHERE user_id = '229';
+UPDATE person SET nik='3205021407830002' WHERE user_id = '230';
+UPDATE person SET nik='3205422810820002' WHERE user_id = '231';
+UPDATE person SET nik='3205190111920002' WHERE user_id = '232';
+UPDATE person SET nik='3206191203950004' WHERE user_id = '233';
+UPDATE person SET nik='3205012401820005' WHERE user_id = '234';
+UPDATE person SET nik='3205021106830014' WHERE user_id = '235';
+UPDATE person SET nik='3205012303820007' WHERE user_id = '236';
+UPDATE person SET nik='3205102911930003' WHERE user_id = '237';
+
+UPDATE person SET nik='3205012812890002' WHERE user_id = '239';
+UPDATE person SET nik='3215031011910005' WHERE user_id = '240';
+UPDATE person SET nik='3205192112950002' WHERE user_id = '241';
+
+
+UPDATE person SET nik='3372032403940001' WHERE user_id = '244';
+UPDATE person SET nik='3205053107940004' WHERE user_id = '245';
+
+
+
+
+
+
+UPDATE person SET nik='3205390107970020' WHERE user_id = '252';
+UPDATE person SET nik='3205011102980005' WHERE user_id = '253';
+UPDATE person SET nik='3205020102950002' WHERE user_id = '254';
+UPDATE person SET nik='3205050510920002' WHERE user_id = '255';
+UPDATE person SET nik='3205192304960010' WHERE user_id = '256';
+UPDATE person SET nik='0' WHERE user_id = '257';
+UPDATE person SET nik='3211191306680001' WHERE user_id = '258';
+UPDATE person SET nik='3211170903720005' WHERE user_id = '259';
+UPDATE person SET nik='3212072806680003' WHERE user_id = '260';
+UPDATE person SET nik='3212191006710002' WHERE user_id = '261';
+UPDATE person SET nik='1055071410815001' WHERE user_id = '262';
+UPDATE person SET nik='3210061011830082' WHERE user_id = '263';
+UPDATE person SET nik='3211172307810009' WHERE user_id = '264';
+UPDATE person SET nik='3274000405810004' WHERE user_id = '265';
+UPDATE person SET nik='3211071208880001' WHERE user_id = '266';
+UPDATE person SET nik='3325122402920004' WHERE user_id = '267';
+UPDATE person SET nik='3211180308880001' WHERE user_id = '268';
+UPDATE person SET nik='3211185302930007' WHERE user_id = '269';
+UPDATE person SET nik='3273291202910002' WHERE user_id = '270';
+UPDATE person SET nik='3206030502910004' WHERE user_id = '271';
+UPDATE person SET nik='3211175511950004' WHERE user_id = '272';
+
+
+
+UPDATE person SET nik='0' WHERE user_id = '276';
+UPDATE person SET nik='3273050105710019' WHERE user_id = '277';
+UPDATE person SET nik='3273110711690002' WHERE user_id = '278';
+UPDATE person SET nik='3204291302800002' WHERE user_id = '279';
+UPDATE person SET nik='3273240203700010' WHERE user_id = '280';
+UPDATE person SET nik='3204291012820012' WHERE user_id = '281';
+UPDATE person SET nik='3204172109870003' WHERE user_id = '282';
+UPDATE person SET nik='3217111010810046' WHERE user_id = '283';
+UPDATE person SET nik='3204350305890008' WHERE user_id = '284';
+UPDATE person SET nik='3204322811930005' WHERE user_id = '285';
+UPDATE person SET nik='3204321405820048' WHERE user_id = '286';
+UPDATE person SET nik='3204120511830014' WHERE user_id = '287';
+UPDATE person SET nik='3273170506950001' WHERE user_id = '288';
+UPDATE person SET nik='3204332502930012' WHERE user_id = '289';
+UPDATE person SET nik='3204285211920009' WHERE user_id = '290';
+UPDATE person SET nik='3204291812970008' WHERE user_id = '291';
+UPDATE person SET nik='3204322108960002' WHERE user_id = '292';
+UPDATE person SET nik='3204362311960003' WHERE user_id = '293';
+UPDATE person SET nik='3204082711880006' WHERE user_id = '294';
+UPDATE person SET nik='3204332405940002' WHERE user_id = '295';
+UPDATE person SET nik='3211210302930002' WHERE user_id = '296';
+
+UPDATE person SET nik='3204361209950003' WHERE user_id = '298';
+UPDATE person SET nik='3204360101980016' WHERE user_id = '299';
+
+UPDATE person SET nik='0' WHERE user_id = '301';
+UPDATE person SET nik='0' WHERE user_id = '302';
+UPDATE person SET nik='3273042907690003' WHERE user_id = '303';
+UPDATE person SET nik='3204291506750010' WHERE user_id = '304';
+UPDATE person SET nik='3204290404730006' WHERE user_id = '305';
+UPDATE person SET nik='3273291712670001' WHERE user_id = '306';
+UPDATE person SET nik='3205042408710005' WHERE user_id = '307';
+UPDATE person SET nik='3273230608740003' WHERE user_id = '308';
+UPDATE person SET nik='3204341709750007' WHERE user_id = '309';
+UPDATE person SET nik='3204290409760003' WHERE user_id = '310';
+UPDATE person SET nik='3204460101770005' WHERE user_id = '311';
+UPDATE person SET nik='3204292605830005' WHERE user_id = '312';
+UPDATE person SET nik='3205130107800052' WHERE user_id = '313';
+UPDATE person SET nik='3273040510750003' WHERE user_id = '314';
+UPDATE person SET nik='3273222903680013' WHERE user_id = '315';
+UPDATE person SET nik='3273300911830005' WHERE user_id = '316';
+UPDATE person SET nik='3211143103780004' WHERE user_id = '317';
+UPDATE person SET nik='3205141106840011' WHERE user_id = '318';
+UPDATE person SET nik='3204081501700010' WHERE user_id = '319';
+UPDATE person SET nik='3204290908850008' WHERE user_id = '320';
+UPDATE person SET nik='3204290406830014' WHERE user_id = '321';
+UPDATE person SET nik='3273231303920004' WHERE user_id = '322';
+UPDATE person SET nik='3204342101930007' WHERE user_id = '323';
+UPDATE person SET nik='3212271507920003' WHERE user_id = '324';
+UPDATE person SET nik='3273125103860003' WHERE user_id = '325';
+UPDATE person SET nik='3273221109900003' WHERE user_id = '326';
+UPDATE person SET nik='3273291112880001' WHERE user_id = '327';
+UPDATE person SET nik='3273162201860002' WHERE user_id = '328';
+UPDATE person SET nik='3204071208850002' WHERE user_id = '329';
+UPDATE person SET nik='3273210602820002' WHERE user_id = '330';
+UPDATE person SET nik='3204352206910001' WHERE user_id = '331';
+UPDATE person SET nik='3273220808810002' WHERE user_id = '332';
+UPDATE person SET nik='3204250507850002' WHERE user_id = '333';
+UPDATE person SET nik='3273280405930003' WHERE user_id = '334';
+UPDATE person SET nik='3273220908850003' WHERE user_id = '335';
+UPDATE person SET nik='3204341103860001' WHERE user_id = '336';
+UPDATE person SET nik='3273212606850003' WHERE user_id = '337';
+
+UPDATE person SET nik='3204312705950001' WHERE user_id = '339';
+UPDATE person SET nik='3204082598940005' WHERE user_id = '340';
+UPDATE person SET nik='3273213001890001' WHERE user_id = '341';
+UPDATE person SET nik='3273222307890001' WHERE user_id = '342';
+UPDATE person SET nik='3204341407940002' WHERE user_id = '343';
+UPDATE person SET nik='3274090802920005' WHERE user_id = '344';
+UPDATE person SET nik='3273220610890002' WHERE user_id = '345';
+UPDATE person SET nik='3273262606880003' WHERE user_id = '346';
+UPDATE person SET nik='3273161509910004' WHERE user_id = '347';
+UPDATE person SET nik='3273030906860002' WHERE user_id = '348';
+UPDATE person SET nik='3205140406950002' WHERE user_id = '349';
+UPDATE person SET nik='3273220709820003' WHERE user_id = '350';
+UPDATE person SET nik='3204292411900006' WHERE user_id = '351';
+UPDATE person SET nik='3204291211880003' WHERE user_id = '352';
+UPDATE person SET nik='3273255805860002' WHERE user_id = '353';
+UPDATE person SET nik='3273042108820005' WHERE user_id = '354';
+UPDATE person SET nik='3273222910970004' WHERE user_id = '355';
+UPDATE person SET nik='327328290689001' WHERE user_id = '356';
+UPDATE person SET nik='3204292904920002' WHERE user_id = '357';
+UPDATE person SET nik='3209062511900003' WHERE user_id = '358';
+UPDATE person SET nik='3273254108930001' WHERE user_id = '359';
+UPDATE person SET nik='3273220810890001' WHERE user_id = '360';
+UPDATE person SET nik='3205142205900002' WHERE user_id = '361';
+UPDATE person SET nik='3273282708980004' WHERE user_id = '362';
+UPDATE person SET nik='3204331111980006' WHERE user_id = '363';
+UPDATE person SET nik='3204122907890001' WHERE user_id = '364';
+UPDATE person SET nik='3204051010880005' WHERE user_id = '365';
+UPDATE person SET nik='3273220710920002' WHERE user_id = '366';
+UPDATE person SET nik='3214121604890002' WHERE user_id = '367';
+UPDATE person SET nik='3273181106940001' WHERE user_id = '368';
+UPDATE person SET nik='3273255310940003' WHERE user_id = '369';
+UPDATE person SET nik='3204054906940011' WHERE user_id = '370';
+
+UPDATE person SET nik='3204280702990001' WHERE user_id = '372';
+UPDATE person SET nik='3273260901880003' WHERE user_id = '373';
+UPDATE person SET nik='3205190611960010' WHERE user_id = '374';
+
+
+
+UPDATE person SET nik='3273220711980002' WHERE user_id = '378';
+UPDATE person SET nik='0' WHERE user_id = '379';
+UPDATE person SET nik='0' WHERE user_id = '380';
+UPDATE person SET nik='3217082005720006' WHERE user_id = '381';
+UPDATE person SET nik='3217081401720004' WHERE user_id = '382';
+UPDATE person SET nik='3274011012680015' WHERE user_id = '383';
+UPDATE person SET nik='3273196607700003' WHERE user_id = '384';
+UPDATE person SET nik='3217111205740010' WHERE user_id = '385';
+UPDATE person SET nik='3204150402720007' WHERE user_id = '386';
+UPDATE person SET nik='3204251607680002' WHERE user_id = '387';
+UPDATE person SET nik='3277010606720076' WHERE user_id = '388';
+UPDATE person SET nik='3277026712730019' WHERE user_id = '389';
+UPDATE person SET nik='3217140308810004' WHERE user_id = '390';
+UPDATE person SET nik='3217041002790007' WHERE user_id = '391';
+UPDATE person SET nik='3277010607750026' WHERE user_id = '392';
+UPDATE person SET nik='3217065901730011' WHERE user_id = '393';
+UPDATE person SET nik='3217081202810009' WHERE user_id = '394';
+UPDATE person SET nik='3217092904740002' WHERE user_id = '395';
+UPDATE person SET nik='3203051008800004' WHERE user_id = '396';
+UPDATE person SET nik='3273181011720005' WHERE user_id = '397';
+UPDATE person SET nik='3277021110740001' WHERE user_id = '398';
+UPDATE person SET nik='3277012005740033' WHERE user_id = '399';
+UPDATE person SET nik='3273222708690007' WHERE user_id = '400';
+UPDATE person SET nik='3277022403710018' WHERE user_id = '401';
+UPDATE person SET nik='3273262403820001' WHERE user_id = '402';
+UPDATE person SET nik='3217080409780010' WHERE user_id = '403';
+UPDATE person SET nik='3217062608830015' WHERE user_id = '404';
+UPDATE person SET nik='3217061008820008' WHERE user_id = '405';
+UPDATE person SET nik='3204290903800001' WHERE user_id = '406';
+UPDATE person SET nik='3204322801790002' WHERE user_id = '407';
+UPDATE person SET nik='3217081512870024' WHERE user_id = '408';
+UPDATE person SET nik='3217062912800015' WHERE user_id = '409';
+UPDATE person SET nik='3217082607760006' WHERE user_id = '410';
+UPDATE person SET nik='3221710410840025' WHERE user_id = '411';
+UPDATE person SET nik='3217061104840013' WHERE user_id = '412';
+UPDATE person SET nik='3273152801790006' WHERE user_id = '413';
+UPDATE person SET nik='3217081605010017' WHERE user_id = '414';
+UPDATE person SET nik='3277031711780001' WHERE user_id = '415';
+UPDATE person SET nik='3277022711880009' WHERE user_id = '416';
+UPDATE person SET nik='3217062309810013' WHERE user_id = '417';
+UPDATE person SET nik='3217101009850020' WHERE user_id = '418';
+UPDATE person SET nik='3274056503890006' WHERE user_id = '419';
+UPDATE person SET nik='3217061211910004' WHERE user_id = '420';
+UPDATE person SET nik='3217062004770010' WHERE user_id = '421';
+UPDATE person SET nik='3217082403900005' WHERE user_id = '422';
+UPDATE person SET nik='3203051702930009' WHERE user_id = '423';
+UPDATE person SET nik='3273051711840003' WHERE user_id = '424';
+UPDATE person SET nik='3273262612740001' WHERE user_id = '425';
+UPDATE person SET nik='3273191703930002' WHERE user_id = '426';
+UPDATE person SET nik='3204130111950001' WHERE user_id = '427';
+UPDATE person SET nik='3205152709920003' WHERE user_id = '428';
+UPDATE person SET nik='3207101610940002' WHERE user_id = '429';
+UPDATE person SET nik='3217102607880009' WHERE user_id = '430';
+UPDATE person SET nik='3204170209900003' WHERE user_id = '431';
+
+UPDATE person SET nik='3273032108890001' WHERE user_id = '433';
+UPDATE person SET nik='3277031510830002' WHERE user_id = '434';
+UPDATE person SET nik='3217060410940004' WHERE user_id = '435';
+UPDATE person SET nik='3217060101840103' WHERE user_id = '436';
+UPDATE person SET nik='3203010909900014' WHERE user_id = '437';
+UPDATE person SET nik='3277021506910014' WHERE user_id = '438';
+UPDATE person SET nik='1272032905880002' WHERE user_id = '439';
+UPDATE person SET nik='3217061408960003' WHERE user_id = '440';
+UPDATE person SET nik='3273132011940004' WHERE user_id = '441';
+UPDATE person SET nik='3203011809930016' WHERE user_id = '442';
+
+UPDATE person SET nik='3217051205910009' WHERE user_id = '444';
+UPDATE person SET nik='3273190104930002' WHERE user_id = '445';
+UPDATE person SET nik='3217060810860004' WHERE user_id = '446';
+UPDATE person SET nik='3217085812990025' WHERE user_id = '447';
+UPDATE person SET nik='3273150501900003' WHERE user_id = '448';
+UPDATE person SET nik='3204333006840017' WHERE user_id = '449';
+UPDATE person SET nik='3217041705950010' WHERE user_id = '450';
+UPDATE person SET nik='3211101503980001' WHERE user_id = '451';
+UPDATE person SET nik='3217061312990013' WHERE user_id = '452';
+UPDATE person SET nik='3273141012920003' WHERE user_id = '453';
+UPDATE person SET nik='3273021212860015' WHERE user_id = '454';
+UPDATE person SET nik='3203051702950001' WHERE user_id = '455';
+UPDATE person SET nik='3273020801990007' WHERE user_id = '456';
+UPDATE person SET nik='3273022509940013' WHERE user_id = '457';
+UPDATE person SET nik='3217060202930021' WHERE user_id = '458';
+UPDATE person SET nik='3273261807970005' WHERE user_id = '459';
+
+
+UPDATE person SET nik='3277030903950017' WHERE user_id = '462';
+UPDATE person SET nik='3602201604940004' WHERE user_id = '463';
+UPDATE person SET nik='3217110508020011' WHERE user_id = '464';
+
+UPDATE person SET nik='0' WHERE user_id = '466';
+UPDATE person SET nik='0' WHERE user_id = '467';
+
+UPDATE person SET nik='0' WHERE user_id = '469';
+UPDATE person SET nik='3203052211990006' WHERE user_id = '470';
+UPDATE person SET nik='3217063101990003' WHERE user_id = '471';
+UPDATE person SET nik='3217042006980002' WHERE user_id = '472';
+UPDATE person SET nik='0' WHERE user_id = '473';
+UPDATE person SET nik='0' WHERE user_id = '474';
+UPDATE person SET nik='0' WHERE user_id = '475';
+UPDATE person SET nik='0' WHERE user_id = '476';
+UPDATE person SET nik='0' WHERE user_id = '477';
+UPDATE person SET nik='0' WHERE user_id = '478';
+UPDATE person SET nik='3217080706910002' WHERE user_id = '479';
+
+UPDATE person SET nik='0' WHERE user_id = '481';
+UPDATE person SET nik='3217040901940006' WHERE user_id = '482';
+UPDATE person SET nik='3273190610030001' WHERE user_id = '483';
+UPDATE person SET nik='3217041601880008' WHERE user_id = '484';
+UPDATE person SET nik='3217062709840011' WHERE user_id = '485';
+UPDATE person SET nik='3217020602810010' WHERE user_id = '486';
+UPDATE person SET nik='3277032102850009' WHERE user_id = '487';
+UPDATE person SET nik='3217011007820001' WHERE user_id = '488';
+UPDATE person SET nik='3277031504890003' WHERE user_id = '489';
+UPDATE person SET nik='3273011808890004' WHERE user_id = '490';
+UPDATE person SET nik='3273020210920010' WHERE user_id = '491';
+UPDATE person SET nik='3217110711990006' WHERE user_id = '492';
+UPDATE person SET nik='3272067011670001' WHERE user_id = '493';
+UPDATE person SET nik='3272063008690900' WHERE user_id = '494';
+UPDATE person SET nik='3273230807680006' WHERE user_id = '495';
+UPDATE person SET nik='3272020702060021' WHERE user_id = '496';
+
+UPDATE person SET nik='3272035401700021' WHERE user_id = '498';
+UPDATE person SET nik='3272061001710001' WHERE user_id = '499';
+UPDATE person SET nik='3272060812790001' WHERE user_id = '500';
+UPDATE person SET nik='3272050610730001' WHERE user_id = '501';
+UPDATE person SET nik='3272060905740001' WHERE user_id = '502';
+UPDATE person SET nik='3273301209730001' WHERE user_id = '503';
+UPDATE person SET nik='3272042907750901' WHERE user_id = '504';
+UPDATE person SET nik='3272060501840899' WHERE user_id = '505';
+UPDATE person SET nik='3202272101790003' WHERE user_id = '506';
+UPDATE person SET nik='3202330506740001' WHERE user_id = '507';
+UPDATE person SET nik='3202080601750006' WHERE user_id = '508';
+UPDATE person SET nik='3272042810890001' WHERE user_id = '509';
+UPDATE person SET nik='3272051503830002' WHERE user_id = '510';
+UPDATE person SET nik='3272040109780001' WHERE user_id = '511';
+UPDATE person SET nik='3202383005830003' WHERE user_id = '512';
+UPDATE person SET nik='3272060403900001' WHERE user_id = '513';
+UPDATE person SET nik='3272013101920001' WHERE user_id = '514';
+UPDATE person SET nik='3272040201900001' WHERE user_id = '515';
+UPDATE person SET nik='3272032412930001' WHERE user_id = '516';
+UPDATE person SET nik='3272063112830001' WHERE user_id = '517';
+UPDATE person SET nik='3202290806880005' WHERE user_id = '518';
+UPDATE person SET nik='3272041105870021' WHERE user_id = '519';
+UPDATE person SET nik='3272062503930001' WHERE user_id = '520';
+UPDATE person SET nik='3272032308910003' WHERE user_id = '521';
+UPDATE person SET nik='3202290401910002' WHERE user_id = '522';
+UPDATE person SET nik='3272062210950041' WHERE user_id = '523';
+UPDATE person SET nik='3203161701900007' WHERE user_id = '524';
+UPDATE person SET nik='3202292505890006' WHERE user_id = '525';
+
+UPDATE person SET nik='3272031004950940' WHERE user_id = '527';
+UPDATE person SET nik='3202332809920002' WHERE user_id = '528';
+UPDATE person SET nik='3272070107970002' WHERE user_id = '529';
+UPDATE person SET nik='3272042204930021' WHERE user_id = '530';
+
+UPDATE person SET nik='0' WHERE user_id = '532';
+UPDATE person SET nik='3272022407950002' WHERE user_id = '533';
+UPDATE person SET nik='3272060603870001' WHERE user_id = '534';
+UPDATE person SET nik='3202290803880005' WHERE user_id = '535';
+UPDATE person SET nik='3202291008890007' WHERE user_id = '536';
+UPDATE person SET nik='0' WHERE user_id = '537';
+UPDATE person SET nik='0' WHERE user_id = '538';
+UPDATE person SET nik='3201260609720002' WHERE user_id = '539';
+
+UPDATE person SET nik='3203280101821217' WHERE user_id = '541';
+UPDATE person SET nik='3203280403830002' WHERE user_id = '542';
+UPDATE person SET nik='3203281502830010' WHERE user_id = '543';
+UPDATE person SET nik='3201261005890003' WHERE user_id = '544';
+UPDATE person SET nik='3201241808900001' WHERE user_id = '545';
+UPDATE person SET nik='3203012105910006' WHERE user_id = '546';
+
+UPDATE person SET nik='3203130310910001' WHERE user_id = '548';
+UPDATE person SET nik='3203100207900004' WHERE user_id = '549';
+UPDATE person SET nik='3203285405990005' WHERE user_id = '550';
+UPDATE person SET nik='3203072401900005' WHERE user_id = '551';
+UPDATE person SET nik='3203190310940001' WHERE user_id = '552';
+UPDATE person SET nik='3203015001910013' WHERE user_id = '553';
+UPDATE person SET nik='3203281306940001' WHERE user_id = '554';
+UPDATE person SET nik='3203012412480007' WHERE user_id = '555';
+
+
+UPDATE person SET nik='0' WHERE user_id = '558';
+
+UPDATE person SET nik='0' WHERE user_id = '560';
+UPDATE person SET nik='0' WHERE user_id = '561';
+UPDATE person SET nik='3201261505960002' WHERE user_id = '562';
+UPDATE person SET nik='3204053103700001' WHERE user_id = '563';
+
+UPDATE person SET nik='3203200107890418' WHERE user_id = '565';
+UPDATE person SET nik='3203012008690007' WHERE user_id = '566';
+UPDATE person SET nik='3203025003810008' WHERE user_id = '567';
+UPDATE person SET nik='3203071504820018' WHERE user_id = '568';
+UPDATE person SET nik='3203010107800606' WHERE user_id = '569';
+UPDATE person SET nik='3203071205750010' WHERE user_id = '570';
+UPDATE person SET nik='3203070508790024' WHERE user_id = '571';
+UPDATE person SET nik='3203080206830008' WHERE user_id = '572';
+
+UPDATE person SET nik='3203041802790002' WHERE user_id = '574';
+UPDATE person SET nik='3203026007900006' WHERE user_id = '575';
+UPDATE person SET nik='3203010107850581' WHERE user_id = '576';
+UPDATE person SET nik='3203070504880014' WHERE user_id = '577';
+UPDATE person SET nik='3203040108920003' WHERE user_id = '578';
+UPDATE person SET nik='3203040101940086' WHERE user_id = '579';
+UPDATE person SET nik='3203122602940006' WHERE user_id = '580';
+UPDATE person SET nik='3203010203930009' WHERE user_id = '581';
+UPDATE person SET nik='3203110602920012' WHERE user_id = '582';
+UPDATE person SET nik='320311908990011' WHERE user_id = '583';
+UPDATE person SET nik='3203030301860002' WHERE user_id = '584';
+UPDATE person SET nik='3203070909960013' WHERE user_id = '585';
+UPDATE person SET nik='3203011210910003' WHERE user_id = '586';
+
+UPDATE person SET nik='0' WHERE user_id = '588';
+UPDATE person SET nik='0' WHERE user_id = '589';
+UPDATE person SET nik='0' WHERE user_id = '590';
+UPDATE person SET nik='3203081401980006' WHERE user_id = '591';
+UPDATE person SET nik='3203081406950010' WHERE user_id = '592';
+UPDATE person SET nik='0' WHERE user_id = '593';
+UPDATE person SET nik='0' WHERE user_id = '594';
+UPDATE person SET nik='0' WHERE user_id = '595';
+UPDATE person SET nik='3215252805690002' WHERE user_id = '596';
+UPDATE person SET nik='3215252512690006' WHERE user_id = '597';
+UPDATE person SET nik='3215250101720000' WHERE user_id = '598';
+UPDATE person SET nik='3215251803730002' WHERE user_id = '599';
+UPDATE person SET nik='3215251704740002' WHERE user_id = '600';
+UPDATE person SET nik='3213162810770005' WHERE user_id = '601';
+UPDATE person SET nik='3273280509690001' WHERE user_id = '602';
+UPDATE person SET nik='3212180808720001' WHERE user_id = '603';
+UPDATE person SET nik='3215250705680008' WHERE user_id = '604';
+UPDATE person SET nik='3278030401770007' WHERE user_id = '605';
+UPDATE person SET nik='3212182308770006' WHERE user_id = '606';
+UPDATE person SET nik='3214012106780003' WHERE user_id = '607';
+UPDATE person SET nik='3215251307890004' WHERE user_id = '608';
+UPDATE person SET nik='3215140201920001' WHERE user_id = '609';
+UPDATE person SET nik='3210250512850001' WHERE user_id = '610';
+UPDATE person SET nik='3206340101790031' WHERE user_id = '611';
+UPDATE person SET nik='3214130405680002' WHERE user_id = '612';
+UPDATE person SET nik='3215151410850003' WHERE user_id = '613';
+UPDATE person SET nik='3215252611950001' WHERE user_id = '614';
+UPDATE person SET nik='3215250906860002' WHERE user_id = '615';
+UPDATE person SET nik='3214032412840001' WHERE user_id = '616';
+UPDATE person SET nik='3214142201900000' WHERE user_id = '617';
+UPDATE person SET nik='3215250101910008' WHERE user_id = '618';
+UPDATE person SET nik='3214141901110001' WHERE user_id = '619';
+UPDATE person SET nik='3204293811870002' WHERE user_id = '620';
+UPDATE person SET nik='3215140509850003' WHERE user_id = '621';
+UPDATE person SET nik='3212172303950002' WHERE user_id = '622';
+UPDATE person SET nik='3215130305930008' WHERE user_id = '623';
+UPDATE person SET nik='3212160410950002' WHERE user_id = '624';
+UPDATE person SET nik='3207042908950002' WHERE user_id = '625';
+UPDATE person SET nik='3215146107940004' WHERE user_id = '626';
+UPDATE person SET nik='3215252611820005' WHERE user_id = '627';
+UPDATE person SET nik='3206050510930003' WHERE user_id = '628';
+UPDATE person SET nik='321525102840006' WHERE user_id = '629';
+UPDATE person SET nik='3215256402990001' WHERE user_id = '630';
+UPDATE person SET nik='3274021302910004' WHERE user_id = '631';
+UPDATE person SET nik='3215142910890003' WHERE user_id = '632';
+UPDATE person SET nik='3215250298900007' WHERE user_id = '633';
+UPDATE person SET nik='3204152208950004' WHERE user_id = '634';
+UPDATE person SET nik='3215250806700006' WHERE user_id = '635';
+
+UPDATE person SET nik='3215251801920001' WHERE user_id = '637';
+UPDATE person SET nik='3213031211950001' WHERE user_id = '638';
+
+UPDATE person SET nik='3206052302950001' WHERE user_id = '640';
+
+
+
+UPDATE person SET nik='3215252208920001' WHERE user_id = '644';
+UPDATE person SET nik='0' WHERE user_id = '645';
+UPDATE person SET nik='0' WHERE user_id = '646';
+UPDATE person SET nik='3215132303970006' WHERE user_id = '647';
+UPDATE person SET nik='3213230108720001' WHERE user_id = '648';
+UPDATE person SET nik='3212160304770003' WHERE user_id = '649';
+UPDATE person SET nik='3213062209690002' WHERE user_id = '650';
+UPDATE person SET nik='3209402411870004' WHERE user_id = '651';
+UPDATE person SET nik='3213270404800009' WHERE user_id = '652';
+UPDATE person SET nik='3273255209800001' WHERE user_id = '653';
+UPDATE person SET nik='3213072804820003' WHERE user_id = '654';
+UPDATE person SET nik='3213031107850004' WHERE user_id = '655';
+UPDATE person SET nik='3213030507890006' WHERE user_id = '656';
+UPDATE person SET nik='3212302802790002' WHERE user_id = '657';
+UPDATE person SET nik='3213031505830018' WHERE user_id = '658';
+UPDATE person SET nik='3213031308900001' WHERE user_id = '659';
+UPDATE person SET nik='3213032404900004' WHERE user_id = '660';
+UPDATE person SET nik='3213031401950006' WHERE user_id = '661';
+UPDATE person SET nik='3213060703970027' WHERE user_id = '662';
+UPDATE person SET nik='3213083004970003' WHERE user_id = '663';
+UPDATE person SET nik='3213030601960001' WHERE user_id = '664';
+
+UPDATE person SET nik='3215250102980002' WHERE user_id = '666';
+
+UPDATE person SET nik='0' WHERE user_id = '668';
+UPDATE person SET nik='0' WHERE user_id = '669';
+UPDATE person SET nik='3274032208690006' WHERE user_id = '670';
+UPDATE person SET nik='3209200911750004' WHERE user_id = '671';
+UPDATE person SET nik='3212161908700001' WHERE user_id = '672';
+UPDATE person SET nik='3273282211760002' WHERE user_id = '673';
+UPDATE person SET nik='3212161404720003' WHERE user_id = '674';
+UPDATE person SET nik='3212151604820005' WHERE user_id = '675';
+UPDATE person SET nik='3212181804830003' WHERE user_id = '676';
+UPDATE person SET nik='3212080503730001' WHERE user_id = '677';
+UPDATE person SET nik='3212070709790002' WHERE user_id = '678';
+UPDATE person SET nik='3212070808760001' WHERE user_id = '679';
+UPDATE person SET nik='3212184202860003' WHERE user_id = '680';
+UPDATE person SET nik='3212102506840002' WHERE user_id = '681';
+UPDATE person SET nik='3212181404840003' WHERE user_id = '682';
+UPDATE person SET nik='3212166706930004' WHERE user_id = '683';
+UPDATE person SET nik='3213181210970003' WHERE user_id = '684';
+UPDATE person SET nik='3212180107950002' WHERE user_id = '685';
+UPDATE person SET nik='3212141403970003' WHERE user_id = '686';
+UPDATE person SET nik='3274032008690006' WHERE user_id = '687';
+UPDATE person SET nik='3209200509690003' WHERE user_id = '688';
+UPDATE person SET nik='3274034510690011' WHERE user_id = '689';
+UPDATE person SET nik='3274031708720011' WHERE user_id = '690';
+UPDATE person SET nik='3274031009720012' WHERE user_id = '691';
+UPDATE person SET nik='3274032811710005' WHERE user_id = '692';
+UPDATE person SET nik='3274010667710008' WHERE user_id = '693';
+UPDATE person SET nik='3274035105720009' WHERE user_id = '694';
+UPDATE person SET nik='3274011108770011' WHERE user_id = '695';
+UPDATE person SET nik='3210070707790181' WHERE user_id = '696';
+UPDATE person SET nik='3209125103750010' WHERE user_id = '697';
+UPDATE person SET nik='3274056311690001' WHERE user_id = '698';
+UPDATE person SET nik='3210181204730041' WHERE user_id = '699';
+UPDATE person SET nik='3209201403680006' WHERE user_id = '700';
+UPDATE person SET nik='3273162609680005' WHERE user_id = '701';
+UPDATE person SET nik='3274032405680005' WHERE user_id = '702';
+UPDATE person SET nik='3209122605760004' WHERE user_id = '703';
+
+UPDATE person SET nik='3209352505090023' WHERE user_id = '705';
+UPDATE person SET nik='3273232406740001' WHERE user_id = '706';
+UPDATE person SET nik='3274056006750015' WHERE user_id = '707';
+UPDATE person SET nik='3209200206700004' WHERE user_id = '708';
+UPDATE person SET nik='3209122008700002' WHERE user_id = '709';
+UPDATE person SET nik='3274020203890001' WHERE user_id = '710';
+UPDATE person SET nik='3274042104860005' WHERE user_id = '711';
+UPDATE person SET nik='3274052501820008' WHERE user_id = '712';
+UPDATE person SET nik='3209203009820002' WHERE user_id = '713';
+UPDATE person SET nik='3274051205820009' WHERE user_id = '714';
+UPDATE person SET nik='3274036301900006' WHERE user_id = '715';
+UPDATE person SET nik='3209201510120012' WHERE user_id = '716';
+UPDATE person SET nik='3274050703860002' WHERE user_id = '717';
+UPDATE person SET nik='3274022808740001' WHERE user_id = '718';
+UPDATE person SET nik='3209121609850014' WHERE user_id = '719';
+UPDATE person SET nik='3210111310850002' WHERE user_id = '720';
+UPDATE person SET nik='3174022104860006' WHERE user_id = '721';
+UPDATE person SET nik='3209201705890007' WHERE user_id = '722';
+UPDATE person SET nik='0' WHERE user_id = '723';
+UPDATE person SET nik='3208013008690001' WHERE user_id = '724';
+UPDATE person SET nik='3208101512760001' WHERE user_id = '725';
+UPDATE person SET nik='3274031904800012' WHERE user_id = '726';
+UPDATE person SET nik='3208131802820002' WHERE user_id = '727';
+UPDATE person SET nik='3208160202830006' WHERE user_id = '728';
+UPDATE person SET nik='3274050809760013' WHERE user_id = '729';
+UPDATE person SET nik='3208233112860002' WHERE user_id = '730';
+UPDATE person SET nik='3208132108820011' WHERE user_id = '731';
+UPDATE person SET nik='3208091304870009' WHERE user_id = '732';
+UPDATE person SET nik='3274021808810013' WHERE user_id = '733';
+UPDATE person SET nik='3278032703690005' WHERE user_id = '734';
+
+UPDATE person SET nik='3278032502700006' WHERE user_id = '736';
+UPDATE person SET nik='3205101709720004' WHERE user_id = '737';
+UPDATE person SET nik='3278056809740001' WHERE user_id = '738';
+UPDATE person SET nik='3278030806710008' WHERE user_id = '739';
+UPDATE person SET nik='3278061206720006' WHERE user_id = '740';
+UPDATE person SET nik='3215252409760006' WHERE user_id = '741';
+UPDATE person SET nik='3278040205680002' WHERE user_id = '742';
+UPDATE person SET nik='3278062108680005' WHERE user_id = '743';
+UPDATE person SET nik='3278011011770018' WHERE user_id = '744';
+UPDATE person SET nik='3278020412720008' WHERE user_id = '745';
+UPDATE person SET nik='3278020506740012' WHERE user_id = '746';
+UPDATE person SET nik='3278020704750015' WHERE user_id = '747';
+UPDATE person SET nik='3277012701710012' WHERE user_id = '748';
+UPDATE person SET nik='3273241308810002' WHERE user_id = '749';
+UPDATE person SET nik='3278024707700008' WHERE user_id = '750';
+UPDATE person SET nik='3278091912680001' WHERE user_id = '751';
+UPDATE person SET nik='3278023107730006' WHERE user_id = '752';
+UPDATE person SET nik='3278011410760003' WHERE user_id = '753';
+UPDATE person SET nik='3278092707820001' WHERE user_id = '754';
+UPDATE person SET nik='3273200911820000' WHERE user_id = '755';
+UPDATE person SET nik='3278011505860006' WHERE user_id = '756';
+UPDATE person SET nik='3278082909780012' WHERE user_id = '757';
+UPDATE person SET nik='3274032209850009' WHERE user_id = '758';
+UPDATE person SET nik='3278040202770008' WHERE user_id = '759';
+UPDATE person SET nik='3278082710790002' WHERE user_id = '760';
+UPDATE person SET nik='3278030503800006' WHERE user_id = '761';
+UPDATE person SET nik='3278010607780005' WHERE user_id = '762';
+UPDATE person SET nik='3278011107820019' WHERE user_id = '763';
+UPDATE person SET nik='3278052606900002' WHERE user_id = '764';
+UPDATE person SET nik='3278012707870004' WHERE user_id = '765';
+UPDATE person SET nik='3278031609920005' WHERE user_id = '766';
+UPDATE person SET nik='3278010709870003' WHERE user_id = '767';
+UPDATE person SET nik='3278040607910007' WHERE user_id = '768';
+UPDATE person SET nik='3278030102960008' WHERE user_id = '769';
+UPDATE person SET nik='3278012503830001' WHERE user_id = '770';
+UPDATE person SET nik='3206221703910002' WHERE user_id = '771';
+UPDATE person SET nik='3278090506940002' WHERE user_id = '772';
+UPDATE person SET nik='3278081408930015' WHERE user_id = '773';
+UPDATE person SET nik='3206280411970001' WHERE user_id = '774';
+UPDATE person SET nik='3206222203920003' WHERE user_id = '775';
+UPDATE person SET nik='3278081610940008' WHERE user_id = '776';
+UPDATE person SET nik='323278031202940006' WHERE user_id = '777';
+UPDATE person SET nik='3278020211870007' WHERE user_id = '778';
+UPDATE person SET nik='3278020712840012' WHERE user_id = '779';
+
+UPDATE person SET nik='3278052309930003' WHERE user_id = '781';
+UPDATE person SET nik='3278085406980004' WHERE user_id = '782';
+UPDATE person SET nik='3206220312920001' WHERE user_id = '783';
+UPDATE person SET nik='3278030509960004' WHERE user_id = '784';
+UPDATE person SET nik='0' WHERE user_id = '785';
+UPDATE person SET nik='0' WHERE user_id = '786';
+UPDATE person SET nik='3278080204770010' WHERE user_id = '787';
+UPDATE person SET nik='3204290508720009' WHERE user_id = '788';
+UPDATE person SET nik='3207122806760001' WHERE user_id = '789';
+UPDATE person SET nik='3207071103830001' WHERE user_id = '790';
+UPDATE person SET nik='3278081508810010' WHERE user_id = '791';
+UPDATE person SET nik='3207302007850002' WHERE user_id = '792';
+UPDATE person SET nik='3278020110850001' WHERE user_id = '793';
+UPDATE person SET nik='3279011203820002' WHERE user_id = '794';
+UPDATE person SET nik='3207180506850007' WHERE user_id = '795';
+UPDATE person SET nik='3279011611910003' WHERE user_id = '796';
+UPDATE person SET nik='3279012811840004' WHERE user_id = '797';
+UPDATE person SET nik='3279026212940001' WHERE user_id = '798';
+UPDATE person SET nik='3302082408840002' WHERE user_id = '799';
+UPDATE person SET nik='3279010210960001' WHERE user_id = '800';
+UPDATE person SET nik='3207021312900002' WHERE user_id = '801';
+UPDATE person SET nik='3207022811930002' WHERE user_id = '802';
+UPDATE person SET nik='3279024605950001' WHERE user_id = '803';
+UPDATE person SET nik='3279011908930004' WHERE user_id = '804';
+UPDATE person SET nik='3279012403930001' WHERE user_id = '805';
+UPDATE person SET nik='3279012007920004' WHERE user_id = '806';
+UPDATE person SET nik='7206052006890001' WHERE user_id = '807';
+UPDATE person SET nik='3279031410960003' WHERE user_id = '808';
+UPDATE person SET nik='0' WHERE user_id = '809';
+
+
+UPDATE person SET nik='0' WHERE user_id = '812';
+UPDATE person SET nik='3213280406970002' WHERE user_id = '813';
