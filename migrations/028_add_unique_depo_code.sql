@@ -1,0 +1,1 @@
+ALTER TABLE `depo` ADD UNIQUE(`code`);

@@ -1,5 +1,4 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
-
 <?php
     $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
     if(!empty($this->session->flashdata('msg'))):
@@ -19,7 +18,7 @@
         <a href="<?=site_url('anggota/create').$role_params ?>" class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> <?= (isset($_GET["role"]) && $_GET["role"] == 1)? "Administrator" : "Anggota" ?></a>
         <hr>
         <div class="table-responsive">
-            <table class="table table-bordered" id="anggotaTable" width="100%" cellspacing="0">
+            <table class="table table-bordered display nowrap" id="anggotaTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-center" width="10">No</th>
@@ -31,7 +30,7 @@
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Status<br/>Keanggotaan</th>
                         <th class="text-center">Pengajuan<br/>Perubahan</th>
-                        <th class="text-center" style="width: 150px;">Aksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +90,9 @@
 
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
-        $('#anggotaTable').DataTable();
+        $('#anggotaTable').DataTable({
+            scrollX:        true,
+        });
     });
 
 </script>
