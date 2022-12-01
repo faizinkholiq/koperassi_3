@@ -16,9 +16,23 @@
         <?php
             if($data["temporary"]): 
         ?>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong><i class="fas fa-clock mr-2"></i> Perubahan data sedang diproses, mohon tunggu hingga administrator menyetujui !</strong>
-        </div>
+            <?php 
+            switch($data["status"]):  
+                case "Pending": ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-clock mr-2"></i> Perubahan data sedang diproses, mohon tunggu hingga administrator menyetujui !</strong>
+                    </div>
+            <?php 
+                break;
+                case "Rejected": 
+            ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-times mr-2"></i> Perubahan data anda ditolak, <strong>Alasan:</strong> <?= $data["reason"] ?> !
+                    </div>
+            <?php 
+                break;
+            endswitch; 
+            ?>
         <?php
             endif;
         ?>
@@ -37,7 +51,7 @@
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK" 
                                     value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" 
-                                    <?= ($data["temporary"])? "disabled" : "" ?> required>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?> required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -46,7 +60,7 @@
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="TMK"
                                     value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" 
-                                    <?= ($data["temporary"])? "disabled" : "" ?> required>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?> required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -55,7 +69,7 @@
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="namaTextInput" name="nama" placeholder="Nama"
                                     value="<?=(isset($data["name"]) && !empty($data["name"]))? $data["name"] : '' ?>" 
-                                    <?= ($data["temporary"])? "disabled" : "" ?> required>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?> required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -63,7 +77,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8">
                                 <textarea class="form-control form-control-user" name="alamat" id="alamatTextArea" rows="5"
-                                    <?= ($data["temporary"])? "disabled" : "" ?>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?>
                                 ><?=(isset($data["address"]) && !empty($data["address"]))? $data["address"] : '' ?></textarea>
                             </div>
                         </div>
@@ -73,7 +87,7 @@
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="noTelpTextInput" name="no_telp" placeholder="No. Telephone"
                                     value="<?=(isset($data["phone"]) && !empty($data["phone"]))? $data["phone"] : '' ?>"
-                                    <?= ($data["temporary"])? "disabled" : "" ?>>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -82,16 +96,19 @@
                             <div class="col-lg-6">
                                 <input type="email" class="form-control form-control-user" id="emailTextInput" name="email" placeholder="Email"
                                     value="<?=(isset($data["email"]) && !empty($data["email"]))? $data["email"] : '' ?>"
-                                    <?= ($data["temporary"])? "disabled" : "" ?>>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control form-control-user" id="depoTextInput" name="depo" placeholder="Depo/Stock Point"
-                                    value="<?=(isset($data["depo"]) && !empty($data["depo"]))? $data["depo"] : '' ?>"
-                                    <?= ($data["temporary"])? "disabled" : "" ?>>
+                                <select class="form-control form-control-user" id="depoSelectInput" name="depo" <?= ($data["status"] == "Pending")? "disabled" : "" ?>>
+                                    <option value="">- Pilih salah satu -</option>
+                                    <?php foreach($list_depo as $key => $value): ?>
+                                    <option value="<?= $value["code"] ?>" <?=(isset($data["depo"]) && $data["depo"] == $value["code"])? 'selected' : '' ?>><?= $value["name"] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -100,7 +117,7 @@
                             <div class="col-lg-6">
                                 <input type="text" class="form-control form-control-user" id="accNoTextInput" name="acc_no" placeholder="No. Rekening"
                                     value="<?=(isset($data["acc_no"]) && !empty($data["acc_no"]))? $data["acc_no"] : '' ?>"
-                                    <?= ($data["temporary"])? "disabled" : "" ?>>
+                                    <?= ($data["status"] == "Pending")? "disabled" : "" ?>>
                             </div>
                         </div>
                         <div class="row mb-4">
@@ -149,7 +166,7 @@
                     </div>
                     <div class="col-lg-4">
                         <button type="submit" class="btn btn-primary mt-2 mb-2 ml-2 mr-4 btn-lg"
-                        <?= ($data["temporary"])? "disabled" : "" ?>>
+                        <?= ($data["status"] == "Pending")? "disabled" : "" ?>>
                             Ajukan Perubahan Data<i class="ml-2 fas fa-chevron-right"></i>
                         </button>
                     </div>

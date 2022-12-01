@@ -108,8 +108,12 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
                             <div class="col-lg-3">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control form-control-user" id="depoTextInput" name="depo" placeholder="Depo/Stock Point"
-                                    value="<?=(isset($data["depo"]) && !empty($data["depo"]))? $data["depo"] : '' ?>">
+                                <select class="form-control form-control-user" id="depoSelectInput" name="depo" <?= ($data["status"] == "Pending")? "disabled" : "" ?>>
+                                    <option value="">- Pilih salah satu -</option>
+                                    <?php foreach($list_depo as $key => $value): ?>
+                                    <option value="<?= $value["code"] ?>" <?=(isset($data["depo"]) && $data["depo"] == $value["code"])? 'selected' : '' ?>><?= $value["name"] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">

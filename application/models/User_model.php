@@ -26,7 +26,7 @@
                 $data = array_merge($data, $user_detail);
             }
 
-            $data["notification"] = $this->get_notif($data["id"], $data["role"], 3);
+            $data["notification"] = $this->get_notif($data["id"], $data["role"], 5);
             $data["count_notification"] = count($this->get_notif($data["id"], $data["role"]));
             
             return $data;

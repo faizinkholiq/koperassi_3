@@ -50,11 +50,13 @@
             'person_family.phone phone_family',
             'person_family.status status_family',
             'position.name position_name',
+            'depo.name depo_name',
             'user.id user_id'
         ])
         ->from('person')
         ->join('person_family', 'person.id = person_family.person_id', 'left')
         ->join('position', 'person.position = position.id', 'left')
+        ->join('depo', 'person.depo = depo.code', 'left')
         ->join('user', 'person.user_id = user.id', 'left')
         ->where('person.id',$id)
         ->get()
@@ -126,6 +128,12 @@
     public function get_list_position()
     {
         $q = $this->db->select()->from('position')->order_by('id', 'desc');
+        return $q->get()->result_array();
+    }
+
+    public function get_list_depo()
+    {
+        $q = $this->db->select()->from('depo')->order_by('id', 'desc');
         return $q->get()->result_array();
     }
 

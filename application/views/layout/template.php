@@ -207,7 +207,7 @@ if (!isset($highlight_menu)){
                                             break;
                                         } 
                                 ?>
-                                <a href="<?= site_url('user/notifications_detail/').$item['id'] ?>" class="dropdown-item d-flex align-items-center" href="#">
+                                <a href="<?= site_url('anggota') ?>" class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-<?= $type ?>">
                                             <i class="fas fa-<?= $icon ?> text-white"></i>
@@ -221,7 +221,7 @@ if (!isset($highlight_menu)){
                                 <?php 
                                     endforeach; 
                                 ?>
-                                <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a>
+                                <!-- <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('user/notifications') ?>">Show All Alerts</a> -->
                                 <?php
                                     else:
                                 ?>

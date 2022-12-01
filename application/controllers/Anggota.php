@@ -262,6 +262,7 @@ class Anggota extends CI_Controller {
             }else{
                 $d["data"] = $this->anggota_model->detail($id);
                 $d['list_position'] = $this->anggota_model->get_list_position();
+                $d['list_depo'] = $this->anggota_model->get_list_depo();
 
                 $this->load->view('layout/template', $d);
             }
@@ -399,6 +400,7 @@ class Anggota extends CI_Controller {
                 $d["data"] = $this->anggota_model->detail_temp($id);
                 $d["data"]["temporary"] = true;
             }
+            $d['list_depo'] = $this->anggota_model->get_list_depo();
             $d['list_position'] = $this->anggota_model->get_list_position();
 
             $this->load->view('layout/template', $d);
@@ -444,23 +446,25 @@ class Anggota extends CI_Controller {
                     }
 
                     // Upload File
-                    if($_FILES["ktp"]['error'] == 0) {
-                        $file = $_FILES["ktp"];
-                        $file["origin"] = "ktp";
-
-                        $upload = $this->upload_file($file);
+                    if(isset($_FILES["ktp"])){
+                        if($_FILES["ktp"]['error'] == 0) {
+                            $file = $_FILES["ktp"];
+                            $file["origin"] = "ktp";
     
-                        if(!$upload['success']){
-                            $data = [
-                                'success' => 0,
-                                'message' => $upload['message'],
-                            ];
-    
-                            $this->session->set_flashdata('msg', $data);
-                            redirect('anggota/settings');   
-                            return;
-                        }else{
-                            $nd["ktp"] = $upload['file'];
+                            $upload = $this->upload_file($file);
+        
+                            if(!$upload['success']){
+                                $data = [
+                                    'success' => 0,
+                                    'error' => $upload['message'],
+                                ];
+        
+                                $this->session->set_flashdata('msg', $data);
+                                redirect('anggota/settings');   
+                                return;
+                            }else{
+                                $nd["ktp"] = $upload['file'];
+                            }
                         }
                     }
 
@@ -561,6 +565,15 @@ class Anggota extends CI_Controller {
                                 $nd["ktp"] = $detail_temp["ktp"];
                                 
                                 if ($this->anggota_model->edit($nd)) {
+                                    $this->user_model->create_notif([
+                                        "user_id" => $detail["user_id"],
+                                        "time" => date("Y-m-d"),
+                                        "message" => "Pengajuan perubahan data diri telah disetujui oleh Administrator",
+                                        "status" => "Success",
+                                        "module" => "Anggota",
+                                        "changes_id" => $id,
+                                    ]);
+
                                     $data['success'] = 1;
                                     $data['message'] = "Success Update Data!";
                                 } else {
@@ -578,6 +591,16 @@ class Anggota extends CI_Controller {
                             $nd_temp["reason"] = $reason;
                             $nd_temp["status"] = "Rejected";
                             if($this->anggota_model->edit_temp($nd_temp)){
+                                
+                                $this->user_model->create_notif([
+                                    "user_id" => $detail["user_id"],
+                                    "time" => date("Y-m-d"),
+                                    "message" => "Pengajuan perubahan data diri ditolak",
+                                    "status" => "Failed",
+                                    "module" => "Anggota",
+                                    "changes_id" => $id,
+                                ]);
+
                                 $data['success'] = 1;
                                 $data['message'] = "Penolakan Data berhasil !";
                             }else{

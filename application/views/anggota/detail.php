@@ -41,7 +41,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?=!empty($data["depo"])? $data["depo"] : '-'?></div>
+                            <div class="col-lg-8"><?=!empty($data["depo"])? $data["depo_name"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">No. Rekening</div>
