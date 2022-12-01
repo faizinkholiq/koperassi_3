@@ -89,12 +89,12 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Jabatan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?= isset($position) && !empty($position)? $position : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($position) && !empty($position)? $position_name : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Depo/Stock Point</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?= isset($depo) && !empty($depo)? $depo : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($depo) && !empty($depo)? $depo_name : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">No. Rekening</div>

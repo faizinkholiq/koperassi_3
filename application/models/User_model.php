@@ -57,9 +57,15 @@
             'person.email',
             'person.ktp',
             'person.profile_photo',
+            'person.position',
+            'position.name position_name',
+            'person.depo',
+            'depo.name depo_name',
         ])
         ->from('user')
-        ->join('person', 'user.id = person.user_id', 'left')
+        ->join('person', 'user.id = person.user_id')
+        ->join('position', 'person.position = position.id', 'left')
+        ->join('depo', 'person.depo = depo.code', 'left')
         ->where('user.id',$id)
         ->get()
         ->row_array();
