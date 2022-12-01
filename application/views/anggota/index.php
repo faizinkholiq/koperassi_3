@@ -51,11 +51,11 @@
                                     case "Pending":
                                         $tag = "<span class='bg-warning text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-clock'></i> Pending</span>";
                                         break;
-                                    case "Approved":
-                                        $tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-check'></i> DiVerifikasi</span>";
-                                        break;
+                                    // case "Approved":
+                                    //     $tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-check'></i> Diverifikasi</span>";
+                                    //     break;
                                     case "Rejected":
-                                        $tag = "<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-times'></i> DiTolak</span>";
+                                        $tag = "<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-times'></i> Ditolak</span>";
                                         break;
                                 }
                                 echo $tag; 
@@ -65,8 +65,8 @@
                         ?></td>
                         <td class="text-center">
                             <?php if($row["status_perubahan"] == 'Pending'):?>
-                            <a href="#!" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></a>
-                            <a href="#!" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></a>
+                            <button type="button" onclick="DoApprove(<?= $row['id'] ?>)" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
+                            <button type="button" onclick="DoReject(<?= $row['id'] ?>)" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
                             <?php endif; ?>
                             <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn btn-sm my-btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>
                             <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-eye"></i></a>
@@ -75,6 +75,126 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="approveModalLabel"><i class="fas fa-check mr-2"></i>Setujui Perubahan Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Apakah anda yakin ingin menyetujui perubahan data tersebut?</strong><br/>
+                <div class="mt-4 mb-4">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="font-weight-bold" width="30%">NIK :</td>
+                            <td width="70%" id="appNIK">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">TMK :</td>
+                            <td id="appTMK">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Nama :</td>
+                            <td id="appNama">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Alamat :</td>
+                            <td id="appAlamat">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">No. Telephone :</td>
+                            <td id="appPhone">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email :</td>
+                            <td id="appEmail">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Depo :</td>
+                            <td id="appDepo">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">No. Rekening :</td>
+                            <td id="appRek">-</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="<?=site_url('anggota/action_changes/approved')?>">
+                    <input type="hidden" id="appPersonID" name="id" />
+                    <button class="btn btn-success mr-2" type="submit">Ya, Setuju</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel"><i class="fas fa-times mr-2"></i>Tolak Perubahan Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" action="<?=site_url('anggota/action_changes/rejected')?>">
+                <div class="modal-body">
+                    <strong>Apakah anda yakin ingin menolak perubahan data tersebut?</strong><br/>
+                    <div class="mt-4 mb-4">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="font-weight-bold" width="30%">NIK :</td>
+                                <td width="70%" id="rejNIK">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">TMK :</td>
+                                <td id="rejTMK">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Nama :</td>
+                                <td id="rejNama">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Alamat :</td>
+                                <td id="rejAlamat">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">No. Telephone :</td>
+                                <td id="rejPhone">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Email :</td>
+                                <td id="rejEmail">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Depo :</td>
+                                <td id="rejDepo">-</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">No. Rekening :</td>
+                                <td id="rejRek">-</td>
+                            </tr>
+                        </table>
+                    </div>                
+                    <strong>Alasan:</strong>
+                    <textarea class="form-control form-control-user" name="reason" rows="5" placeholder="Silahkan tulis alasan mengapa data tersebut ditolak"></textarea><br/>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="rejPersonID" name="id" />
+                    <button class="btn btn-danger mr-2" type="submit">Ya, Tolak</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -94,5 +214,45 @@
             scrollX:        true,
         });
     });
+
+    function DoApprove(id){
+        $.get(url.site + "/anggota/get_person_temp/" + id, (data) => {
+            data = $.parseJSON(data);
+            if (data.success != 0) {
+                $('#appNIK').text(data.nik);
+                $('#appTMK').text(data.tmk);
+                $('#appNama').text(data.name);
+                $('#appAlamat').text(data.address);
+                $('#appEmail').text(data.email);
+                $('#appDepo').text(data.depo);
+                $('#appRek').text(data.acc_no);
+
+                $('#appPersonID').val(id);
+                $('#approveModal').modal('show');
+            }else{
+                alert(data.error);
+            }
+        });
+    }
+
+    function DoReject(id){
+        $.get(url.site + "/anggota/get_person_temp/" + id, (data) => {
+            data = $.parseJSON(data);
+            if (data.success != 0) {
+                $('#rejNIK').text(data.nik);
+                $('#rejTMK').text(data.tmk);
+                $('#rejNama').text(data.name);
+                $('#rejAlamat').text(data.address);
+                $('#rejEmail').text(data.email);
+                $('#rejDepo').text(data.depo);
+                $('#rejRek').text(data.acc_no);
+
+                $('#rejPersonID').val(id);
+                $('#rejectModal').modal('show');
+            }else{
+                alert(data.error);
+            }
+        });
+    }
 
 </script>

@@ -138,7 +138,7 @@
 
     public function edit_temp($data)
     {   
-        $this->db->where('id', $data['id']);
+        $this->db->where('person_id', $data['id']);
         unset($data['id']);
         $this->db->update('person_temp', $data);
 

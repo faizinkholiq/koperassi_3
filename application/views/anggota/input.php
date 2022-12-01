@@ -22,7 +22,7 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
                         data-toggle="tooltip" data-placement="top" title="Kembali"></i>
                 </a>
                 <?php if(isset($data["id"])): ?>
-                    <button class="btn btn-primary mr-4" style="float:right" data-toggle="modal" data-target="#resetModal"><i class="fas fa-undo mr-2"></i> Reset Password</button>
+                    <button type="button" class="btn btn-primary mr-4" style="float:right" data-toggle="modal" data-target="#resetModal"><i class="fas fa-undo mr-2"></i> Reset Password</button>
                 <?php endif; ?>
                 <h5 class="font-weight-bold mt-2"><i class="mr-2 fas fa-user"></i> Data Diri</h5>
                 <div class="row mb-4 mt-4">
@@ -252,16 +252,18 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="resetModalLabel">Reset Password</h5>
+                <h5 class="modal-title" id="resetModalLabel"><i class="fas fa-undo"></i> Reset Password</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Password akun anggota yang direset akan dikembalikan ke default password: member@koperasi123<strong></strong></div>
+            <div class="modal-body">
+                Password akun anggota yang direset akan dikembalikan ke default password: <strong>member@koperasi123</strong>
+            </div>
             <div class="modal-footer">
                 <form method="GET" action="<?= site_url('anggota/reset_password/').$data["id"] ?>">
                     <input type="hidden" id="resetID" name="id" />
-                    <button class="btn btn-danger ml-2" type="submit">Hapus</button>
+                    <button class="btn btn-primary ml-2" type="submit">Reset Password</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                 </form>
             </div>

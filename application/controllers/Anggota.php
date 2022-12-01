@@ -501,4 +501,109 @@ class Anggota extends CI_Controller {
 
 	}
 
+    public function approver($id)
+	{
+        $d = $this->user_model->login_check();
+        $d['content_view'] = 'anggota/approver';
+        $d['highlight_menu'] = "anggota";
+        $d['title'] = "Setujui Anggota";
+
+        if (!check_permission('anggota', $d['role'])){
+            redirect('home');
+        }else{
+            $d["data"] = $this->anggota_model->detail($id);
+            $this->load->view('layout/template', $d);
+        }
+	}
+    
+    public function get_person_temp($id)
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $data = $this->anggota_model->detail_temp($id);
+        }
+        
+        echo json_encode($data);
+	}
+
+    public function action_changes($do)
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post("id");
+            $reason = $this->input->post("reason");
+
+            $detail = $this->anggota_model->detail($id);
+            if ($detail) {
+                $detail_temp = $this->anggota_model->detail_temp($id);
+                if($detail_temp) {
+                    
+                    switch($do){
+                        case "approved":
+                            $nd_temp["id"] = $id; 
+                            $nd_temp["status"] = "Approved";
+                            if($this->anggota_model->edit_temp($nd_temp)){
+                                $nd["id"] = $id;
+                                $nd["name"] = $detail_temp["name"];
+                                $nd["nik"] = $detail_temp["nik"];
+                                $nd["tmk"] = $detail_temp["tmk"];
+                                $nd["address"] = $detail_temp["address"];
+                                $nd["depo"] = $detail_temp["depo"];
+                                $nd["acc_no"] = $detail_temp["acc_no"];
+                                $nd["phone"] = $detail_temp["phone"];
+                                $nd["email"] = $detail_temp["email"];
+                                $nd["ktp"] = $detail_temp["ktp"];
+                                
+                                if ($this->anggota_model->edit($nd)) {
+                                    $data['success'] = 1;
+                                    $data['message'] = "Success Update Data!";
+                                } else {
+                                    $data['success'] = 0;
+                                    $data['error'] = "Failed Update Data !";
+                                }
+                            }else{
+                                $data['success'] = 0;
+                                $data['error'] = "Persetujuan Data gagal !";
+                            }
+
+                            break;
+                        case "rejected":
+                            $nd_temp["id"] = $id; 
+                            $nd_temp["reason"] = $reason;
+                            $nd_temp["status"] = "Rejected";
+                            if($this->anggota_model->edit_temp($nd_temp)){
+                                $data['success'] = 1;
+                                $data['message'] = "Penolakan Data berhasil !";
+                            }else{
+                                $data['success'] = 0;
+                                $data['error'] = "Penolakan Data gagal !";
+                            }
+
+                            break;
+                        default:
+                                $data['success'] = 0;
+                                $data['error'] = "Invalid Action !";
+                            break;
+                    }
+
+                }else{
+                    $data['success'] = 0;
+                    $data['error'] = "Temporary data not found !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid anggota ID !";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('anggota');
+    }
+
 }
