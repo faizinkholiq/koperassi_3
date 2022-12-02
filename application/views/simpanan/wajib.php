@@ -140,7 +140,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="...">
+                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="..." value="<?= $default_nominal ?>">
                                 </div>
                             </div>
                         </div>

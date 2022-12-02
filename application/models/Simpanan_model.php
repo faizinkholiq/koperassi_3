@@ -260,4 +260,9 @@
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
 
+    public function get_default_nominal($type)
+    {
+        return $this->db->get_where('simpanan_settings', ['simpanan' => $type])->row_array();
+    }
+
 }

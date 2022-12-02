@@ -50,12 +50,14 @@ class Simpanan extends CI_Controller {
 					$d['title'] = "Simpanan Pokok";
 					$d['content_view'] = 'simpanan/pokok';
 					$d['highlight_menu'] = "simpanan_pokok";
+                    $d['default_nominal'] = $this->simpanan_model->get_default_nominal("Pokok")["nominal"];
 					$d['data'] = $this->simpanan_pokok_model->get();
 					break;
 				case 'wajib':
 					$d['title'] = "Simpanan Wajib";
 					$d['content_view'] = 'simpanan/wajib';
 					$d['highlight_menu'] = "simpanan_wajib";
+                    $d['default_nominal'] = $this->simpanan_model->get_default_nominal("Wajib")["nominal"];
 					$d['data'] = $this->simpanan_wajib_model->get();
 					break;
 				case 'sukarela':
