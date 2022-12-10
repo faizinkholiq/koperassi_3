@@ -143,6 +143,7 @@ class Anggota extends CI_Controller {
             if (!check_permission('anggota', $d['role'])){
                 redirect('home');
             }else{
+                $d['list_depo'] = $this->anggota_model->get_list_depo();
                 $d['list_position'] = $this->anggota_model->get_list_position();
                 $this->load->view('layout/template', $d);
             }
