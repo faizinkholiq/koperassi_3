@@ -6,12 +6,12 @@
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">KTP</div>
                     <div class="col-lg-1 text-right">:</div>
-                    <div class="col-lg-7"><?= (isset($after['nik']) && !empty($after['nik']))? $after['nik'] : '-' ?></div>
+                    <div class="col-lg-7"><?= (isset($after['no_ktp']) && !empty($after['no_ktp']))? $after['no_ktp'] : '-' ?></div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">NIK</div>
                     <div class="col-lg-1 text-right">:</div>
-                    <div class="col-lg-7"><?= (isset($after['tmk']) && !empty($after['tmk']))? $after['tmk'] : '-' ?></div>
+                    <div class="col-lg-7"><?= (isset($after['nik']) && !empty($after['nik']))? $after['nik'] : '-' ?></div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">Nama Lengkap</div>

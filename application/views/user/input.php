@@ -14,19 +14,19 @@
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
-                            <div class="col-lg-3">NIK</div>
+                            <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK" 
-                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>">
+                                <input type="text" class="form-control form-control-user" id="noKtpTextInput" name="no_ktp" placeholder="KTP" 
+                                    value="<?=(isset($data["no_ktp"]) && !empty($data["no_ktp"]))? $data["no_ktp"] : '' ?>">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">TMK</div>
+                            <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="TMK"
-                                    value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>">
+                                <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK"
+                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>">
                             </div>
                         </div>
                         <div class="row mb-3">

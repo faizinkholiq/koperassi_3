@@ -63,7 +63,7 @@ class Anggota extends CI_Controller {
 	{
         $d = $this->user_model->login_check();
         $this->form_validation->set_rules('nama','Nama','required');
-        $this->form_validation->set_rules('nik','NIK','required');
+        $this->form_validation->set_rules('no_ktp','No KTP','required');
 
         if ($this->form_validation->run() == TRUE) {
             if (!check_permission('anggota', $d['role'])){
@@ -97,7 +97,7 @@ class Anggota extends CI_Controller {
 
                 // Create user account
                 $user_id = $this->user_model->create([
-                    "username" => $nd["detail_anggota"]["nik"],
+                    "username" => $nd["detail_anggota"]["no_ktp"],
                     "name" => $nd["detail_anggota"]["name"],
                     "role" => $role,
                     "password" => "member@koperasi123",
@@ -154,7 +154,7 @@ class Anggota extends CI_Controller {
 	{
         $d = $this->user_model->login_check();
         $this->form_validation->set_rules('nama','Nama','required');
-        $this->form_validation->set_rules('nik','NIK','required');
+        $this->form_validation->set_rules('no_ktp','No KTP','required');
 
         if ($this->form_validation->run() == TRUE) {
             if (!check_permission('anggota', $d['role'])){
@@ -334,8 +334,8 @@ class Anggota extends CI_Controller {
 
     private function get_input()
     {
+        $data["detail_anggota"]["no_ktp"] = $this->input->post('no_ktp');
         $data["detail_anggota"]["nik"] = $this->input->post('nik');
-        $data["detail_anggota"]["tmk"] = $this->input->post('tmk');
         $data["detail_anggota"]["name"] = $this->input->post('nama');
         $data["detail_anggota"]["address"] = $this->input->post('alamat');
         $data["detail_anggota"]["phone"] = $this->input->post('no_telp');
@@ -411,8 +411,8 @@ class Anggota extends CI_Controller {
     private function get_input_temp()
     {   
         $data["name"] = $this->input->post('nama');
+        $data["no_ktp"] = $this->input->post('no_ktp');
         $data["nik"] = $this->input->post('nik');
-        $data["tmk"] = $this->input->post('tmk');
         $data["address"] = $this->input->post('alamat');
         $data["depo"] = $this->input->post('depo');
         $data["acc_no"] = $this->input->post('acc_no');
@@ -426,7 +426,7 @@ class Anggota extends CI_Controller {
 	{
         $d = $this->user_model->login_check();
         $this->form_validation->set_rules('nama','Nama','required');
-        $this->form_validation->set_rules('nik','NIK','required');
+        $this->form_validation->set_rules('no_ktp','No KTP','required');
 
         if ($this->form_validation->run() == TRUE) {
             if (!check_permission('anggota_settings', $d['role'])){
@@ -556,8 +556,8 @@ class Anggota extends CI_Controller {
                             if($this->anggota_model->edit_temp($nd_temp)){
                                 $nd["id"] = $id;
                                 $nd["name"] = $detail_temp["name"];
+                                $nd["no_ktp"] = $detail_temp["no_ktp"];
                                 $nd["nik"] = $detail_temp["nik"];
-                                $nd["tmk"] = $detail_temp["tmk"];
                                 $nd["address"] = $detail_temp["address"];
                                 $nd["depo"] = $detail_temp["depo"];
                                 $nd["acc_no"] = $detail_temp["acc_no"];

@@ -74,12 +74,12 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?= isset($nik) && !empty($nik)? $nik : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($no_ktp) && !empty($no_ktp)? $no_ktp : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?= isset($tmk) && !empty($tmk)? $tmk : "-" ?></div>
+                            <div class="col-lg-8"><?= isset($nik) && !empty($nik)? $nik : "-" ?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama Lengkap</div>

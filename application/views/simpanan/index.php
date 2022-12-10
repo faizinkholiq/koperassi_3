@@ -247,7 +247,7 @@
             $('#kodeTextInput').val(simpanan[0].code);
             $('#simpananTextInput').val(simpanan[0].id);
             $('#namaAnggotaTextInput').val(simpanan[0].name);
-            $('#noAnggotaTextInput').val(simpanan[0].tmk);
+            $('#noAnggotaTextInput').val(simpanan[0].nik);
             $('#jabatanTextInput').val(simpanan[0].position_name);
             $('#depoTextInput').val(simpanan[0].depo);
             $('#alamatTextArea').text(simpanan[0].address);

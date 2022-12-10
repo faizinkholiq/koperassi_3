@@ -6,12 +6,12 @@
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">KTP</div>
                     <div class="col-lg-1 text-right">:</div>
-                    <div class="col-lg-7"><?= (isset($data['nik']) && !empty($data['nik']))? $data['nik'] : '-' ?></div>
+                    <div class="col-lg-7"><?= (isset($data['no_ktp']) && !empty($data['no_ktp']))? $data['no_ktp'] : '-' ?></div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">NIK</div>
                     <div class="col-lg-1 text-right">:</div>
-                    <div class="col-lg-7"><?= (isset($data['tmk']) && !empty($data['tmk']))? $data['tmk'] : '-' ?></div>
+                    <div class="col-lg-7"><?= (isset($data['nik']) && !empty($data['nik']))? $data['nik'] : '-' ?></div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">Nama Lengkap</div>

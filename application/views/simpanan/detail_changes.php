@@ -6,7 +6,7 @@
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">No. Anggota</div>
                     <div class="col-lg-1 text-right">:</div>
-                    <div class="col-lg-7"><?= (isset($before['tmk']) && !empty($before['tmk']))? $before['tmk'] : '-' ?></div>
+                    <div class="col-lg-7"><?= (isset($before['nik']) && !empty($before['nik']))? $before['nik'] : '-' ?></div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 offset-lg-1 font-weight-bold">Nama</div>

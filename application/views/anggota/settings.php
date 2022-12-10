@@ -49,8 +49,8 @@
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="No. KTP" 
-                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" 
+                                <input type="text" class="form-control form-control-user" id="noKtpTextInput" name="no_ktp" placeholder="No. KTP" 
+                                    value="<?=(isset($data["no_ktp"]) && !empty($data["no_ktp"]))? $data["no_ktp"] : '' ?>" 
                                     <?= ($data["status"] == "Pending")? "disabled" : "" ?> required>
                             </div>
                         </div>
@@ -58,8 +58,8 @@
                             <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="NIK"
-                                    value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" 
+                                <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK"
+                                    value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" 
                                     <?= ($data["status"] == "Pending")? "disabled" : "" ?> required>
                             </div>
                         </div>

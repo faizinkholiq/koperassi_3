@@ -23,8 +23,8 @@
                 <thead>
                     <tr>
                         <th width="10">No</th>
+                        <th class="text-center">KTP</th>
                         <th class="text-center">NIK</th>
-                        <th class="text-center">TMK</th>
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">No. Telp</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
@@ -35,8 +35,8 @@
                     <?php foreach($data as $key => $row): ?>
                     <tr>
                         <td><?=$key+1?></td>
+                        <td><?=$row["no_ktp"]?></td>
                         <td><?=$row["nik"]?></td>
-                        <td><?=$row["tmk"]?></td>
                         <td><?=$row["name"]?></td>
                         <td><?=$row["phone"]?></td>
                         <td><?=$row["join_date"]?></td>
@@ -181,7 +181,7 @@
 
             if(person.length > 0){
                 $('#anggotaAlert').fadeOut();
-                $('#noAnggotaTextInput').val(person[0].tmk)
+                $('#noAnggotaTextInput').val(person[0].nik)
                 $('#jabatanTextInput').val(person[0].position_name)
                 $('#depoTextInput').val(person[0].depo)
                 $('#alamatTextArea').text(person[0].address)

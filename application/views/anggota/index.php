@@ -37,8 +37,8 @@
                     <?php foreach($data as $key => $row): ?>
                     <tr>
                         <td><?=$key+1?></td>
+                        <td><?=$row["no_ktp"]?></td>
                         <td><?=$row["nik"]?></td>
-                        <td><?=$row["tmk"]?></td>
                         <td><?=$row["name"]?></td>
                         <td><?=$row["phone"]?></td>
                         <td><?=$row["position_name"]?></td>
@@ -94,11 +94,11 @@
                     <table class="table table-bordered">
                         <tr>
                             <td class="font-weight-bold" width="30%">KTP :</td>
-                            <td width="70%" id="appNIK">-</td>
+                            <td width="70%" id="appKTP">-</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">NIK :</td>
-                            <td id="appTMK">-</td>
+                            <td id="appNIK">-</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Nama :</td>
@@ -154,11 +154,11 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td class="font-weight-bold" width="30%">KTP :</td>
-                                <td width="70%" id="rejNIK">-</td>
+                                <td width="70%" id="rejKTP">-</td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold">NIK :</td>
-                                <td id="rejTMK">-</td>
+                                <td id="rejNIK">-</td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold">Nama :</td>
@@ -219,8 +219,8 @@
         $.get(url.site + "/anggota/get_person_temp/" + id, (data) => {
             data = $.parseJSON(data);
             if (data.success != 0) {
+                $('#appKTP').text(data.no_ktp);
                 $('#appNIK').text(data.nik);
-                $('#appTMK').text(data.tmk);
                 $('#appNama').text(data.name);
                 $('#appAlamat').text(data.address);
                 $('#appEmail').text(data.email);
@@ -239,8 +239,8 @@
         $.get(url.site + "/anggota/get_person_temp/" + id, (data) => {
             data = $.parseJSON(data);
             if (data.success != 0) {
+                $('#rejKTP').text(data.no_ktp);
                 $('#rejNIK').text(data.nik);
-                $('#rejTMK').text(data.tmk);
                 $('#rejNama').text(data.name);
                 $('#rejAlamat').text(data.address);
                 $('#rejEmail').text(data.email);

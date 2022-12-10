@@ -21,12 +21,12 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?=!empty($data["nik"])? $data["nik"] : '-'?></div>
+                            <div class="col-lg-8"><?=!empty($data["no_ktp"])? $data["no_ktp"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-8"><?=!empty($data["tmk"])? $data["tmk"] : '-'?></div>
+                            <div class="col-lg-8"><?=!empty($data["nik"])? $data["nik"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Nama Lengkap</div>

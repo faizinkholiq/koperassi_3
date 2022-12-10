@@ -8,8 +8,8 @@
             'simpanan_sukarela.id',
             'simpanan_sukarela.person person_id',
             'person.name',
+            'person.no_ktp',
             'person.nik',
-            'person.tmk',
             'person.phone',
             'person.join_date',
             'simpanan_sukarela.balance',
@@ -24,7 +24,7 @@
     {
         return $this->db->select([
             "simpanan_sukarela.*",
-            "person.tmk",
+            "person.nik",
             "person.name",
             "position.name position",
             "person.depo",
