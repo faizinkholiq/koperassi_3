@@ -19,12 +19,12 @@
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-8">
                         <div class="row mb-3">
-                            <div class="col-lg-3">NIK</div>
+                            <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8"><?=!empty($data["nik"])? $data["nik"] : '-'?></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">TMK</div>
+                            <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8"><?=!empty($data["tmk"])? $data["tmk"] : '-'?></div>
                         </div>

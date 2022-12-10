@@ -8,7 +8,7 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             Anggota dapat login ke akun masing-masing menggunakan data dibawah ini: 
             <ul class="mt-2">
-                <li>Username = <strong>< NIK Anggota ></strong></li>
+                <li>Username = <strong>< No. KTP Anggota ></strong></li>
                 <li>Password = <strong>"member@koperasi123"</strong></li>
             </ul>
         </div>
@@ -29,18 +29,18 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
                     <div class="col-lg-8">
                         <input type="hidden" name="role" value="<?= (isset($_GET["role"]) && $_GET["role"] == 1)? 1 : 2 ?>">
                         <div class="row mb-3">
-                            <div class="col-lg-3">NIK</div>
+                            <div class="col-lg-3">KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="NIK" 
+                                <input type="text" class="form-control form-control-user" id="nikTextInput" name="nik" placeholder="No. KTP" 
                                     value="<?=(isset($data["nik"]) && !empty($data["nik"]))? $data["nik"] : '' ?>" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">TMK</div>
+                            <div class="col-lg-3">NIK</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="TMK"
+                                <input type="text" class="form-control form-control-user" id="tmkTextInput" name="tmk" placeholder="NIK"
                                     value="<?=(isset($data["tmk"]) && !empty($data["tmk"]))? $data["tmk"] : '' ?>" required>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-lg-3">KTP</div>
+                            <div class="col-lg-3">Foto KTP</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control" id="ktpFile" name="ktp" style="height:auto;">

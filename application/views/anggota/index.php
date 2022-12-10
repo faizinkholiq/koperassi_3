@@ -22,8 +22,8 @@
                 <thead>
                     <tr>
                         <th class="text-center" width="10">No</th>
+                        <th class="text-center">KTP</th>
                         <th class="text-center">NIK</th>
-                        <th class="text-center">TMK</th>
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">No. Telp</th>
                         <th class="text-center">Jabatan</th>
@@ -93,11 +93,11 @@
                 <div class="mt-4 mb-4">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="font-weight-bold" width="30%">NIK :</td>
+                            <td class="font-weight-bold" width="30%">KTP :</td>
                             <td width="70%" id="appNIK">-</td>
                         </tr>
                         <tr>
-                            <td class="font-weight-bold">TMK :</td>
+                            <td class="font-weight-bold">NIK :</td>
                             <td id="appTMK">-</td>
                         </tr>
                         <tr>
@@ -153,11 +153,11 @@
                     <div class="mt-4 mb-4">
                         <table class="table table-bordered">
                             <tr>
-                                <td class="font-weight-bold" width="30%">NIK :</td>
+                                <td class="font-weight-bold" width="30%">KTP :</td>
                                 <td width="70%" id="rejNIK">-</td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold">TMK :</td>
+                                <td class="font-weight-bold">NIK :</td>
                                 <td id="rejTMK">-</td>
                             </tr>
                             <tr>
