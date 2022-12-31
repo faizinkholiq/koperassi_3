@@ -81,9 +81,9 @@
         ->get_compiled_select();
 
         $q_investasi = $this->db->select([
-            'investasi.id',
-            'investasi.person person_id',
-            'investasi.code',
+            'simpanan_investasi.id',
+            'simpanan_investasi.person person_id',
+            'simpanan_investasi.code',
             'person.name',
             'person.no_ktp',
             'person.nik',
@@ -95,17 +95,17 @@
             'person.position',
             'position.name position_name',
             '"Simpanan Wajib" type',
-            'investasi.date',
-            'investasi.balance',
+            'simpanan_investasi.date',
+            'simpanan_investasi.balance',
             '0 simpanan_temp_id',
         ])
-        ->from('investasi')
-        ->join('person', 'person.id = investasi.person')
+        ->from('simpanan_investasi')
+        ->join('person', 'person.id = simpanan_investasi.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
         ->get_compiled_select();
 
-        $q_all = $this->db->query($q_pokok.' UNION ALL '.$q_wajib. ' UNION ALL '.$q_sukarela.' UNION ALL '.$q_investasi.' ORDER BY date DESC');
+        $q_all = $this->db->query($q_pokok.' UNION ALL '.$q_wajib. ' UNION ALL '.$q_sukarela.' UNION ALL '.$q_simpanan_investasi.' ORDER BY date DESC');
         return $q_all->result_array();
     }
 
@@ -118,7 +118,7 @@
                 'COALESCE(simpanan_pokok.total, 0) 
                 + COALESCE(simpanan_wajib.total, 0) 
                 + COALESCE(simpanan_sukarela.total, 0)
-                + COALESCE(investasi.total, 0) balance',
+                + COALESCE(simpanan_investasi.total, 0) balance',
             ])
             ->from('person')
             ->join('(
@@ -148,7 +148,7 @@
                     SUM(balance) total 
                 FROM investasi 
                 GROUP BY person
-            ) investasi', 'person.id = investasi.person', 'left')
+            ) investasi', 'person.id = simpanan_investasi.person', 'left')
             ->where('person.id', $person)
             ->group_by('person.id')->get()->row_array()['balance'];
 
@@ -228,17 +228,17 @@
 
     public function get_settings()
     {
-        return $this->db->get('simpanan_settings')->result_array();
+        return $this->db->get('settings_simpanan')->result_array();
     }
 
     public function detail_settings($id)
     {
-        return $this->db->get_where('simpanan_settings', ["id" => $id])->row_array();
+        return $this->db->get_where('settings_simpanan', ["id" => $id])->row_array();
     }
 
     public function create_settings($data)
     {
-        $this->db->insert('simpanan_settings', $data);
+        $this->db->insert('settings_simpanan', $data);
 
         return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
     }
@@ -247,7 +247,7 @@
     {   
         $this->db->where('id', $data['id']);
         unset($data['id']);
-        $this->db->update('simpanan_settings', $data);
+        $this->db->update('settings_simpanan', $data);
 
         return ($this->db->error()["code"] == 0) ? true : false;
     }
@@ -255,14 +255,14 @@
     public function delete_settings($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('simpanan_settings');
+        $this->db->delete('settings_simpanan');
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
 
     public function get_default_nominal($type)
     {
-        return $this->db->get_where('simpanan_settings', ['simpanan' => $type])->row_array();
+        return $this->db->get_where('settings_simpanan', ['simpanan' => $type])->row_array();
     }
 
 }

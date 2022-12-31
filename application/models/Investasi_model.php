@@ -5,17 +5,17 @@
     public function get()
     {
         $q = $this->db->select([
-            'investasi.id',
-            'investasi.person person_id',
+            'simpanan_investasi.id',
+            'simpanan_investasi.person person_id',
             'person.name',
             'person.no_ktp',
             'person.nik',
             'person.phone',
             'person.join_date',
-            'investasi.balance',
+            'simpanan_investasi.balance',
         ])
-        ->from('investasi')
-        ->join('person', 'person.id = investasi.person')
+        ->from('simpanan_investasi')
+        ->join('person', 'person.id = simpanan_investasi.person')
         ->order_by('date', 'desc');
         return $q->get()->result_array();
     }
@@ -23,7 +23,7 @@
     public function detail($id)
     {
         return $this->db->select()
-        ->from('investasi')
+        ->from('simpanan_investasi')
         ->where('id',$id)
         ->get()
         ->row_array();
@@ -31,7 +31,7 @@
 
     public function create($data)
     {
-        $this->db->insert('investasi', $data);
+        $this->db->insert('simpanan_investasi', $data);
 
         return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
     }
@@ -40,7 +40,7 @@
     {   
         $this->db->where('id', $data['id']);
         unset($data['id']);
-        $this->db->update('investasi', $data);
+        $this->db->update('simpanan_investasi', $data);
 
         return ($this->db->error()["code"] == 0) ? true : false;
     }
@@ -48,7 +48,7 @@
     public function delete($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('investasi');
+        $this->db->delete('simpanan_investasi');
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
@@ -62,7 +62,7 @@
             THEN MAX(code) + 1 
             ELSE '1000000001' END code
         ")
-        ->from('investasi')
+        ->from('simpanan_investasi')
         ->order_by('code', 'DESC')
         ->limit(1)
         ->get()->row_array();
