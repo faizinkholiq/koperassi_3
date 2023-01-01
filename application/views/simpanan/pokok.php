@@ -17,6 +17,12 @@
     <div class="card-body">
         <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
         <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
+        <select class="form-control" id="selectBulan" name="bulan">
+            <option>Januari</option>
+        </select>
+        <select class="form-control" id="selectTahun" name="tahun">
+            <option>2023</option>
+        </select>
         <hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
