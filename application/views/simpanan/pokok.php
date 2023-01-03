@@ -41,7 +41,7 @@
             </div>
         </div><hr>
         <div class="table-responsive">
-            <table id="simpananTable" class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th width="10">No</th>
@@ -177,9 +177,9 @@
         site: '<?=site_url() ?>'
     };
     const list_anggota = <?= json_encode($person_list); ?>;
+
     let month = $('#selectBulan').val();
     let year = $('#selectTahun').val();
-
 
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",

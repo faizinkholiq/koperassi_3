@@ -93,6 +93,48 @@ class Simpanan extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function get_dt_simpanan_wajib(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+        $params["month"] = $this->input->post("month");
+        $params["year"] = $this->input->post("year");
+
+        $data = $this->simpanan_wajib_model->get_dt($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
+    public function get_dt_simpanan_sukarela(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+        $params["month"] = $this->input->post("month");
+        $params["year"] = $this->input->post("year");
+
+        $data = $this->simpanan_sukarela_model->get_dt($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
+    public function get_dt_simpanan_investasi(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+        $params["month"] = $this->input->post("month");
+        $params["year"] = $this->input->post("year");
+
+        $data = $this->investasi_model->get_dt($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
 	public function create($module)
 	{
         $d = $this->user_model->login_check();
