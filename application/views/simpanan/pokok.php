@@ -15,17 +15,33 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
-        <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
-        <select class="form-control" id="selectBulan" name="bulan">
-            <option>Januari</option>
-        </select>
-        <select class="form-control" id="selectTahun" name="tahun">
-            <option>2023</option>
-        </select>
-        <hr>
+        <div class="row">
+            <div class="col-lg-6">
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
+                <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
+            </div>
+            <div class="col-lg-6 row justify-content-end p-0">
+                <select class="form-control col-lg-3" id="selectBulan" name="bulan" onchange="selectMonth()">
+                    <option value="all">- All Data -</option>
+                    <?php 
+                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    foreach($months as $key => $item):
+                    ?>
+                    <option value="<?= $key+1 ?>"><?= $item ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectYear()">
+                    <?php 
+                    $start = 2019;
+                    for($i = $start; $i <= date('Y'); $i++):
+                    ?>
+                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div><hr>
         <div class="table-responsive">
-            <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
+            <table id="simpananTable" class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th width="10">No</th>
@@ -37,19 +53,7 @@
                         <th class="text-center">Jml. Simpanan</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach($data as $key => $row): ?>
-                    <tr>
-                        <td><?=$key+1?></td>
-                        <td><?=$row["no_ktp"]?></td>
-                        <td><?=$row["nik"]?></td>
-                        <td><?=$row["name"]?></td>
-                        <td><?=$row["phone"]?></td>
-                        <td><?=$row["join_date"]?></td>
-                        <td><?=$row["balance"]?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -172,8 +176,34 @@
         base: '<?=base_url() ?>',
         site: '<?=site_url() ?>'
     };
+    const list_anggota = <?= json_encode($person_list); ?>;
+    let month = $('#selectBulan').val();
+    let year = $('#selectTahun').val();
 
-    const list_anggota = <?= json_encode($person_list); ?>
+
+    let dt = $('#simpananTable').DataTable({
+        dom: "Bfrtip",
+        ajax: {
+            url: url.site + "/simpanan/get_dt_simpanan_pokok",
+            type: "POST",
+            data: function(d){
+                d.month = month;
+                d.year = year;
+            }
+        },
+        processing: true,
+        serverSide: true,
+        columns: [
+            { data: "row_no" },
+            { data: "no_ktp" },
+            { data: "nik" },
+            { data: "name" },
+            { data: "phone" },
+            { data: "join_date" },
+            { data: "balance" },
+        ],
+        ordering: false
+    });
 
     $(document).ready(function() {
         $('.alert').alert()
@@ -215,6 +245,16 @@
         $("#anggotaSelect").val('');
         $("#anggotaSelect").selectpicker('refresh');
         $('#anggotaAlert').show();
+    }
+
+    function selectMonth(){
+        month = $('#selectBulan').val();
+        dt.ajax.reload();
+    }
+
+    function selectYear(){
+        year = $('#selectTahun').val();
+        dt.ajax.reload();
     }
 
 </script>

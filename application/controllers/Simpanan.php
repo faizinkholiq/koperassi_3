@@ -51,26 +51,22 @@ class Simpanan extends CI_Controller {
 					$d['content_view'] = 'simpanan/pokok';
 					$d['highlight_menu'] = "simpanan_pokok";
                     $d['default_nominal'] = $this->simpanan_model->get_default_nominal("Pokok")["nominal"];
-					$d['data'] = $this->simpanan_pokok_model->get();
 					break;
 				case 'wajib':
 					$d['title'] = "Simpanan Wajib";
 					$d['content_view'] = 'simpanan/wajib';
 					$d['highlight_menu'] = "simpanan_wajib";
                     $d['default_nominal'] = $this->simpanan_model->get_default_nominal("Wajib")["nominal"];
-					$d['data'] = $this->simpanan_wajib_model->get();
 					break;
 				case 'sukarela':
 					$d['title'] = "Simpanan Sukarela";
 					$d['content_view'] = 'simpanan/sukarela';
 					$d['highlight_menu'] = "simpanan_sukarela";
-					$d['data'] = $this->simpanan_sukarela_model->get();
 					break;
 				case 'investasi':
 					$d['title'] = "Investasi";
 					$d['content_view'] = 'simpanan/investasi';
 					$d['highlight_menu'] = "investasi";
-					$d['data'] = $this->investasi_model->get();
 					break;
 			}
 
@@ -82,6 +78,20 @@ class Simpanan extends CI_Controller {
             $this->load->view('layout/template', $d);
         }
 	}
+
+    public function get_dt_simpanan_pokok(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+        $params["month"] = $this->input->post("month");
+        $params["year"] = $this->input->post("year");
+
+        $data = $this->simpanan_pokok_model->get_dt($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
 
 	public function create($module)
 	{
