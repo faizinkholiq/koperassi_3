@@ -105,8 +105,26 @@
     public function list()
     {
         $q = $this->db->select([
-                "person.*",
+                "person.id",
+                "person.user_id",
+                "person.no_ktp",
+                "person.nik",
+                "person.name",
+                "person.address",
+                "person.phone",
+                "person.join_date",
+                "person.status",
+                "person.position",
                 "position.name position_name",
+                "person.depo",
+                "person.acc_no",
+                "person.phone",
+                "person.email",
+                "person.ktp",
+                "person.profile_photo",
+                "person.join_date",
+                "person.status",
+                "person.salary",
             ])
             ->from('person')
             ->join('user', 'user.id = person.user_id')
@@ -120,7 +138,25 @@
     public function detail($id)
     {
         return $this->db->select([
-            'person.*',
+            "person.id",
+            "person.user_id",
+            "person.no_ktp",
+            "person.nik",
+            "person.name",
+            "person.address",
+            "person.phone",
+            "person.join_date",
+            "person.status",
+            "person.position",
+            "person.depo",
+            "person.acc_no",
+            "person.phone",
+            "person.email",
+            "person.ktp",
+            "person.profile_photo",
+            "person.join_date",
+            "person.status",
+            "person.salary",
             'person_family.id id_family',
             'person_family.name name_family',
             'person_family.address address_family',
