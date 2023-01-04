@@ -24,7 +24,7 @@
                 '0 simpanan_temp_id',
             ])
             ->from('simpanan_pokok')
-            ->join('person', 'person.id = simpanan_pokok.person')
+            ->join('person', 'person.nik = simpanan_pokok.person')
             ->join('position', 'person.position = position.id', 'left')
             ->where('person.id', $person)
             ->get_compiled_select();
@@ -49,7 +49,7 @@
             '0 simpanan_temp_id',
         ])
         ->from('simpanan_wajib')
-        ->join('person', 'person.id = simpanan_wajib.person')
+        ->join('person', 'person.nik = simpanan_wajib.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
         ->get_compiled_select();
@@ -74,7 +74,7 @@
             'simpanan_temp.id simpanan_temp_id',
         ])
         ->from('simpanan_sukarela')
-        ->join('person', 'person.id = simpanan_sukarela.person')
+        ->join('person', 'person.nik = simpanan_sukarela.person')
         ->join('position', 'person.position = position.id', 'left')
         ->join('simpanan_temp', 'simpanan_temp.simpanan_id = simpanan_sukarela.id AND simpanan_temp.type = "Sukarela"', 'left')
         ->where('person.id', $person)
@@ -100,12 +100,12 @@
             '0 simpanan_temp_id',
         ])
         ->from('simpanan_investasi')
-        ->join('person', 'person.id = simpanan_investasi.person')
+        ->join('person', 'person.nik = simpanan_investasi.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
         ->get_compiled_select();
 
-        $q_all = $this->db->query($q_pokok.' UNION ALL '.$q_wajib. ' UNION ALL '.$q_sukarela.' UNION ALL '.$q_simpanan_investasi.' ORDER BY date DESC');
+        $q_all = $this->db->query($q_pokok.' UNION ALL '.$q_wajib. ' UNION ALL '.$q_sukarela.' UNION ALL '.$q_investasi.' ORDER BY date DESC');
         return $q_all->result_array();
     }
 
@@ -127,28 +127,28 @@
                     SUM(balance) total 
                 FROM simpanan_pokok 
                 GROUP BY person
-            ) simpanan_pokok', 'person.id = simpanan_pokok.person', 'left')
+            ) simpanan_pokok', 'person.nik = simpanan_pokok.person', 'left')
             ->join('(
                 SELECT 
                     person, 
                     SUM(balance) total 
                 FROM simpanan_wajib 
                 GROUP BY person
-            ) simpanan_wajib', 'person.id = simpanan_wajib.person', 'left')
+            ) simpanan_wajib', 'person.nik = simpanan_wajib.person', 'left')
             ->join('(
                 SELECT 
                     person, 
                     SUM(balance) total 
                 FROM simpanan_sukarela 
                 GROUP BY person
-            ) simpanan_sukarela', 'person.id = simpanan_sukarela.person', 'left')
+            ) simpanan_sukarela', 'person.nik = simpanan_sukarela.person', 'left')
             ->join('(
                 SELECT 
                     person, 
                     SUM(balance) total 
                 FROM investasi 
                 GROUP BY person
-            ) investasi', 'person.id = simpanan_investasi.person', 'left')
+            ) investasi', 'person.nik = simpanan_investasi.person', 'left')
             ->where('person.id', $person)
             ->group_by('person.id')->get()->row_array()['balance'];
 

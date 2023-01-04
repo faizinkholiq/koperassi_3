@@ -17,7 +17,7 @@
             ])
             ->from('cicilan')
             ->join('pinjaman', 'pinjaman.id = cicilan.pinjaman')
-            ->join('person', 'person.id = pinjaman.person')
+            ->join('person', 'person.nik = pinjaman.person')
             ->where('person.id', $person)
             ->group_by('cicilan.id')
             ->get()->result_array();
@@ -31,7 +31,7 @@
                 'COALESCE(SUM(pinjaman.balance), 0) balance',
             ])
             ->from('person')
-            ->join('pinjaman', 'person.id = pinjaman.person', 'left')
+            ->join('pinjaman', 'person.nik = pinjaman.person', 'left')
             ->where('person.id', $person)
             ->group_by('person.id')->get()->row_array()['balance'];
 
