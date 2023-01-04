@@ -24,6 +24,8 @@
     {
         $search = $p["search"];
 
+        $this->db->start_cache();
+
         if(!empty($search["value"])){
 			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_wajib.balance"];
 			$src = $search["value"];
@@ -52,8 +54,6 @@
 
         $limit = $p["length"];
 		$offset = $p["start"];
-
-        $this->db->start_cache();
 
         $q = $this->db->select([
             'simpanan_wajib.id',

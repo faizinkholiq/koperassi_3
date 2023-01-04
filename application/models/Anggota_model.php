@@ -28,9 +28,11 @@
     public function get_dt($p)
     {
         $search = $p["search"];
-
+        
+        $this->db->start_cache();
+        
         if(!empty($search["value"])){
-			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_pokok.balance"];
+			$col = ["person.no_ktp", "person.nik", "person.name", "person.phone", "person.join_date", "position.name", "person_temp.status"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
@@ -56,8 +58,6 @@
 
         $limit = $p["length"];
 		$offset = $p["start"];
-
-        $this->db->start_cache();
 
         $this->db->select([
             "person.id",
