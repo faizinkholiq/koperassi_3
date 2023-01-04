@@ -25,23 +25,23 @@ class Anggota extends CI_Controller {
         if (!check_permission('anggota', $d['role'])){
             redirect('home');
         }else{
-            $d['data'] = $this->anggota_model->get($role);
             $this->load->view('layout/template', $d);
         }
 	}
 
-    public function get_data()
-	{
-        $d = $this->user_model->login_check();
-        if (!check_permission('anggota', $d['role'])){
-            $data['success'] = 0;
-            $data['error'] = "No Permission !";
-        }else{
-            $data = $this->anggota_model->get();
-        }
+    public function get_data(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
         
+        $params["role"] = $this->input->post("role");
+
+        $data = $this->anggota_model->get_dt($params);
+
+        ob_end_clean();
         echo json_encode($data);
-	}
+    }
 
     public function detail($id)
 	{

@@ -84,6 +84,7 @@ class Simpanan extends CI_Controller {
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
         $params["start"] = $this->input->post("start");
+
         $params["month"] = $this->input->post("month");
         $params["year"] = $this->input->post("year");
 
@@ -98,6 +99,7 @@ class Simpanan extends CI_Controller {
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
         $params["start"] = $this->input->post("start");
+       
         $params["month"] = $this->input->post("month");
         $params["year"] = $this->input->post("year");
 
@@ -112,6 +114,7 @@ class Simpanan extends CI_Controller {
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
         $params["start"] = $this->input->post("start");
+     
         $params["month"] = $this->input->post("month");
         $params["year"] = $this->input->post("year");
 
@@ -126,6 +129,7 @@ class Simpanan extends CI_Controller {
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
         $params["start"] = $this->input->post("start");
+     
         $params["month"] = $this->input->post("month");
         $params["year"] = $this->input->post("year");
 

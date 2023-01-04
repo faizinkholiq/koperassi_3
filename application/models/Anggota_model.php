@@ -25,6 +25,76 @@
         return $q->get()->result_array();
     }
 
+    public function get_dt($p)
+    {
+        $search = $p["search"];
+
+        if(!empty($search["value"])){
+			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_pokok.balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+
+        if (!empty($p['role'])){
+            $this->db->where('user.role', '1');
+        }else{
+            $this->db->where('user.role', '2');
+        }
+
+        $limit = $p["length"];
+		$offset = $p["start"];
+
+        $this->db->start_cache();
+
+        $this->db->select([
+            "person.id",
+            "person.no_ktp",
+            "person.nik",
+            "person.name",
+            "person.phone",
+            "person.join_date",
+            "person.status",
+            "person.position",
+            "position.name position_name",
+            "person_temp.status status_perubahan",
+            "person_temp.reason",
+            'ROW_NUMBER() OVER(ORDER BY person.id ASC) AS row_no'
+        ])
+        ->from('person')
+        ->join('user', 'user.id = person.user_id')
+        ->join('position', 'position.id = person.position', 'left')
+        ->join('person_temp', 'person_temp.person_id = person.id', 'left')
+        ->order_by('person.id', 'asc');
+        
+        $q = $this->db->get();
+        $data["recordsTotal"] = $q->num_rows();
+        $data["recordsFiltered"] = $q->num_rows();
+        
+        $this->db->stop_cache();
+
+        $this->db->limit($limit, $offset);
+        
+        $data["data"] = $this->db->get()->result_array();
+        $data["draw"] = intval($p["draw"]);
+
+        $this->db->flush_cache();
+
+        return $data;
+    }
+
     public function list()
     {
         $q = $this->db->select([

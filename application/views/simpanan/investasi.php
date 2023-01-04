@@ -209,7 +209,6 @@
 
     $(document).ready(function() {
         $('.alert').alert()
-        $('#simpananTable').DataTable();
         $('.selectpicker').selectpicker();
 
         $("#anggotaSelect").change(function () {

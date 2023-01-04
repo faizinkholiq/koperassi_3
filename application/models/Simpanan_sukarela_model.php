@@ -50,25 +50,38 @@
             $this->db->where('simpanan_sukarela.year', $p['year']);
         }
 
-        $q = $this->db->select([
-                'simpanan_sukarela.id',
-                'simpanan_sukarela.person person_id',
-                'person.name',
-                'person.no_ktp',
-                'person.nik',
-                'person.phone',
-                'person.join_date',
-                'simpanan_sukarela.balance',
-				'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
-            ])
-            ->from('simpanan_sukarela')
-            ->join('person', 'person.id = simpanan_sukarela.person')
-            ->order_by('date', 'desc')->get();
+        $limit = $p["length"];
+		$offset = $p["start"];
+
+        $this->db->start_cache();
+
+        $this->db->select([
+            'simpanan_sukarela.id',
+            'simpanan_sukarela.person person_id',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'simpanan_sukarela.balance',
+            'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
+        ])
+        ->from('simpanan_sukarela')
+        ->join('person', 'person.id = simpanan_sukarela.person')
+        ->order_by('date', 'desc');
         
+        $q = $this->db->get();
         $data["recordsTotal"] = $q->num_rows();
         $data["recordsFiltered"] = $q->num_rows();
-        $data["data"] = $q->result_array();
+        
+        $this->db->stop_cache();
+
+        $this->db->limit($limit, $offset);
+        
+        $data["data"] = $this->db->get()->result_array();
         $data["draw"] = intval($p["draw"]);
+
+        $this->db->flush_cache();
 
         return $data;
     }

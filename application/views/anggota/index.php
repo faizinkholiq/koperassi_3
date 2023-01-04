@@ -33,47 +33,7 @@
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach($data as $key => $row): ?>
-                    <tr>
-                        <td><?=$key+1?></td>
-                        <td><?=$row["no_ktp"]?></td>
-                        <td><?=$row["nik"]?></td>
-                        <td><?=$row["name"]?></td>
-                        <td><?=$row["phone"]?></td>
-                        <td><?=$row["position_name"]?></td>
-                        <td><?=$row["join_date"]?></td>
-                        <td class="text-center"><?=$row["status"]?></td>
-                        <td class="text-center"><?php 
-                            if(!empty($row["status_perubahan"])){
-                                $tag = "-";
-                                switch($row["status_perubahan"]){
-                                    case "Pending":
-                                        $tag = "<span class='bg-warning text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-clock'></i> Pending</span>";
-                                        break;
-                                    // case "Approved":
-                                    //     $tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-check'></i> Diverifikasi</span>";
-                                    //     break;
-                                    case "Rejected":
-                                        $tag = "<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-times'></i> Ditolak</span>";
-                                        break;
-                                }
-                                echo $tag; 
-                            }else{
-                                echo "-";
-                            } 
-                        ?></td>
-                        <td class="text-center">
-                            <?php if($row["status_perubahan"] == 'Pending'):?>
-                            <button type="button" onclick="DoApprove(<?= $row['id'] ?>)" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
-                            <button type="button" onclick="DoReject(<?= $row['id'] ?>)" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
-                            <?php endif; ?>
-                            <a href="<?= site_url('anggota/edit/'.$row["id"]).$role_params ?>" class="btn btn-sm my-btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>
-                            <a href="<?= site_url('anggota/detail/'.$row["id"]).$role_params ?>" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-eye"></i></a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -208,11 +168,37 @@
         "base": "<?= base_url() ?>",
     }
 
+    let role = <?= isset($_GET['role'])? $_GET['role'] : 0 ?>;
+
+    let dt = $('#anggotaTable').DataTable({
+        dom: "Bfrtip",
+        ajax: {
+            url: url.site + "/anggota/get_data",
+            type: "POST",
+            data: function(d){
+                d.role = role;
+            }
+        },
+        processing: true,
+        serverSide: true,
+        columns: [
+            { data: "row_no" },
+            { data: "no_ktp" },
+            { data: "nik" },
+            { data: "name" },
+            { data: "phone" },
+            { data: "position_name" },
+            { data: "join_date" },
+            { data: "status" },
+            { data: "status_perubahan" },
+            { data: "aksi" },
+        ],
+        ordering: false,
+        scrollX: true,
+    });
+
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
-        $('#anggotaTable').DataTable({
-            scrollX:        true,
-        });
     });
 
     function DoApprove(id){
