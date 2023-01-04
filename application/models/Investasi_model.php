@@ -15,7 +15,7 @@
             'simpanan_investasi.balance',
         ])
         ->from('simpanan_investasi')
-        ->join('person', 'person.id = simpanan_investasi.person')
+        ->join('person', 'person.nik = simpanan_investasi.person')
         ->order_by('date', 'desc');
         return $q->get()->result_array();
     }
@@ -67,7 +67,7 @@
             'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
         ])
         ->from('simpanan_investasi')
-        ->join('person', 'person.id = simpanan_investasi.person')
+        ->join('person', 'person.nik = simpanan_investasi.person')
         ->order_by('date', 'desc');
         
         $q = $this->db->get();
