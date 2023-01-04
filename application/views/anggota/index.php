@@ -169,6 +169,7 @@
     }
 
     let role = <?= isset($_GET['role'])? $_GET['role'] : 0 ?>;
+    let role_params <?= $role_params ?>;
 
     let dt = $('#anggotaTable').DataTable({
         dom: "Bfrtip",
@@ -189,9 +190,47 @@
             { data: "phone" },
             { data: "position_name" },
             { data: "join_date" },
-            { data: "status" },
-            { data: "status_perubahan" },
-            { data: "aksi" },
+            { data: "status", class: "text-center" },
+            { 
+                data: "status_perubahan",
+                class: "text-center",
+                render: function (data, type, row) {
+                    let tag = '-';
+
+                    switch(row.status_perubahan){
+                        case "Pending":
+                            $tag = "<span class='bg-warning text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-clock'></i> Pending</span>";
+                            break;
+                        case "Rejected":
+                            $tag = "<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-times'></i> Ditolak</span>";
+                            break;
+                    }
+
+                    return tag;
+                }
+            },
+            { 
+                class: "text-center",
+                render: function (data, type, row) {
+                    let btn;
+
+                    if (row.status_perubahan == 'Pending') {
+                        btn = `
+                            <button type="button" onclick="DoApprove(${row.id})" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
+                            <button type="button" onclick="DoReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
+                            <a href="${url.site}/anggota/edit/${row.id+role_params}" class="btn btn-sm my-btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>
+                            <a href="${url.site}/anggota/detail/${row.id+role_params}" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-eye"></i></a>
+                        `;
+                    }else{
+                        btn = `
+                            <a href="${url.site}/anggota/edit/${row.id+role_params}" class="btn btn-sm my-btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>
+                            <a href="${url.site}/anggota/detail/${row.id+role_params}" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-eye"></i></a>
+                        `;
+                    }
+
+                    return btn;
+                }
+            },
         ],
         ordering: false,
         scrollX: true,
