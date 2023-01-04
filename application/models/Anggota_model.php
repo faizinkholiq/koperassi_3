@@ -5,7 +5,14 @@
     public function get($role = null)
     {
         $q = $this->db->select([
-            "person.*",
+            "person.id",
+            "person.no_ktp",
+            "person.nik",
+            "person.name",
+            "person.phone",
+            "person.join_date",
+            "person.status",
+            "person.position",
             "position.name position_name",
             "person_temp.status status_perubahan",
             "person_temp.reason",
@@ -30,7 +37,7 @@
         $search = $p["search"];
         
         $this->db->start_cache();
-        
+
         if(!empty($search["value"])){
 			$col = ["person.no_ktp", "person.nik", "person.name", "person.phone", "person.join_date", "position.name", "person_temp.status"];
 			$src = $search["value"];
