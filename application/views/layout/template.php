@@ -105,6 +105,12 @@ if (!isset($highlight_menu)){
                     <span>Administrator</span></a>
             </li>
 
+            <li class="nav-item <?= $highlight_menu === 'posting_simpanan' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/simpanan/posting') ?>">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>Posting Simpanan</span></a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link <?= $simpanan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseSimpanan"
                     aria-expanded="true" aria-controls="collapseSimpanan">

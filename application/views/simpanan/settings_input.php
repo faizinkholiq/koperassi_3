@@ -16,8 +16,6 @@
                                 <option value="">- Pilih Salah Satu -</option>
                                 <option value="Pokok" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Pokok')? 'selected' : '' ?>>Pokok</option>
                                 <option value="Wajib" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Wajib')? 'selected' : '' ?>>Wajib</option>
-                                <option value="Sukarela" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Sukarela')? 'selected' : '' ?>>Sukarela</option>
-                                <option value="Investasi" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Investasi')? 'selected' : '' ?>>Investasi</option>
                             </select>
                             </div>
                         </div>
@@ -33,8 +31,8 @@
                 </div>
             </div>
             <div class="card-footer text-right">
-                <a href="<?=site_url('simpanan/settings') ?>" class="btn btn-secondary btn-lg mt-4 mb-4">Kembali</a>
-                <button type="submit" class="btn btn-primary btn-lg mt-4 mb-4 ml-2 mr-4">Simpan Data <i class="ml-2 fas fa-chevron-right"></i></button>
+                <a href="<?=site_url('simpanan/settings') ?>" class="btn btn-secondary btn-md mt-2 mb-2">Kembali</a>
+                <button type="submit" class="btn btn-primary btn-md mt-2 mb-2 ml-2 mr-4">Simpan Data <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>
