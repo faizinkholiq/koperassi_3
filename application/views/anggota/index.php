@@ -169,7 +169,7 @@
     }
 
     let role = <?= isset($_GET['role'])? $_GET['role'] : 0 ?>;
-    let role_params <?= $role_params ?>;
+    let role_params = '<?= $role_params ?>';
 
     let dt = $('#anggotaTable').DataTable({
         dom: "Bfrtip",

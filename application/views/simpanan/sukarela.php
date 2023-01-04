@@ -143,7 +143,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">Simpanan</div>
+                            <div class="col-lg-3">Nominal</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
                                 <div class="input-group mb-2">
