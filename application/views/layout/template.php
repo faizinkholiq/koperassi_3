@@ -62,6 +62,12 @@ if (!isset($highlight_menu)){
                 if ($role == 2): 
             ?>
 
+            <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/ubah_simpanan') ?>">
+                    <i class="fas fa-fw fa-hand-holding-usd"></i>
+                    <span>Pengajuan Perubahan Simpanan</span></a>
+            </li>
+
             <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan') ?>">
                     <i class="fas fa-fw fa-hand-holding-usd"></i>

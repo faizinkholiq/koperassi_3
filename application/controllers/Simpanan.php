@@ -30,13 +30,26 @@ class Simpanan extends CI_Controller {
 		if (!check_permission('simpanan', $d['role'])){
             redirect('home');
         }else{
-			$d['data']['summary'] = $this->simpanan_model->summary($d['person_id']);
-			$d['data']['rows'] = $this->simpanan_model->get($d['person_id']);
-			$d['data']['history'] = $this->simpanan_model->get_history($d['person_id']);
+			$d['summary'] = $this->simpanan_model->summary($d['person_id']);
+			$d['history'] = $this->simpanan_model->get_history($d['person_id']);
 			$d['person_list'] = $this->anggota_model->list();
 			$this->load->view('layout/template', $d);
         }
 	}
+
+    public function get_dt_simpanan(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+
+        $params["person"] = $this->input->post("person");
+
+        $data = $this->simpanan_model->get_dt($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
 	
 	public function page($module)
 	{	

@@ -109,6 +109,205 @@
         return $q_all->result_array();
     }
 
+    public function get_dt($p)
+    {
+        $search = $p["search"];
+        
+        $person = $p["person"];
+        $limit = $p["length"];
+		$offset = $p["start"];
+
+        if(!empty($search["value"])){
+			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_pokok.balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+        $this->db->select([
+            'simpanan_pokok.id',
+            'simpanan_pokok.person person_id',
+            'simpanan_pokok.code',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
+            '"Simpanan Pokok" type',
+            'simpanan_pokok.date',
+            'simpanan_pokok.balance',
+            '0 simpanan_temp_id',
+        ])
+        ->from('simpanan_pokok')
+        ->join('person', 'person.nik = simpanan_pokok.person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->where('person.id', $person);
+        
+        $q_pokok = $this->db->get_compiled_select();
+
+        if(!empty($search["value"])){
+			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_pokok.balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+    
+        $this->db->select([
+            'simpanan_wajib.id',
+            'simpanan_wajib.person person_id',
+            'simpanan_wajib.code',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
+            '"Simpanan Wajib" type',
+            'simpanan_wajib.date',
+            'simpanan_wajib.balance',
+            '0 simpanan_temp_id',
+        ])
+        ->from('simpanan_wajib')
+        ->join('person', 'person.nik = simpanan_wajib.person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->where('person.id', $person);
+
+        $q_wajib = $this->db->get_compiled_select();
+
+        if(!empty($search["value"])){
+			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_pokok.balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+        $this->db->select([
+            'simpanan_sukarela.id',
+            'simpanan_sukarela.person person_id',
+            'simpanan_sukarela.code',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
+            '"Simpanan Sukarela" type',
+            'simpanan_sukarela.date',
+            'simpanan_sukarela.balance',
+            'simpanan_temp.id simpanan_temp_id',
+        ])
+        ->from('simpanan_sukarela')
+        ->join('person', 'person.nik = simpanan_sukarela.person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->join('simpanan_temp', 'simpanan_temp.simpanan_id = simpanan_sukarela.id AND simpanan_temp.type = "Sukarela"', 'left')
+        ->where('person.id', $person);
+
+        $q_sukarela = $this->db->get_compiled_select();
+
+        if(!empty($search["value"])){
+			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_pokok.balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+        $this->db->select([
+            'simpanan_investasi.id',
+            'simpanan_investasi.person person_id',
+            'simpanan_investasi.code',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
+            '"Simpanan Wajib" type',
+            'simpanan_investasi.date',
+            'simpanan_investasi.balance',
+            '0 simpanan_temp_id',
+        ])
+        ->from('simpanan_investasi')
+        ->join('person', 'person.nik = simpanan_investasi.person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->where('person.id', $person);
+        
+        $q_investasi = $this->db->get_compiled_select();
+
+        $q_all = $this->db->query("$q_pokok UNION ALL $q_wajib UNION ALL $q_sukarela UNION ALL $q_investasi ORDER BY date DESC");
+        
+        $data["recordsTotal"] = $q_all->num_rows();
+        $data["recordsFiltered"] = $q_all ->num_rows();
+
+        $q_all = $this->db->query("$q_pokok UNION ALL $q_wajib UNION ALL $q_sukarela UNION ALL $q_investasi ORDER BY date DESC LIMIT $offset, $limit");
+
+        $data["data"] = $q_all->result_array();
+        $data["draw"] = intval($p["draw"]);
+
+        return $data;
+    }
+
+
     public function summary($person)
     {   
         $data['plafon'] = 0; 
@@ -146,9 +345,9 @@
                 SELECT 
                     person, 
                     SUM(balance) total 
-                FROM investasi 
+                FROM simpanan_investasi 
                 GROUP BY person
-            ) investasi', 'person.nik = simpanan_investasi.person', 'left')
+            ) simpanan_investasi', 'person.nik = simpanan_investasi.person', 'left')
             ->where('person.id', $person)
             ->group_by('person.id')->get()->row_array()['balance'];
 
@@ -186,7 +385,7 @@
 
     public function get_history($id){
         $data = $this->db->from('history_simpanan')
-        ->where('person_id', $id)
+        ->where('person', $id)
         ->order_by('id', 'DESC')
         ->get()->result_array();
         return $data;
@@ -219,7 +418,7 @@
     public function detail_history($person, $code, $type, $status)
     {
         return $this->db->get_where('history_simpanan', [
-            "person_id" => $person, 
+            "person" => $person, 
             "code" => $code,
             "type" => $type,
             "status" => $status,

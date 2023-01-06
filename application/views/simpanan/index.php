@@ -16,12 +16,12 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= $data['summary']['plafon'] ?></span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= $data['summary']['limit'] ?></span></div>
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= $summary['plafon'] ?></span></div>
+                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= $summary['limit'] ?></span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2">Rp<?= $data['summary']['gaji'] ?></span></div>
-                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2">Rp<?= $data['summary']['simpanan'] ?></span></div>
+                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2">Rp<?= $summary['gaji'] ?></span></div>
+                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2">Rp<?= $summary['simpanan'] ?></span></div>
             </div>
         </div>
     </div>
@@ -33,36 +33,13 @@
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="10">No</th>
                         <th class="text-center">Tanggal</th>
                         <th class="text-center">Kode Transaksi</th>
                         <th class="text-center">Uraian</th>
                         <th class="text-center">Pemasukan</th>
-                        <th class="text-center" width="80"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach($data['rows'] as $key => $row): ?>
-                    <tr>
-                        <td><?=$key+1?></td>
-                        <td><?=$row["date"]?></td>
-                        <td><?=$row["code"]?></td>
-                        <td><?=$row["type"]?></td>
-                        <td><?=$row["balance"]?></td>
-                        <td class="text-center">
-                            <?php if($row["type"] == "Simpanan Sukarela"): ?>
-                            <button type="button" onClick="showForm(<?=$row["id"]?>)" class="btn btn-primary">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                                <?php if($row["simpanan_temp_id"]): ?>
-                                    <i class="fas fa-clock text-warning text-lg ml-2" 
-                                        data-toggle="tooltip" data-placement="top" title="Pengajuan perubahan sedang diproses"></i>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -192,7 +169,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($data['history'] as $key => $row): ?>
+                    <?php foreach($history as $key => $row): ?>
                         <tr>
                             <td class="text-center"><?= $row["date"] ?></td>
                             <td class="text-center"><?= $row["code"] ?></td>
@@ -230,12 +207,37 @@
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 
 <script>   
-    const simpanan_data =  <?= json_encode($data['rows']); ?>;
+    const url = {
+        "site": "<?= site_url() ?>",
+        "base": "<?= base_url() ?>",
+    }
+
     const list_anggota = <?= json_encode($person_list); ?>;
+    const person = <?= $person_id ?>
+
+    let dt = $('#simpananTable').DataTable({
+        dom: "Bfrtip",
+        ajax: {
+            url: url.site + "/simpanan/get_dt_simpanan",
+            type: "POST",
+            data: function(d){
+                d.person = person;
+            }
+        },
+        processing: true,
+        serverSide: true,
+        columns: [
+            { data: "date" },
+            { data: "code" },
+            { data: "type" },
+            { data: "balance" },
+        ],
+        ordering: false,
+        scrollX: true,
+    });
 
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
-        $('#simpananTable').DataTable();
     });
 
     function showForm(simpanan_id){
