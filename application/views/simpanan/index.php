@@ -28,14 +28,42 @@
 </div>
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12 row justify-content-end p-0">
+                <select class="form-control col-lg-2 mr-4" id="selectTipe" name="tipe" onchange="selectType()">
+                    <option value="all">- All Data -</option>
+                    <option value="Simpanan Pokok">Simpanan Pokok</option>
+                    <option value="Simpanan Wajib">Simpanan Wajib</option>
+                    <option value="Simpanan Sukarela">Simpanan Sukarela</option>
+                    <option value="Simpanan Investasi">Simpanan Investasi</option>
+                </select>
+                <select class="form-control col-lg-1" id="selectBulan" name="bulan" onchange="selectMonth()">
+                    <option value="all">- All Month -</option>
+                    <?php 
+                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    foreach($months as $key => $item):
+                    ?>
+                    <option value="<?= $key+1 ?>"><?= $item ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select class="form-control col-lg-1 ml-4" id="selectTahun" name="tahun" onchange="selectYear()">
+                    <?php 
+                    $start = 2019;
+                    for($i = $start; $i <= date('Y'); $i++):
+                    ?>
+                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="text-center">Tanggal</th>
-                        <th class="text-center">Kode Transaksi</th>
+                        <th class="text-center">Tahun</th>
+                        <th class="text-center">Bulan</th>
                         <th class="text-center">Uraian</th>
-                        <th class="text-center">Pemasukan</th>
+                        <th class="text-center">Jml. Simpanan</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -156,7 +184,25 @@
     }
 
     const list_anggota = <?= json_encode($person_list); ?>;
-    const person = <?= $person_id ?>
+    const person = <?= $person_id ?>;
+    const month_list = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
+
+    let month = $('#selectBulan').val();
+    let year = $('#selectTahun').val();
+    let type = $('#selectTipe').val();
 
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",
@@ -165,13 +211,21 @@
             type: "POST",
             data: function(d){
                 d.person = person;
+                d.type = type;
+                d.month = month;
+                d.year = year;
             }
         },
         processing: true,
         serverSide: true,
         columns: [
-            { data: "date" },
-            { data: "code" },
+            { data: "year" },
+            { 
+                data: "month", 
+                render: function (data, type, row) {
+                    return month_list[Number(data) - 1];
+                }
+            },
             { data: "type" },
             { data: "balance" },
         ],
@@ -209,6 +263,21 @@
     function resetForm(){
         $('#formSimpanan')[0].reset();
         $('#alamatTextArea').text("");
+    }
+
+    function selectType(){
+        type = $('#selectTipe').val();
+        dt.ajax.reload();
+    }
+
+    function selectMonth(){
+        month = $('#selectBulan').val();
+        dt.ajax.reload();
+    }
+
+    function selectYear(){
+        year = $('#selectTahun').val();
+        dt.ajax.reload();
     }
 
 </script>

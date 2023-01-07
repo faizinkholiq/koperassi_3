@@ -26,17 +26,23 @@
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-primary font-weight-bold" data-toggle="modal" data-target="#historyModal"><i class="fas fa-history mr-2"></i> History Perubahan</button>
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-upload mr-1"></i> Ajukan Perubahan</a>
+            </div>
+        </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="text-center">Tanggal</th>
-                        <th class="text-center">Kode Transaksi</th>
-                        <th class="text-center">Uraian</th>
-                        <th class="text-center">Pemasukan</th>
+                        <th class="text-center">Tahun</th>
+                        <th class="text-center">Bulan</th>
+                        <th class="text-center">Jenis Simpanan</th>
+                        <th class="text-center">Nilai Awal</th>
+                        <th class="text-center">Nilai Perubahan</th>
+                        <th class="text-center">Status Perubahan</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -143,62 +149,6 @@
                 <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Ajukan Perubahan Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
-        </div>
-    </div>
-</div>
-
- <!-- History Modal-->
- <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="historyModalLabel"><i class="mr-2 fas fa-history"></i> History Perubahan Simpanan</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Tanggal</th>
-                            <th class="text-center">Kode Transaksi</th>
-                            <th class="text-center">Uraian</th>
-                            <th class="text-center">Pemasukkan</th>
-                            <th class="text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach($history as $key => $row): ?>
-                        <tr>
-                            <td class="text-center"><?= $row["date"] ?></td>
-                            <td class="text-center"><?= $row["code"] ?></td>
-                            <td class="text-center"><?= $row["type"] ?></td>
-                            <td class="text-center"><?= $row["balance"] ?></td>
-                            <td class="text-center"><?php 
-                                switch ($row["status"]){
-                                    case "Pending":
-                                        echo '<i class="fas fa-clock text-warning text-lg"
-                                            data-toggle="tooltip" data-placement="top" 
-                                            title="Pengajuan perubahan sedang diproses"></i>';
-                                        break;
-                                    case "Success":
-                                        echo '<i class="fas fa-check-circle text-success text-lg"
-                                            data-toggle="tooltip" data-placement="top" 
-                                            title="Admistrator telah menyetujui perubahan"></i>';
-                                        break;
-                                    case "Failed":
-                                        echo '<i class="fas fa-times-circle text-danger text-lg"
-                                            data-toggle="tooltip" data-placement="top" 
-                                            title="Pengajuan perubahan gagal, karena Administrator tidak menyetujui perubahan"></i>';
-                                        break;
-                                }
-                            ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>

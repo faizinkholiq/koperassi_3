@@ -44,6 +44,9 @@ class Simpanan extends CI_Controller {
         $params["start"] = $this->input->post("start");
 
         $params["person"] = $this->input->post("person");
+        $params["type"] = $this->input->post("type");
+        $params["month"] = $this->input->post("month");
+        $params["year"] = $this->input->post("year");
 
         $data = $this->simpanan_model->get_dt($params);
 
@@ -468,6 +471,7 @@ class Simpanan extends CI_Controller {
 		if (!check_permission('ubah_simpanan', $d['role'])){
             redirect('home');
         }else{
+			$d['summary'] = $this->simpanan_model->summary($d['person_id']);
 			$this->load->view('layout/template', $d);
         }
 	}
