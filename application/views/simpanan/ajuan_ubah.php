@@ -73,60 +73,38 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
                                 <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
-                                    value="<?= date('Y-m-d') ?>" disabled>
+                                    value="<?= date('Y-m-d') ?>" readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">No. Anggota</div>
+                            <div class="col-lg-3">Month</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" id="noAnggotaTextInput" name="no_anggota" readonly="readonly">
+                                <select class="form-control" id="monthCombo" name="month">
+                                    <?php
+                                      $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                      foreach($months as $key => $item): ?>
+                                      <option value="<?= $key+1 ?>"><?= $item ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">Nama Anggota</div>
+                            <div class="col-lg-3">Year</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" id="namaAnggotaTextInput" name="nama_anggota" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Jabatan</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="jabatanTextInput" name="jabatan" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Depo/Stock Point</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="depoTextInput" name="depo" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">No. Rekening</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="noRekTextInput" name="no_rek" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Alamat</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <textarea readonly="readonly" class="form-control form-control-user" name="alamat" id="alamatTextArea"></textarea>
+                                <select class="form-control" id="yearCombo" name="year">
+                                    <?php for($i = 2019; $i <= date('Y'); $i++): ?>
+                                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Tipe</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
-                                <select class="form-control form-control-user" id="statusCombo" name="type" readonly="readonly">
-                                    <option value="Pokok">Simpanan Pokok</option>
-                                    <option value="Wajib">Simpanan Wajib</option>
-                                    <option value="Sukarela" selected>Simpanan Sukarela</option>
-                                </select>
+                                <input type="text" class="form-control" id="tipeTextInput" name="type" readonly="readonly" value="Simpanan Sukarela">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -137,7 +115,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="...">
+                                    <input type="text" class="form-control" id="nominalTextInput" name="balance" placeholder="...">
                                 </div>
                             </div>
                         </div>
@@ -160,15 +138,28 @@
     const url = {
         "site": "<?= site_url() ?>",
         "base": "<?= base_url() ?>",
-    }
+    };
 
-    const list_anggota = <?= json_encode($person_list); ?>;
-    const person = <?= $person_id ?>
+    const person = <?= $person_id ?>;
+    const month_list = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
 
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",
         ajax: {
-            url: url.site + "/simpanan/get_dt_simpanan",
+            url: url.site + "/simpanan/get_dt_ubah_simpanan",
             type: "POST",
             data: function(d){
                 d.person = person;
@@ -177,10 +168,17 @@
         processing: true,
         serverSide: true,
         columns: [
-            { data: "date" },
-            { data: "code" },
+            { data: "year" },
+            { 
+                data: "month", 
+                render: function (data, type, row) {
+                    return month_list[Number(data) - 1];
+                }
+            },
             { data: "type" },
             { data: "balance" },
+            { data: "balance" },
+            { data: "status" },
         ],
         ordering: false,
         scrollX: true,
@@ -192,30 +190,11 @@
 
     function showForm(simpanan_id){
         resetForm();
-        let simpanan = simpanan_data.filter(r => r.id == simpanan_id)
-
-        if(simpanan.length > 0){
-            
-            $('#kodeTextInput').val(simpanan[0].code);
-            $('#simpananTextInput').val(simpanan[0].id);
-            $('#namaAnggotaTextInput').val(simpanan[0].name);
-            $('#noAnggotaTextInput').val(simpanan[0].nik);
-            $('#jabatanTextInput').val(simpanan[0].position_name);
-            $('#depoTextInput').val(simpanan[0].depo);
-            $('#alamatTextArea').text(simpanan[0].address);
-            $('#noRekTextInput').val(simpanan[0].acc_no);
-            $('#jumlahTextInput').val(simpanan[0].balance);
-            $('#tglDateInput').val(simpanan[0].date);
-
-            $('#inputModal').modal('show');
-        }else{
-            alert("ID Simpanan tidak ditemukan")
-        }
+        $('#inputModal').modal('show');
     }
     
     function resetForm(){
         $('#formSimpanan')[0].reset();
-        $('#alamatTextArea').text("");
     }
 
 </script>

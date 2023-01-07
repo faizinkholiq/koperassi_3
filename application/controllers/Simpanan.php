@@ -476,4 +476,18 @@ class Simpanan extends CI_Controller {
         }
 	}
 
+    public function get_dt_ubah_simpanan(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+
+        $params["person"] = $this->input->post("person");
+
+        $data = $this->simpanan_model->get_dt_ubah_simpanan($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
 }

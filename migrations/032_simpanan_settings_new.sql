@@ -1,0 +1,2 @@
+ALTER TABLE `settings_simpanan_sukarela` CHANGE `nominal` `balance` FLOAT NOT NULL;
+ALTER TABLE `settings_simpanan_sukarela` ADD `year` VARCHAR(4) NOT NULL AFTER `balance`, ADD `month` VARCHAR(2) NOT NULL AFTER `year`, ADD `status` ENUM('Approved','Pending','Decline') NOT NULL DEFAULT 'Pending' AFTER `month`;
