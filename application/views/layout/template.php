@@ -63,7 +63,7 @@ if (!isset($highlight_menu)){
             ?>
 
             <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/ubah_simpanan') ?>">
+                <a class="nav-link" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">
                     <i class="fas fa-fw fa-hand-holding-usd"></i>
                     <span>Pengajuan Perubahan Simpanan</span></a>
             </li>

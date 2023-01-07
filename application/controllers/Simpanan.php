@@ -458,4 +458,18 @@ class Simpanan extends CI_Controller {
         }
 	}
 
+    public function pengajuan_perubahan()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Pengajuan Perubahan Simpanan";
+		$d['highlight_menu'] = "ubah_simpanan";
+		$d['content_view'] = 'simpanan/ajuan_ubah';
+
+		if (!check_permission('ubah_simpanan', $d['role'])){
+            redirect('home');
+        }else{
+			$this->load->view('layout/template', $d);
+        }
+	}
+
 }
