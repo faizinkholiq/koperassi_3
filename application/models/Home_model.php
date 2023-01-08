@@ -25,10 +25,10 @@ class Home_model extends CI_Model {
     public function get_summary_member($person)
     {
         $this->db->select([
-            "CONCAT('RP', FORMAT(simpanan_pokok.total, 0, 'id_ID')) pokok",
-            "CONCAT('RP', FORMAT(simpanan_wajib.total, 0, 'id_ID')) wajib",
-            "CONCAT('RP', FORMAT(simpanan_sukarela.total, 0, 'id_ID')) sukarela",
-            "CONCAT('RP', FORMAT(simpanan_investasi.total, 0, 'id_ID')) investasi",
+            "CASE WHEN simpanan_pokok.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_pokok.total, 0, 'id_ID')) ELSE 0 END pokok",
+            "CASE WHEN simpanan_wajib.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_wajib.total, 0, 'id_ID')) ELSE 0 END wajib",
+            "CASE WHEN simpanan_sukarela.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_sukarela.total, 0, 'id_ID')) ELSE 0 END sukarela",
+            "CASE WHEN simpanan_investasi.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_investasi.total, 0, 'id_ID')) ELSE 0 END investasi",
             "0 pinjaman",
         ])
         ->from('person')
