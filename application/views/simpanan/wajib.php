@@ -45,12 +45,15 @@
                 <thead>
                     <tr>
                         <th width="10">No</th>
+                        <th class="text-center">Tahun</th>
+                        <th class="text-center">Bulan</th>
                         <th class="text-center">KTP</th>
                         <th class="text-center">NIK</th>
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">No. Telp</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Jml. Simpanan</th>
+                        <th class="text-center">DK</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -196,12 +199,15 @@
         serverSide: true,
         columns: [
             { data: "row_no" },
+            { data: "year" },
+            { data: "month" },
             { data: "no_ktp" },
             { data: "nik" },
             { data: "name" },
             { data: "phone" },
             { data: "join_date" },
             { data: "balance" },
+            { data: "dk" },
         ],
         ordering: false
     });

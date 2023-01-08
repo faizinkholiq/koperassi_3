@@ -27,7 +27,7 @@
         $this->db->start_cache();
 
         if(!empty($search["value"])){
-			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_wajib.balance"];
+			$col = ["person.ktp", "person.nik", "person.name", "person.phone", "person.join_date", "simpanan_wajib.balance", "year", "month", "dk"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
@@ -63,6 +63,9 @@
             'person.nik',
             'person.phone',
             'person.join_date',
+            'simpanan_wajib.year',
+            'simpanan_wajib.month',
+            'simpanan_wajib.dk',
             'simpanan_wajib.balance',
             'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
         ])
