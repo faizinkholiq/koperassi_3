@@ -261,7 +261,7 @@
             $q_sukarela UNION ALL 
             $q_investasi ORDER BY 
                 year, 
-                CAST(month AS UNSIGNED),
+                CAST(month AS DECIMAL),
                 FIELD(type, 'Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Sukarela', 'Simpanan Investasi')
         ) simpanan");
 

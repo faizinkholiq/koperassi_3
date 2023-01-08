@@ -71,7 +71,7 @@
         ])
         ->from('simpanan_pokok')
         ->join('person', 'person.nik = simpanan_pokok.person')
-        ->order_by("year, CAST(month AS UNSIGNED)");
+        ->order_by("year, CAST(month AS DECIMAL)");
         
         $q = $this->db->get();
         $data["recordsTotal"] = $q->num_rows();
