@@ -25,17 +25,17 @@ class Home_model extends CI_Model {
     public function get_summary_member($person)
     {
         $this->db->select([
-            "CONCAT('RP', FORMAT(SUM(simpanan_pokok.balance), 0, 'id_ID')) pokok",
-            "CONCAT('RP', FORMAT(SUM(simpanan_wajib.balance), 0, 'id_ID')) wajib",
-            "CONCAT('RP', FORMAT(SUM(simpanan_sukarela.balance), 0, 'id_ID')) sukarela",
-            "CONCAT('RP', FORMAT(SUM(simpanan_investasi.balance), 0, 'id_ID')) investasi",
+            "CONCAT('RP', FORMAT(simpanan_pokok.total, 0, 'id_ID')) pokok",
+            "CONCAT('RP', FORMAT(simpanan_wajib.total, 0, 'id_ID')) wajib",
+            "CONCAT('RP', FORMAT(simpanan_sukarela.total, 0, 'id_ID')) sukarela",
+            "CONCAT('RP', FORMAT(simpanan_investasi.total, 0, 'id_ID')) investasi",
             "0 pinjaman",
         ])
         ->from('person')
-        ->join('simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_pokok GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_wajib GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_sukarela GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_investasi GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
         ->where('person.nik', $person);
         $data = $this->db->get()->row_array();
         

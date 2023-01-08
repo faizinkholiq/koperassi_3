@@ -230,6 +230,7 @@ class Simpanan extends CI_Controller {
             $data["year"] = date('Y');
             $data["month"] = date('m');
             $data["balance"] = $this->input->post('balance');
+            $data["dk"] = 'D';
         }
 
         return $data;
