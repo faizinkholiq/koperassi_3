@@ -2,8 +2,9 @@
 <div class="row">
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#e74c3c;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Wajib
+            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Simpanan Wajib:<br/>
+                <?= $summary['wajib'] ?>
             </div>
             <div class="card-footer" style="background:#c0392b; border:none; color:white;">
                 Lihat Detail
@@ -13,8 +14,9 @@
     </div>
     <div class="col-xl-4 col-md-6 mb-4" >
         <div class="card shadow" style="width:100%; background:#f1c40f;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Pokok
+            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Simpanan Pokok:<br/>
+                <?= $summary['pokok'] ?>
             </div>
             <div class="card-footer" style="background:#f39c12; border:none; color:white;">
                 Lihat Detail
@@ -24,8 +26,9 @@
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#1abc9c;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Investasi
+            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Investasi:<br/>
+                <?= $summary['investasi'] ?>
             </div>
             <div class="card-footer" style="background:#16a085; border:none; color:white;">
                 Lihat Detail
@@ -35,8 +38,9 @@
     </div>
     <div class="col-xl-4 col-md-6 mb-4 offset-2">
         <div class="card shadow" style="width:100%; background:#3498db;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Sukarela
+            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Simpanan Sukarela:<br/>
+                <?= $summary['sukarela'] ?>
             </div>
             <div class="card-footer" style="background:#2980b9; border:none; color:white;">
                 Lihat Detail
@@ -46,8 +50,9 @@
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#9b59b6;">
-            <div class="card-body font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Sisa Pinjaman
+            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Sisa Pinjaman:<br/>
+                <?= $summary['pinjaman'] ?>
             </div>
             <div class="card-footer" style="background:#8e44ad; border:none; color:white;">
                 Lihat Detail

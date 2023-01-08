@@ -167,7 +167,7 @@
             'user.id user_id'
         ])
         ->from('person')
-        ->join('person_family', 'person.id = person_family.person_id', 'left')
+        ->join('person_family', 'person.id = person_family.person', 'left')
         ->join('position', 'person.position = position.id', 'left')
         ->join('depo', 'person.depo = depo.code', 'left')
         ->join('user', 'person.user_id = user.id', 'left')
@@ -278,4 +278,5 @@
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
+    
 }
