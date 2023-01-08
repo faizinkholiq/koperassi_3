@@ -229,6 +229,7 @@
             { data: "type" },
             { data: "balance" },
         ],
+        paging: false,
         ordering: false,
         scrollX: true,
     });

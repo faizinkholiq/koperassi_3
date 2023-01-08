@@ -271,7 +271,7 @@
 
         $this->db->stop_cache();
         
-        $this->db->limit($limit, $offset);
+        // $this->db->limit($limit, $offset);
 
         $data["data"] = $this->db->get()->result_array();
         $data["draw"] = intval($p["draw"]);
