@@ -435,4 +435,62 @@
         return $this->db->get_where('settings_simpanan', ['simpanan' => $type])->row_array();
     }
 
+    public function get_dt_ubah_simpanan($p)
+    {
+        $search = $p["search"];
+
+        $this->db->start_cache();
+
+        if(!empty($search["value"])){
+			$col = ["month", "year", "balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+        $limit = $p["length"];
+		$offset = $p["start"];
+
+        $this->db->select([
+            'simpanan_pokok.id',
+            'simpanan_pokok.person person_id',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'simpanan_pokok.balance',
+            'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
+        ])
+        ->from('settings_simpanan_sukarela')
+        ->join('person', 'person.nik = settings_simpanan_sukarela.person')
+        ->order_by('date', 'desc');
+        
+        $q = $this->db->get();
+        $data["recordsTotal"] = $q->num_rows();
+        $data["recordsFiltered"] = $q->num_rows();
+        
+        $this->db->stop_cache();
+
+        $this->db->limit($limit, $offset);
+        
+        $data["data"] = $this->db->get()->result_array();
+        $data["draw"] = intval($p["draw"]);
+
+        $this->db->flush_cache();
+
+        return $data;
+    }
+
 }
