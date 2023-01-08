@@ -259,7 +259,10 @@
             $q_pokok UNION ALL 
             $q_wajib UNION ALL 
             $q_sukarela UNION ALL 
-            $q_investasi ORDER BY date DESC
+            $q_investasi ORDER BY 
+                year, 
+                month,
+                FIELD(type, 'Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Sukarela', 'Simpanan Investasi')
         ) simpanan");
 
         $q_all = $this->db->get();
@@ -270,7 +273,7 @@
         
         $this->db->limit($limit, $offset);
 
-        $data["data"] = $q_all->result_array();
+        $data["data"] = $this->db->get()->result_array();
         $data["draw"] = intval($p["draw"]);
 
         $this->db->flush_cache();

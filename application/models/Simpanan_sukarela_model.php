@@ -71,7 +71,7 @@
         ])
         ->from('simpanan_sukarela')
         ->join('person', 'person.nik = simpanan_sukarela.person')
-        ->order_by('date', 'desc');
+        ->order_by("year, month");
         
         $q = $this->db->get();
         $data["recordsTotal"] = $q->num_rows();

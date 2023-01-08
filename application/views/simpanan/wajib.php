@@ -180,7 +180,21 @@
         site: '<?=site_url() ?>'
     };
 
-    const list_anggota = <?= json_encode($person_list); ?>
+    const list_anggota = <?= json_encode($person_list); ?>;
+    const month_list = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
 
     let month = $('#selectBulan').val();
     let year = $('#selectTahun').val();
@@ -200,7 +214,12 @@
         columns: [
             { data: "row_no" },
             { data: "year" },
-            { data: "month" },
+            { 
+                data: "month", 
+                render: function (data, type, row) {
+                    return month_list[Number(data) - 1];
+                }
+            },
             { data: "no_ktp" },
             { data: "nik" },
             { data: "name" },
