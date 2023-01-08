@@ -32,10 +32,10 @@ class Home_model extends CI_Model {
             "0 pinjaman",
         ])
         ->from('person')
-        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_pokok GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_wajib GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_sukarela GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) total FROM simpanan_investasi GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
+        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_pokok GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
+        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_wajib GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
+        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_sukarela GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
+        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_investasi GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
         ->where('person.nik', $person);
         $data = $this->db->get()->row_array();
         
