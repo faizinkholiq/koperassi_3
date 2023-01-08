@@ -490,4 +490,73 @@ class Simpanan extends CI_Controller {
         echo json_encode($data);
     }
 
+    private function get_input_ubah_simpanan()
+    {
+        $person_id = $this->input->post('person');
+        
+        $detail_person = $this->person_model->detail($person_id);
+        $data = [];
+        
+        if ($detail_person) {
+            $data["person"] = $detail_person['nik'];
+            $data["date"] = $this->input->post('date');
+            $data["year"] = $this->input->post('year');
+            $data["month"] = $this->input->post('month');
+            $data["balance"] = $this->input->post('balance');
+        }
+
+        return $data;
+    }
+
+    public function submit_ubah_simpanan()
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('person','Person','required');
+        $this->form_validation->set_rules('balance','Nominal Perubahan','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('ubah_simpanan', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input_ubah_simpanan();
+                if(!$nd){
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid Person !";
+                }else{
+                    $date_input = $nd['year']."-".$nd['month']."-01";
+                    if($date_input >= date('Y-m-01')){
+                        $nd['status'] = 'Pending';
+                        $detail = $this->simpanan_model->detail_ubah_simpanan_by_month($nd);
+                        if ($detail) {
+                            $nd['id'] = $detail['id'];
+                            $this->simpanan_model->edit_ubah_simpanan($nd);
+                            $simpanan_id = $nd['id'];
+                        }else{
+                            $simpanan_id = $this->simpanan_model->create_ubah_simpanan($nd);
+                        }
+    
+                        if ($simpanan_id) {
+                            $data['success'] = 1;
+                            $data['message'] = "Data berhasil tersimpan !";
+                        } else {
+                            $data['success'] = 0;
+                            $data['error'] = "Gagal menyimpan data !";
+                        }
+                    }else{
+                        $data['success'] = 0;
+                        $data['error'] = "Pengajuan perubahan ditolak karena bulan/tahun yang dipilih sudah terlewat !";
+                    }
+                }
+            }
+        }else{
+			$data['success'] = 0;
+			$data['error'] = "Invalid Input";
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/pengajuan_perubahan');
+	}
+
+
 }

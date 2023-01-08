@@ -61,13 +61,11 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="formSimpanan" action="<?= site_url('simpanan/edit_temp') ?>" method="POST" enctype="multipart/form-data">
+            <form id="formSimpanan" action="<?= site_url('simpanan/submit_ubah_simpanan') ?>" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
-                        <input id="personTextInput" type="hidden" name="person_id" value="<?= $person_id; ?>">
-                        <input id="simpananTextInput" type="hidden" name="simpanan_id" value="">
-                        <input id="kodeTextInput" type="hidden" name="code" value="">
+                        <input id="personTextInput" type="hidden" name="person" value="<?= $person_id; ?>">
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Bayar</div>
                             <div class="col-lg-1 text-right">:</div>
@@ -94,7 +92,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-7">
                                 <select class="form-control" id="yearCombo" name="year">
-                                    <?php for($i = 2019; $i <= date('Y'); $i++): ?>
+                                    <?php for($i = date('Y'); $i <= date('Y')+5; $i++): ?>
                                     <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
                                     <?php endfor; ?>
                                 </select>

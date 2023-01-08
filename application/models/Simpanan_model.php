@@ -442,7 +442,7 @@
         $this->db->start_cache();
 
         if(!empty($search["value"])){
-			$col = ["month", "year", "balance"];
+			$col = ["month", "yea", "balance"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
@@ -463,15 +463,18 @@
 		$offset = $p["start"];
 
         $this->db->select([
-            'simpanan_pokok.id',
-            'simpanan_pokok.person person_id',
+            'settings_simpanan_sukarela.id',
+            'settings_simpanan_sukarela.person person_id',
             'person.name',
             'person.no_ktp',
             'person.nik',
             'person.phone',
             'person.join_date',
-            'simpanan_pokok.balance',
-            'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
+            '"Simpanan Sukarela" type',
+            'settings_simpanan_sukarela.month',
+            'settings_simpanan_sukarela.year',
+            'settings_simpanan_sukarela.status',
+            'settings_simpanan_sukarela.balance',
         ])
         ->from('settings_simpanan_sukarela')
         ->join('person', 'person.nik = settings_simpanan_sukarela.person')
@@ -491,6 +494,40 @@
         $this->db->flush_cache();
 
         return $data;
+    }
+
+    public function create_ubah_simpanan($data)
+    {
+        $this->db->insert('settings_simpanan_sukarela', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_ubah_simpanan($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('settings_simpanan_sukarela', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function delete_ubah_simpanan($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('settings_simpanan_sukarela');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+    
+    public function detail_ubah_simpanan($id)
+    {
+        return $this->db->get_where('settings_simpanan_sukarela', ["id" => $id])->row_array();
+    }
+
+    public function detail_ubah_simpanan_by_month($p)
+    {
+        return $this->db->get_where('settings_simpanan_sukarela', ["year" => $p['year'], "month" => $p['month']])->row_array();
     }
 
 }
