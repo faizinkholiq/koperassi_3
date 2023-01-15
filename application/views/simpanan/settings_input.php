@@ -16,6 +16,8 @@
                                 <option value="">- Pilih Salah Satu -</option>
                                 <option value="Pokok" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Pokok')? 'selected' : '' ?>>Pokok</option>
                                 <option value="Wajib" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Wajib')? 'selected' : '' ?>>Wajib</option>
+                                <option value="Sukarela" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Sukarela')? 'selected' : '' ?>>Sukarela</option>
+                                <option value="Investasi" <?=(isset($data["simpanan"]) && $data["simpanan"] == 'Investasi')? 'selected' : '' ?>>Investasi</option>
                             </select>
                             </div>
                         </div>
