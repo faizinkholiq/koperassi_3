@@ -161,6 +161,8 @@
             "person.join_date",
             "person.status",
             "person.salary",
+            "person.sukarela",
+            "person.investasi",
             'person_family.id id_family',
             'person_family.name name_family',
             'person_family.address address_family',

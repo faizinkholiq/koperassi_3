@@ -477,20 +477,6 @@ class Simpanan extends CI_Controller {
         return $data;
     }
 
-    public function posting()
-	{
-        $d = $this->user_model->login_check();
-        $d['title'] = "Posting Simpanan";
-		$d['highlight_menu'] = "posting_simpanan";
-		$d['content_view'] = 'coming_soon';
-
-		if (!check_permission('posting_simpanan', $d['role'])){
-            redirect('home');
-        }else{
-			$this->load->view('layout/template', $d);
-        }
-	}
-
     public function pengajuan_perubahan()
 	{
         $d = $this->user_model->login_check();
@@ -586,6 +572,48 @@ class Simpanan extends CI_Controller {
 
 		$this->session->set_flashdata('msg', $data);  
 		redirect('simpanan/pengajuan_perubahan');
+	}
+
+    // Posting Simpanan
+	public function posting()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Posting Simpanan";
+        $d['highlight_menu'] = "posting_simpanan";
+        $d['content_view'] = 'simpanan/posting';
+        
+        if (!check_permission('posting_simpanan', $d['role'])){
+            redirect('home');
+        }else{
+            $this->load->view('layout/template', $d);
+        }
+	}
+
+    public function do_posting()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('posting_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $nd['bulan'] = $this->input->post('bulan');
+            $nd['tahun'] = $this->input->post('tahun');
+            $nd['simpanan'] = $this->input->post('simpanan');
+            if($nd['simpanan']) {
+                if ($this->simpanan_model->posting($nd)) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Mohon pilih salah satu simpanan!";
+            }
+        }
+
+        echo json_encode($data);
 	}
 
 

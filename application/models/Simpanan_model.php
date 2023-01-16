@@ -540,4 +540,14 @@
         return $this->db->get_where('settings_simpanan_sukarela', ["year" => $p['year'], "month" => $p['month']])->row_array();
     }
 
+    public function posting($data)
+    {   
+        foreach($data["simpanan"] as $key => $val){
+            $this->db->where('month', $data['bulan']);
+            $this->db->where('year', $data['tahun']);
+            $this->db->update('simpanan_'.$val, ["posting" => 1, "posting_date" => date('Y-m-d')]);
+        }
+        
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
 }

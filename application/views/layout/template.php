@@ -26,6 +26,7 @@ if (!isset($highlight_menu)){
     <!-- Custom styles for this template-->
     <link href="<?=base_url('assets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
     <link href="<?=base_url('assets/css/custom.css') ?>" rel="stylesheet">
+    <link href="<?=base_url('assets/css/loading.css') ?>" rel="stylesheet">
 
     <!-- JQuery -->
     <script src="<?=base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
@@ -113,7 +114,7 @@ if (!isset($highlight_menu)){
 
             <li class="nav-item <?= $highlight_menu === 'posting_simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan/posting') ?>">
-                    <i class="fas fa-fw fa-users-cog"></i>
+                    <i class="fas fa-fw fa-file-export"></i>
                     <span>Posting Simpanan</span></a>
             </li>
 
