@@ -1,0 +1,1 @@
+ALTER TABLE `person` ADD `sukarela` FLOAT NULL AFTER `salary`, ADD `investasi` FLOAT NULL AFTER `sukarela`;

@@ -29,6 +29,8 @@
                         <th class="text-center">Jabatan</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Status<br/>Keanggotaan</th>
+                        <th class="text-center">Simpanan<br/>Sukarela</th>
+                        <th class="text-center">Investasi</th>
                         <th class="text-center">Pengajuan<br/>Perubahan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -191,6 +193,8 @@
             { data: "position_name" },
             { data: "join_date" },
             { data: "status", class: "text-center" },
+            { data: "sukarela" },
+            { data: "investasi" },
             { 
                 data: "status_perubahan",
                 class: "text-center",

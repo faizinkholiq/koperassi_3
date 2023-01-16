@@ -440,6 +440,35 @@ class Simpanan extends CI_Controller {
         redirect('simpanan/settings');
     }
 
+    public function generate_settings() 
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('master', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->get('id');
+            $detail = $this->simpanan_model->detail_settings($id);
+            
+            if ($detail) {
+                $data[strtolower($detail['simpanan'])] = $detail['nominal'];
+                if ($this->simpanan_model->generate_settings($data)) {
+                    $data['success'] = 1;
+                    $data['message'] = "Proses Generate Berhasil !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Proses Generate Gagal ";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Data simpanan tidak ditemukan";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('simpanan/settings');
+    }
+
     private function get_input_settings()
     {
         $data["simpanan"] = $this->input->post('simpanan');

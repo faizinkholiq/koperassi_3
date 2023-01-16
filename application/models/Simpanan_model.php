@@ -433,6 +433,13 @@
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
 
+    public function generate_settings($data)
+    {   
+        $this->db->update('person', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
     public function get_default_nominal($type)
     {
         return $this->db->get_where('settings_simpanan', ['simpanan' => $type])->row_array();

@@ -137,6 +137,32 @@ $role_params = (isset($_GET["role"]) && $_GET["role"] == 1)? "?role=1" : "";
                                 </div>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Simpanan Sukarela</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp</div>
+                                    </div>
+                                    <input type="text" class="form-control form-control-user" id="sukarelaTextInput" name="sukarela" placeholder="..."
+                                        value="<?=(isset($data["sukarela"]) && !empty($data["sukarela"]))? $data["sukarela"] : '' ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Investasi</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp</div>
+                                    </div>
+                                    <input type="text" class="form-control form-control-user" id="gajiTextInput" name="investasi" placeholder="..."
+                                        value="<?=(isset($data["investasi"]) && !empty($data["investasi"]))? $data["investasi"] : '' ?>">
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mb-4">
                             <div class="col-lg-3">Foto KTP</div>
                             <div class="col-lg-1 text-right">:</div>

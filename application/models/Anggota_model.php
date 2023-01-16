@@ -78,12 +78,16 @@
             "position.name position_name",
             "person_temp.status status_perubahan",
             "person_temp.reason",
+            "CONCAT('Rp', FORMAT(IF(sukarela.total IS NOT NULL AND sukarela.total != 0, sukarela.total + person.sukarela, IF(person.sukarela IS NOT NULL, person.sukarela, 0)), 0, 'id_ID')) sukarela",
+            "CONCAT('Rp', FORMAT(IF(investasi.total IS NOT NULL AND investasi.total != 0, investasi.total + person.investasi, IF(person.investasi IS NOT NULL, person.investasi, 0)), 0, 'id_ID')) investasi",
             'ROW_NUMBER() OVER(ORDER BY person.id ASC) AS row_no'
         ])
         ->from('person')
         ->join('user', 'user.id = person.user_id')
         ->join('position', 'position.id = person.position', 'left')
         ->join('person_temp', 'person_temp.person_id = person.id', 'left')
+        ->join('(SELECT person, SUM(balance) total FROM simpanan_sukarela WHERE posting = 1 GROUP BY person) sukarela', 'sukarela.person = person.nik', 'left')
+        ->join('(SELECT person, SUM(balance) total FROM simpanan_investasi WHERE posting = 1 GROUP BY person) investasi', 'investasi.person = person.nik', 'left')
         ->order_by('person.id', 'asc');
         
         $q = $this->db->get();

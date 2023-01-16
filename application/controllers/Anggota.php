@@ -346,6 +346,8 @@ class Anggota extends CI_Controller {
         $data["detail_anggota"]["position"] = $this->input->post('position');
         $data["detail_anggota"]["depo"] = $this->input->post('depo');
         $data["detail_anggota"]["acc_no"] = $this->input->post('acc_no');
+        $data["detail_anggota"]["sukarela"] = $this->input->post('sukarela');
+        $data["detail_anggota"]["investasi"] = $this->input->post('investasi');
 
         $data["family"]["name"] = $this->input->post("nama_kel");
         $data["family"]["address"] = $this->input->post("alamat_kel");
