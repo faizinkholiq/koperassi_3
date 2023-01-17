@@ -59,15 +59,15 @@ if (!isset($highlight_menu)){
                     <span>Dashboard</span></a>
             </li>
 
-            <?php 
-                if ($role == 2): 
-            ?>
-
             <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">
                     <i class="fas fa-fw fa-hand-holding-usd"></i>
                     <span>Pengajuan Perubahan Simpanan</span></a>
             </li>
+
+            <?php 
+                if ($role == 2): 
+            ?>
 
             <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/simpanan') ?>">

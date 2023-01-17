@@ -487,7 +487,6 @@ class Simpanan extends CI_Controller {
 		if (!check_permission('ubah_simpanan', $d['role'])){
             redirect('home');
         }else{
-			$d['summary'] = $this->simpanan_model->summary($d['person_id']);
 			$this->load->view('layout/template', $d);
         }
 	}

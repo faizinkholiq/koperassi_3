@@ -12,6 +12,7 @@
 </div>
 <?php endif; ?>
 
+<?php if($role == '2'): ?>
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
@@ -26,6 +27,8 @@
         </div>
     </div>
 </div>
+<?php endif; ?>
+
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
         <div class="row">
