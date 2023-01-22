@@ -1,24 +1,6 @@
 <!-- Content Row -->
 <div class="row">
     <div class="col-xl-4 col-md-6 mb-4" >
-        <div class="card shadow" style="width:100%; background:#f1c40f;">
-            <div class="card-body" style="height:7rem; color:white; font-size:1rem;">
-                <div class="row mb-1">
-                    <div class="col-lg-4">0</div>
-                    <div class="col-lg-8">Total Transaksi</div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">0</div>
-                    <div class="col-lg-8">Jumlah Tagihan Bulan Ini</div>
-                </div>
-            </div>
-            <div class="card-footer font-weight-bold" style="background:#f39c12; border:none; color:white; font-size:1.3rem;">
-                Simpanan Sukarela
-                <i class="float-right fa fa-chevron-right"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#e74c3c;">
             <div class="card-body" style="height:7rem; color:white; font-size:1rem;">
                 <div class="row mb-1">
@@ -35,7 +17,25 @@
                 </div>
             </div>
             <div class="card-footer font-weight-bold" style="background:#c0392b; border:none; color:white; font-size:1.3rem;">
-                Investasi
+                Simpanan Wajib
+                <i class="float-right fa fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card shadow" style="width:100%; background:#f1c40f;">
+            <div class="card-body" style="height:7rem; color:white; font-size:1rem;">
+                <div class="row mb-1">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Total Transaksi</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">0</div>
+                    <div class="col-lg-8">Jumlah Tagihan Bulan Ini</div>
+                </div>
+            </div>
+            <div class="card-footer font-weight-bold" style="background:#f39c12; border:none; color:white; font-size:1.3rem;">
+                Simpanan Pokok
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="card-footer font-weight-bold" style="background:#16a085; border:none; color:white; font-size:1.3rem;">
-                Total Saldo Rekening
+                Investasi
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="card-footer font-weight-bold" style="background:#2980b9; border:none; color:white; font-size:1.3rem;">
-                Simpanan Pokok
+                Simpanan Sukarela
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 </div>
             </div>
             <div class="card-footer font-weight-bold" style="background:#8e44ad; border:none; color:white; font-size:1.3rem;">
-                Simpanan Wajib
+                Sisa Pinjaman
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>

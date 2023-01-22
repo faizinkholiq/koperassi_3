@@ -70,7 +70,7 @@ if (!isset($highlight_menu)){
                     <i class="fas fa-fw fa-wrench  <?= $simpanan ? 'text-white' : '' ?>"></i>
                     <span>Simpanan</span>
                 </a>
-                <div id="collapseMaster" class="collapse <?= $master ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseMaster" class="collapse <?= $simpanan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Pengajuan Simpanan</a>
