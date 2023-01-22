@@ -59,20 +59,24 @@ if (!isset($highlight_menu)){
                     <span>Dashboard</span></a>
             </li>
 
-            <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">
-                    <i class="fas fa-fw fa-hand-holding-usd"></i>
-                    <span>Pengajuan Perubahan Simpanan</span></a>
-            </li>
-
             <?php 
                 if ($role == 2): 
+                $simpanan = in_array($highlight_menu, ["simpanan","ubah_simpanan","penarikan_simpanan"]);
             ?>
 
-            <li class="nav-item <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/simpanan') ?>">
-                    <i class="fas fa-fw fa-hand-holding-usd"></i>
-                    <span>Simpanan</span></a>
+            <li class="nav-item">
+                <a class="nav-link <?= $simpanan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseMaster"
+                    aria-expanded="true" aria-controls="collapseMaster">
+                    <i class="fas fa-fw fa-wrench  <?= $simpanan ? 'text-white' : '' ?>"></i>
+                    <span>Simpanan</span>
+                </a>
+                <div id="collapseMaster" class="collapse <?= $master ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Pengajuan Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'penarikan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/penarikan') ?>">Penarikan Data Simpanan</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>">
@@ -100,6 +104,13 @@ if (!isset($highlight_menu)){
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings"]);
             ?>
+
+            <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">
+                    <i class="fas fa-fw fa-hand-holding-usd"></i>
+                    <span>Pengajuan Perubahan Simpanan</span></a>
+            </li>
+
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
                     <i class="fas fa-fw fa-users"></i>
@@ -142,6 +153,7 @@ if (!isset($highlight_menu)){
                 </a>
                 <div id="collapseMaster" class="collapse <?= $master ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'parameter_settings' ? 'active' : '' ?>" href="<?= site_url('/parameter') ?>">Parameter Settings</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_settings' ? 'active' : '' ?>" href="<?= site_url('/simpanan/settings') ?>">Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'position' ? 'active' : '' ?>" href="<?= site_url('/position') ?>">Jabatan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'depo' ? 'active' : '' ?>" href="<?= site_url('/depo') ?>">Depo / Stock Point</a>
