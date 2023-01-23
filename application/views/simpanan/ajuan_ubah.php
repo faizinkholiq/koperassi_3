@@ -107,7 +107,10 @@
                             <div class="col-lg-3">Tipe</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control" id="tipeTextInput" name="type" readonly="readonly" value="Simpanan Sukarela">
+                                <select class="form-control" id="tipeCombo" name="type">
+                                    <option value="Sukarela">Simpanan Sukarela</option>
+                                    <option value="Investasi">Investasi</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">

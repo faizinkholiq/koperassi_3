@@ -473,22 +473,23 @@
 		$offset = $p["start"];
 
         $this->db->select([
-            'settings_simpanan_sukarela.id',
-            'settings_simpanan_sukarela.person person_id',
+            'pengajuan_simpanan.id',
+            'pengajuan_simpanan.person person_id',
             'person.name',
             'person.no_ktp',
             'person.nik',
             'person.phone',
             'person.join_date',
-            '"Simpanan Sukarela" type',
-            'settings_simpanan_sukarela.month',
-            'settings_simpanan_sukarela.year',
-            'settings_simpanan_sukarela.status',
-            'settings_simpanan_sukarela.balance',
+            'pengajuan_simpanan.type',
+            'pengajuan_simpanan.month',
+            'pengajuan_simpanan.year',
+            'pengajuan_simpanan.status',
+            'pengajuan_simpanan.balance',
         ])
-        ->from('settings_simpanan_sukarela')
-        ->join('person', 'person.nik = settings_simpanan_sukarela.person')
-        ->order_by('date', 'desc');
+        ->from('pengajuan_simpanan')
+        ->join('person', 'person.nik = pengajuan_simpanan.person')
+        ->order_by('date', 'desc')
+        ->order_by('type', 'asc');
         
         $q = $this->db->get();
         $data["recordsTotal"] = $q->num_rows();
@@ -508,7 +509,7 @@
 
     public function create_ubah_simpanan($data)
     {
-        $this->db->insert('settings_simpanan_sukarela', $data);
+        $this->db->insert('pengajuan_simpanan', $data);
 
         return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
     }
@@ -517,7 +518,7 @@
     {   
         $this->db->where('id', $data['id']);
         unset($data['id']);
-        $this->db->update('settings_simpanan_sukarela', $data);
+        $this->db->update('pengajuan_simpanan', $data);
 
         return ($this->db->error()["code"] == 0) ? true : false;
     }
@@ -525,19 +526,19 @@
     public function delete_ubah_simpanan($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('settings_simpanan_sukarela');
+        $this->db->delete('pengajuan_simpanan');
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
     
     public function detail_ubah_simpanan($id)
     {
-        return $this->db->get_where('settings_simpanan_sukarela', ["id" => $id])->row_array();
+        return $this->db->get_where('pengajuan_simpanan', ["id" => $id])->row_array();
     }
 
     public function detail_ubah_simpanan_by_month($p)
     {
-        return $this->db->get_where('settings_simpanan_sukarela', ["year" => $p['year'], "month" => $p['month']])->row_array();
+        return $this->db->get_where('pengajuan_simpanan', ["year" => $p['year'], "month" => $p['month'], "type" => $p['type']])->row_array();
     }
 
     public function posting($data)

@@ -519,6 +519,7 @@ class Simpanan extends CI_Controller {
             $data["year"] = $this->input->post('year');
             $data["month"] = $this->input->post('month');
             $data["balance"] = $this->input->post('balance');
+            $data["type"] = $this->input->post('type');
         }
 
         return $data;
