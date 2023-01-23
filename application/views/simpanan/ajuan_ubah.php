@@ -72,6 +72,7 @@
             <div class="modal-body">
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
+                        <input id="IDTextInput" type="hidden" name="id" value="">
                         <input id="personTextInput" type="hidden" name="person" value="<?= $person_id; ?>">
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Bayar</div>
@@ -139,8 +140,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash mr-2"></i>Hapus Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Apakah anda yakin ingin menghapus data ini?</strong>
+            </div>
+            <div class="modal-footer">
+                <form method="GET" action="<?=site_url('simpanan/delete_ubah_simpanan')?>">
+                    <input type="hidden" id="delID" name="id" />
+                    <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="approveModalLabel"><i class="fas fa-check mr-2"></i>Setujui Perubahan Data</h5>
@@ -269,7 +293,7 @@
                             `;
                         }else{
                             btn = `
-                                <button type="button" onclick="DoEdit(${row.id})" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                                <button type="button" onclick='DoEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
                                 <button type="button" onclick="DoDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
                             `;
                         }
@@ -292,11 +316,29 @@
 
     function showForm(simpanan_id){
         resetForm();
+        $('#formSimpanan').attr('action', url.site + "/simpanan/submit_ubah_simpanan")
         $('#inputModal').modal('show');
     }
     
     function resetForm(){
         $('#formSimpanan')[0].reset();
+    }
+
+    function DoEdit(row){
+        resetForm();
+        $('#formSimpanan').attr('action', url.site + "/simpanan/edit_ubah_simpanan")
+        $('#IDTextInput').val(row.id);
+        $('#tglDateInput').val(row.date);
+        $('#monthCombo').val(row.month);
+        $('#yearCombo').val(row.year);
+        $('#tipeCombo').val(row.type);
+        $('#nominalTextInput').val(row.balance);
+        $('#inputModal').modal('show');
+    }
+
+    function DoDelete(id){
+        $('#delID').val(id);
+        $('#deleteModal').modal('show');
     }
 
     function DoApprove(id){

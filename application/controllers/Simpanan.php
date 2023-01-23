@@ -575,6 +575,65 @@ class Simpanan extends CI_Controller {
 		redirect('simpanan/pengajuan_perubahan');
 	}
 
+    public function edit_ubah_simpanan()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('ubah_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $nd = $this->get_input_ubah_simpanan();
+            $nd['status'] = 'Pending';
+
+            $date_input = $nd['year']."-".$nd['month']."-01";
+            if($date_input >= date('Y-m-01')){
+                $detail = $this->simpanan_model->detail_ubah_simpanan($id);
+                if ($detail) {
+                    $nd['id'] = $detail['id'];
+                    if ($this->simpanan_model->edit_ubah_simpanan($nd)) {
+                        $data['success'] = 1;
+                        $data['message'] = "Data berhasil tersimpan !";
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Gagal menyimpan data !";
+                    }
+                }else{
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid simpanan ID !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Pengajuan perubahan ditolak karena bulan/tahun yang dipilih sudah terlewat !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/pengajuan_perubahan');
+	}
+
+    public function delete_ubah_simpanan() 
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('ubah_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->get('id');
+            if ($this->simpanan_model->delete_ubah_simpanan($id)) {
+                $data['success'] = 1;
+                $data['message'] = "Berhasil menghapus data !";
+            } else {
+                $data['success'] = 0;
+                $data['error'] = "Gagal menghapus data !";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('simpanan/pengajuan_perubahan');
+    }
+
+
     public function approve_ubah_simpanan()
 	{
         $d = $this->user_model->login_check();
