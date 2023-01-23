@@ -483,6 +483,7 @@ class Simpanan extends CI_Controller {
         $d['title'] = "Pengajuan Perubahan Simpanan";
 		$d['highlight_menu'] = "ubah_simpanan";
 		$d['content_view'] = 'simpanan/ajuan_ubah';
+        $d['summary'] = $this->simpanan_model->summary($d['person_id']);
 
 		if (!check_permission('ubah_simpanan', $d['role'])){
             redirect('home');

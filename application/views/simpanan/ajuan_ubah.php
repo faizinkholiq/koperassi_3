@@ -31,11 +31,13 @@
 
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
+        <?php if($role == '2'): ?>
         <div class="row">
             <div class="col-lg-6">
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-upload mr-1"></i> Ajukan Perubahan</a>
             </div>
         </div><hr>
+        <?php endif; ?>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
