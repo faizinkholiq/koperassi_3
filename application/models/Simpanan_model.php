@@ -435,6 +435,7 @@
 
     public function generate_settings($data)
     {   
+        $data['status_simpanan'] = 'generated';
         $this->db->update('person', $data);
 
         return ($this->db->error()["code"] == 0) ? true : false;

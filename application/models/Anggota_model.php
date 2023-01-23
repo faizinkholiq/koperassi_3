@@ -78,8 +78,10 @@
             "position.name position_name",
             "person_temp.status status_perubahan",
             "person_temp.reason",
-            "CONCAT('Rp', FORMAT(IF(sukarela.total IS NOT NULL AND sukarela.total != 0, sukarela.total + person.sukarela, IF(person.sukarela IS NOT NULL, person.sukarela, 0)), 0, 'id_ID')) sukarela",
-            "CONCAT('Rp', FORMAT(IF(investasi.total IS NOT NULL AND investasi.total != 0, investasi.total + person.investasi, IF(person.investasi IS NOT NULL, person.investasi, 0)), 0, 'id_ID')) investasi",
+            // "CONCAT('Rp', FORMAT(IF(sukarela.total IS NOT NULL AND sukarela.total != 0, sukarela.total + person.sukarela, IF(person.sukarela IS NOT NULL, person.sukarela, 0)), 0, 'id_ID')) sukarela",
+            // "CONCAT('Rp', FORMAT(IF(investasi.total IS NOT NULL AND investasi.total != 0, investasi.total + person.investasi, IF(person.investasi IS NOT NULL, person.investasi, 0)), 0, 'id_ID')) investasi",
+            "CONCAT('Rp', FORMAT(person.sukarela, 0, 'id_ID')) sukarela",
+            "CONCAT('Rp', FORMAT(person.investasi, 0, 'id_ID')) investasi",
             'ROW_NUMBER() OVER(ORDER BY person.id ASC) AS row_no'
         ])
         ->from('person')
@@ -129,14 +131,14 @@
             "person.join_date",
             "person.status",
             "person.salary",
-            "COALESCE(def_sukarela.balance, person.sukarela) sukarela",
-            "COALESCE(def_investasi.balance, person.investasi) investasi",
+            "person.sukarela",
+            "person.investasi",
         ])
         ->from('person')
         ->join('user', 'user.id = person.user_id')
         ->join('position', 'position.id = person.position', 'left')
-        ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Sukarela') def_sukarela", 'def_sukarela.person = person.id', 'left')
-        ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Investasi') def_investasi", 'def_investasi.person = person.id', 'left')
+        // ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Sukarela') def_sukarela", 'def_sukarela.person = person.id', 'left')
+        // ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Investasi') def_investasi", 'def_investasi.person = person.id', 'left')
         ->where('person.status', 'Aktif')
         ->where('user.role', '2')
         ->order_by('person.id', 'asc');

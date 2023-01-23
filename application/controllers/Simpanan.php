@@ -451,8 +451,8 @@ class Simpanan extends CI_Controller {
             $detail = $this->simpanan_model->detail_settings($id);
             
             if ($detail) {
-                $data[strtolower($detail['simpanan'])] = $detail['nominal'];
-                if ($this->simpanan_model->generate_settings($data)) {
+                $nd[strtolower($detail['simpanan'])] = $detail['nominal'];
+                if ($this->simpanan_model->generate_settings($nd)) {
                     $data['success'] = 1;
                     $data['message'] = "Proses Generate Berhasil !";
                 } else {

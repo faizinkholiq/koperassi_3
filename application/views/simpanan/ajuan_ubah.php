@@ -48,6 +48,7 @@
                         <th class="text-center">Nilai Awal</th>
                         <th class="text-center">Nilai Perubahan</th>
                         <th class="text-center">Status Perubahan</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -147,6 +148,7 @@
     };
 
     const person = <?= $person_id ?>;
+    const role = <?= $role ?>;
     const month_list = [
         'Januari',
         'Februari',
@@ -184,7 +186,29 @@
             { data: "type" },
             { data: "balance" },
             { data: "balance" },
-            { data: "status" },
+            { data: "status", class: "text-center" },
+            { 
+                class: "text-center",
+                render: function (data, type, row) {
+                    let btn = '-';
+                    
+                    if (row.status == 'Pending') {
+                        if (role == 1) {
+                            btn = `
+                                <button type="button" onclick="DoApprove(${row.id})" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
+                                <button type="button" onclick="DoReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
+                            `;
+                        }else{
+                            btn = `
+                                <button type="button" onclick="DoEdit(${row.id})" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                                <button type="button" onclick="DoDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                            `;
+                        }
+                    }
+
+                    return btn;
+                }
+            },
         ],
         ordering: false,
         scrollX: true,

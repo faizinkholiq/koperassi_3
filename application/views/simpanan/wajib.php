@@ -20,25 +20,6 @@
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
                 <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
             </div>
-            <div class="col-lg-6 row justify-content-end p-0">
-                <select class="form-control col-lg-3" id="selectBulan" name="bulan" onchange="selectMonth()">
-                    <option value="all">- All Data -</option>
-                    <?php 
-                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                    foreach($months as $key => $item):
-                    ?>
-                    <option value="<?= $key+1 ?>"><?= $item ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectYear()">
-                    <?php 
-                    $start = 2019;
-                    for($i = $start; $i <= date('Y'); $i++):
-                    ?>
-                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
-                    <?php endfor; ?>
-                </select>
-            </div>
         </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">

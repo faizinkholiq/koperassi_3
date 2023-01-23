@@ -247,6 +247,7 @@
                 $('#depoTextInput').val(person[0].depo)
                 $('#alamatTextArea').text(person[0].address)
                 $('#noRekTextInput').val(person[0].acc_no)
+                $('#jumlahTextInput').val(person[0].investasi)
             }else{
                 $('#anggotaAlert').fadeIn();
                 $('#formSimpanan')[0].reset();
