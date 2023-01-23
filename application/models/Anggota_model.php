@@ -109,33 +109,37 @@
     public function list()
     {
         $q = $this->db->select([
-                "person.id",
-                "person.user_id",
-                "person.no_ktp",
-                "person.nik",
-                "person.name",
-                "person.address",
-                "person.phone",
-                "person.join_date",
-                "person.status",
-                "person.position",
-                "position.name position_name",
-                "person.depo",
-                "person.acc_no",
-                "person.phone",
-                "person.email",
-                "person.ktp",
-                "person.profile_photo",
-                "person.join_date",
-                "person.status",
-                "person.salary",
-            ])
-            ->from('person')
-            ->join('user', 'user.id = person.user_id')
-            ->join('position', 'position.id = person.position', 'left')
-            ->where('person.status', 'Aktif')
-            ->where('user.role', '2')
-            ->order_by('person.id', 'asc');
+            "person.id",
+            "person.user_id",
+            "person.no_ktp",
+            "person.nik",
+            "person.name",
+            "person.address",
+            "person.phone",
+            "person.join_date",
+            "person.status",
+            "person.position",
+            "position.name position_name",
+            "person.depo",
+            "person.acc_no",
+            "person.phone",
+            "person.email",
+            "person.ktp",
+            "person.profile_photo",
+            "person.join_date",
+            "person.status",
+            "person.salary",
+            "COALESCE(def_sukarela.balance, person.sukarela) sukarela",
+            "COALESCE(def_investasi.balance, person.investasi) investasi",
+        ])
+        ->from('person')
+        ->join('user', 'user.id = person.user_id')
+        ->join('position', 'position.id = person.position', 'left')
+        ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Sukarela') def_sukarela", 'def_sukarela.person = person.id', 'left')
+        ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Investasi') def_investasi", 'def_investasi.person = person.id', 'left')
+        ->where('person.status', 'Aktif')
+        ->where('user.role', '2')
+        ->order_by('person.id', 'asc');
         return $q->get()->result_array();
     }
 

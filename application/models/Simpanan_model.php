@@ -538,7 +538,13 @@
 
     public function detail_ubah_simpanan_by_month($p)
     {
-        return $this->db->get_where('pengajuan_simpanan', ["year" => $p['year'], "month" => $p['month'], "type" => $p['type']])->row_array();
+        return $this->db->get_where('pengajuan_simpanan', 
+        [
+            "person" => $p['person'], 
+            "year" => $p['year'], 
+            "month" => $p['month'], 
+            "type" => $p['type']
+        ])->row_array();
     }
 
     public function posting($data)
