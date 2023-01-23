@@ -210,6 +210,27 @@
     </div>
 </div>
 
+<div class="modal fade" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reasonModalLabel"><i class="fas fa-times mr-2"></i>Alasan data tersebut ditolak</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="reasonParagraph"></p>      
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="rejID" name="id" />
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 
@@ -273,7 +294,7 @@
                             tag = "<span class='bg-warning text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-clock'></i> Pending</span>";
                             break;
                         case "Decline":
-                            tag = "<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-times'></i> Ditolak</span>";
+                            tag = `<span onclick='showReason("`+row.reason+`")' class='bg-danger text-white font-weight-bold px-2 py-1 rounded' style="cursor:pointer;"><i class='fas fa-times'></i> Ditolak</span>`;
                             break;
                     }
 
@@ -285,13 +306,15 @@
                 render: function (data, type, row) {
                     let btn = '-';
                     
-                    if (row.status == 'Pending') {
-                        if (role == 1) {
+                    if (role == 1) {
+                        if (row.status == 'Pending') {
                             btn = `
                                 <button type="button" onclick="DoApprove(${row.id})" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
                                 <button type="button" onclick="DoReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
                             `;
-                        }else{
+                        }
+                    }else{
+                        if (row.status == 'Pending' || row.status == 'Decline') {
                             btn = `
                                 <button type="button" onclick='DoEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
                                 <button type="button" onclick="DoDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
@@ -349,6 +372,11 @@
     function DoReject(id){
         $('#rejID').val(id);
         $('#rejectModal').modal('show');
+    }
+
+    function showReason(reason){
+        $('#reasonParagraph').text(reason);
+        $('#reasonModal').modal('show');
     }
 
 </script>

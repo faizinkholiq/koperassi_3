@@ -487,6 +487,7 @@
             'pengajuan_simpanan.status',
             'pengajuan_simpanan.balance',
             'pengajuan_simpanan.date',
+            'pengajuan_simpanan.reason',
         ])
         ->from('pengajuan_simpanan')
         ->join('person', 'person.nik = pengajuan_simpanan.person')
