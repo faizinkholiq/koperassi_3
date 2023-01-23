@@ -575,6 +575,78 @@ class Simpanan extends CI_Controller {
 		redirect('simpanan/pengajuan_perubahan');
 	}
 
+    public function approve_ubah_simpanan()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('ubah_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $nd['status'] = 'Approved';
+            $detail = $this->simpanan_model->detail_ubah_simpanan($id);
+            if ($detail) {
+                $type = strtolower($detail['type']);
+                $nd['id'] = $detail['id'];
+                if ($this->simpanan_model->edit_ubah_simpanan($nd)) {
+                    
+                    $person = $this->anggota_model->detail_by_nik($detail['person']);
+                    if ($person) {
+                        $data_person["id"] = $person['id'];
+                        $data_person[$type] = $detail['balance'];
+                        $data_person['status_simpanan'] = 'custom';
+                        $this->anggota_model->edit($data_person);
+                    }
+
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid simpanan ID !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/pengajuan_perubahan');
+	}
+
+    public function reject_ubah_simpanan()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('ubah_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $nd['status'] = 'Decline';
+            $nd['reason'] = $this->input->post('reason');
+            $detail = $this->simpanan_model->detail_ubah_simpanan($id);
+            if ($detail) {
+                $type = strtolower($detail['type']);
+                $nd['id'] = $detail['id'];
+                if ($this->simpanan_model->edit_ubah_simpanan($nd)) {
+                    
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid simpanan ID !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/pengajuan_perubahan');
+	}
+
+
     // Posting Simpanan
 	public function posting()
 	{

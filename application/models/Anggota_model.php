@@ -188,6 +188,49 @@
         ->row_array();
     }
 
+    public function detail_by_nik($nik)
+    {
+        return $this->db->select([
+            "person.id",
+            "person.user_id",
+            "person.no_ktp",
+            "person.nik",
+            "person.name",
+            "person.address",
+            "person.phone",
+            "person.join_date",
+            "person.status",
+            "person.position",
+            "person.depo",
+            "person.acc_no",
+            "person.phone",
+            "person.email",
+            "person.ktp",
+            "person.profile_photo",
+            "person.join_date",
+            "person.status",
+            "person.salary",
+            "person.sukarela",
+            "person.investasi",
+            'person_family.id id_family',
+            'person_family.name name_family',
+            'person_family.address address_family',
+            'person_family.phone phone_family',
+            'person_family.status status_family',
+            'position.name position_name',
+            'depo.name depo_name',
+            'user.id user_id'
+        ])
+        ->from('person')
+        ->join('person_family', 'person.id = person_family.person', 'left')
+        ->join('position', 'person.position = position.id', 'left')
+        ->join('depo', 'person.depo = depo.code', 'left')
+        ->join('user', 'person.user_id = user.id', 'left')
+        ->where('person.nik',$nik)
+        ->get()
+        ->row_array();
+    }
+
     public function create($data)
     {
         $this->db->insert('person', $data);
