@@ -22,7 +22,7 @@
             </div>
             <div class="col-lg-6 row justify-content-end p-0">
                 <select class="form-control col-lg-3" id="selectBulan" name="bulan" onchange="selectMonth()">
-                    <option value="all">- All Data -</option>
+                    <option value="all">- All Month -</option>
                     <?php 
                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                     foreach($months as $key => $item):
@@ -54,6 +54,7 @@
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Jml. Simpanan</th>
                         <th class="text-center">DK</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -67,7 +68,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> Tambah Simpanan</h5>
+                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> <span id="inputModalTitle">Tambah Simpanan</span></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -162,10 +163,33 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-info mt-4 mb-4" onclick="resetForm()">Reset</button>
+                <button type="button" id="btnReset" class="btn btn-info mt-4 mb-4" onclick="resetForm()">Reset</button>
                 <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash mr-2"></i>Hapus Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Apakah anda yakin ingin menghapus data ini?</strong>
+            </div>
+            <div class="modal-footer">
+                <form method="GET" action="<?=site_url('simpanan/delete_ubah_simpanan')?>">
+                    <input type="hidden" id="delID" name="id" />
+                    <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -194,6 +218,7 @@
         'November',
         'Desember',
     ];
+    const module = '<?= $module ?>';
 
     let month = $('#selectBulan').val();
     let year = $('#selectTahun').val();
@@ -226,6 +251,15 @@
             { data: "join_date" },
             { data: "balance" },
             { data: "dk" },
+            { 
+                class: "text-center",
+                render: function (data, type, row) {
+                    return `
+                        <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                        <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                    `;
+                }
+            },
         ],
         ordering: false
     });
@@ -254,23 +288,6 @@
 
     });
 
-    function showForm(){
-        $('#inputModal').modal('show');
-        $('#formSimpanan')[0].reset();
-        $('#alamatTextArea').text("");
-        $("#anggotaSelect").val('');
-        $("#anggotaSelect").selectpicker('refresh');
-        $('#anggotaAlert').show();
-    }
-
-    function resetForm() {
-        $('#formSimpanan')[0].reset();
-        $('#alamatTextArea').text("");
-        $("#anggotaSelect").val('');
-        $("#anggotaSelect").selectpicker('refresh');
-        $('#anggotaAlert').show();
-    }
-
     function selectMonth(){
         month = $('#selectBulan').val();
         dt.ajax.reload();
@@ -279,6 +296,49 @@
     function selectYear(){
         year = $('#selectTahun').val();
         dt.ajax.reload();
+    }
+
+    function showForm(){
+        resetForm();
+        $('#inputModalTitle').text('Tambah Simpanan');
+        $('#formSimpanan').attr('action', url.site + "/simpanan/create/" + module)
+        $('#btnReset').show();
+
+        $('#inputModal').modal('show');
+    }
+
+    function resetForm() {
+        $('#formSimpanan')[0].reset();
+        $('#tglDateInput').val("");
+        $('#jumlahTextInput').val("");
+        $('#alamatTextArea').text("");
+        $("#anggotaSelect").val('');
+        $("#anggotaSelect").selectpicker('refresh');
+        $('#anggotaAlert').show();
+    }
+
+    function doEdit(row){
+        resetForm();
+        $('#inputModalTitle').text('Ubah Simpanan');
+        $('#formSimpanan').attr('action', url.site + "/simpanan/edit/" + module)
+        $('#tglDateInput').val(row.date);
+        $('#anggotaAlert').fadeOut();
+        $('#anggotaSelect').val(row.person_id);
+        $("#anggotaSelect").selectpicker('refresh');
+        $('#noAnggotaTextInput').val(row.nik)
+        $('#jabatanTextInput').val(row.position_name)
+        $('#depoTextInput').val(row.depo)
+        $('#alamatTextArea').text(row.address)
+        $('#noRekTextInput').val(row.acc_no)
+        $('#jumlahTextInput').val(row.balance);
+        $('#btnReset').hide();
+
+        $('#inputModal').modal('show');
+    }
+
+    function doDelete(id){
+        $('#delID').val(id);
+        $('#deleteModal').modal('show');
     }
 
 </script>

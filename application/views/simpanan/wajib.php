@@ -35,6 +35,7 @@
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Jml. Simpanan</th>
                         <th class="text-center">DK</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -151,6 +152,29 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel"><i class="fas fa-trash mr-2"></i>Hapus Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Apakah anda yakin ingin menghapus data ini?</strong>
+            </div>
+            <div class="modal-footer">
+                <form method="GET" action="<?=site_url('simpanan/delete_ubah_simpanan')?>">
+                    <input type="hidden" id="delID" name="id" />
+                    <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -208,6 +232,15 @@
             { data: "join_date" },
             { data: "balance" },
             { data: "dk" },
+            { 
+                class: "text-center",
+                render: function (data, type, row) {
+                    return `
+                        <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                        <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                    `;
+                }
+            },
         ],
         ordering: false
     });
@@ -236,13 +269,19 @@
 
     });
 
+    function selectMonth(){
+        month = $('#selectBulan').val();
+        dt.ajax.reload();
+    }
+
+    function selectYear(){
+        year = $('#selectTahun').val();
+        dt.ajax.reload();
+    }
+
     function showForm(){
         $('#inputModal').modal('show');
-        $('#formSimpanan')[0].reset();
-        $('#alamatTextArea').text("");
-        $("#anggotaSelect").val('');
-        $("#anggotaSelect").selectpicker('refresh');
-        $('#anggotaAlert').show();
+        resetForm();
     }
 
     function resetForm() {
@@ -253,14 +292,21 @@
         $('#anggotaAlert').show();
     }
 
-    function selectMonth(){
-        month = $('#selectBulan').val();
-        dt.ajax.reload();
+    function doEdit(row){
+        resetForm();
+        $('#formSimpanan').attr('action', url.site + "/simpanan/edit_ubah_simpanan")
+        $('#IDTextInput').val(row.id);
+        $('#tglDateInput').val(row.date);
+        $('#monthCombo').val(row.month);
+        $('#yearCombo').val(row.year);
+        $('#tipeCombo').val(row.type);
+        $('#nominalTextInput').val(row.balance);
+        $('#inputModal').modal('show');
     }
 
-    function selectYear(){
-        year = $('#selectTahun').val();
-        dt.ajax.reload();
+    function doDelete(id){
+        $('#delID').val(id);
+        $('#deleteModal').modal('show');
     }
 
 </script>
