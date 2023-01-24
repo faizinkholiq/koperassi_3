@@ -192,7 +192,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-info mt-4 mb-4" onclick="resetForm()">Reset</button>
+                <button type="button" id="btnReset" class="btn btn-info mt-4 mb-4" onclick="resetForm()">Reset</button>
                 <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>

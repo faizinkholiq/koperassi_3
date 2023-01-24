@@ -232,6 +232,7 @@
         base: '<?=base_url() ?>',
         site: '<?=site_url() ?>'
     };
+    
     const list_anggota = <?= json_encode($person_list); ?>;
     const month_list = [
         'Januari',
