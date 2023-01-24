@@ -156,6 +156,47 @@
                         </div>
                     </div>
                 </div>
+                <hr/>
+                <h5 class="font-weight-bold mt-4"><i class="mr-2 fas fa-users"></i> Hubungan Keluarga</h5>
+                <div class="row mb-4 mt-4">
+                    <div class="col-lg-8">
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Nama</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control form-control-user" id="namaKelTextInput" name="nama_kel" placeholder="Nama Anggota Keluarga"
+                                value="<?=(isset($data["name_family"]) && !empty($data["name_family"]))? $data["name_family"] : '' ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Alamat</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-8">
+                                <textarea class="form-control form-control-user" id="alamatKelTextArea" name="alamat_kel" rows="5"><?=(isset($data["address_family"]) && !empty($data["address_family"]))? $data["address_family"] : '' ?></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">No. Telephone</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control form-control-user" id="noTelpKelTextInput" name="no_telp_kel" placeholder="No. Telp"
+                                value="<?=(isset($data["phone_family"]) && !empty($data["phone_family"]))? $data["phone_family"] : '' ?>">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Status Hubungan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <select class="form-control form-control-user" id="statusHubunganCombo" name="status_kel">
+                                    <option value="">- Pilih Salah Satu -</option>
+                                    <option value="Istri" <?=(isset($data["status_family"]) && $data["status_family"] == 'Istri')? 'selected' : '' ?>>Istri</option>
+                                    <option value="Orangtua" <?=(isset($data["status_family"]) && $data["status_family"] == 'Orangtua')? 'selected' : '' ?>>Orangtua (Ayah/Ibu)</option>
+                                    <option value="Saudara" <?=(isset($data["status_family"]) && $data["status_family"] == 'Saudara')? 'selected' : '' ?>>Saudara (Kakak/Adik)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-right">
                 <div class="row">

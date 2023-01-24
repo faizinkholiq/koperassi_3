@@ -116,7 +116,7 @@ class Anggota extends CI_Controller {
                 $anggota_id = $this->anggota_model->create($nd["detail_anggota"]);
                 if ($anggota_id) {
                     if (!empty($nd["family"]["name"])) {
-                        $nd["family"]["person_id"] = $anggota_id;
+                        $nd["family"]["person"] = $anggota_id;
                         $this->anggota_model->create_keluarga($nd["family"]);
                     }
 
@@ -225,7 +225,7 @@ class Anggota extends CI_Controller {
                         ]);
 
                         if (!empty($nd["family"]["name"])) {
-                            $nd["family"]["person_id"] = $id;
+                            $nd["family"]["person"] = $id;
                             if (!empty($detail["id_family"])) {
                                 $nd["family"]["id"] = $detail["id_family"];
                                 $this->anggota_model->edit_keluarga($nd["family"]);
