@@ -25,7 +25,6 @@
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="10">No</th>
                         <th class="text-center">Tahun</th>
                         <th class="text-center">Bulan</th>
                         <th class="text-center">KTP</th>
@@ -250,7 +249,6 @@
         processing: true,
         serverSide: true,
         columns: [
-            { data: "row_no" },
             { data: "year" },
             { 
                 data: "month", 
@@ -268,10 +266,14 @@
             { 
                 class: "text-center",
                 render: function (data, type, row) {
-                    return `
-                        <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
-                        <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
-                    `;
+                    if (row.posting == 1) {
+                        return '-'
+                    }else{
+                        return `
+                            <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                            <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                        `;
+                    }
                 }
             },
         ],

@@ -73,6 +73,7 @@
             'simpanan_investasi.dk',
             'simpanan_investasi.date',
             'simpanan_investasi.balance',
+            'simpanan_investasi.posting',
             'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
         ])
         ->from('simpanan_investasi')

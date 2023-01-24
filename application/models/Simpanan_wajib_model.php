@@ -73,6 +73,7 @@
             'simpanan_wajib.dk',
             'simpanan_wajib.date',
             'simpanan_wajib.balance',
+            'simpanan_wajib.posting',
             'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
         ])
         ->from('simpanan_wajib')

@@ -44,7 +44,6 @@
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="10">No</th>
                         <th class="text-center">Tahun</th>
                         <th class="text-center">Bulan</th>
                         <th class="text-center">KTP</th>
@@ -226,6 +225,7 @@
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/rowgroup/1.3.0/js/dataTables.rowGroup.min.js"></script> -->
 
 <script>
     const url = {
@@ -269,7 +269,6 @@
         processing: true,
         serverSide: true,
         columns: [
-            { data: "row_no" },
             { data: "year" },
             { 
                 data: "month", 
@@ -287,14 +286,18 @@
             { 
                 class: "text-center",
                 render: function (data, type, row) {
-                    return `
-                        <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
-                        <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
-                    `;
+                    if (row.posting == 1) {
+                        return '-'
+                    }else{
+                        return `
+                            <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                            <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                        `;
+                    }
                 }
             },
         ],
-        ordering: false
+        ordering: false,
     });
 
     $(document).ready(function() {
