@@ -6,7 +6,7 @@
     {
         $q = $this->db->select([
                 'simpanan_pokok.id',
-                'simpanan_pokok.person person_id',
+                'person.id person_id',
                 'person.name',
                 'person.no_ktp',
                 'person.nik',

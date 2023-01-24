@@ -6,12 +6,13 @@
     {
         $q = $this->db->select([
             'simpanan_investasi.id',
-            'simpanan_investasi.person person_id',
+            'person.id person_id',
             'person.name',
             'person.no_ktp',
             'person.nik',
             'person.phone',
             'person.join_date',
+            'simpanan_investasi.date',
             'simpanan_investasi.balance',
         ])
         ->from('simpanan_investasi')
@@ -57,20 +58,26 @@
 
         $q = $this->db->select([
             'simpanan_investasi.id',
-            'simpanan_investasi.person person_id',
+            'person.id person_id',
             'person.name',
             'person.no_ktp',
             'person.nik',
             'person.phone',
             'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            "position.name position_name",
             'simpanan_investasi.year',
             'simpanan_investasi.month',
             'simpanan_investasi.dk',
+            'simpanan_investasi.date',
             'simpanan_investasi.balance',
             'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
         ])
         ->from('simpanan_investasi')
         ->join('person', 'person.nik = simpanan_investasi.person')
+        ->join('position', 'position.id = person.position', 'left')
         ->order_by("year, CAST(month AS DECIMAL)");
         
         $q = $this->db->get();
