@@ -74,6 +74,7 @@
                 </button>
             </div>
             <form id="formSimpanan" action="<?= site_url('simpanan/create/'.$module) ?>" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="idSimpanan" name="id" /> 
             <div class="modal-body">
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
@@ -147,6 +148,34 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <div class="col-lg-3">Tahun</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-5">
+                                <select class="form-control" id="yearCombo" name="year">
+                                    <?php 
+                                    $start = 2019;
+                                    for($i = $start; $i <= date('Y'); $i++):
+                                    ?>
+                                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Bulan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-5">
+                                <select class="form-control" id="monthCombo" name="month">
+                                    <?php 
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    foreach($months as $key => $item):
+                                    ?>
+                                    <option value="<?= $key+1 ?>"><?= $item ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-lg-3">Nominal</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
@@ -184,7 +213,7 @@
                 <strong>Apakah anda yakin ingin menghapus data ini?</strong>
             </div>
             <div class="modal-footer">
-                <form method="GET" action="<?=site_url('simpanan/delete_ubah_simpanan')?>">
+                <form method="GET" action="<?=site_url('simpanan/delete/').$module ?>">
                     <input type="hidden" id="delID" name="id" />
                     <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -219,6 +248,9 @@
         'Desember',
     ];
     const module = '<?= $module ?>';
+    const date_now = '<?= date('Y-m-d') ?>';
+    const year_now = '<?= date('Y') ?>';
+    const month_now = '<?= (int)date('m') ?>';
 
     let month = $('#selectBulan').val();
     let year = $('#selectTahun').val();
@@ -309,7 +341,9 @@
 
     function resetForm() {
         $('#formSimpanan')[0].reset();
-        $('#tglDateInput').val("");
+        $('#tglDateInput').val(date_now);
+        $('#yearCombo').val(year_now);
+        $('#monthCombo').val(month_now);
         $('#jumlahTextInput').val("");
         $('#alamatTextArea').text("");
         $("#anggotaSelect").val('');
@@ -321,6 +355,7 @@
         resetForm();
         $('#inputModalTitle').text('Ubah Simpanan');
         $('#formSimpanan').attr('action', url.site + "/simpanan/edit/" + module)
+        $('#idSimpanan').val(row.id)
         $('#tglDateInput').val(row.date);
         $('#anggotaAlert').fadeOut();
         $('#anggotaSelect').val(row.person_id);
@@ -330,6 +365,8 @@
         $('#depoTextInput').val(row.depo)
         $('#alamatTextArea').text(row.address)
         $('#noRekTextInput').val(row.acc_no)
+        $('#yearCombo').val(row.year);
+        $('#monthCombo').val(Number(row.month));
         $('#jumlahTextInput').val(row.balance);
         $('#btnReset').hide();
 

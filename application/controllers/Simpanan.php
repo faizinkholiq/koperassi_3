@@ -217,6 +217,111 @@ class Simpanan extends CI_Controller {
 		redirect('simpanan/page/'.$module);
 	}
 
+    public function edit($module)
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('person','Anggota','required');
+        $this->form_validation->set_rules('balance','Jumlah Simpanan','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('simpanan_anggota', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input();
+                $nd['id'] = $this->input->post('id');
+                if(!$nd){
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid Person !";
+                }else{
+                    switch ($module) {
+                        case 'pokok':
+                            $simpanan_id = $this->simpanan_pokok_model->edit($nd);
+                            break;
+                        case 'wajib':
+                            $simpanan_id = $this->simpanan_wajib_model->edit($nd);
+                            break;
+                        case 'sukarela':
+                            $simpanan_id = $this->simpanan_sukarela_model->edit($nd);
+                            break;
+                        case 'investasi':
+                            $simpanan_id = $this->investasi_model->edit($nd);
+                            break;
+                        default:
+                            $data['success'] = 0;
+                            $data['error'] = "Invalid module";
+                            
+                            $this->session->set_flashdata('msg', $data);
+                            redirect('home');   
+                            return;
+    
+                            break;
+                    }
+    
+                    if ($simpanan_id) {
+                        $data['success'] = 1;
+                        $data['message'] = "Update Berhasil !";
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Update Gagal !";
+                    }
+                }
+            }
+        }else{
+			$data['success'] = 0;
+			$data['error'] = "Invalid Input";
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/page/'.$module);
+	}
+
+    public function delete($module) 
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('simpanan_anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->get('id');
+
+            switch ($module) {
+                case 'pokok':
+                    $delete = $this->simpanan_pokok_model->delete($id);
+                    break;
+                case 'wajib':
+                    $delete = $this->simpanan_wajib_model->delete($id);
+                    break;
+                case 'sukarela':
+                    $delete = $this->simpanan_sukarela_model->delete($id);
+                    break;
+                case 'investasi':
+                    $delete = $this->investasi_model->delete($id);
+                    break;
+                default:
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid module";
+                    
+                    $this->session->set_flashdata('msg', $data);
+                    redirect('home');   
+                    return;
+
+                    break;
+            }
+
+            if ($delete) {
+                $data['success'] = 1;
+                $data['message'] = "Berhasil menghapus data !";
+            } else {
+                $data['success'] = 0;
+                $data['error'] = "Gagal menghapus data !";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+		redirect('simpanan/page/'.$module);
+    }
+
 	private function get_input()
     {
         $person_id = $this->input->post('person');
@@ -227,8 +332,8 @@ class Simpanan extends CI_Controller {
         if ($detail_person) {
             $data["person"] = $detail_person['nik'];
             $data["date"] = $this->input->post('date');
-            $data["year"] = date('Y');
-            $data["month"] = date('m');
+            $data["year"] = $this->input->post('year');
+            $data["month"] = $this->input->post('month');
             $data["balance"] = $this->input->post('balance');
             $data["dk"] = 'D';
         }
