@@ -74,7 +74,7 @@
             'simpanan_sukarela.date',
             'simpanan_sukarela.balance',
             'simpanan_sukarela.posting',
-            'ROW_NUMBER() OVER(ORDER BY date DESC) AS row_no'
+            'ROW_NUMBER() OVER(ORDER BY year, CAST(month AS DECIMAL)) AS row_no'
         ])
         ->from('simpanan_sukarela')
         ->join('person', 'person.nik = simpanan_sukarela.person')

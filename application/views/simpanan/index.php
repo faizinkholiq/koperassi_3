@@ -64,6 +64,7 @@
                         <th class="text-center">Bulan</th>
                         <th class="text-center">Uraian</th>
                         <th class="text-center">Jml. Simpanan</th>
+                        <th class="text-center" width="80">D/K</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -220,7 +221,16 @@
         processing: true,
         serverSide: true,
         columns: [
-            { data: "year" },
+            { 
+                data: "year",
+                render: function (data, type, row) {
+                    if(row.row_no == 1){
+                        return data
+                    }else{
+                        return ''
+                    }
+                }
+            },
             { 
                 data: "month", 
                 render: function (data, type, row) {
@@ -229,6 +239,7 @@
             },
             { data: "type" },
             { data: "balance" },
+            { data: "dk", class: "text-center" },
         ],
         paging: false,
         ordering: false,

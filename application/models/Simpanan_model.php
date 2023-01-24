@@ -136,6 +136,7 @@
             'simpanan_pokok.balance',
             'simpanan_pokok.year',
             'simpanan_pokok.month',
+            'simpanan_pokok.dk',
         ])
         ->from('simpanan_pokok')
         ->join('person', 'person.nik = simpanan_pokok.person')
@@ -162,6 +163,7 @@
             'simpanan_wajib.balance',
             'simpanan_wajib.year',
             'simpanan_wajib.month',
+            'simpanan_wajib.dk',
         ])
         ->from('simpanan_wajib')
         ->join('person', 'person.nik = simpanan_wajib.person')
@@ -188,6 +190,7 @@
             'simpanan_sukarela.balance',
             'simpanan_sukarela.year',
             'simpanan_sukarela.month',
+            'simpanan_sukarela.dk',
         ])
         ->from('simpanan_sukarela')
         ->join('person', 'person.nik = simpanan_sukarela.person')
@@ -214,6 +217,7 @@
             'simpanan_investasi.balance',
             'simpanan_investasi.year',
             'simpanan_investasi.month',
+            'simpanan_investasi.dk',
         ])
         ->from('simpanan_investasi')
         ->join('person', 'person.nik = simpanan_investasi.person')
@@ -254,7 +258,10 @@
             $this->db->where('year', $p['year']);
         }
         
-        $this->db->select()
+        $this->db->select([
+            "simpanan.*",
+            "ROW_NUMBER() OVER(ORDER BY 1) AS row_no"
+        ])
         ->from("(
             $q_pokok UNION ALL 
             $q_wajib UNION ALL 

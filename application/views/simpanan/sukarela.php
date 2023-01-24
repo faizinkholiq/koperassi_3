@@ -52,7 +52,7 @@
                         <th class="text-center">No. Telp</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Jml. Simpanan</th>
-                        <th class="text-center">DK</th>
+                        <th class="text-center">D/K</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -268,7 +268,16 @@
         processing: true,
         serverSide: true,
         columns: [
-            { data: "year"},
+            { 
+                data: "year",
+                render: function (data, type, row) {
+                    if(row.row_no == 1){
+                        return data
+                    }else{
+                        return ''
+                    }
+                }
+            },
             { 
                 data: "month", 
                 render: function (data, type, row) {
@@ -281,7 +290,7 @@
             { data: "phone" },
             { data: "join_date" },
             { data: "balance" },
-            { data: "dk" },
+            { data: "dk", class: "text-center" },
             { 
                 class: "text-center",
                 render: function (data, type, row) {
