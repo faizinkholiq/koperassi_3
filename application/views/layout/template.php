@@ -153,7 +153,7 @@ if (!isset($highlight_menu)){
                 </a>
                 <div id="collapseMaster" class="collapse <?= $master ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'parameter_settings' ? 'active' : '' ?>" href="<?= site_url('/parameter') ?>">Parameter Settings</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'parameter_sistem' ? 'active' : '' ?>" href="<?= site_url('/parameter') ?>">Parameter Sistem</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_settings' ? 'active' : '' ?>" href="<?= site_url('/simpanan/settings') ?>">Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'position' ? 'active' : '' ?>" href="<?= site_url('/position') ?>">Jabatan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'depo' ? 'active' : '' ?>" href="<?= site_url('/depo') ?>">Depo / Stock Point</a>
