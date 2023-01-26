@@ -29,7 +29,7 @@
                                     $data['month'] = isset($data['month']) && !empty($data['month']) ? $data['month'] : (int)date('m');
                                     foreach($months as $key => $item):
                                     ?>
-                                    <option value="<?= $key+1 ?>"  <?= (isset($data['month']) && $key + 1  == $data['month'])? 'selected' : '' ?>><?= $item ?></option>
+                                    <option value="<?= $key+1 ?>"  <?= ($key + 1  == $data['month'])? 'selected' : '' ?>><?= $item ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -48,7 +48,7 @@
                                     $data['year'] = isset($data['year']) && !empty($data['year']) ? $data['year'] : date('Y');
                                     for($i = $start; $i <= date('Y'); $i++):
                                     ?>
-                                    <option value="<?= $i ?>" <?= (isset($data['year']) && $i == $data['year'])? 'selected' : '' ?>><?= $i ?></option>
+                                    <option value="<?= $i ?>" <?= ($i == $data['year'])? 'selected' : '' ?>><?= $i ?></option>
                                     <?php endfor; ?>
                                 </select>
                             </div>

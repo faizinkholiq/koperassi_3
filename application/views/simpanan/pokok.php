@@ -25,17 +25,19 @@
                     <option value="all">- All Month -</option>
                     <?php 
                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    $parameter['month'] = isset($parameter['month']) && !empty($parameter['month']) ? $parameter['month'] : '';
                     foreach($months as $key => $item):
                     ?>
-                    <option value="<?= $key+1 ?>"><?= $item ?></option>
+                    <option value="<?= $key+1 ?>" <?= ($key + 1  == $parameter['month'])? 'selected' : '' ?>><?= $item ?></option>
                     <?php endforeach; ?>
                 </select>
                 <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectYear()">
                     <?php 
                     $start = 2019;
+                    $parameter['year'] = isset($parameter['year']) && !empty($parameter['year']) ? $parameter['year'] : date('Y');
                     for($i = $start; $i <= date('Y'); $i++):
                     ?>
-                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                    <option value="<?= $i ?>" <?= ($i == $parameter['year'])? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
                 </select>
             </div>

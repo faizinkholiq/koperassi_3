@@ -15,6 +15,7 @@ class Simpanan extends CI_Controller {
 			'simpanan_sukarela_model',
 			'investasi_model',
             'person_model',
+            'parameter_model',
 		]);
 
         $this->load->library('form_validation');
@@ -88,6 +89,7 @@ class Simpanan extends CI_Controller {
 
 			$d['module'] = $module;
 			
+            $d['parameter'] = $this->parameter_model->detail($d['person_id']);
 			// List Data
 			$d['person_list'] = $this->anggota_model->list();
 
