@@ -102,7 +102,7 @@ if (!isset($highlight_menu)){
             <?php 
                 if ($role == 1): 
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
-                $master = in_array($highlight_menu, ["depo","position","simpanan_settings"]);
+                $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
             ?>
 
             <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
