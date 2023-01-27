@@ -1,0 +1,1 @@
+CREATE TABLE `kas_koperasi` (`id` INT NOT NULL AUTO_INCREMENT , `date` DATE NOT NULL , `tahun` VARCHAR(4) NOT NULL , `debet` FLOAT NULL , `kredit` FLOAT NULL , `total` FLOAT NOT NULL , `updated_by` SMALLINT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

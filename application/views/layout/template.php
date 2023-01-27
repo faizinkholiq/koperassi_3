@@ -85,12 +85,6 @@ if (!isset($highlight_menu)){
                     <span>Pinjaman</span></a>
             </li>
 
-            <li class="nav-item <?= $highlight_menu === 'laporan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/laporan') ?>">
-                    <i class="fas fa-fw fa-file-contract"></i>
-                    <span>Laporan</span></a>
-            </li>
-
             <li class="nav-item <?= $highlight_menu === 'anggota_settings' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota/settings') ?>">
                     <i class="fas fa-fw fa-user"></i>
@@ -103,6 +97,7 @@ if (!isset($highlight_menu)){
                 if ($role == 1): 
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
+                $laporan = in_array($highlight_menu, ["laporan_simpanan", "laporan_simpanan_detail"]);
             ?>
 
             <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
@@ -141,6 +136,20 @@ if (!isset($highlight_menu)){
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_wajib' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/wajib') ?>">Simpanan Wajib</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_sukarela' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/sukarela') ?>">Simpanan Sukarela</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'investasi' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/investasi') ?>">Investasi</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link <?= $laporan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseLaporan"
+                    aria-expanded="true" aria-controls="collapseLaporan">
+                    <i class="fas fa-fw fa-file-alt <?= $laporan ? 'text-white' : '' ?>"></i>
+                    <span>Laporan</span>
+                </a>
+                <div id="collapseLaporan" class="collapse <?= $laporan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'laporan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Laporan Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'laporan_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Laporan Simpanan Detail</a>
                     </div>
                 </div>
             </li>

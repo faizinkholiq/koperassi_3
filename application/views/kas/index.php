@@ -12,32 +12,23 @@
 </div>
 <?php endif; ?>
 
-<?php if($role == '2'): ?>
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= $summary['plafon'] ?></span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= $summary['limit'] ?></span></div>
-            </div>
-            <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2">Rp<?= $summary['gaji'] ?></span></div>
-                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2">Rp<?= $summary['simpanan'] ?></span></div>
+                <div class="text-lg mb-2">Total Simpanan Anggota: <span class="text-danger ml-2">Rp1000</span></div>
             </div>
         </div>
     </div>
 </div>
-<?php endif; ?>
 
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
-        <?php if($role == '2'): ?>
         <div class="row">
             <div class="col-lg-6">
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-upload mr-1"></i> Ajukan Perubahan</a>
             </div>
         </div><hr>
-        <?php endif; ?>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
