@@ -295,25 +295,10 @@
             { 
                 class: "text-center",
                 render: function (data, type, row) {
-                    let btn = '-';
-                    
-                    if (role == 1) {
-                        if (row.status == 'Pending') {
-                            btn = `
-                                <button type="button" onclick="DoApprove(${row.id})" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
-                                <button type="button" onclick="DoReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
-                            `;
-                        }
-                    }else{
-                        if (row.status == 'Pending' || row.status == 'Decline') {
-                            btn = `
-                                <button type="button" onclick='DoEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
-                                <button type="button" onclick="DoDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
-                            `;
-                        }
-                    }
-
-                    return btn;
+                    return `
+                        <button type="button" onclick='DoEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                        <button type="button" onclick="DoDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                    `;
                 }
             },
         ],
