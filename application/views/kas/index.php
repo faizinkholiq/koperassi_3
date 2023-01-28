@@ -26,7 +26,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-upload mr-1"></i> Ajukan Perubahan</a>
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah Kas</a>
             </div>
         </div><hr>
         <div class="table-responsive">
