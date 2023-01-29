@@ -62,46 +62,14 @@
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
                         <input id="IDTextInput" type="hidden" name="id" value="">
-                        <input id="personTextInput" type="hidden" name="person" value="<?= $person_id; ?>">
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Tanggal Bayar</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
-                                <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
-                                    value="<?= date('Y-m-d') ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Month</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <select class="form-control" id="monthCombo" name="month">
-                                    <?php
-                                      $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                                      foreach($months as $key => $item): ?>
-                                      <option value="<?= $key+1 ?>"><?= $item ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Year</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-5">
                                 <select class="form-control" id="yearCombo" name="year">
                                     <?php for($i = date('Y'); $i <= date('Y')+5; $i++): ?>
                                     <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
                                     <?php endfor; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Tipe</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
-                                <select class="form-control" id="tipeCombo" name="type">
-                                    <option value="Sukarela">Simpanan Sukarela</option>
-                                    <option value="Investasi">Investasi</option>
                                 </select>
                             </div>
                         </div>
@@ -113,7 +81,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="nominalTextInput" name="balance" placeholder="...">
+                                    <input type="text" class="form-control" id="nominalTextInput" name="debet" placeholder="...">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +90,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Ajukan Perubahan Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
+                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Tambah Kas <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>
