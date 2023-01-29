@@ -1,1 +1,2 @@
 CREATE TABLE `kas_koperasi` (`id` INT NOT NULL AUTO_INCREMENT , `date` DATE NOT NULL , `tahun` VARCHAR(4) NOT NULL , `debet` FLOAT NULL , `kredit` FLOAT NULL , `total` FLOAT NOT NULL , `updated_by` SMALLINT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `kas_koperasi` CHANGE `tahun` `year` VARCHAR(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;

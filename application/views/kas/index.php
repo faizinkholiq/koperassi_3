@@ -16,7 +16,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Total Simpanan Anggota: <span class="text-danger ml-2">Rp1000</span></div>
+                <div class="text-lg mb-2">Total kas Anggota: <span class="text-danger ml-2">Rp1000</span></div>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
             </div>
         </div><hr>
         <div class="table-responsive">
-            <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="kasTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-center">Tanggal</th>
@@ -52,12 +52,12 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> Tambah Simpanan</h5>
+                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> Tambah kas</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="formSimpanan" action="<?= site_url('simpanan/submit_ubah_simpanan') ?>" method="POST" enctype="multipart/form-data">
+            <form id="formkas" action="<?= site_url('kas/submit_ubah_kas') ?>" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
@@ -110,7 +110,7 @@
                 <strong>Apakah anda yakin ingin menghapus data ini?</strong>
             </div>
             <div class="modal-footer">
-                <form method="GET" action="<?=site_url('simpanan/delete_ubah_simpanan')?>">
+                <form method="GET" action="<?=site_url('kas/delete_ubah_kas')?>">
                     <input type="hidden" id="delID" name="id" />
                     <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -147,10 +147,10 @@
         'Desember',
     ];
 
-    let dt = $('#simpananTable').DataTable({
+    let dt = $('#kasTable').DataTable({
         dom: "Bfrtip",
         ajax: {
-            url: url.site + "/simpanan/get_dt_ubah_simpanan",
+            url: url.site + "/kas/get_data",
             type: "POST",
             data: function(d){
                 d.person = person;
@@ -159,16 +159,23 @@
         processing: true,
         serverSide: true,
         columns: [
+            { data: "date" },
             { data: "year" },
             { 
-                data: "month", 
+                data: "debet",
+                class: "text-center",
                 render: function (data, type, row) {
-                    return month_list[Number(data) - 1];
+                    return (data)? data : '-' ;
                 }
             },
-            { data: "type" },
-            { data: "name" },
-            { data: "balance" },
+            { 
+                data: "kredit",
+                class: "text-center",
+                render: function (data, type, row) {
+                    return (data)? data : '-' ;
+                }
+            },
+            { data: "total" },
             { 
                 class: "text-center",
                 render: function (data, type, row) {
@@ -190,19 +197,19 @@
         }
     });
 
-    function showForm(simpanan_id){
+    function showForm(kas_id){
         resetForm();
-        $('#formSimpanan').attr('action', url.site + "/simpanan/submit_ubah_simpanan")
+        $('#formkas').attr('action', url.site + "/kas/create")
         $('#inputModal').modal('show');
     }
     
     function resetForm(){
-        $('#formSimpanan')[0].reset();
+        $('#formkas')[0].reset();
     }
 
     function DoEdit(row){
         resetForm();
-        $('#formSimpanan').attr('action', url.site + "/simpanan/edit_ubah_simpanan")
+        $('#formkas').attr('action', url.site + "/kas/edit")
         $('#IDTextInput').val(row.id);
         $('#tglDateInput').val(row.date);
         $('#monthCombo').val(row.month);

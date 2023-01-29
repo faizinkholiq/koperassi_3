@@ -29,10 +29,27 @@ class Kas extends CI_Controller {
         }
 	}
 
+    public function get_data(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+        
+        $params["role"] = $this->input->post("role");
+
+        $data = $this->kas_model->get_dt($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
     private function get_input()
     {
+        $data["date"] = date('Y-m-d');
         $data["year"] = $this->input->post('year');
-        $data["month"] = $this->input->post('month');
+        $data["debet"] = $this->input->post('debet');
+        $data["kredit"] = $this->input->post('kredit');
+        $data["total"] = $this->input->post('debet');
 
         return $data;
     }
@@ -45,6 +62,7 @@ class Kas extends CI_Controller {
             $data['error'] = "No Permission !";
         }else{
             $nd = $this->get_input();
+            $nd['updated_by'] = $d['person_id'];
             
             $kas_id = $this->kas_model->create($nd);
             if ($kas_id) {
@@ -92,7 +110,7 @@ class Kas extends CI_Controller {
 		redirect('kas');
 	}
 
-    public function delete_ubah_simpanan() 
+    public function delete() 
     {
         $d = $this->user_model->login_check();
         if (!check_permission('kas', $d['role'])){
