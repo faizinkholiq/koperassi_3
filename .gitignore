@@ -15,7 +15,7 @@ application/logs/*
 
 !application/*/.htaccess
 
-composer.lock
+# composer.lock
 tests/mocks/database/ci_test.sqlite
 
 user_guide_src/build/*
