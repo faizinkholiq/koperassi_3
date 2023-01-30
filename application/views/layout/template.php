@@ -97,7 +97,7 @@ if (!isset($highlight_menu)){
                 if ($role == 1): 
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
-                $laporan = in_array($highlight_menu, ["laporan_simpanan", "laporan_simpanan_detail"]);
+                $report = in_array($highlight_menu, ["report_simpanan", "report_simpanan_detail"]);
             ?>
 
             <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
@@ -141,15 +141,15 @@ if (!isset($highlight_menu)){
             </li>
 
             <li class="nav-item">
-                <a class="nav-link <?= $laporan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseLaporan"
+                <a class="nav-link <?= $report ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseLaporan"
                     aria-expanded="true" aria-controls="collapseLaporan">
-                    <i class="fas fa-fw fa-file-alt <?= $laporan ? 'text-white' : '' ?>"></i>
+                    <i class="fas fa-fw fa-file-alt <?= $report ? 'text-white' : '' ?>"></i>
                     <span>Laporan</span>
                 </a>
-                <div id="collapseLaporan" class="collapse <?= $laporan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseLaporan" class="collapse <?= $report ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'laporan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Laporan Simpanan</a>
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'laporan_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Laporan Simpanan Detail</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan') ?>">Laporan Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan_detail') ?>">Laporan Simpanan Detail</a>
                     </div>
                 </div>
             </li>
