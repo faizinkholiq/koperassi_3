@@ -151,10 +151,10 @@ class Report_model extends CI_Model {
             "depo.name depo",
             "person.position position_id",
             "position.name position",
-            "COALESCE(FORMAT(simpanan_wajib.balance, 0, 'id_ID'), 0) wajib",
-            "COALESCE(FORMAT(simpanan_pokok.balance, 0, 'id_ID'), 0) pokok",
-            "COALESCE(FORMAT(simpanan_sukarela.balance, 0, 'id_ID'), 0) sukarela",
-            "COALESCE(FORMAT(simpanan_investasi.balance, 0, 'id_ID'), 0) investasi",
+            "COALESCE(simpanan_wajib.balance, 0) wajib",
+            "COALESCE(simpanan_pokok.balance, 0) pokok",
+            "COALESCE(simpanan_sukarela.balance, 0) sukarela",
+            "COALESCE(simpanan_investasi.balance, 0) investasi",
             "FORMAT(
                 COALESCE(simpanan_wajib.balance, 0) + 
                 COALESCE(simpanan_pokok.balance, 0) + 

@@ -115,10 +115,15 @@ class Report extends CI_Controller {
             $sheet->setCellValue("C$rowNo", $row['depo']);
             $sheet->setCellValue("D$rowNo", $row['position']);
             $sheet->setCellValue("E$rowNo", $row['wajib']);
+            $sheet->getStyle("E$rowNo")->getNumberFormat()->setFormatCode('#,##0');
             $sheet->setCellValue("F$rowNo", $row['pokok']);
+            $sheet->getStyle("F$rowNo")->getNumberFormat()->setFormatCode('#,##0');
             $sheet->setCellValue("G$rowNo", $row['sukarela']);
+            $sheet->getStyle("G$rowNo")->getNumberFormat()->setFormatCode('#,##0');
             $sheet->setCellValue("H$rowNo", $row['investasi']);
+            $sheet->getStyle("H$rowNo")->getNumberFormat()->setFormatCode('#,##0');
             $sheet->setCellValue("I$rowNo", $row['total']);
+            $sheet->getStyle("I$rowNo")->getNumberFormat()->setFormatCode('#,##0');
             $rowNo++;
         }
         $rowNo--;
@@ -132,9 +137,9 @@ class Report extends CI_Controller {
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ],
             'borders' => [
-                'outline' => array(
+                'outline' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ),
+                ],
             ],
         ];
         
