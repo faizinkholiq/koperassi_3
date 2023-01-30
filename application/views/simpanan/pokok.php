@@ -254,6 +254,7 @@
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
+    const default_nominal = <?= isset($default_nominal)? $default_nominal : 0 ?>;
 
     let month = $('#selectBulan').val();
     let year = $('#selectTahun').val();
@@ -359,7 +360,7 @@
         $('#tglDateInput').val(date_now);
         $('#yearCombo').val(year_now);
         $('#monthCombo').val(month_now);
-        $('#jumlahTextInput').val("");
+        $('#jumlahTextInput').val(default_nominal);
         $('#alamatTextArea').text("");
         $("#anggotaSelect").val('');
         $("#anggotaSelect").selectpicker('refresh');
