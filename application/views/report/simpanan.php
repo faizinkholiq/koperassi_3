@@ -17,7 +17,8 @@
     <div class="card-body">
         <div class="row mb-4">
             <div class="col-lg-12 text-right">
-                <a href="<?= site_url('report/export_simpanan') ?>" target="_blank" class="btn my-btn-primary mr-2"><i class="fas fw fa-file-excel mr-1"></i> Export Data</a>
+                <a href="<?= site_url('report/export_simpanan') ?>" target="_blank" class="btn my-btn-primary mr-2"><i class="fas fw fa-file-excel mr-1"></i> Export</a>
+                <a href="<?= site_url('report/export_simpanan_detail') ?>" target="_blank" class="btn btn-primary mr-2"><i class="fas fw fa-file-excel mr-1"></i> Export Detail</a>
             </div>
         </div>
         <div class="table-responsive">

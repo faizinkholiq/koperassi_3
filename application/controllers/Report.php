@@ -42,41 +42,19 @@ class Report extends CI_Controller {
         echo json_encode($data);
     }
 
-    public function simpanan_detail()
-	{
-        $d = $this->user_model->login_check();
-        $d['title'] = "Laporan Simpanan Detail";
-		$d['highlight_menu'] = "report_simpanan_detail";
-		$d['content_view'] = 'report/simpanan_detail';
-
-		if (!check_permission('report', $d['role'])){
-            redirect('home');
-        }else{
-			$this->load->view('layout/template', $d);
-        }
-	}
-
-    public function get_dt_simpanan_detail(){
-        $params["search"] = $this->input->post("search");
-        $params["draw"] = $this->input->post("draw");
-        $params["length"] = $this->input->post("length");
-        $params["start"] = $this->input->post("start");
-
-        $data = $this->report_model->get_dt_simpanan($params);
-
-        ob_end_clean();
-        echo json_encode($data);
-    }
-
     public function export_simpanan()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $rowNo = 1;
-        $sheet->setCellValue("A$rowNo", 'Koperasi PT. Putri Daya Usahatama');
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Koperasi PT. Putri Daya Usahatama');
         $rowNo++;
-        $sheet->setCellValue("A$rowNo", 'Rincian Simpanan Anggota Koperasi');
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Rincian Simpanan Anggota Koperasi');
         $rowNo+=2;
         
         $firstRow = $rowNo;
@@ -95,52 +73,69 @@ class Report extends CI_Controller {
             ],
         ];
 
-        $sheet->setCellValue("A$rowNo", 'NIK');
-        $sheet->getColumnDimension('A')->setWidth(20);
-        $sheet->mergeCells("A$rowNo:A".$rowNo+1);
-        $sheet->setCellValue("B$rowNo", 'Nama');
-        $sheet->getColumnDimension('B')->setWidth(35);
-        $sheet->mergeCells("B$rowNo:B".$rowNo+1);
-        $sheet->setCellValue("C$rowNo", 'Depo');
-        $sheet->getColumnDimension('C')->setWidth(20);
-        $sheet->mergeCells("C$rowNo:C".$rowNo+1);
-        $sheet->setCellValue("D$rowNo", 'Jabatan');
-        $sheet->getColumnDimension('D')->setWidth(35);
-        $sheet->mergeCells("D$rowNo:D".$rowNo+1);
-        $sheet->setCellValue("E$rowNo", 'Data Simpanan');
-        $sheet->mergeCells("E$rowNo:I$rowNo");
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'NIK');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Nama');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Depo');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Tahun');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Data Simpanan');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+4]}{$rowNo}");
         $rowNo++;
-        $sheet->setCellValue("E$rowNo", 'Wajib');
-        $sheet->getColumnDimension('E')->setWidth(20);
-        $sheet->setCellValue("F$rowNo", 'Pokok');
-        $sheet->getColumnDimension('F')->setWidth(20);
-        $sheet->setCellValue("G$rowNo", 'Sukarela');
-        $sheet->getColumnDimension('G')->setWidth(20);
-        $sheet->setCellValue("H$rowNo", 'Investasi');
-        $sheet->getColumnDimension('H')->setWidth(20);
-        $sheet->setCellValue("I$rowNo", 'Total');
-        $sheet->getColumnDimension('I')->setWidth(20);
-        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($headerStyle);
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Wajib');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Sukarela');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Investasi');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
         $rowNo++;
         
         $firstRow = $rowNo;
         $data = $this->report_model->get_data_simpanan();
         foreach($data as $row)
         {
-            $sheet->setCellValue("A$rowNo", $row['nik']);
-            $sheet->setCellValue("B$rowNo", $row['name']);
-            $sheet->setCellValue("C$rowNo", $row['depo']);
-            $sheet->setCellValue("D$rowNo", $row['position']);
-            $sheet->setCellValue("E$rowNo", $row['wajib']);
-            $sheet->getStyle("E$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("F$rowNo", $row['pokok']);
-            $sheet->getStyle("F$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("G$rowNo", $row['sukarela']);
-            $sheet->getStyle("G$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("H$rowNo", $row['investasi']);
-            $sheet->getStyle("H$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("I$rowNo", $row['total']);
-            $sheet->getStyle("I$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['depo']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['position']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['wajib']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['pokok']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['sukarela']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['investasi']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['total']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $rowNo++;
         }
         $rowNo--;
@@ -160,10 +155,10 @@ class Report extends CI_Controller {
             ],
         ];
         
-        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($allStyle);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
 
         $writer = new Xlsx($spreadsheet);
-        $filename = 'Report_Simpanan_'.date('YmdHis');
+        $filename = 'Report_Detail_Simpanan_'.date('YmdHis');
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
@@ -178,9 +173,13 @@ class Report extends CI_Controller {
         $sheet = $spreadsheet->getActiveSheet();
 
         $rowNo = 1;
-        $sheet->setCellValue("A$rowNo", 'Koperasi PT. Putri Daya Usahatama');
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Koperasi PT. Putri Daya Usahatama');
         $rowNo++;
-        $sheet->setCellValue("A$rowNo", 'Rincian Simpanan Anggota Koperasi');
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Rincian Simpanan Anggota Koperasi');
         $rowNo+=2;
         
         $firstRow = $rowNo;
@@ -199,52 +198,81 @@ class Report extends CI_Controller {
             ],
         ];
 
-        $sheet->setCellValue("A$rowNo", 'NIK');
-        $sheet->getColumnDimension('A')->setWidth(20);
-        $sheet->mergeCells("A$rowNo:A".$rowNo+1);
-        $sheet->setCellValue("B$rowNo", 'Nama');
-        $sheet->getColumnDimension('B')->setWidth(35);
-        $sheet->mergeCells("B$rowNo:B".$rowNo+1);
-        $sheet->setCellValue("C$rowNo", 'Depo');
-        $sheet->getColumnDimension('C')->setWidth(20);
-        $sheet->mergeCells("C$rowNo:C".$rowNo+1);
-        $sheet->setCellValue("D$rowNo", 'Jabatan');
-        $sheet->getColumnDimension('D')->setWidth(35);
-        $sheet->mergeCells("D$rowNo:D".$rowNo+1);
-        $sheet->setCellValue("E$rowNo", 'Data Simpanan');
-        $sheet->mergeCells("E$rowNo:I$rowNo");
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BAG');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'NIK');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Nama');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Tahun');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bulan');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Desc');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Ket');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Data Simpanan');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+4]}{$rowNo}");
         $rowNo++;
-        $sheet->setCellValue("E$rowNo", 'Wajib');
-        $sheet->getColumnDimension('E')->setWidth(20);
-        $sheet->setCellValue("F$rowNo", 'Pokok');
-        $sheet->getColumnDimension('F')->setWidth(20);
-        $sheet->setCellValue("G$rowNo", 'Sukarela');
-        $sheet->getColumnDimension('G')->setWidth(20);
-        $sheet->setCellValue("H$rowNo", 'Investasi');
-        $sheet->getColumnDimension('H')->setWidth(20);
-        $sheet->setCellValue("I$rowNo", 'Total');
-        $sheet->getColumnDimension('I')->setWidth(20);
-        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($headerStyle);
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Wajib');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Sukarela');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Investasi');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
         $rowNo++;
         
         $firstRow = $rowNo;
         $data = $this->report_model->get_data_simpanan_detail();
         foreach($data as $row)
         {
-            $sheet->setCellValue("A$rowNo", $row['nik']);
-            $sheet->setCellValue("B$rowNo", $row['name']);
-            $sheet->setCellValue("C$rowNo", $row['depo']);
-            $sheet->setCellValue("D$rowNo", $row['position']);
-            $sheet->setCellValue("E$rowNo", $row['wajib']);
-            $sheet->getStyle("E$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("F$rowNo", $row['pokok']);
-            $sheet->getStyle("F$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("G$rowNo", $row['sukarela']);
-            $sheet->getStyle("G$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("H$rowNo", $row['investasi']);
-            $sheet->getStyle("H$rowNo")->getNumberFormat()->setFormatCode('#,##0');
-            $sheet->setCellValue("I$rowNo", $row['total']);
-            $sheet->getStyle("I$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['depo']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['position']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['wajib']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['pokok']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['sukarela']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['investasi']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['total']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $rowNo++;
         }
         $rowNo--;
@@ -264,7 +292,7 @@ class Report extends CI_Controller {
             ],
         ];
         
-        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($allStyle);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
 
         $writer = new Xlsx($spreadsheet);
         $filename = 'Report_Simpanan_'.date('YmdHis');

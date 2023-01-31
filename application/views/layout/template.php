@@ -140,19 +140,12 @@ if (!isset($highlight_menu)){
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link <?= $report ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseLaporan"
-                    aria-expanded="true" aria-controls="collapseLaporan">
-                    <i class="fas fa-fw fa-file-alt <?= $report ? 'text-white' : '' ?>"></i>
-                    <span>Laporan</span>
-                </a>
-                <div id="collapseLaporan" class="collapse <?= $report ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="my-bg-primary py-2 collapse-inner rounded">
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan') ?>">Laporan Simpanan</a>
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan_detail') ?>">Laporan Simpanan Detail</a>
-                    </div>
-                </div>
+            <li class="nav-item <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/report/simpanan') ?>">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Laporan</span></a>
             </li>
+
 
             <li class="nav-item">
                 <a class="nav-link <?= $master ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseMaster"

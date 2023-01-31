@@ -27,3 +27,18 @@ function check_permission($module, $role) {
             break;
     }
 }
+
+function get_alphabet_list()
+{
+	// list letter alphabet
+	$letter = range('A', 'Z'); //alphabets, index 0 - 25
+	$letters = $letter;
+
+	foreach($letter as $i => $let) {
+		foreach($letter as $l) {
+			$letters[] = $let . $l; // it will make 'AA' until 'ZZ'
+		}
+	}
+
+	return $letters;
+}
