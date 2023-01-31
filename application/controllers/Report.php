@@ -78,8 +78,23 @@ class Report extends CI_Controller {
         $rowNo++;
         $sheet->setCellValue("A$rowNo", 'Rincian Simpanan Anggota Koperasi');
         $rowNo+=2;
-
+        
         $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
         $sheet->setCellValue("A$rowNo", 'NIK');
         $sheet->getColumnDimension('A')->setWidth(20);
         $sheet->mergeCells("A$rowNo:A".$rowNo+1);
@@ -105,9 +120,11 @@ class Report extends CI_Controller {
         $sheet->getColumnDimension('H')->setWidth(20);
         $sheet->setCellValue("I$rowNo", 'Total');
         $sheet->getColumnDimension('I')->setWidth(20);
+        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($headerStyle);
         $rowNo++;
         
-        $data = $this->report_model->get_data();
+        $firstRow = $rowNo;
+        $data = $this->report_model->get_data_simpanan();
         foreach($data as $row)
         {
             $sheet->setCellValue("A$rowNo", $row['nik']);
@@ -128,7 +145,7 @@ class Report extends CI_Controller {
         }
         $rowNo--;
 
-        $styleArray = [
+        $allStyle = [
             'font' => [
                 'bold' => false,
             ],
@@ -137,13 +154,117 @@ class Report extends CI_Controller {
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ],
             'borders' => [
-                'outline' => [
+                'allBorders' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                 ],
             ],
         ];
         
-        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($styleArray);
+        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($allStyle);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Report_Simpanan_'.date('YmdHis');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
+    public function export_simpanan_detail()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $rowNo = 1;
+        $sheet->setCellValue("A$rowNo", 'Koperasi PT. Putri Daya Usahatama');
+        $rowNo++;
+        $sheet->setCellValue("A$rowNo", 'Rincian Simpanan Anggota Koperasi');
+        $rowNo+=2;
+        
+        $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $sheet->setCellValue("A$rowNo", 'NIK');
+        $sheet->getColumnDimension('A')->setWidth(20);
+        $sheet->mergeCells("A$rowNo:A".$rowNo+1);
+        $sheet->setCellValue("B$rowNo", 'Nama');
+        $sheet->getColumnDimension('B')->setWidth(35);
+        $sheet->mergeCells("B$rowNo:B".$rowNo+1);
+        $sheet->setCellValue("C$rowNo", 'Depo');
+        $sheet->getColumnDimension('C')->setWidth(20);
+        $sheet->mergeCells("C$rowNo:C".$rowNo+1);
+        $sheet->setCellValue("D$rowNo", 'Jabatan');
+        $sheet->getColumnDimension('D')->setWidth(35);
+        $sheet->mergeCells("D$rowNo:D".$rowNo+1);
+        $sheet->setCellValue("E$rowNo", 'Data Simpanan');
+        $sheet->mergeCells("E$rowNo:I$rowNo");
+        $rowNo++;
+        $sheet->setCellValue("E$rowNo", 'Wajib');
+        $sheet->getColumnDimension('E')->setWidth(20);
+        $sheet->setCellValue("F$rowNo", 'Pokok');
+        $sheet->getColumnDimension('F')->setWidth(20);
+        $sheet->setCellValue("G$rowNo", 'Sukarela');
+        $sheet->getColumnDimension('G')->setWidth(20);
+        $sheet->setCellValue("H$rowNo", 'Investasi');
+        $sheet->getColumnDimension('H')->setWidth(20);
+        $sheet->setCellValue("I$rowNo", 'Total');
+        $sheet->getColumnDimension('I')->setWidth(20);
+        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($headerStyle);
+        $rowNo++;
+        
+        $firstRow = $rowNo;
+        $data = $this->report_model->get_data_simpanan_detail();
+        foreach($data as $row)
+        {
+            $sheet->setCellValue("A$rowNo", $row['nik']);
+            $sheet->setCellValue("B$rowNo", $row['name']);
+            $sheet->setCellValue("C$rowNo", $row['depo']);
+            $sheet->setCellValue("D$rowNo", $row['position']);
+            $sheet->setCellValue("E$rowNo", $row['wajib']);
+            $sheet->getStyle("E$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $sheet->setCellValue("F$rowNo", $row['pokok']);
+            $sheet->getStyle("F$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $sheet->setCellValue("G$rowNo", $row['sukarela']);
+            $sheet->getStyle("G$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $sheet->setCellValue("H$rowNo", $row['investasi']);
+            $sheet->getStyle("H$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $sheet->setCellValue("I$rowNo", $row['total']);
+            $sheet->getStyle("I$rowNo")->getNumberFormat()->setFormatCode('#,##0');
+            $rowNo++;
+        }
+        $rowNo--;
+
+        $allStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        
+        $sheet->getStyle("A$firstRow:I$rowNo")->applyFromArray($allStyle);
 
         $writer = new Xlsx($spreadsheet);
         $filename = 'Report_Simpanan_'.date('YmdHis');
