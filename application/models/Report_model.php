@@ -118,30 +118,57 @@ class Report_model extends CI_Model {
             "person.id",
             "person.nik",
             "person.name",
-            "person.depo depo_id",
-            "depo.code depo_code",
-            "depo.name depo",
-            "person.position position_id",
-            "position.name position",
-            "COALESCE(simpanan_wajib.balance, 0) wajib",
-            "COALESCE(simpanan_pokok.balance, 0) pokok",
-            "COALESCE(simpanan_sukarela.balance, 0) sukarela",
-            "COALESCE(simpanan_investasi.balance, 0) investasi",
-            "COALESCE(simpanan_wajib.balance, 0) 
-                + COALESCE(simpanan_pokok.balance, 0) 
-                + COALESCE(simpanan_sukarela.balance, 0) 
-                + COALESCE(simpanan_investasi.balance, 0) total",
+            "simpanan.year",
+            "simpanan.month",
+            "'Db' ket",
+            "CASE WHEN simpanan.type = 'Simpanan Pokok' THEN simpanan.balance END pokok", 
+            "CASE WHEN simpanan.type = 'Simpanan Wajib' THEN simpanan.balance END wajib", 
+            "CASE WHEN simpanan.type = 'Simpanan Sukarela' THEN simpanan.balance END sukarela", 
+            "CASE WHEN simpanan.type = 'Investasi' THEN simpanan.balance END investasi",
         ])
         ->from('person')
-        ->join('user', 'user.id = person.user_id', 'left')
-        ->join('depo', 'depo.id = person.depo', 'left')
-        ->join('position', 'position.id = person.position', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_pokok GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
+        ->join('user', 'user.id = person.user_id')
+        ->join("(
+            SELECT 
+                id,
+                person,
+                CAST(month AS DECIMAL) month,
+                year,
+                balance,
+                'Simpanan Pokok' type
+            FROM simpanan_pokok
+            UNION ALL
+            SELECT 
+                id,
+                person,
+                CAST(month AS DECIMAL) month,
+                year,
+                balance,
+                'Simpanan Wajib' type
+            FROM simpanan_wajib
+            UNION ALL
+            SELECT 
+                id,
+                person,
+                CAST(month AS DECIMAL) month,
+                year,
+                balance,
+                'Simpanan Sukarela' type
+            FROM simpanan_sukarela
+            UNION ALL
+            SELECT 
+                id,
+                person,
+                CAST(month AS DECIMAL) month,
+                year,
+                balance,
+                'Investasi' type
+            FROM simpanan_investasi
+            ORDER BY year, type, CAST(month AS DECIMAL)
+        ) simpanan", 'simpanan.person = person.nik', 'left')
         ->where('user.role', '2')
-        ->order_by('person.id', 'asc');
+        ->group_by("person.id, simpanan.year, simpanan.month")
+        ->order_by('person.id, simpanan.year, simpanan.month');
         
         $q = $this->db->get();
 

@@ -211,11 +211,11 @@ class Report extends CI_Controller {
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Tahun');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bulan');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Desc');
@@ -223,16 +223,16 @@ class Report extends CI_Controller {
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Ket');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Data Simpanan');
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+4]}{$rowNo}");
         $rowNo++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Wajib');
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok');
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Wajib');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Sukarela');
@@ -248,21 +248,42 @@ class Report extends CI_Controller {
         
         $firstRow = $rowNo;
         $data = $this->report_model->get_data_simpanan_detail();
+        $months = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
+
         foreach($data as $row)
         {
             $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BG01');
+            $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['depo']);
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['year']);
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['position']);
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['month']);
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['wajib']);
-            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", !empty($row['month'])? $months[$row['month'] - 1] : '');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['ket']);
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['pokok']);
+            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['wajib']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['sukarela']);
@@ -271,7 +292,7 @@ class Report extends CI_Controller {
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['investasi']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['total']);
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['pokok'] + $row['wajib'] + $row['sukarela'] + $row['investasi']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $rowNo++;
         }
