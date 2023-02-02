@@ -95,16 +95,10 @@ if (!isset($highlight_menu)){
 
             <?php 
                 if ($role == 1): 
-                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan"]);
+                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan","ubah_simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
                 $report = in_array($highlight_menu, ["report_simpanan", "report_simpanan_detail"]);
             ?>
-
-            <li class="nav-item <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">
-                    <i class="fas fa-fw fa-hand-holding-usd"></i>
-                    <span>Pengajuan Perubahan Simpanan</span></a>
-            </li>
 
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota') ?>">
@@ -136,6 +130,7 @@ if (!isset($highlight_menu)){
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_wajib' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/wajib') ?>">Simpanan Wajib</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_sukarela' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/sukarela') ?>">Simpanan Sukarela</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'investasi' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/investasi') ?>">Investasi</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Perubahan Simpanan</a>
                     </div>
                 </div>
             </li>
