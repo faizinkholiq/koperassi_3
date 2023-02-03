@@ -198,10 +198,10 @@ class Report extends CI_Controller {
             ],
         ];
 
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BAG');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
-        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
-        $letterCounter++;
+        // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BAG');
+        // $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        // $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        // $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'NIK');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
@@ -266,8 +266,8 @@ class Report extends CI_Controller {
         foreach($data as $row)
         {
             $letterCounter = $firstLtrCounter;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BG01');
-            $letterCounter++;
+            // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BG01');
+            // $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
