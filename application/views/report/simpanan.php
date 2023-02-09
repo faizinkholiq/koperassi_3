@@ -20,7 +20,28 @@
                 <a href="<?= site_url('report/export_simpanan') ?>" target="_blank" class="btn my-btn-primary mr-2"><i class="fas fw fa-file-excel mr-1"></i> Export</a>
                 <a href="<?= site_url('report/export_simpanan_detail') ?>" target="_blank" class="btn btn-primary mr-2"><i class="fas fw fa-file-excel mr-1"></i> Export Detail</a>
             </div>
-        </div>
+            <div class="col-lg-6 row justify-content-end p-0">
+                <select class="form-control col-lg-3" id="selectBulan" name="bulan" onchange="selectMonth()">
+                    <option value="all">- All Month -</option>
+                    <?php 
+                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    $parameter['month'] = isset($parameter['month']) && !empty($parameter['month']) ? $parameter['month'] : '';
+                    foreach($months as $key => $item):
+                    ?>
+                    <option value="<?= $key+1 ?>" <?= ($key + 1  == $parameter['month'])? 'selected' : '' ?>><?= $item ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectYear()">
+                    <?php 
+                    $start = 2019;
+                    $parameter['year'] = isset($parameter['year']) && !empty($parameter['year']) ? $parameter['year'] : date('Y');
+                    for($i = $start; $i <= date('Y'); $i++):
+                    ?>
+                    <option value="<?= $i ?>" <?= ($i == $parameter['year'])? 'selected' : '' ?>><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
