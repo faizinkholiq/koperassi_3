@@ -2,15 +2,22 @@
     <div class="col-lg-12 mb-4">
         <!-- Illustrations -->
         <div class="card shadow mb-4">
-            <form action="<?= site_url('report/export_simpanan_detail') ?>" method="POST" id="postingForm" method="GET">
+            <form action="<?= site_url('report/export_simpanan_detail') ?>" id="postingForm" method="GET">
             <div class="card-body">
                 <div class="row mb-4 mt-4" style="position: relative;">
                     <div class="col-lg-8">
                         <div class="row mb-3">
+                            <div class="col-lg-3">Tgl. Cetak</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-4">
+                                <input type="date" class="form-control col-lg-8" name="date" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-lg-3">Dari</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <select class="form-control col-lg-8" id="selectFormMonth" name="form">
+                                <select class="form-control col-lg-8" id="selectFormMonth" name="from">
                                     <?php 
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                     foreach($months as $key => $item):

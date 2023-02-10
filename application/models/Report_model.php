@@ -112,7 +112,7 @@ class Report_model extends CI_Model {
         return $q->result_array();
     }
 
-    public function get_data_simpanan_detail() 
+    public function get_data_simpanan_detail($p = null) 
     {
         $this->db->select([
             "person.id",
@@ -169,6 +169,14 @@ class Report_model extends CI_Model {
         ->where('user.role', '2')
         ->group_by("person.id, simpanan.year, simpanan.month")
         ->order_by('person.id, simpanan.year, simpanan.month');
+
+        if(!empty($p['year'])){
+            $this->db->where('simpanan.year', $p['year']);
+        }
+
+        if(!empty($p['from']) && !empty($p['to'])){
+            $this->db->where("simpanan.month BETWEEN ".$p['from']. " AND ".$p['to']);
+        }
         
         $q = $this->db->get();
 

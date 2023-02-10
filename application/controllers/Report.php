@@ -182,7 +182,12 @@ class Report extends CI_Controller {
     }
 
     public function export_simpanan_detail()
-    {
+    {   
+        // Params
+        $p['from'] = $this->input->get('from');
+        $p['to'] = $this->input->get('to');
+        $p['year'] = $this->input->get('year');
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -261,7 +266,7 @@ class Report extends CI_Controller {
         $rowNo++;
         
         $firstRow = $rowNo;
-        $data = $this->report_model->get_data_simpanan_detail();
+        $data = $this->report_model->get_data_simpanan_detail($p);
         $months = [
             'Januari',
             'Februari',
