@@ -286,8 +286,8 @@
                 d.year = year;
             },
         },
-        initComplete:function(settings, json){
-            let total = json.data.map(item => item.balance).reduce((acc, amount) => acc + amount);
+        drawCallback: function(settings) {
+            let total = settings.json.data.map(item => Number(item.balance)).reduce((acc, amount) => acc + amount);
             $('#totalSimpanan').text((total)? rupiah(total) : 0);
         },
         processing: true,
