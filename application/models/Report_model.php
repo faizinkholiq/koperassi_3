@@ -121,10 +121,10 @@ class Report_model extends CI_Model {
             "simpanan.year",
             "simpanan.month",
             "'Db' ket",
-            "CASE WHEN simpanan.type = 'Simpanan Pokok' THEN simpanan.balance END pokok", 
-            "CASE WHEN simpanan.type = 'Simpanan Wajib' THEN simpanan.balance END wajib", 
-            "CASE WHEN simpanan.type = 'Simpanan Sukarela' THEN simpanan.balance END sukarela", 
-            "CASE WHEN simpanan.type = 'Investasi' THEN simpanan.balance END investasi",
+            "SUM(CASE WHEN simpanan.type = 'Simpanan Pokok' THEN simpanan.balance ELSE 0 END) pokok", 
+            "SUM(CASE WHEN simpanan.type = 'Simpanan Wajib' THEN simpanan.balance ELSE 0 END) wajib", 
+            "SUM(CASE WHEN simpanan.type = 'Simpanan Sukarela' THEN simpanan.balance ELSE 0 END) sukarela", 
+            "SUM(CASE WHEN simpanan.type = 'Investasi' THEN simpanan.balance ELSE 0 END) investasi"
         ])
         ->from('person')
         ->join('user', 'user.id = person.user_id')
@@ -165,7 +165,7 @@ class Report_model extends CI_Model {
                 'Investasi' type
             FROM simpanan_investasi
             ORDER BY year, type, CAST(month AS DECIMAL)
-        ) simpanan", 'simpanan.person = person.nik', 'left')
+        ) simpanan", 'simpanan.person = person.nik')
         ->where('user.role', '2')
         ->group_by("person.id, simpanan.year, simpanan.month")
         ->order_by('person.id, simpanan.year, simpanan.month');

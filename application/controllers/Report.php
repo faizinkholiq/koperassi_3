@@ -277,16 +277,52 @@ class Report extends CI_Controller {
             'Desember'
         ];
 
+        $rowBefore = [];
+        $mergePersonRow = 0;
+        $mergeYearRow = 0;
         foreach($data as $row)
         {
+            if(!empty($rowBefore)){
+                if($rowBefore['nik'] == $row['nik']){
+                    $mergePersonRow++;
+                    if($rowBefore['year'] == $row['year']){
+                        $mergeYearRow++;
+                    }
+                }
+            }else{
+                $mergePersonRow++;
+                $mergeYearRow++;
+            }
+            
             $letterCounter = $firstLtrCounter;
             // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BG01');
             // $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
+            if(!empty($rowBefore)){
+                if($rowBefore['nik'] != $row['nik']){
+                    if ($rowNo - $mergePersonRow < $rowNo - 1){
+                        $sheet->mergeCells("{$letters[$letterCounter]}".$rowNo - $mergePersonRow.":{$letters[$letterCounter]}".$rowNo - 1);
+                    }
+                }
+            }
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
+            if(!empty($rowBefore)){
+                if($rowBefore['nik'] != $row['nik']){
+                    if ($rowNo - $mergePersonRow < $rowNo - 1){
+                        $sheet->mergeCells("{$letters[$letterCounter]}".$rowNo - $mergePersonRow.":{$letters[$letterCounter]}".$rowNo - 1);
+                    }
+                }
+            }
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['year']);
+            if(!empty($rowBefore)){
+                if($rowBefore['nik'] != $row['nik']){
+                    if ($rowNo - $mergeYearRow < $rowNo - 1){
+                        $sheet->mergeCells("{$letters[$letterCounter]}".$rowNo - $mergeYearRow.":{$letters[$letterCounter]}".$rowNo - 1);
+                    }
+                }
+            }
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['month']);
             $letterCounter++;
@@ -309,6 +345,15 @@ class Report extends CI_Controller {
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['pokok'] + $row['wajib'] + $row['sukarela'] + $row['investasi']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $rowNo++;
+
+            if(!empty($rowBefore)){
+                if($rowBefore['nik'] != $row['nik']){
+                    $mergePersonRow = 0;
+                    $mergeYearRow = 0;
+                }
+            }
+
+            $rowBefore = $row;
         }
         $rowNo--;
 
