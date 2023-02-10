@@ -136,12 +136,12 @@ if (!isset($highlight_menu)){
             </li>
 
             <li class="nav-item">
-                <a class="nav-link <?= $report ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseSimpanan"
-                    aria-expanded="true" aria-controls="collapseSimpanan">
+                <a class="nav-link <?= $report ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseReport"
+                    aria-expanded="true" aria-controls="collapseReport">
                     <i class="fas fa-fw fa-hand-holding-usd  <?= $report ? 'text-white' : '' ?>"></i>
                     <span>Laporan</span>
                 </a>
-                <div id="collapseSimpanan" class="collapse <?= $report ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseReport" class="collapse <?= $report ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan') ?>">Rekapitulasi Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan_detail') ?>">Detail Simpanan</a>
