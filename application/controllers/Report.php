@@ -30,6 +30,20 @@ class Report extends CI_Controller {
         }
 	}
 
+    public function simpanan_detail()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Laporan Simpanan";
+		$d['highlight_menu'] = "report_simpanan_detail";
+		$d['content_view'] = 'report/simpanan_detail';
+
+		if (!check_permission('report', $d['role'])){
+            redirect('home');
+        }else{
+			$this->load->view('layout/template', $d);
+        }
+	}
+
     public function get_dt_simpanan(){
         $params["search"] = $this->input->post("search");
         $params["draw"] = $this->input->post("draw");
