@@ -286,8 +286,12 @@
             }
         },
         drawCallback: function(settings) {
-            let total = settings.json.data.map(item => Number(item.balance)).reduce((acc, amount) => acc + amount);
-            $('#totalSimpanan').text((total)? rupiah(total) : 0);
+            if(settings.json.data.length > 0){
+                let total = settings.json.data.map(item => Number(item.balance)).reduce((acc, amount) => acc + amount);
+                $('#totalSimpanan').text((total)? rupiah(total) : 0);
+            }else{
+                $('#totalSimpanan').text(0);
+            }
         },
         processing: true,
         serverSide: true,
