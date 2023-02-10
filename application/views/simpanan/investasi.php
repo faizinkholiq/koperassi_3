@@ -13,6 +13,16 @@
 </div>
 <?php endif; ?>
 
+<div class="card mb-4 shadow">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6 font-weight-bold border-right">
+                <div class="text-lg mb-2">Total Simpanan: <span class="text-danger ml-2" id="totalSimpanan"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="row">
@@ -258,6 +268,13 @@
     let month = $('#selectBulan').val();
     let year = $('#selectTahun').val();
 
+    const rupiah = (number)=>{
+        return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR"
+        }).format(number);
+    }
+
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",
         ajax: {
@@ -266,6 +283,14 @@
             data: function(d){
                 d.month = month;
                 d.year = year;
+            }
+        },
+        drawCallback: function(settings) {
+            if(settings.json.data.length > 0){
+                let total = settings.json.data.map(item => Number(item.balance)).reduce((acc, amount) => acc + amount);
+                $('#totalSimpanan').text((total)? rupiah(total) : 0);
+            }else{
+                $('#totalSimpanan').text(0);
             }
         },
         processing: true,
@@ -292,7 +317,12 @@
             { data: "name" },
             { data: "phone" },
             { data: "join_date" },
-            { data: "balance" },
+            { 
+                data: "balance", 
+                render: function (data, type, row) {
+                    return rupiah(data)
+                }
+            },
             { data: "dk", class: "text-center" },
             { 
                 class: "text-center",
