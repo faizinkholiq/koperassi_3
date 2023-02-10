@@ -143,7 +143,7 @@ if (!isset($highlight_menu)){
                 </a>
                 <div id="collapseReport" class="collapse <?= $report ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan') ?>">Rekapitulasi Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>" href="<?= site_url('report/export_simpanan') ?>">Rekapitulasi Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan_detail') ?>">Detail Simpanan</a>
                     </div>
                 </div>
