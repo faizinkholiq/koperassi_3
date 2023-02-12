@@ -855,5 +855,18 @@ class Simpanan extends CI_Controller {
         echo json_encode($data);
 	}
 
+    public function penarikan()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Penarikan Simpanan";
+		$d['highlight_menu'] = "penarikan_simpanan";
+		$d['content_view'] = 'simpanan/penarikan';
 
+		if (!check_permission('penarikan_simpanan', $d['role'])){
+            redirect('home');
+        }else{
+			$d['person_list'] = $this->anggota_model->list();
+			$this->load->view('layout/template', $d);
+        }
+	}
 }

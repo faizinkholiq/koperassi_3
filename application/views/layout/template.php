@@ -131,6 +131,7 @@ if (!isset($highlight_menu)){
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan_sukarela' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/sukarela') ?>">Simpanan Sukarela</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'investasi' ? 'active' : '' ?>" href="<?= site_url('/simpanan/page/investasi') ?>">Investasi</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Perubahan Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'penarikan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/penarikan') ?>">Penarikan Simpanan</a>
                     </div>
                 </div>
             </li>
