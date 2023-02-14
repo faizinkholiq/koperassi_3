@@ -18,7 +18,6 @@
         <div class="row">
             <div class="col-lg-6">
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
-                <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
             </div>
             <div class="col-lg-6 row justify-content-end p-0">
                 <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectSimpanan()">
@@ -39,6 +38,7 @@
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">Total Simpanan</th>
                         <th class="text-center">Jenis Pernarikan</th>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>

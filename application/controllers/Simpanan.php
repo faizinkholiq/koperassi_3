@@ -869,4 +869,19 @@ class Simpanan extends CI_Controller {
 			$this->load->view('layout/template', $d);
         }
 	}
+
+    public function get_dt_penarikan(){
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+
+        $params["type"] = $this->input->post("type");
+
+        $data = $this->simpanan_model->get_dt_penarikan($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
 }
