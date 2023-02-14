@@ -482,7 +482,7 @@
 
         $this->db->select([
             'pengajuan_simpanan.id',
-            'pengajuan_simpanan.person person_id',
+            'person.id person_id',
             'person.name',
             'person.no_ktp',
             'person.nik',
@@ -571,124 +571,11 @@
     public function get_dt_penarikan($p)
     {
         $search = $p["search"];
-        
-        $person = $p["person"];
-        $limit = $p["length"];
-		$offset = $p["start"];
 
-        $q_pokok = $this->db->select([
-            'simpanan_pokok.id',
-            'simpanan_pokok.person person_id',
-            'simpanan_pokok.code',
-            'person.name',
-            'person.no_ktp',
-            'person.nik',
-            'person.phone',
-            'person.join_date',
-            'person.depo',
-            'person.address',
-            'person.acc_no',
-            'person.position',
-            'position.name position_name',
-            '"Simpanan Pokok" type',
-            'simpanan_pokok.date',
-            'simpanan_pokok.balance',
-            'simpanan_pokok.year',
-            'simpanan_pokok.month',
-            'simpanan_pokok.dk',
-        ])
-        ->from('simpanan_pokok')
-        ->join('person', 'person.nik = simpanan_pokok.person')
-        ->join('position', 'person.position = position.id', 'left')
-        ->where('person.id', $person)
-        ->get_compiled_select();
-    
-        $q_wajib = $this->db->select([
-            'simpanan_wajib.id',
-            'simpanan_wajib.person person_id',
-            'simpanan_wajib.code',
-            'person.name',
-            'person.no_ktp',
-            'person.nik',
-            'person.phone',
-            'person.join_date',
-            'person.depo',
-            'person.address',
-            'person.acc_no',
-            'person.position',
-            'position.name position_name',
-            '"Simpanan Wajib" type',
-            'simpanan_wajib.date',
-            'simpanan_wajib.balance',
-            'simpanan_wajib.year',
-            'simpanan_wajib.month',
-            'simpanan_wajib.dk',
-        ])
-        ->from('simpanan_wajib')
-        ->join('person', 'person.nik = simpanan_wajib.person')
-        ->join('position', 'person.position = position.id', 'left')
-        ->where('person.id', $person)
-        ->get_compiled_select();
-
-        $q_sukarela = $this->db->select([
-            'simpanan_sukarela.id',
-            'simpanan_sukarela.person person_id',
-            'simpanan_sukarela.code',
-            'person.name',
-            'person.no_ktp',
-            'person.nik',
-            'person.phone',
-            'person.join_date',
-            'person.depo',
-            'person.address',
-            'person.acc_no',
-            'person.position',
-            'position.name position_name',
-            '"Simpanan Sukarela" type',
-            'simpanan_sukarela.date',
-            'simpanan_sukarela.balance',
-            'simpanan_sukarela.year',
-            'simpanan_sukarela.month',
-            'simpanan_sukarela.dk',
-        ])
-        ->from('simpanan_sukarela')
-        ->join('person', 'person.nik = simpanan_sukarela.person')
-        ->join('position', 'person.position = position.id', 'left')
-        ->where('person.id', $person)
-        ->get_compiled_select();
-
-        $q_investasi = $this->db->select([
-            'simpanan_investasi.id',
-            'simpanan_investasi.person person_id',
-            'simpanan_investasi.code',
-            'person.name',
-            'person.no_ktp',
-            'person.nik',
-            'person.phone',
-            'person.join_date',
-            'person.depo',
-            'person.address',
-            'person.acc_no',
-            'person.position',
-            'position.name position_name',
-            '"Simpanan Investasi" type',
-            'simpanan_investasi.date',
-            'simpanan_investasi.balance',
-            'simpanan_investasi.year',
-            'simpanan_investasi.month',
-            'simpanan_investasi.dk',
-        ])
-        ->from('simpanan_investasi')
-        ->join('person', 'person.nik = simpanan_investasi.person')
-        ->join('position', 'person.position = position.id', 'left')
-        ->where('person.id', $person)
-        ->get_compiled_select();
-        
-        // Get All Data
         $this->db->start_cache();
 
         if(!empty($search["value"])){
-			$col = ["year", "month", "type", "balance"];
+			$col = ["month", "year", "balance"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
@@ -705,40 +592,37 @@
             }
 		}
 
-        if (!empty($p["type"]) && $p['type'] != 'all') {
-            $this->db->where('type', $p['type']);
-        }
+        $limit = $p["length"];
+		$offset = $p["start"];
 
-        if (!empty($p["month"]) && $p['month'] != 'all') {
-            $this->db->where('month', $p['month']);
-        }
-
-        if (!empty($p["year"])) {
-            $this->db->where('year', $p['year']);
-        }
-        
         $this->db->select([
-            "simpanan.*",
-            "ROW_NUMBER() OVER(ORDER BY 1) AS row_no"
+            'penarikan_simpanan.id',
+            'person.id person_id',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'penarikan_simpanan.type',
+            'penarikan_simpanan.month',
+            'penarikan_simpanan.year',
+            'penarikan_simpanan.status',
+            'penarikan_simpanan.balance',
+            'penarikan_simpanan.date',
+            'penarikan_simpanan.reason',
         ])
-        ->from("(
-            $q_pokok UNION ALL 
-            $q_wajib UNION ALL 
-            $q_sukarela UNION ALL 
-            $q_investasi ORDER BY 
-                year, 
-                CAST(month AS DECIMAL),
-                FIELD(type, 'Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Sukarela', 'Simpanan Investasi')
-        ) simpanan");
-
-        $q_all = $this->db->get();
-        $data["recordsTotal"] = $q_all->num_rows();
-        $data["recordsFiltered"] = $q_all ->num_rows();
-
-        $this->db->stop_cache();
+        ->from('penarikan_simpanan')
+        ->join('person', 'person.nik = penarikan_simpanan.person')
+        ->order_by('date', 'desc');
         
-        // $this->db->limit($limit, $offset);
+        $q = $this->db->get();
+        $data["recordsTotal"] = $q->num_rows();
+        $data["recordsFiltered"] = $q->num_rows();
+        
+        $this->db->stop_cache();
 
+        $this->db->limit($limit, $offset);
+        
         $data["data"] = $this->db->get()->result_array();
         $data["draw"] = intval($p["draw"]);
 
