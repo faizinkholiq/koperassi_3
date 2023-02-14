@@ -15,19 +15,11 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-lg-6">
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
             </div>
-            <div class="col-lg-6 row justify-content-end p-0">
-                <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectSimpanan()">
-                    <option value="pokok">Pokok</option>
-                    <option value="wajib">Wajib</option>
-                    <option value="sukarela">Sukarela</option>
-                    <option value="investasi">Investasi</option>
-                </select>
-            </div>
-        </div><hr> -->
+        </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
@@ -35,11 +27,10 @@
                         <th class="text-center">Tanggal</th>
                         <th class="text-center">Tahun</th>
                         <th class="text-center">Bulan</th>
-                        <th class="text-center">Nama Anggota</th>
                         <th class="text-center">Total Simpanan</th>
+                        <th class="text-center">Nilai Ditarik</th>
                         <th class="text-center">Jenis Pernarikan</th>
                         <th class="text-center">Status</th>
-                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -234,14 +225,11 @@
         'November',
         'Desember',
     ];
-    const module = '<?= $module ?>';
+    
+    const person = <?= $nik ?>;
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
-    const default_nominal = <?= isset($default_nominal)? $default_nominal : 0 ?>;
-
-    let month = $('#selectBulan').val();
-    let year = $('#selectTahun').val();
     
     const rupiah = (number)=>{
         return new Intl.NumberFormat("id-ID", {
@@ -253,11 +241,10 @@
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",
         ajax: {
-            url: url.site + "/simpanan/get_dt_simpanan_pokok",
+            url: url.site + "/simpanan/get_dt_penarikan",
             type: "POST",
             data: function(d){
-                d.month = month;
-                d.year = year;
+                d.person = person;
             },
         },
         drawCallback: function(settings) {
@@ -271,6 +258,7 @@
         processing: true,
         serverSide: true,
         columns: [
+            { data: "date" },
             { 
                 data: "year",
                 render: function (data, type, row) {
@@ -287,30 +275,39 @@
                     return month_list[Number(data) - 1];
                 }
             },
-            { data: "no_ktp" },
-            { data: "nik" },
-            { data: "name" },
-            { data: "phone" },
-            { data: "join_date" },
             { 
                 data: "balance", 
                 render: function (data, type, row) {
                     return rupiah(data)
                 }
             },
-            { data: "dk", class: "text-center" },
             { 
+                data: "withdraw", 
+                render: function (data, type, row) {
+                    return rupiah(data)
+                }
+            },
+            { data: "type" },
+            { 
+                data: "status", 
                 class: "text-center",
                 render: function (data, type, row) {
-                    if (row.posting == 1) {
-                        return '-'
-                    }else{
-                        return `
-                            <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
-                            <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
-                        `;
+                    let tag = '-';
+
+                    switch(data){
+                        case "Approved":
+                            tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-check'></i> Disetujui</span>";
+                            break;
+                        case "Pending":
+                            tag = "<span class='bg-warning text-white font-weight-bold px-2 py-1 rounded'><i class='fas fa-clock'></i> Pending</span>";
+                            break;
+                        case "Decline":
+                            tag = `<span onclick='showReason("`+row.reason+`")' class='bg-danger text-white font-weight-bold px-2 py-1 rounded' style="cursor:pointer;"><i class='fas fa-times'></i> Ditolak</span>`;
+                            break;
                     }
-                }
+
+                    return tag;
+                } 
             },
         ],
         ordering: false,
@@ -319,31 +316,7 @@
     $(document).ready(function() {
         $('.alert').alert()
         $('.selectpicker').selectpicker();
-
-        $("#anggotaSelect").change(function () {
-            let person_id = this.value;
-            let person = list_anggota.filter(r => r.id == person_id)
-
-            if(person.length > 0){
-                $('#anggotaAlert').fadeOut();
-                $('#noAnggotaTextInput').val(person[0].nik)
-                $('#jabatanTextInput').val(person[0].position_name)
-                $('#depoTextInput').val(person[0].depo)
-                $('#alamatTextArea').text(person[0].address)
-                $('#noRekTextInput').val(person[0].acc_no)
-            }else{
-                $('#anggotaAlert').fadeIn();
-                $('#formSimpanan')[0].reset();
-                $('#alamatTextArea').text("")
-            }
-        });
-
     });
-
-    function selectSimpanan(){
-        year = $('#selectTahun').val();
-        dt.ajax.reload();
-    }
 
     function showForm(){
         resetForm();

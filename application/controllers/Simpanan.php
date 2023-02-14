@@ -860,7 +860,12 @@ class Simpanan extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Penarikan Simpanan";
 		$d['highlight_menu'] = "penarikan_simpanan";
-		$d['content_view'] = 'simpanan/penarikan';
+		
+        if ($d['role'] == 1) {
+            $d['content_view'] = 'simpanan/penarikan';
+        }else{
+            $d['content_view'] = 'simpanan/penarikan_anggota';
+        }
 
 		if (!check_permission('penarikan_simpanan', $d['role'])){
             redirect('home');

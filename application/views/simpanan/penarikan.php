@@ -37,6 +37,7 @@
                         <th class="text-center">Bulan</th>
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">Total Simpanan</th>
+                        <th class="text-center">Nilai Ditari</th>
                         <th class="text-center">Jenis Pernarikan</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Aksi</th>
@@ -123,6 +124,12 @@
             { data: "name" },
             { 
                 data: "balance", 
+                render: function (data, type, row) {
+                    return rupiah(data)
+                }
+            },
+            { 
+                data: "withdraw", 
                 render: function (data, type, row) {
                     return rupiah(data)
                 }

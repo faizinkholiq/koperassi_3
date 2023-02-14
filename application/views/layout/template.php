@@ -74,7 +74,7 @@ if (!isset($highlight_menu)){
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Pengajuan Simpanan</a>
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'penarikan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/penarikan') ?>">Penarikan Data Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'penarikan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/penarikan') ?>">Penarikan Simpanan</a>
                     </div>
                 </div>
             </li>
