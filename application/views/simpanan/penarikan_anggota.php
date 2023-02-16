@@ -44,12 +44,12 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> <span id="inputModalTitle">Tambah Simpanan</span></h5>
+                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> <span id="inputModalTitle">Penarikan Simpanan</span></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="formSimpanan" action="<?= site_url('simpanan/create/'.$module) ?>" method="POST" enctype="multipart/form-data">
+            <form id="formSimpanan" action="<?= site_url('simpanan/create_penarikan') ?>" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="idSimpanan" name="id" /> 
             <div class="modal-body">
                 <div class="row mb-4 mt-4">
@@ -57,76 +57,38 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Bayar</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
                                     value="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">No. Anggota</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="noAnggotaTextInput" name="no_anggota" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
                             <div class="col-lg-3">Nama Anggota</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
+                            <div class="col-lg-6">
                                 <select id="anggotaSelect" name="person" data-live-search="true" class="selectpicker form-control form-control-user" required>
                                     <option value="">- Please Select -</option>
                                     <?php foreach($person_list as $key => $item): ?>
                                     <option value="<?= $item["id"] ?>"><?= $item["name"] ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <small id="anggotaAlert" class="text-danger font-weight-bold mt-4">
-                                    * Silahkan pilih anggota terlebih dahulu
-                                </small>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Jabatan</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="jabatanTextInput" name="jabatan" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Depo/Stock Point</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="depoTextInput" name="depo" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">No. Rekening</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" id="noRekTextInput" name="no_rek" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Alamat</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-7">
-                                <textarea readonly="readonly" class="form-control form-control-user" name="alamat" id="alamatTextArea"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Tipe</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <select class="form-control form-control-user" id="statusCombo" name="status" disabled="disabled">
-                                    <option value="pokok" <?=(isset($module) && $module == 'pokok')? 'selected' : '' ?>>Simpanan Pokok</option>
-                                    <option value="wajib" <?=(isset($module) && $module == 'wajib')? 'selected' : '' ?>>Simpanan Wajib</option>
-                                    <option value="sukarela" <?=(isset($module) && $module == 'sukarela')? 'selected' : '' ?>>Simpanan Sukarela</option>
+                                    <option value="pokok">Simpanan Pokok</option>
+                                    <option value="wajib">Simpanan Wajib</option>
+                                    <option value="sukarela" selected>Simpanan Sukarela</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Tahun</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <select class="form-control" id="yearCombo" name="year">
                                     <?php 
                                     $start = 2019;
@@ -140,7 +102,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Bulan</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <select class="form-control" id="monthCombo" name="month">
                                     <?php 
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -154,12 +116,12 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">Nominal</div>
                             <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="..." value="<?= $default_nominal ?>">
+                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="...">
                                 </div>
                             </div>
                         </div>
@@ -189,7 +151,7 @@
                 <strong>Apakah anda yakin ingin menghapus data ini?</strong>
             </div>
             <div class="modal-footer">
-                <form method="GET" action="<?=site_url('simpanan/delete/').$module ?>">
+                <form method="GET" action="<?=site_url('simpanan/delete/') ?>">
                     <input type="hidden" id="delID" name="id" />
                     <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -210,7 +172,6 @@
         site: '<?=site_url() ?>'
     };
     
-    const list_anggota = <?= json_encode($person_list); ?>;
     const month_list = [
         'Januari',
         'Februari',
@@ -226,6 +187,7 @@
         'Desember',
     ];
     
+    const user_id = <?= $id ?>;
     const person = <?= $nik ?>;
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
@@ -320,8 +282,8 @@
 
     function showForm(){
         resetForm();
-        $('#inputModalTitle').text('Tambah Simpanan');
-        $('#formSimpanan').attr('action', url.site + "/simpanan/create/" + module)
+        $('#inputModalTitle').text('Tambah Data Penarikan');
+        $('#formSimpanan').attr('action', url.site + "/simpanan/create_penarikan")
         $('#btnReset').show();
 
         $('#inputModal').modal('show');
@@ -332,27 +294,19 @@
         $('#tglDateInput').val(date_now);
         $('#yearCombo').val(year_now);
         $('#monthCombo').val(month_now);
-        $('#jumlahTextInput').val(default_nominal);
-        $('#alamatTextArea').text("");
-        $("#anggotaSelect").val('');
+        $("#anggotaSelect").val(user_id);
         $("#anggotaSelect").selectpicker('refresh');
-        $('#anggotaAlert').show();
     }
 
     function doEdit(row){
         resetForm();
-        $('#inputModalTitle').text('Ubah Simpanan');
-        $('#formSimpanan').attr('action', url.site + "/simpanan/edit/" + module)
+        $('#inputModalTitle').text('Ubah Data Penarikan');
+        $('#formSimpanan').attr('action', url.site + "/simpanan/edit_penarikan")
         $('#idSimpanan').val(row.id)
         $('#tglDateInput').val(row.date);
         $('#anggotaAlert').fadeOut();
         $('#anggotaSelect').val(row.person_id);
         $("#anggotaSelect").selectpicker('refresh');
-        $('#noAnggotaTextInput').val(row.nik)
-        $('#jabatanTextInput').val(row.position_name)
-        $('#depoTextInput').val(row.depo)
-        $('#alamatTextArea').text(row.address)
-        $('#noRekTextInput').val(row.acc_no)
         $('#yearCombo').val(row.year);
         $('#monthCombo').val(Number(row.month));
         $('#jumlahTextInput').val(row.balance);
