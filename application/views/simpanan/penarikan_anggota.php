@@ -282,7 +282,7 @@
 
     function showForm(){
         resetForm();
-        $('#inputModalTitle').text('Tambah Data Penarikan');
+        $('#inputModalTitle').text('Tarik Data Simpanan');
         $('#formSimpanan').attr('action', url.site + "/simpanan/create_penarikan")
         $('#btnReset').show();
 
