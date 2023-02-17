@@ -889,4 +889,175 @@ class Simpanan extends CI_Controller {
         echo json_encode($data);
     }
 
+    private function get_input_penarikan()
+    {
+        $person_id = $this->input->post('person');
+        
+        $detail_person = $this->person_model->detail($person_id);
+        $data = [];
+        
+        if ($detail_person) {
+            $data["person"] = $detail_person['nik'];
+            $data["date"] = $this->input->post('date');
+            $data["year"] = $this->input->post('year');
+            $data["month"] = $this->input->post('month');
+            $data["balance"] = $this->input->post('balance');
+            $data["type"] = $this->input->post('type');
+        }
+
+        return $data;
+    }
+
+    public function create_penarikan()
+	{
+        $d = $this->user_model->login_check();
+        $this->form_validation->set_rules('person','Person','required');
+        $this->form_validation->set_rules('balance','Nominal Perubahan','required');
+
+        if ($this->form_validation->run() == TRUE) {
+            if (!check_permission('penarikan_simpanan', $d['role'])){
+                $data['success'] = 0;
+                $data['error'] = "No Permission !";
+            }else{
+                $nd = $this->get_input_penarikan();
+                if(!$nd){
+                    $data['success'] = 0;
+                    $data['error'] = "Invalid Person !";
+                }else{
+                    $nd['status'] = 'Pending';
+                    $simpanan_id = $this->simpanan_model->create_penarikan($nd);
+
+                    if ($simpanan_id) {
+                        $data['success'] = 1;
+                        $data['message'] = "Data berhasil tersimpan !";
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Gagal menyimpan data !";
+                    }
+                }
+            }
+        }else{
+			$data['success'] = 0;
+			$data['error'] = "Invalid Input";
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/penarikan');
+	}
+
+    public function edit_penarikan()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('penarikan_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $nd = $this->get_input_penarikan();
+            $nd['status'] = 'Pending';
+
+            $detail = $this->simpanan_model->detail_penarikan($id);
+            if ($detail) {
+                $nd['id'] = $detail['id'];
+                if ($this->simpanan_model->edit_penarikan($nd)) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid simpanan ID !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/penarikan');
+	}
+
+    public function delete_penarikan() 
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('penarikan_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->get('id');
+            if ($this->simpanan_model->delete_penarikan($id)) {
+                $data['success'] = 1;
+                $data['message'] = "Berhasil menghapus data !";
+            } else {
+                $data['success'] = 0;
+                $data['error'] = "Gagal menghapus data !";
+            }
+        }
+
+        $this->session->set_flashdata('msg', $data);
+        redirect('simpanan/penarikan');
+    }
+
+
+    public function approve_penarikan()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('penarikan_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $nd['status'] = 'Approved';
+            $detail = $this->simpanan_model->detail_penarikan($id);
+            if ($detail) {
+                $type = ucfirst($detail['type']);
+                $nd['id'] = $detail['id'];
+                if ($this->simpanan_model->edit_penarikan($nd)) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid simpanan ID !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/penarikan');
+	}
+
+    public function reject_penarikan()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('penarikan_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $id = $this->input->post('id');
+            $nd['status'] = 'Decline';
+            $nd['reason'] = $this->input->post('reason');
+            $detail = $this->simpanan_model->detail_penarikan($id);
+            if ($detail) {
+                $type = ucfirst($detail['type']);
+                $nd['id'] = $detail['id'];
+                if ($this->simpanan_model->edit_penarikan($nd)) {
+                    
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid simpanan ID !";
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/penarikan');
+	}
+
 }
