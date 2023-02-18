@@ -66,19 +66,17 @@
                             <div class="col-lg-3">Nama Anggota</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <select id="anggotaSelect" name="person" data-live-search="true" class="selectpicker form-control form-control-user" required>
-                                    <option value="">- Please Select -</option>
-                                    <?php foreach($person_list as $key => $item): ?>
-                                    <option value="<?= $item["id"] ?>"><?= $item["name"] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <input type="hidden" class="form-control form-control-user" id="personIDInput" name="person" 
+                                    value="<?= $id ?>">
+                                <input type="text" class="form-control form-control-user" id="personNameInput" name="person_name" 
+                                    value="<?= $name ?>" disabled>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Tipe</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <select class="form-control form-control-user" id="statusCombo" name="status" disabled="disabled">
+                                <select class="form-control form-control-user" id="statusCombo" name="type" readonly>
                                     <option value="pokok">Simpanan Pokok</option>
                                     <option value="wajib">Simpanan Wajib</option>
                                     <option value="sukarela" selected>Simpanan Sukarela</option>
@@ -223,13 +221,6 @@
             { data: "date" },
             { 
                 data: "year",
-                render: function (data, type, row) {
-                    if(row.row_no == 1){
-                        return data
-                    }else{
-                        return ''
-                    }
-                }
             },
             { 
                 data: "month", 
@@ -238,15 +229,17 @@
                 }
             },
             { 
-                data: "balance", 
+                data: "withdraw", 
                 render: function (data, type, row) {
+                    data = 0;
                     return rupiah(data)
                 }
             },
             { 
-                data: "withdraw", 
+                data: "balance", 
                 render: function (data, type, row) {
-                    return rupiah(data)
+                    let balance = parseFloat(data)
+                    return rupiah(balance)
                 }
             },
             { data: "type" },

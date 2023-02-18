@@ -631,4 +631,34 @@
         return $data;
     }
 
+    public function create_penarikan($data)
+    {
+        $this->db->insert('penarikan_simpanan', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_penarikan($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('penarikan_simpanan', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function delete_penarikan($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('penarikan_simpanan');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+    
+    public function detail_penarikan($id)
+    {
+        return $this->db->get_where('penarikan_simpanan', ["id" => $id])->row_array();
+    }
+
+
 }

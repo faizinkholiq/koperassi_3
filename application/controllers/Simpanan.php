@@ -892,7 +892,6 @@ class Simpanan extends CI_Controller {
     private function get_input_penarikan()
     {
         $person_id = $this->input->post('person');
-        
         $detail_person = $this->person_model->detail($person_id);
         $data = [];
         
@@ -902,7 +901,7 @@ class Simpanan extends CI_Controller {
             $data["year"] = $this->input->post('year');
             $data["month"] = $this->input->post('month');
             $data["balance"] = $this->input->post('balance');
-            $data["type"] = $this->input->post('type');
+            $data["type"] = ucfirst($this->input->post('type'));
         }
 
         return $data;
@@ -911,34 +910,28 @@ class Simpanan extends CI_Controller {
     public function create_penarikan()
 	{
         $d = $this->user_model->login_check();
-        $this->form_validation->set_rules('person','Person','required');
-        $this->form_validation->set_rules('balance','Nominal Perubahan','required');
-
-        if ($this->form_validation->run() == TRUE) {
-            if (!check_permission('penarikan_simpanan', $d['role'])){
+        if (!check_permission('penarikan_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $nd = $this->get_input_penarikan();
+            print_r($nd);
+            exit;
+            if(!$nd){
                 $data['success'] = 0;
-                $data['error'] = "No Permission !";
+                $data['error'] = "Invalid Person !";
             }else{
-                $nd = $this->get_input_penarikan();
-                if(!$nd){
-                    $data['success'] = 0;
-                    $data['error'] = "Invalid Person !";
-                }else{
-                    $nd['status'] = 'Pending';
-                    $simpanan_id = $this->simpanan_model->create_penarikan($nd);
+                $nd['status'] = 'Pending';
+                $simpanan_id = $this->simpanan_model->create_penarikan($nd);
 
-                    if ($simpanan_id) {
-                        $data['success'] = 1;
-                        $data['message'] = "Data berhasil tersimpan !";
-                    } else {
-                        $data['success'] = 0;
-                        $data['error'] = "Gagal menyimpan data !";
-                    }
+                if ($simpanan_id) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
                 }
             }
-        }else{
-			$data['success'] = 0;
-			$data['error'] = "Invalid Input";
         }
 
 		$this->session->set_flashdata('msg', $data);  
