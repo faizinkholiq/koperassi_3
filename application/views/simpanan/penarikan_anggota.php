@@ -160,6 +160,27 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reasonModalLabel"><i class="fas fa-times mr-2"></i>Alasan data tersebut ditolak</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="reasonParagraph"></p>      
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="rejID" name="id" />
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -326,6 +347,11 @@
     function doDelete(id){
         $('#delID').val(id);
         $('#deleteModal').modal('show');
+    }
+
+    function showReason(reason){
+        $('#reasonParagraph').text(reason);
+        $('#reasonModal').modal('show');
     }
 
 </script>

@@ -49,6 +49,53 @@
     </div>
 </div>
 
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="approveModalLabel"><i class="fas fa-check mr-2"></i>Setujui Perubahan Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Apakah anda yakin ingin menyetujui perubahan data tersebut?</strong>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="<?=site_url('simpanan/approve_penarikan')?>">
+                    <input type="hidden" id="appID" name="id" />
+                    <button class="btn btn-success mr-2" type="submit">Ya, Setuju</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel"><i class="fas fa-times mr-2"></i>Tolak Perubahan Data</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" action="<?=site_url('simpanan/reject_penarikan')?>">
+                <div class="modal-body">
+                    <strong>Apakah anda yakin ingin menolak perubahan data tersebut?</strong><br/>        
+                    <textarea class="form-control form-control-user mt-4" name="reason" rows="5" placeholder="Silahkan tulis alasan mengapa data tersebut ditolak"></textarea><br/>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="rejID" name="id" />
+                    <button class="btn btn-danger mr-2" type="submit">Ya, Tolak</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -159,14 +206,15 @@
             { 
                 class: "text-center",
                 render: function (data, type, row) {
-                    if (row.posting == 1) {
-                        return '-'
-                    }else{
-                        return `
-                            <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
-                            <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                    let btn = "-"
+                    if (row.status == 'Pending') {
+                        btn = `
+                            <button type="button" onclick="doApprove(${row.id})" class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
+                            <button type="button" onclick="doReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
                         `;
                     }
+
+                    return btn;
                 }
             },
         ],
@@ -178,12 +226,12 @@
         $('.selectpicker').selectpicker();
     });
 
-    function DoApprove(id){
+    function doApprove(id){
         $('#appID').val(id);
         $('#approveModal').modal('show');
     }
 
-    function DoReject(id){
+    function doReject(id){
         $('#rejID').val(id);
         $('#rejectModal').modal('show');
     }
