@@ -915,8 +915,6 @@ class Simpanan extends CI_Controller {
             $data['error'] = "No Permission !";
         }else{
             $nd = $this->get_input_penarikan();
-            print_r($nd);
-            exit;
             if(!$nd){
                 $data['success'] = 0;
                 $data['error'] = "Invalid Person !";

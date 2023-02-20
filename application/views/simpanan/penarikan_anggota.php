@@ -31,6 +31,7 @@
                         <th class="text-center">Nilai Ditarik</th>
                         <th class="text-center">Jenis Pernarikan</th>
                         <th class="text-center">Status</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -263,6 +264,20 @@
 
                     return tag;
                 } 
+            },
+            { 
+                class: "text-center",
+                render: function (data, type, row) {
+                    let btn = '-';
+                    if (row.status == 'Pending' || row.status == 'Decline') {
+                        btn = `
+                            <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
+                            <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                        `;
+                    }
+
+                    return btn;
+                }
             },
         ],
         ordering: false,
