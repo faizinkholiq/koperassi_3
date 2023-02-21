@@ -15,8 +15,8 @@
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Total kas Anggota: <span class="text-danger ml-2">Rp1000</span></div>
+            <div class="col-lg-6 font-weight-bold">
+                <div class="text-lg mb-2">Total Simpanan Anggota: <span class="text-danger ml-2">Rp1000</span></div>
             </div>
         </div>
     </div>
@@ -25,8 +25,12 @@
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-6">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah Kas</a>
+            <div class="col-lg-3 font-weight-bold border-right">
+                <div class="text-lg mb-2">Total Kas Anggota: <span class="text-danger ml-2">Rp1000</span></div>
+            </div>
+            <div class="col-lg-9">
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Debit Kas</a>
+                <a href="#!" class="btn btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-minus mr-1"></i> Kredit Kas</a>
             </div>
         </div><hr>
         <div class="table-responsive">
