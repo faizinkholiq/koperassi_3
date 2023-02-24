@@ -29,8 +29,8 @@
                 <div class="text-lg mb-2">Total Kas Anggota: <span class="text-danger ml-2">Rp1000</span></div>
             </div>
             <div class="col-lg-9">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Debit Kas</a>
-                <a href="#!" class="btn btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-minus mr-1"></i> Kredit Kas</a>
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm('Debit')"><i class="fas fw fa-plus mr-1"></i> Debit Kas</a>
+                <a href="#!" class="btn btn-primary mr-2" onclick="showForm('Kredit')"><i class="fas fw fa-minus mr-1"></i> Kredit Kas</a>
             </div>
         </div><hr>
         <div class="table-responsive">
