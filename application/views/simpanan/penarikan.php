@@ -37,7 +37,7 @@
                         <th class="text-center">Bulan</th>
                         <th class="text-center">Nama Anggota</th>
                         <th class="text-center">Total Simpanan</th>
-                        <th class="text-center">Nilai Ditari</th>
+                        <th class="text-center">Nilai Ditarik</th>
                         <th class="text-center">Jenis Pernarikan</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Aksi</th>
@@ -155,11 +155,7 @@
             { 
                 data: "year",
                 render: function (data, type, row) {
-                    if(row.row_no == 1){
-                        return data
-                    }else{
-                        return ''
-                    }
+                    return data
                 }
             },
             { 
@@ -172,13 +168,15 @@
             { 
                 data: "balance", 
                 render: function (data, type, row) {
-                    return rupiah(data)
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
                 }
             },
             { 
                 data: "withdraw", 
                 render: function (data, type, row) {
-                    return rupiah(data)
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
                 }
             },
             { data: "type" },
