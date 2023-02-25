@@ -73,7 +73,7 @@ if (!isset($highlight_menu)){
                 <div id="collapseMaster" class="collapse <?= $simpanan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Simpanan</a>
-                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Pengajuan Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Perubahan Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'penarikan_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/penarikan') ?>">Penarikan Simpanan</a>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ if (!isset($highlight_menu)){
 
             <?php 
                 if ($role == 1): 
-                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan","ubah_simpanan"]);
+                $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan","ubah_simpanan","penarikan_simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
                 $report = in_array($highlight_menu, ["report_simpanan", "report_simpanan_detail"]);
             ?>

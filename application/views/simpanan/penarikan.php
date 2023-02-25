@@ -15,19 +15,11 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-lg-6">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Net Off</a>
             </div>
-            <div class="col-lg-6 row justify-content-end p-0">
-                <select class="form-control col-lg-3 ml-4" id="selectTahun" name="tahun" onchange="selectSimpanan()">
-                    <option value="pokok">Pokok</option>
-                    <option value="wajib">Wajib</option>
-                    <option value="sukarela">Sukarela</option>
-                    <option value="investasi">Investasi</option>
-                </select>
-            </div>
-        </div><hr> -->
+        </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
                 <thead>
