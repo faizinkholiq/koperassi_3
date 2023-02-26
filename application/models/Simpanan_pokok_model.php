@@ -91,10 +91,11 @@
         
         $data["data"] = $this->db->get()->result_array();
         $data["draw"] = intval($p["draw"]);
-        $data["total"] = $this->get_total($p);
-
+        
         $this->db->flush_cache();
-
+        
+        $data["total"] = $this->get_total($p);
+        
         return $data;
     }
 
