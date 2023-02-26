@@ -128,6 +128,7 @@
         
         $data["data"] = $this->db->get()->result_array();
         $data["draw"] = intval($p["draw"]);
+        $data["total"] = $this->get_total($p);
 
         $this->db->flush_cache();
 
@@ -195,6 +196,27 @@
             return $row["code"];
         }else{
             return "1000000001";
+        }
+    }
+
+    private function get_total($p = []) {
+        if (isset($p['person'])) {
+            $this->db->where('simpanan_sukarela.person', $p['person']);
+        }
+
+        if (!empty($p["month"]) && $p['month'] != 'all') {
+            $this->db->where('simpanan_sukarela.month', $p['month']);
+        }
+
+        if (!empty($p["year"])) {
+            $this->db->where('simpanan_sukarela.year', $p['year']);
+        }
+
+        $data = $this->db->select('SUM(balance) total')->from('simpanan_sukarela')->get()->row_array();
+        if (!empty($data)) {
+            return $data['total'];
+        }else{
+            return 0;
         }
     }
 

@@ -286,7 +286,9 @@
         },
         drawCallback: function(settings) {
             if(settings.json.data.length > 0){
-                let total = settings.json.data.map(item => Number(item.balance)).reduce((acc, amount) => acc + amount);
+                // let total = settings.json.data.map(item => Number(item.balance)).reduce((acc, amount) => acc + amount);
+                let total = parseFloat(settings.json.total);
+                
                 $('#totalSimpanan').text((total)? rupiah(total) : 0);
             }else{
                 $('#totalSimpanan').text(0);
