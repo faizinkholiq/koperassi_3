@@ -660,5 +660,60 @@
         return $this->db->get_where('penarikan_simpanan', ["id" => $id])->row_array();
     }
 
+    private function get_total_simpanan($table, $person = null) {
+        if ($person) {
+            $this->db->where('person', $person);
+        }
+
+        $data = $this->db->select('SUM(balance) total')->from($table)->get()->row_array();
+        if (!empty($data)) {
+            return $data['total'];
+        }else{
+            return 0;
+        }
+    }
+
+    public function get_summary_simpanan($person = null) 
+    {
+        $data = [];
+
+        $data['wajib'] = (float)$this->get_total_simpanan('simpanan_wajib', $person);
+        $data['pokok'] = (float)$this->get_total_simpanan('simpanan_pokok', $person);
+        $data['sukarela'] = (float)$this->get_total_simpanan('simpanan_sukarela', $person);
+        $data['investasi'] = (float)$this->get_total_simpanan('simpanan_investasi', $person);
+        $data['all'] = $data['wajib'] + $data['pokok'] + $data['sukarela'] + $data['investasi'];
+        
+        return $data;
+    }
+
+    private function get_total_penarikan($type, $person = null) {
+        if ($type != 'All') {
+            $this->db->where('type', $type);
+        }
+
+        if ($person) {
+            $this->db->where('person', $person);
+        }
+
+        $data = $this->db->select('SUM(balance) total')->from('penarikan_simpanan')->where('status', 'Approved')->get()->row_array();
+        if (!empty($data)) {
+            return $data['total'];
+        }else{
+            return 0;
+        }
+    }
+
+    public function get_summary_penarikan($person = null) 
+    {
+        $data = [];
+
+        $data['wajib'] = (float)$this->get_total_penarikan('Wajib', $person);
+        $data['pokok'] = (float)$this->get_total_penarikan('Pokok', $person);
+        $data['sukarela'] = (float)$this->get_total_penarikan('Sukarela', $person);
+        $data['investasi'] = (float)$this->get_total_penarikan('Investasi', $person);
+        $data['all'] = (float)$this->get_total_penarikan('All', $person);
+        
+        return $data;
+    }
 
 }

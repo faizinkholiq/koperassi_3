@@ -871,6 +871,9 @@ class Simpanan extends CI_Controller {
             redirect('home');
         }else{
 			$d['person_list'] = $this->anggota_model->list();
+            $d['summary']['simpanan'] = $this->simpanan_model->get_summary_simpanan($d['nik']);
+            $d['summary']['penarikan'] = $this->simpanan_model->get_summary_penarikan($d['nik']);
+
 			$this->load->view('layout/template', $d);
         }
 	}

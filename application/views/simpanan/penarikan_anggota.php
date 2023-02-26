@@ -17,7 +17,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tarik Simpanan</a>
             </div>
         </div><hr>
         <div class="table-responsive">
@@ -77,7 +77,8 @@
                             <div class="col-lg-3">Tipe</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <select class="form-control form-control-user" id="statusCombo" name="type" readonly>
+                                <input type="hidden" name="type" value="sukarela">
+                                <select class="form-control form-control-user" id="statusCombo" name="type_combo" disabled>
                                     <option value="pokok">Simpanan Pokok</option>
                                     <option value="wajib">Simpanan Wajib</option>
                                     <option value="sukarela" selected>Simpanan Sukarela</option>
@@ -120,8 +121,11 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="...">
+                                    <input type="text" class="form-control" id="jumlahTextInput" name="balance" placeholder="..." required>
                                 </div>
+                                <span>
+                                    nominal yang didapat ditarik: <span class="font-weight-bold text-danger" id="spanMaxSimpanan">-</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -150,7 +154,7 @@
                 <strong>Apakah anda yakin ingin menghapus data ini?</strong>
             </div>
             <div class="modal-footer">
-                <form method="GET" action="<?=site_url('simpanan/delete/') ?>">
+                <form method="GET" action="<?=site_url('simpanan/delete_penarikan/') ?>">
                     <input type="hidden" id="delID" name="id" />
                     <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -219,6 +223,8 @@
         currency: "IDR"
         }).format(number);
     }
+
+    const summary = <?php echo json_encode($summary) ?>;
 
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",
@@ -307,6 +313,17 @@
     $(document).ready(function() {
         $('.alert').alert()
         $('.selectpicker').selectpicker();
+        $('#spanMaxSimpanan').text(rupiah(parseFloat(summary.simpanan.sukarela) - parseFloat(summary.penarikan.sukarela)));
+        
+        $('#jumlahTextInput').keyup(function () {
+            'use strict';
+
+            if ((parseFloat(summary.simpanan.sukarela) - parseFloat(summary.penarikan.sukarela)) >= parseFloat($(this).val())) {
+                this.setCustomValidity('');
+            } else {
+                this.setCustomValidity('Nominal yang diambil tidak boleh melebihi total simpanan.');
+            }
+        });
     });
 
     function showForm(){
