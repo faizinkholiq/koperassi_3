@@ -61,6 +61,10 @@ class Report extends CI_Controller {
 
     public function export_simpanan()
     {
+        // Params
+        $p['month'] = $this->input->get('month');
+        $p['year'] = $this->input->get('year');
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -127,7 +131,7 @@ class Report extends CI_Controller {
         $rowNo++;
         
         $firstRow = $rowNo;
-        $data = $this->report_model->get_data_simpanan();
+        $data = $this->report_model->get_data_simpanan($p);
         foreach($data as $row)
         {
             $letterCounter = $firstLtrCounter;

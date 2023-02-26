@@ -76,8 +76,18 @@ class Report_model extends CI_Model {
         return $data;
     }
 
-    public function get_data_simpanan() 
-    {
+    public function get_data_simpanan($p = null) 
+    {   
+        $where = "";
+        
+        if(!empty($p['year'])){
+            $where .= " AND year =".$p['year'];
+        }
+
+        if(!empty($p['month'])){
+            $where .= " AND month =".$p['month'];
+        }
+
         $this->db->select([
             "person.id",
             "person.nik",
@@ -89,7 +99,7 @@ class Report_model extends CI_Model {
             "position.name position",
             "COALESCE(simpanan_wajib.balance, 0) wajib",
             "COALESCE(simpanan_pokok.balance, 0) pokok",
-            "COALESCE(simpanan_sukarela.balance, 0) sukarela",
+            "COALESCE(simpanan_sukarela.balance, 0) - COALESCE(penarikan_sukarela.balance, 0) sukarela",
             "COALESCE(simpanan_investasi.balance, 0) investasi",
             "COALESCE(simpanan_wajib.balance, 0) 
                 + COALESCE(simpanan_pokok.balance, 0) 
@@ -100,10 +110,52 @@ class Report_model extends CI_Model {
         ->join('user', 'user.id = person.user_id', 'left')
         ->join('depo', 'depo.id = person.depo', 'left')
         ->join('position', 'position.id = person.position', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_wajib WHERE posting = 1 GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_pokok WHERE posting = 1 GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_sukarela WHERE posting = 1 GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_investasi WHERE posting = 1 GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
+        ->join("(
+            SELECT 
+                id, 
+                person, 
+                SUM(balance) balance 
+            FROM simpanan_wajib 
+            WHERE posting = 1 $where 
+            GROUP BY person
+        ) simpanan_wajib", 'simpanan_wajib.person = person.nik', 'left')
+        ->join("(
+            SELECT 
+                id, 
+                person, 
+                SUM(balance) balance 
+            FROM simpanan_pokok 
+            WHERE posting = 1 $where 
+            GROUP BY person
+        ) simpanan_pokok", 'simpanan_pokok.person = person.nik', 'left')
+        ->join("(
+            SELECT 
+                id, 
+                person, 
+                SUM(balance) balance 
+            FROM simpanan_sukarela 
+            WHERE posting = 1 $where 
+            GROUP BY person
+        ) simpanan_sukarela", 'simpanan_sukarela.person = person.nik', 'left')
+        ->join("(
+            SELECT 
+                id, 
+                person, 
+                SUM(balance) balance 
+            FROM simpanan_investasi 
+            WHERE posting = 1 $where 
+            GROUP BY person
+        ) simpanan_investasi", 'simpanan_investasi.person = person.nik', 'left')
+        ->join("(
+            SELECT 
+                id, 
+                person, 
+                SUM(balance) balance 
+            FROM penarikan_simpanan 
+            WHERE type = 'Sukarela'
+                AND status = 'Approved' $where
+            GROUP BY person
+        ) penarikan_sukarela", 'penarikan_sukarela.person = person.nik', 'left')
         ->where('user.role', '2')
         ->order_by('person.id', 'asc');
         
