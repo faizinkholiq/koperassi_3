@@ -120,7 +120,6 @@
         $q_pokok = $this->db->select([
             'simpanan_pokok.id',
             'simpanan_pokok.person person_id',
-            'simpanan_pokok.code',
             'person.name',
             'person.no_ktp',
             'person.nik',
@@ -147,7 +146,6 @@
         $q_wajib = $this->db->select([
             'simpanan_wajib.id',
             'simpanan_wajib.person person_id',
-            'simpanan_wajib.code',
             'person.name',
             'person.no_ktp',
             'person.nik',
@@ -174,7 +172,6 @@
         $q_sukarela = $this->db->select([
             'simpanan_sukarela.id',
             'simpanan_sukarela.person person_id',
-            'simpanan_sukarela.code',
             'person.name',
             'person.no_ktp',
             'person.nik',
@@ -201,7 +198,6 @@
         $q_investasi = $this->db->select([
             'simpanan_investasi.id',
             'simpanan_investasi.person person_id',
-            'simpanan_investasi.code',
             'person.name',
             'person.no_ktp',
             'person.nik',
@@ -223,6 +219,38 @@
         ->join('person', 'person.nik = simpanan_investasi.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
+        ->get_compiled_select();
+
+        $q_w_sukarela = $this->db->select([
+            'penarikan_simpanan.id',
+            'penarikan_simpanan.person person_id',
+            'person.name',
+            'person.no_ktp',
+            'person.nik',
+            'person.phone',
+            'person.join_date',
+            'person.depo',
+            'person.address',
+            'person.acc_no',
+            'person.position',
+            'position.name position_name',
+            "CASE 
+                WHEN type = 'Pokok' THEN 'Simpanan Pokok'
+                WHEN type = 'Wajib' THEN 'Simpanan Wajib'
+                WHEN type = 'Sukarela' THEN 'Simpanan Sukarela'
+                WHEN type = 'Investasi' THEN 'Investasi'
+            END AS type",
+            'penarikan_simpanan.date',
+            'penarikan_simpanan.balance',
+            'penarikan_simpanan.year',
+            'penarikan_simpanan.month',
+            "'K'dk",
+        ])
+        ->from('penarikan_simpanan')
+        ->join('person', 'person.nik = penarikan_simpanan.person')
+        ->join('position', 'person.position = position.id', 'left')
+        ->where('person.id', $person)
+        ->where('penarikan_simpanan.status', 'Approved')
         ->get_compiled_select();
         
         // Get All Data
@@ -266,7 +294,8 @@
             $q_pokok UNION ALL 
             $q_wajib UNION ALL 
             $q_sukarela UNION ALL 
-            $q_investasi ORDER BY 
+            $q_investasi UNION ALL
+            $q_w_sukarela ORDER BY 
                 year, 
                 CAST(month AS DECIMAL),
                 FIELD(type, 'Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Sukarela', 'Simpanan Investasi')
