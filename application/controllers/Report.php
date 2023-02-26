@@ -11,6 +11,7 @@ class Report extends CI_Controller {
 		$this->load->model([
 			'user_model',
 			'report_model',
+            'parameter_model',
 		]);
 
         $this->load->library('form_validation');
@@ -40,6 +41,8 @@ class Report extends CI_Controller {
 		if (!check_permission('report', $d['role'])){
             redirect('home');
         }else{
+            $d['parameter'] = $this->parameter_model->detail($d['person_id']);
+
 			$this->load->view('layout/template', $d);
         }
 	}

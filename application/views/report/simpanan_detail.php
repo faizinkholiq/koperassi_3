@@ -10,7 +10,7 @@
                             <div class="col-lg-3">Tgl. Cetak</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <input type="date" class="form-control col-lg-8" name="date" />
+                                <input type="date" class="form-control col-lg-8" name="date" value="<?= date('Y-m-d') ?>" />
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -22,7 +22,8 @@
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                     foreach($months as $key => $item):
                                     ?>
-                                    <option value="<?= str_pad($key+1, 2, '0', STR_PAD_LEFT); ?>"><?= $item ?></option>
+                                    <option value="<?= $key+1 ?>" <?= ($key+1 == $parameter['month'])? 'selected' : '' ?>><?= $item ?></option>
+                                    <!-- <option value="<?= str_pad($key+1, 2, '0', STR_PAD_LEFT); ?>"><?= $item ?></option> -->
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -36,7 +37,8 @@
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                     foreach($months as $key => $item):
                                     ?>
-                                    <option value="<?= str_pad($key+1, 2, '0', STR_PAD_LEFT); ?>"><?= $item ?></option>
+                                    <option value="<?= $key+1 ?>" <?= ($key+1 == $parameter['month'])? 'selected' : '' ?>><?= $item ?></option>
+                                    <!-- <option value="<?= str_pad($key+1, 2, '0', STR_PAD_LEFT); ?>"><?= $item ?></option> -->
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -49,8 +51,9 @@
                                     <?php 
                                     $start = 2019;
                                     for($i = $start; $i <= date('Y'); $i++):
+                                    $y = (isset($parameter['year']) && !empty($parameter['year'])) ? : date('Y');
                                     ?>
-                                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                                    <option value="<?= $i ?>" <?= ($i == $y)? 'selected' : '' ?>><?= $i ?></option>
                                     <?php endfor; ?>
                                 </select>
                             </div>
