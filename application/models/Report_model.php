@@ -100,10 +100,10 @@ class Report_model extends CI_Model {
         ->join('user', 'user.id = person.user_id', 'left')
         ->join('depo', 'depo.id = person.depo', 'left')
         ->join('position', 'position.id = person.position', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_pokok GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_wajib WHERE posting = 1 GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_pokok WHERE posting = 1 GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_sukarela WHERE posting = 1 GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
+        ->join('(SELECT id, person, SUM(balance) balance FROM simpanan_investasi WHERE posting = 1 GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
         ->where('user.role', '2')
         ->order_by('person.id', 'asc');
         
@@ -138,6 +138,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Simpanan Pokok' type
             FROM simpanan_pokok
+            WHERE posting = 1
             UNION ALL
             SELECT 
                 id,
@@ -148,6 +149,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Simpanan Wajib' type
             FROM simpanan_wajib
+            WHERE posting = 1
             UNION ALL
             SELECT 
                 id,
@@ -158,6 +160,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Simpanan Sukarela' type
             FROM simpanan_sukarela
+            WHERE posting = 1
             UNION ALL
             SELECT 
                 id,
@@ -168,6 +171,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Investasi' type
             FROM simpanan_investasi
+            WHERE posting = 1
             ORDER BY year, type, CAST(month AS DECIMAL)
         ) simpanan", 'simpanan.person = person.nik')
         ->where('user.role', '2')
