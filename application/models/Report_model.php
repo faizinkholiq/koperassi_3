@@ -114,7 +114,7 @@ class Report_model extends CI_Model {
 
     public function get_data_simpanan_detail($p = null) 
     {
-        $this->db->select([
+        $q_simpanan = $this->db->select([
             "person.id",
             "person.nik",
             "person.name",
@@ -135,6 +135,7 @@ class Report_model extends CI_Model {
                 CAST(month AS DECIMAL) month,
                 year,
                 balance,
+                'Db' ket,
                 'Simpanan Pokok' type
             FROM simpanan_pokok
             UNION ALL
@@ -144,6 +145,7 @@ class Report_model extends CI_Model {
                 CAST(month AS DECIMAL) month,
                 year,
                 balance,
+                'Db' ket,
                 'Simpanan Wajib' type
             FROM simpanan_wajib
             UNION ALL
@@ -153,6 +155,7 @@ class Report_model extends CI_Model {
                 CAST(month AS DECIMAL) month,
                 year,
                 balance,
+                'Db' ket,
                 'Simpanan Sukarela' type
             FROM simpanan_sukarela
             UNION ALL
@@ -162,25 +165,67 @@ class Report_model extends CI_Model {
                 CAST(month AS DECIMAL) month,
                 year,
                 balance,
+                'Db' ket,
                 'Investasi' type
             FROM simpanan_investasi
             ORDER BY year, type, CAST(month AS DECIMAL)
         ) simpanan", 'simpanan.person = person.nik')
         ->where('user.role', '2')
         ->group_by("person.id, simpanan.year, simpanan.month")
-        ->order_by('person.id, simpanan.year, simpanan.month');
+        ->get_compiled_select();
+
+        $q_penarikan = $this->db->select([
+            "person.id",
+            "person.nik",
+            "person.name",
+            "penarikan.year",
+            "penarikan.month",
+            "'Kr' ket",
+            "SUM(CASE WHEN penarikan.type = 'Simpanan Pokok' THEN penarikan.balance ELSE 0 END) pokok", 
+            "SUM(CASE WHEN penarikan.type = 'Simpanan Wajib' THEN penarikan.balance ELSE 0 END) wajib", 
+            "SUM(CASE WHEN penarikan.type = 'Simpanan Sukarela' THEN penarikan.balance ELSE 0 END) sukarela", 
+            "SUM(CASE WHEN penarikan.type = 'Investasi' THEN penarikan.balance ELSE 0 END) investasi"
+        ])
+        ->from('person')
+        ->join('user', 'user.id = person.user_id')
+        ->join("(
+            SELECT 
+                id,
+                person,
+                CAST(month AS DECIMAL) month,
+                year,
+                balance,
+                'Kr' ket,
+                CASE 
+                    WHEN type = 'Pokok' THEN 'Simpanan Pokok'
+                    WHEN type = 'Wajib' THEN 'Simpanan Wajib'
+                    WHEN type = 'Sukarela' THEN 'Simpanan Sukarela'
+                    WHEN type = 'Investasi' THEN 'Investasi'
+                END AS type
+            FROM penarikan_simpanan
+        ) penarikan", 'penarikan.person = person.nik')
+        ->where('user.role', '2')
+        ->group_by("person.id, penarikan.year, penarikan.month")
+        ->get_compiled_select();
+
+        // Get All Data
 
         if(!empty($p['year'])){
-            $this->db->where('simpanan.year', $p['year']);
+            $this->db->where('year', $p['year']);
         }
 
         if(!empty($p['from']) && !empty($p['to'])){
-            $this->db->where("simpanan.month BETWEEN ".$p['from']. " AND ".$p['to']);
+            $this->db->where("month BETWEEN '".$p['from']. "' AND '".$p['to']."'");
         }
-        
-        $q = $this->db->get();
 
-        return $q->result_array();
+        $data = $this->db->query("
+        SELECT * FROM (
+            $q_simpanan UNION ALL 
+            $q_penarikan
+            ORDER BY id, year, month        
+        ) simpanan")->result_array();
+        
+        return $data;
     }
 
 }
