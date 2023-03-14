@@ -2,45 +2,87 @@
 
 class Home_model extends CI_Model {
 
-    public function get_summary_admin($person)
+    public function get_summary_admin()
     {
-        $this->db->select([
-            "CONCAT('RP', FORMAT(SUM(simpanan_pokok.balance), 0, 'id_ID')) pokok",
-            "CONCAT('RP', FORMAT(SUM(simpanan_wajib.balance), 0, 'id_ID')) wajib",
-            "CONCAT('RP', FORMAT(SUM(simpanan_sukarela.balance), 0, 'id_ID')) sukarela",
-            "CONCAT('RP', FORMAT(SUM(simpanan_investasi.balance), 0, 'id_ID')) investasi",
-            "0 pinjaman",
-        ])
-        ->from('person')
-        ->join('simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
-        ->where('person.nik', $person);
-        $data = $this->db->get()->row_array();
+        $data['pokok']['all'] = rupiah($this->get_total_simpanan('simpanan_pokok'));
+        $data['wajib']['all'] = rupiah($this->get_total_simpanan('simpanan_wajib'));
+        $data['sukarela']['all'] = rupiah(floatval($this->get_total_simpanan('simpanan_sukarela')) - floatval($this->get_total_penarikan()));
+        $data['investasi']['all'] = rupiah($this->get_total_simpanan('simpanan_investasi'));
         
+        $p['month'] = date('m');
+        $p['year'] = date('Y');
+
+        $data['pokok']['now'] = rupiah($this->get_total_simpanan('simpanan_pokok', $p));
+        $data['wajib']['now'] = rupiah($this->get_total_simpanan('simpanan_wajib', $p));
+        $data['sukarela']['now'] = rupiah(floatval($this->get_total_simpanan('simpanan_sukarela', $p)) - floatval($this->get_total_penarikan($p)));
+        $data['investasi']['now'] = rupiah($this->get_total_simpanan('simpanan_investasi', $p));
+        
+        $data['total'] = rupiah(
+            floatval($this->get_total_simpanan('simpanan_pokok')) + 
+            floatval($this->get_total_simpanan('simpanan_wajib')) + 
+            floatval($this->get_total_simpanan('simpanan_sukarela')) + 
+            floatval($this->get_total_simpanan('simpanan_investasi')) -
+            floatval($this->get_total_penarikan())
+        );
+
         return $data;
     }
 
     public function get_summary_member($person)
     {
-        $this->db->select([
-            "CASE WHEN simpanan_pokok.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_pokok.total, 0, 'id_ID')) ELSE 0 END pokok",
-            "CASE WHEN simpanan_wajib.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_wajib.total, 0, 'id_ID')) ELSE 0 END wajib",
-            "CASE WHEN simpanan_sukarela.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_sukarela.total - penarikan_sukarela.total, 0, 'id_ID')) ELSE 0 END sukarela",
-            "CASE WHEN simpanan_investasi.total IS NOT NULL THEN CONCAT('RP', FORMAT(simpanan_investasi.total, 0, 'id_ID')) ELSE 0 END investasi",
-            "0 pinjaman",
-        ])
-        ->from('person')
-        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_pokok GROUP BY person) simpanan_pokok', 'simpanan_pokok.person = person.nik', 'left')
-        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_wajib GROUP BY person) simpanan_wajib', 'simpanan_wajib.person = person.nik', 'left')
-        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_sukarela GROUP BY person) simpanan_sukarela', 'simpanan_sukarela.person = person.nik', 'left')
-        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM simpanan_investasi GROUP BY person) simpanan_investasi', 'simpanan_investasi.person = person.nik', 'left')
-        ->join('(SELECT id, person, COALESCE(SUM(balance), 0) total FROM penarikan_simpanan WHERE type = "Sukarela" AND status = "Approved" GROUP BY person) penarikan_sukarela', 'penarikan_sukarela.person = person.nik', 'left')
-        ->where('person.nik', $person);
-        $data = $this->db->get()->row_array();
+        $p['person'] = $person;
+        $data['pokok'] = rupiah($this->get_total_simpanan('simpanan_pokok', $p));
+        $data['wajib'] = rupiah($this->get_total_simpanan('simpanan_wajib', $p));
+        $data['sukarela'] = rupiah(floatval($this->get_total_simpanan('simpanan_sukarela', $p)) - floatval($this->get_total_penarikan($p)));
+        $data['investasi'] = rupiah($this->get_total_simpanan('simpanan_investasi', $p));
+        $data['penarikan'] = rupiah($this->get_total_penarikan(), $p);
+        $data['pinjaman'] = 0;
         
         return $data;
+    }
+
+    private function get_total_simpanan($table, $p = null) {
+        if (isset($p['person']) && !empty($p['person'])) {
+            $this->db->where('person', $p['person']);
+        }
+
+        if (isset($p['month']) && !empty($p['month'])) {
+            $this->db->where('month', (int)$p['month']);
+        }
+
+        if (isset($p['year']) && !empty($p['year'])) {
+            $this->db->where('year', $p['year']);
+        }
+
+        $data = $this->db->select('SUM(balance) total')->from($table)->get()->row_array();
+        if (!empty($data)) {
+            return $data['total'];
+        }else{
+            return 0;
+        }
+    }
+
+    private function get_total_penarikan($p = null) {
+        if (isset($p['person']) && !empty($p['person'])) {
+            $this->db->where('person', $p['person']);
+        }
+
+        if (isset($p['month']) && !empty($p['month'])) {
+            $this->db->where('month', (int)$p['month']);
+        }
+
+        if (isset($p['year']) && !empty($p['year'])) {
+            $this->db->where('year', $p['year']);
+        }
+
+        $this->db->where("type", 'Sukarela');
+        $this->db->where("status", 'Approved');
+        $data = $this->db->select('SUM(balance) total')->from('penarikan_simpanan')->get()->row_array();
+        if (!empty($data)) {
+            return $data['total'];
+        }else{
+            return 0;
+        }
     }
 
 }

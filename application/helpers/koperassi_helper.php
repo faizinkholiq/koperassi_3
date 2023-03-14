@@ -42,3 +42,12 @@ function get_alphabet_list()
 
 	return $letters;
 }
+
+function rupiah($num){
+    if (!empty($num) && $num != 0){
+        $format_rupiah = "Rp" . number_format($num,2,',','.');
+    }else{
+        $format_rupiah = 0;
+    }
+    return $format_rupiah;
+}
