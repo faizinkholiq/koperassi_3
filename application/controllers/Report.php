@@ -65,6 +65,9 @@ class Report extends CI_Controller {
         $p['month'] = $this->input->get('month');
         $p['year'] = $this->input->get('year');
 
+        // Data
+        $data = $this->report_model->get_data_simpanan($p);
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -131,7 +134,6 @@ class Report extends CI_Controller {
         $rowNo++;
         
         $firstRow = $rowNo;
-        $data = $this->report_model->get_data_simpanan($p);
         foreach($data as $row)
         {
             $letterCounter = $firstLtrCounter;
@@ -194,6 +196,24 @@ class Report extends CI_Controller {
         $p['from'] = $this->input->get('from');
         $p['to'] = $this->input->get('to');
         $p['year'] = $this->input->get('year');
+
+        // Data
+        $data = $this->report_model->get_data_simpanan_detail($p);
+
+        $months = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -273,21 +293,6 @@ class Report extends CI_Controller {
         $rowNo++;
         
         $firstRow = $rowNo;
-        $data = $this->report_model->get_data_simpanan_detail($p);
-        $months = [
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ];
 
         $rowBefore = [];
         $mergePersonRow = 0;

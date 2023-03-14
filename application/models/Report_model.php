@@ -166,6 +166,16 @@ class Report_model extends CI_Model {
 
     public function get_data_simpanan_detail($p = null) 
     {
+        
+        $where_simpanan = "";
+        if(!empty($p['year'])){
+            $where_simpanan .= " AND year = '".$p['year']."'";
+        }
+
+        if(!empty($p['from']) && !empty($p['to'])){
+            $where_simpanan .= " AND month BETWEEN '".$p['from']. "' AND '".$p['to']."'";
+        }
+
         $q_simpanan = $this->db->select([
             "person.id",
             "person.nik",
@@ -190,7 +200,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Simpanan Pokok' type
             FROM simpanan_pokok
-            WHERE posting = 1
+            WHERE posting = 1 $where_simpanan
             UNION ALL
             SELECT 
                 id,
@@ -201,7 +211,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Simpanan Wajib' type
             FROM simpanan_wajib
-            WHERE posting = 1
+            WHERE posting = 1 $where_simpanan
             UNION ALL
             SELECT 
                 id,
@@ -212,7 +222,7 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Simpanan Sukarela' type
             FROM simpanan_sukarela
-            WHERE posting = 1
+            WHERE posting = 1 $where_simpanan
             UNION ALL
             SELECT 
                 id,
@@ -223,12 +233,20 @@ class Report_model extends CI_Model {
                 'Db' ket,
                 'Investasi' type
             FROM simpanan_investasi
-            WHERE posting = 1
+            WHERE posting = 1 $where_simpanan
             ORDER BY year, type, CAST(month AS DECIMAL)
         ) simpanan", 'simpanan.person = person.nik')
         ->where('user.role', '2')
         ->group_by("person.id, simpanan.year, simpanan.month")
         ->get_compiled_select();
+        
+        if(!empty($p['year'])){
+            $this->db->where('year', $p['year']);
+        }
+
+        if(!empty($p['from']) && !empty($p['to'])){
+            $this->db->where("month BETWEEN '".$p['from']. "' AND '".$p['to']."'");
+        }
 
         $q_penarikan = $this->db->select([
             "person.id",
@@ -265,17 +283,9 @@ class Report_model extends CI_Model {
         ->get_compiled_select();
 
         // Get All Data
-
-        if(!empty($p['year'])){
-            $this->db->where('year', $p['year']);
-        }
-
-        if(!empty($p['from']) && !empty($p['to'])){
-            $this->db->where("month BETWEEN '".$p['from']. "' AND '".$p['to']."'");
-        }
-
         $data = $this->db->query("
-        SELECT * FROM (
+        SELECT *
+        FROM (
             $q_simpanan UNION ALL 
             $q_penarikan
             ORDER BY id, year, month        
