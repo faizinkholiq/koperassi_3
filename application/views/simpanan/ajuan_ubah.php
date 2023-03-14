@@ -17,12 +17,12 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= $summary['plafon'] ?></span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= $summary['limit'] ?></span></div>
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2"><?= rupiah($summary['plafon']) ?></span></div>
+                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2"><?= rupiah($summary['limit']) ?></span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2">Rp<?= $summary['gaji'] ?></span></div>
-                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2">Rp<?= $summary['simpanan'] ?></span></div>
+                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2"><?= rupiah($summary['gaji']) ?></span></div>
+                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2"><?= rupiah($summary['simpanan']) ?></span></div>
             </div>
         </div>
     </div>
@@ -257,6 +257,13 @@
         'Desember',
     ];
 
+    const rupiah = (number)=>{
+        return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR"
+        }).format(number);
+    }
+
     let dt = $('#simpananTable').DataTable({
         dom: "Bfrtip",
         ajax: {
@@ -278,8 +285,20 @@
             },
             { data: "type" },
             { data: "name" },
-            { data: "balance" },
-            { data: "balance" },
+            { 
+                data: "balance", 
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
+            { 
+                data: "balance", 
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
             { 
                 data: "status", 
                 class: "text-center",

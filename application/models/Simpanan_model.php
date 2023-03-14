@@ -509,6 +509,10 @@
         $limit = $p["length"];
 		$offset = $p["start"];
 
+        if (isset($p['person']) && !empty($p['person'])){
+            $this->db->where('pengajuan_simpanan.person', $p['person']);
+        }
+
         $this->db->select([
             'pengajuan_simpanan.id',
             'person.id person_id',
@@ -623,6 +627,10 @@
 
         $limit = $p["length"];
 		$offset = $p["start"];
+
+        if (isset($p['person']) && !empty($p['person'])){
+            $this->db->where('penarikan_simpanan.person', $p['person']);
+        }
 
         $this->db->select([
             'penarikan_simpanan.id',
