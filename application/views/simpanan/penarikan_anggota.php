@@ -257,17 +257,17 @@
                 }
             },
             { 
-                data: "withdraw", 
+                data: "balance", 
                 render: function (data, type, row) {
-                    data = 0;
-                    return rupiah(data)
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
                 }
             },
             { 
-                data: "balance", 
+                data: "withdraw", 
                 render: function (data, type, row) {
-                    let balance = parseFloat(data)
-                    return rupiah(balance)
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
                 }
             },
             { data: "type" },

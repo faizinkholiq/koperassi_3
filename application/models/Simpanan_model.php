@@ -636,7 +636,7 @@
             'penarikan_simpanan.month',
             'penarikan_simpanan.year',
             'penarikan_simpanan.status',
-            'penarikan_simpanan.balance',
+            'penarikan_simpanan.balance withdraw',
             'penarikan_simpanan.date',
             'penarikan_simpanan.reason',
         ])
