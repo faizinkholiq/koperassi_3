@@ -82,7 +82,7 @@
         $this->db->start_cache();
 
         if(!empty($search["value"])){
-			$col = ["ktp", "nik", "name", "phone", "join_date", "balance", "year", "month", "dk"];
+			$col = ["no_ktp", "nik", "name", "phone", "join_date", "balance", "year", "month", "dk"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
