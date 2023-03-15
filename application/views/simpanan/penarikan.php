@@ -92,7 +92,7 @@
                                     <?php
                                       $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                       foreach($months as $key => $item): ?>
-                                      <option value="<?= $key+1 ?>"><?= $item ?></option>
+                                      <option value="<?= $key+1 ?>" <?= ($key+1 == date('m'))? 'selected' : '' ?>><?= $item ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

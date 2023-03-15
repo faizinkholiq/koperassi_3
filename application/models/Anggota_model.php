@@ -108,7 +108,7 @@
         return $data;
     }
 
-    public function list()
+    public function list($p = null)
     {
         $q = $this->db->select([
             "person.id",
@@ -137,11 +137,22 @@
         ->from('person')
         ->join('user', 'user.id = person.user_id')
         ->join('position', 'position.id = person.position', 'left')
+        ->join('penarikan_simpanan', "person.nik = penarikan_simpanan.person AND penarikan_simpanan.status = 'Net-Off'", 'left')
         // ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Sukarela') def_sukarela", 'def_sukarela.person = person.id', 'left')
         // ->join("(SELECT * FROM pengajuan_simpanan WHERE status = 'Approved' AND type = 'Investasi') def_investasi", 'def_investasi.person = person.id', 'left')
-        ->where('person.status', 'Aktif')
         ->where('user.role', '2')
         ->order_by('person.id', 'asc');
+            
+        if(isset($p['active']) && $p['active'] == 0){
+            $this->db->where('person.status', 'Tidak Aktif');
+        }else{
+            $this->db->where('person.status', 'Aktif');
+        }
+
+        if(isset($p['net_off']) && $p['net_off']){
+            $this->db->where('penarikan_simpanan.id IS NULL');
+        }
+
         return $q->get()->result_array();
     }
 
