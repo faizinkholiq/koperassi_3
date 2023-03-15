@@ -1,5 +1,11 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<style>
+    .bg-light-disabled{
+        background: #ebebeb;
+        font-weight: bold;
+    }
+</style>
 
 <?php
     if(!empty($this->session->flashdata('msg'))):
@@ -256,7 +262,16 @@
                     return rupiah(num)
                 }
             },
-            { data: "type" },
+            { 
+                data: "type" ,
+                render: function(data, type, row) {
+                    if (row.status == "Net-Off"){
+                        return `<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'>Net-Off</span>`;
+                    }else{
+                        return data;
+                    }
+                }
+            },
             { 
                 data: "status", 
                 class: "text-center",
@@ -294,6 +309,11 @@
             },
         ],
         ordering: false,
+        createdRow: function( row, data, dataIndex ) {
+            if (data.status == "Net-Off") {
+                $(row).addClass( 'bg-light-disabled' );
+            }
+        }
     });
 
     $(document).ready(function() {

@@ -883,7 +883,11 @@ class Simpanan extends CI_Controller {
 
     public function get_dt_penarikan(){
         $d = $this->user_model->login_check();
-        $params['person'] = $d['nik'];
+        
+        if($d['role'] != 1){
+            $params['person'] = $d['nik'];
+        }
+        
         $params["search"] = $this->input->post("search");
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
