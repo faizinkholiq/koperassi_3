@@ -1,1 +1,4 @@
 CREATE TABLE `penarikan_simpanan` (`id` INT NOT NULL AUTO_INCREMENT , `type` ENUM('Pokok','Wajib','Sukarela','Investasi') NOT NULL , `year` VARCHAR(4) NOT NULL , `month` VARCHAR(2) NOT NULL , `person` VARCHAR(20) NOT NULL , `balance` FLOAT NOT NULL , `status` ENUM('Approved','Decline','Pending') NOT NULL , `date` DATE NOT NULL , `reason` TEXT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+ALTER TABLE `penarikan_simpanan` CHANGE `status` `status` ENUM('Approved','Decline','Pending','Net-Off') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `penarikan_simpanan` CHANGE `type` `type` ENUM('Pokok','Wajib','Sukarela','Investasi') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;

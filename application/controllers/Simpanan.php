@@ -1059,4 +1059,35 @@ class Simpanan extends CI_Controller {
 		redirect('simpanan/penarikan');
 	}
 
+    public function do_net_off()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('penarikan_simpanan', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $nd = $this->get_input_penarikan();
+            $nd["type"] = null;
+            $nd["balance"] = 0;
+            $nd["status"] = 'Net-Off';
+            if(!$nd){
+                $data['success'] = 0;
+                $data['error'] = "Invalid Person !";
+            }else{
+                $simpanan_id = $this->simpanan_model->create_penarikan($nd);
+
+                if ($simpanan_id) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }
+        }
+
+		$this->session->set_flashdata('msg', $data);  
+		redirect('simpanan/penarikan');
+	}
+
 }

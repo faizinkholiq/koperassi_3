@@ -46,17 +46,30 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> Tambah Simpanan</h5>
+                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> Net Off Simpanan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="formSimpanan" action="<?= site_url('simpanan/submit_ubah_simpanan') ?>" method="POST" enctype="multipart/form-data">
+            <form id="formPenarikan" action="<?= site_url('simpanan/do_net_off') ?>" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
-                        <input id="IDTextInput" type="hidden" name="id" value="">
-                        <input id="personTextInput" type="hidden" name="person" value="<?= $person_id; ?>">
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Nama Anggota</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-7">
+                                <select id="anggotaSelect" name="person" data-live-search="true" class="selectpicker form-control form-control-user" required>
+                                    <option value="">- Please Select -</option>
+                                    <?php foreach($person_list as $key => $item): ?>
+                                    <option value="<?= $item["id"] ?>"><?= $item["name"] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <small id="anggotaAlert" class="text-danger font-weight-bold mt-4">
+                                    * Silahkan pilih anggota terlebih dahulu
+                                </small>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Tanggal Bayar</div>
                             <div class="col-lg-1 text-right">:</div>
@@ -89,17 +102,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-lg-3">Tipe</div>
-                            <div class="col-lg-1 text-right">:</div>
-                            <div class="col-lg-5">
-                                <select class="form-control" id="tipeCombo" name="type">
-                                    <option value="Sukarela">Simpanan Sukarela</option>
-                                    <option value="Investasi">Investasi</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <div class="col-lg-3">Nominal</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-5">
@@ -110,13 +113,13 @@
                                     <input type="text" class="form-control" id="nominalTextInput" name="balance" placeholder="...">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Ajukan Perubahan Simpanan <i class="ml-2 fas fa-chevron-right"></i></button>
+                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit Net-Off<i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>
@@ -296,6 +299,23 @@
     $(document).ready(function() {
         $('.alert').alert()
         $('.selectpicker').selectpicker();
+        $("#anggotaSelect").change(function () {
+            let person_id = this.value;
+            let person = list_anggota.filter(r => r.id == person_id)
+
+            if(person.length > 0){
+                $('#anggotaAlert').fadeOut();
+                // $('#noAnggotaTextInput').val(person[0].nik)
+                // $('#jabatanTextInput').val(person[0].position_name)
+                // $('#depoTextInput').val(person[0].depo)
+                // $('#alamatTextArea').text(person[0].address)
+                // $('#noRekTextInput').val(person[0].acc_no)
+            }else{
+                $('#anggotaAlert').fadeIn();
+                // $('#formSimpanan')[0].reset();
+                // $('#alamatTextArea').text("")
+            }
+        });
     });
 
     function doApprove(id){
@@ -314,8 +334,6 @@
     }
 
     function showForm(simpanan_id){
-        resetForm();
-        $('#formSimpanan').attr('action', url.site + "/simpanan/submit_ubah_simpanan")
         $('#inputModal').modal('show');
     }
 
