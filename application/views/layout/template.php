@@ -62,6 +62,7 @@ if (!isset($highlight_menu)){
             <?php 
                 if ($role == 2): 
                 $simpanan = in_array($highlight_menu, ["simpanan","ubah_simpanan","penarikan_simpanan"]);
+                $pinjaman = in_array($highlight_menu, ["pinjaman","angsuran"]);
             ?>
 
             <li class="nav-item">
@@ -79,16 +80,25 @@ if (!isset($highlight_menu)){
                 </div>
             </li>
 
-            <li class="nav-item <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/pinjaman') ?>">
-                    <i class="fas fa-fw fa-file-invoice-dollar"></i>
-                    <span>Pinjaman</span></a>
+            <li class="nav-item">
+                <a class="nav-link <?= $pinjaman ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseMaster"
+                    aria-expanded="true" aria-controls="collapseMaster">
+                    <i class="fas fa-fw fa-file-invoice-dollar  <?= $pinjaman ? 'text-white' : '' ?>"></i>
+                    <span>Pinjaman</span>
+                </a>
+                <div id="collapseMaster" class="collapse <?= $pinjaman ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>" href="<?= site_url('/pinjaman') ?>">Pengajuan Pinjaman</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'angsuran' ? 'active' : '' ?>" href="<?= site_url('/pinjaman/angsuran') ?>">Tabel Angsuran</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item <?= $highlight_menu === 'anggota_settings' ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= site_url('/anggota/settings') ?>">
                     <i class="fas fa-fw fa-user"></i>
-                    <span>Ubah data diri</span></a>
+                    <span>Ubah data diri</span>
+                </a>
             </li>
 
             <?php endif; ?>

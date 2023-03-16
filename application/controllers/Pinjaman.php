@@ -19,12 +19,24 @@ class Pinjaman extends CI_Controller {
         $d['highlight_menu'] = "pinjaman";
         $d['content_view'] = 'pinjaman/index';
 
-        if (!check_permission('laporan', $d['role'])){
+        if (!check_permission('pinjaman', $d['role'])){
             redirect('home');
         }else{
-            $d['data']['summary'] = $this->pinjaman_model->summary($d['person_id']);
-			$d['data']['rows'] = $this->pinjaman_model->get($d['person_id']);
+            $d['summary'] = $this->pinjaman_model->summary($d['person_id']);
+            $this->load->view('layout/template', $d);
+        }
+	}
 
+    public function angsuran()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Angsuran";
+        $d['highlight_menu'] = "angsuran";
+        $d['content_view'] = 'pinjaman/angsuran';
+
+        if (!check_permission('pinjaman', $d['role'])){
+            redirect('home');
+        }else{
             $this->load->view('layout/template', $d);
         }
 	}
