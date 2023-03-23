@@ -66,12 +66,12 @@ if (!isset($highlight_menu)){
             ?>
 
             <li class="nav-item">
-                <a class="nav-link <?= $simpanan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseMaster"
-                    aria-expanded="true" aria-controls="collapseMaster">
+                <a class="nav-link <?= $simpanan ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseSimpanan"
+                    aria-expanded="true" aria-controls="collapseSimpanan">
                     <i class="fas fa-fw fa-wrench  <?= $simpanan ? 'text-white' : '' ?>"></i>
                     <span>Simpanan</span>
                 </a>
-                <div id="collapseMaster" class="collapse <?= $simpanan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseSimpanan" class="collapse <?= $simpanan ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan') ?>">Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'ubah_simpanan' ? 'active' : '' ?>" href="<?= site_url('/simpanan/pengajuan_perubahan') ?>">Perubahan Simpanan</a>
@@ -81,12 +81,12 @@ if (!isset($highlight_menu)){
             </li>
 
             <li class="nav-item">
-                <a class="nav-link <?= $pinjaman ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseMaster"
-                    aria-expanded="true" aria-controls="collapseMaster">
+                <a class="nav-link <?= $pinjaman ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapsePinjaman"
+                    aria-expanded="true" aria-controls="collapsePinjaman">
                     <i class="fas fa-fw fa-file-invoice-dollar  <?= $pinjaman ? 'text-white' : '' ?>"></i>
                     <span>Pinjaman</span>
                 </a>
-                <div id="collapseMaster" class="collapse <?= $pinjaman ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapsePinjaman" class="collapse <?= $pinjaman ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>" href="<?= site_url('/pinjaman') ?>">Pengajuan Pinjaman</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'angsuran' ? 'active' : '' ?>" href="<?= site_url('/pinjaman/angsuran') ?>">Tabel Angsuran</a>

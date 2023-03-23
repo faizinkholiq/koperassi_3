@@ -68,7 +68,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="hidden" class="form-control form-control-user" id="personIDInput" name="person" 
-                                    value="<?= $id ?>">
+                                    value="<?= $person_id ?>">
                                 <input type="text" class="form-control form-control-user" id="personNameInput" name="person_name" 
                                     value="<?= $name ?>" disabled>
                             </div>
@@ -212,7 +212,8 @@
     ];
     
     const user_id = <?= $id ?>;
-    const person = <?= $nik ?>;
+    const nik = <?= $nik ?>;
+    const person_id = <?= $person_id ?>;
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
@@ -231,9 +232,6 @@
         ajax: {
             url: url.site + "/simpanan/get_dt_penarikan",
             type: "POST",
-            data: function(d){
-                d.person = person;
-            },
         },
         drawCallback: function(settings) {
             if(settings.json.data.length > 0){
@@ -340,8 +338,6 @@
         $('#tglDateInput').val(date_now);
         $('#yearCombo').val(year_now);
         $('#monthCombo').val(month_now);
-        $("#anggotaSelect").val(user_id);
-        $("#anggotaSelect").selectpicker('refresh');
     }
 
     function doEdit(row){
@@ -351,8 +347,6 @@
         $('#idSimpanan').val(row.id)
         $('#tglDateInput').val(row.date);
         $('#anggotaAlert').fadeOut();
-        $('#anggotaSelect').val(row.person_id);
-        $("#anggotaSelect").selectpicker('refresh');
         $('#yearCombo').val(row.year);
         $('#monthCombo').val(Number(row.month));
         $('#jumlahTextInput').val(row.balance);
