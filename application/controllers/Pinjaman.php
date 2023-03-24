@@ -202,7 +202,6 @@ class Pinjaman extends CI_Controller {
             if ($detail) {
                 $nd['id'] = $detail['id'];
                 if ($this->pinjaman_model->edit($nd)) {
-                    
                     $data['success'] = 1;
                     $data['message'] = "Data berhasil tersimpan !";
                 } else {
