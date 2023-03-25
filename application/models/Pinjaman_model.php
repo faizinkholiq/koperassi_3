@@ -125,4 +125,33 @@
         return $this->db->get_where('pinjaman', ["id" => $id])->row_array();
     }
 
+    public function create_angsuran($data)
+    {
+        $this->db->insert('angsuran', $data);
+
+        return ($this->db->affected_rows()>0) ? $this->db->insert_id() : false;
+    }
+
+    public function edit_angsuran($data)
+    {   
+        $this->db->where('id', $data['id']);
+        unset($data['id']);
+        $this->db->update('angsuran', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
+    public function delete_angsuran($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('angsuran');
+        
+        return ($this->db->affected_rows() > 0) ? true : false ;
+    }
+    
+    public function detail_angsuran($id)
+    {
+        return $this->db->get_where('angsuran', ["id" => $id])->row_array();
+    }
+
 }
