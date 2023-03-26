@@ -17,10 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
-                        if(count($data)): 
-                        foreach ($data as $key => $value): 
-                    ?>
+                    <?php if(count($data)): foreach ($data as $key => $value): ?>
                         <tr>
                             <td><?= $value['month'] ?></td>
                             <td><?= $value['year'] ?></td>
@@ -31,16 +28,11 @@
                             <td><?= $value['angsuran'] ?></td>
                             <td><?= $value['status'] ?></td>
                         </tr>
-                    <?php 
-                        endforeach; 
-                        else:
-                    ?>
+                    <?php endforeach; else: ?>
                         <tr>
                             <td colspan="8" class="text-center">No Rows Result Set</td>
                         </tr>
-                    <?php
-                        endif;
-                    ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
