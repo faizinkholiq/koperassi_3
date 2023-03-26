@@ -2,27 +2,6 @@
 
  class Pinjaman_model extends CI_Model {
 
-    public function get($person)
-    {
-        return $this->db->select([
-                'cicilan.id',
-                'cicilan.pinjaman pinjaman_id',
-                'person.id person_id',
-                'cicilan.date',
-                'cicilan.cicilan',
-                'pinjaman.bunga',
-                'cicilan.bayar',
-                '0 sisa',
-                '0 gaji',
-            ])
-            ->from('cicilan')
-            ->join('pinjaman', 'pinjaman.id = cicilan.pinjaman')
-            ->join('person', 'person.nik = pinjaman.person')
-            ->where('person.id', $person)
-            ->group_by('cicilan.id')
-            ->get()->result_array();
-    }
-
     public function summary($person)
     {
         $data['plafon'] = 0; 
@@ -76,6 +55,9 @@
             'pinjaman.year',
             'pinjaman.month',
             'pinjaman.balance', 
+            'pinjaman.angsuran',
+            '0 angsuran_paid',
+            'pinjaman.status',
         ])
         ->from('pinjaman')
         ->order_by('date', 'desc');
@@ -123,6 +105,86 @@
     public function detail($id)
     {
         return $this->db->get_where('pinjaman', ["id" => $id])->row_array();
+    }
+
+    public function get_angsuran($person)
+    {
+        return $this->db->select([
+            'angsuran.id',
+            'pinjaman.id pinjaman_id',
+            'person.id person_id',
+            'angsuran.date',
+            'angsuran.year',
+            'angsuran.month',
+            'angsuran.month_no',
+            'angsuran.pokok',
+            'angsuran.bunga',
+            'angsuran.status',
+        ])
+        ->from('angsuran')
+        ->join('pinjaman', 'pinjaman.id = angsuran.pinjaman')
+        ->join('person', 'person.nik = pinjaman.person')
+        ->where('person.id', $person)
+        ->group_by('angsuran.id')
+        ->get()->result_array();
+    }
+
+    public function get_dt_angsuran($p)
+    {
+        $search = $p["search"];
+
+        $this->db->start_cache();
+
+        if(!empty($search["value"])){
+			$col = ["year", "month", "month_no", "pokok", "status"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+        $limit = $p["length"];
+		$offset = $p["start"];
+
+        if (isset($p['person']) && !empty($p['person'])){
+            $this->db->where('pinjaman.person', $p['person']);
+        }
+
+        $this->db->select([
+            'pinjaman.id',
+            'pinjaman.person',
+            'pinjaman.date',
+            'pinjaman.year',
+            'pinjaman.month',
+            'pinjaman.balance', 
+        ])
+        ->from('pinjaman')
+        ->order_by('date', 'desc');
+        
+        $q = $this->db->get();
+        $data["recordsTotal"] = $q->num_rows();
+        $data["recordsFiltered"] = $q->num_rows();
+        
+        $this->db->stop_cache();
+
+        $this->db->limit($limit, $offset);
+        
+        $data["data"] = $this->db->get()->result_array();
+        $data["draw"] = intval($p["draw"]);
+
+        $this->db->flush_cache();
+
+        return $data;
     }
 
     public function create_angsuran($data)

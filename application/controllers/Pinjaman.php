@@ -38,6 +38,7 @@ class Pinjaman extends CI_Controller {
         if (!check_permission('pinjaman', $d['role'])){
             redirect('home');
         }else{
+            $d['data'] = $this->pinjaman_model->get_angsuran($d["nik"]);
             $this->load->view('layout/template', $d);
         }
 	}

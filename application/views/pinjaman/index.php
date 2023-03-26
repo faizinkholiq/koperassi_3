@@ -15,13 +15,10 @@
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Pinjaman</h6>
-    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah Baru</a>
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Ajukan Pinjaman</a>
             </div>
         </div><hr>
         <div class="table-responsive">
@@ -221,9 +218,7 @@
         serverSide: true,
         columns: [
             { data: "date" },
-            { 
-                data: "year",
-            },
+            { data: "year" },
             { 
                 data: "month", 
                 render: function (data, type, row) {
@@ -244,8 +239,8 @@
                     return rupiah(num)
                 }
             },
-            { data: "angsuran" },
-            { data: "angsuran_paid" },
+            { data: "angsuran", class: "text-center" },
+            { data: "angsuran_paid", class: "text-center" },
             { 
                 data: "status", 
                 class: "text-center",
