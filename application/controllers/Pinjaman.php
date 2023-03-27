@@ -18,12 +18,17 @@ class Pinjaman extends CI_Controller {
         $d = $this->user_model->login_check();
         $d['title'] = "Pinjaman";
         $d['highlight_menu'] = "pinjaman";
-        $d['content_view'] = 'pinjaman/index';
         
         if (!check_permission('pinjaman', $d['role'])){
             redirect('home');
         }else{
-            $d['summary'] = $this->pinjaman_model->summary($d['person_id']);
+            if($d['role'] == 1){
+                $d['content_view'] = 'pinjaman/index_admin';
+            }else{
+                $d['content_view'] = 'pinjaman/index';
+                $d['summary'] = $this->pinjaman_model->summary($d['person_id']);
+            }
+
             $this->load->view('layout/template', $d);
         }
 	}

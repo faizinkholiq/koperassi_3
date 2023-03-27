@@ -146,6 +146,12 @@ if (!isset($highlight_menu)){
                 </div>
             </li>
 
+            <li class="nav-item <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= site_url('/pinjaman') ?>">
+                    <i class="fas fa-fw fa-file-export"></i>
+                    <span>Pinjaman</span></a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link <?= $report ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapseReport"
                     aria-expanded="true" aria-controls="collapseReport">
