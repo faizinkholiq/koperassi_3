@@ -48,6 +48,26 @@ class Pinjaman extends CI_Controller {
         }
 	}
 
+    public function detail($id)
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Pinjaman";
+        $d['highlight_menu'] = "pinjaman";
+        
+        if (!check_permission('pinjaman', $d['role'])){
+            redirect('home');
+        }else{
+            $detail_person = $this->person_model->detail($person_id);
+            if($detail_person) {
+                $d['detail'] = $this->pinjaman_model->get_angsuran($detail_person['nik']);
+                $d['content_view'] = 'pinjaman/detail';
+                $this->load->view('layout/template', $d);
+            }else{
+                redirect('home');
+            }
+        }
+	}
+
     public function get_dt(){
         $d = $this->user_model->login_check();
         

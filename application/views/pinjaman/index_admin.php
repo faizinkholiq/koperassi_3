@@ -3,22 +3,22 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered display nowrap table-responsive" id="pinjamanTable" width="100%" cellspacing="0">
+            <table class="table table-bordered display nowrap" id="pinjamanTable" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="text-center">NIK</th>
-                        <th class="text-center">Nama</th>
-                        <th class="text-center">Depo</th>
-                        <th class="text-center">Pengajuan</th>
-                        <th class="text-center">Wajib</th>
-                        <th class="text-center">Investasi</th>
-                        <th class="text-center">Sukarela</th>
-                        <th class="text-center">Gaji Pokok</th>
-                        <th class="text-center">Plafon</th>
-                        <th class="text-center">Realisasi</th>
-                        <th class="text-center">Jml. Angsuran</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Aksi</th>
+                        <th width="150" class="text-center">NIK</th>
+                        <th width="250" class="text-center">Nama</th>
+                        <th width="150" class="text-center">Depo</th>
+                        <th width="150" class="text-center">Pengajuan</th>
+                        <th width="150" class="text-center">Wajib</th>
+                        <th width="150" class="text-center">Investasi</th>
+                        <th width="150" class="text-center">Sukarela</th>
+                        <th width="150" class="text-center">Gaji Pokok</th>
+                        <th width="150" class="text-center">Plafon</th>
+                        <th width="150" class="text-center">Realisasi</th>
+                        <th width="100" class="text-center">Jml. Angsuran</th>
+                        <th width="100" class="text-center">Status</th>
+                        <th width="100" class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -29,7 +29,7 @@
 
 
 <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="approveModalLabel"><i class="fas fa-check mr-2"></i>Setujui Perubahan Data</h5>
@@ -37,16 +37,25 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <strong>Apakah anda yakin ingin menyetujui perubahan data tersebut?</strong>
-            </div>
-            <div class="modal-footer">
-                <form method="POST" action="<?=site_url('pinjaman/approve')?>">
+            <form method="POST" action="<?=site_url('pinjaman/approve')?>">
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="font-weight-bold" width="30%">Pengajuan :</td>
+                            <td width="70%" id="appPengajuan">-</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Realisasi :</td>
+                            <td id="appReal">-</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
                     <input type="hidden" id="appID" name="id" />
                     <button class="btn btn-success mr-2" type="submit">Ya, Setuju</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -125,62 +134,66 @@
         processing: true,
         serverSide: true,
         columns: [
-            { 
-                data: "nik",
-                width: "2000px", 
-            },
+            { data: "nik" },
             { data: "name" },
             { data: "depo" },
             { 
                 data: "pengajuan",
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? `<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
                 }
             },
             { 
                 data: "wajib",
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? rupiah(num) : '-';
                 }
             },
             { 
                 data: "investasi",
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? rupiah(num) : '-';
                 }
             },
             { 
                 data: "sukarela", 
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? rupiah(num) : '-';
                 }
             },
             { 
                 data: "gaji",
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? rupiah(num) : '-';
                 }
             },
             { 
                 data: "plafon",
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? rupiah(num) : '-';
                 }
             },
             { 
                 data: "realisasi",
+                class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return rupiah(num)
+                    return (data > 0)? `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
                 }
             },
-            { data: "angsuran" },
+            { data: "angsuran", class: "text-center" },
             { 
                 data: "status", 
                 class: "text-center",
@@ -208,9 +221,11 @@
                     let btn = '-';
                     if (row.status == 'Pending' || row.status == 'Decline') {
                         btn = `
-                            <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
-                            <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                            <button type="button" onclick='doApprove(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
+                            <button type="button" onclick="doReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
                         `;
+                    }else{
+                        btn = `<a href="${url.site}/pinjaman/detail/${row.id}" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>`
                     }
 
                     return btn;
@@ -224,8 +239,11 @@
     $(document).ready(function() {
     });
 
-    function doApprove(id){
-        $('#appID').val(id);
+    function doApprove(row){
+        let num = parseFloat(row.pengajuan??0)
+        let span_pengajuan = (row.pengajuan > 0)? `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
+        $('#appID').val(row.id);
+        $('#appPengajuan').html(span_pengajuan);
         $('#approveModal').modal('show');
     }
 

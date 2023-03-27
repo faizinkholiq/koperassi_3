@@ -112,19 +112,23 @@
             'person.name',
             'depo.name depo',
             'pinjaman.balance pengajuan', 
-            '0 wajib',
-            '0 investasi',
-            '0 sukarela',
-            '0 gaji',
+            'SUM(wajib.balance) wajib',
+            'SUM(investasi.balance) investasi',
+            'SUM(sukarela.balance) sukarela',
+            'person.salary gaji',
             '0 plafon',
-            '0 realisasi',
+            'pinjaman.real realisasi',
             'pinjaman.angsuran',
             'pinjaman.status',
         ])
         ->from('pinjaman')
         ->join('person', 'person.nik = pinjaman.person')
         ->join('depo', 'depo.id = person.depo', 'left')
-        ->order_by('pinjaman.date', 'desc');
+        ->join('simpanan_wajib wajib', 'wajib.person = person.nik', 'left')
+        ->join('simpanan_investasi investasi', 'investasi.person = person.nik', 'left')
+        ->join('simpanan_sukarela sukarela', 'sukarela.person = person.nik', 'left')
+        ->order_by('pinjaman.date', 'desc')
+        ->group_by('pinjaman.id');
         
         $q = $this->db->get();
         $data["recordsTotal"] = $q->num_rows();

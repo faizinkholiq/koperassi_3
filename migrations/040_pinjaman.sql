@@ -11,3 +11,5 @@ ALTER TABLE `angsuran` ADD `pinjaman` INT NOT NULL AFTER `id`;
 ALTER TABLE `angsuran` CHANGE `status` `status` ENUM('Lunas','Belum Lunas') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 
 ALTER TABLE `angsuran` ADD `date` DATE NOT NULL AFTER `pinjaman`;
+
+ALTER TABLE `pinjaman` ADD `real` FLOAT NOT NULL AFTER `bunga`;
