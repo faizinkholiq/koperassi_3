@@ -3,7 +3,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" width="100%" cellspacing="0">
+            <table style="width:100%;" class="table table-bordered display nowrap" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-center">Bulan</th>

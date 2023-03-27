@@ -3,7 +3,7 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="pinjamanTable" width="100%" cellspacing="0">
+            <table class="table table-bordered display nowrap table-responsive" id="pinjamanTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-center">NIK</th>
@@ -41,7 +41,7 @@
                 <strong>Apakah anda yakin ingin menyetujui perubahan data tersebut?</strong>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="<?=site_url('simpanan/approve_penarikan')?>">
+                <form method="POST" action="<?=site_url('pinjaman/approve')?>">
                     <input type="hidden" id="appID" name="id" />
                     <button class="btn btn-success mr-2" type="submit">Ya, Setuju</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -60,7 +60,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" action="<?=site_url('simpanan/reject_penarikan')?>">
+            <form method="POST" action="<?=site_url('pinjaman/reject')?>">
                 <div class="modal-body">
                     <strong>Apakah anda yakin ingin menolak perubahan data tersebut?</strong><br/>        
                     <textarea class="form-control form-control-user mt-4" name="reason" rows="5" placeholder="Silahkan tulis alasan mengapa data tersebut ditolak"></textarea><br/>
@@ -125,30 +125,62 @@
         processing: true,
         serverSide: true,
         columns: [
-            { data: "date" },
-            { data: "year" },
             { 
-                data: "month", 
-                render: function (data, type, row) {
-                    return month_list[Number(data) - 1];
-                }
+                data: "nik",
+                width: "2000px", 
             },
+            { data: "name" },
+            { data: "depo" },
             { 
-                data: "limit", 
+                data: "pengajuan",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
                     return rupiah(num)
                 }
             },
             { 
-                data: "balance", 
+                data: "wajib",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
                     return rupiah(num)
                 }
             },
-            { data: "angsuran", class: "text-center" },
-            { data: "angsuran_paid", class: "text-center" },
+            { 
+                data: "investasi",
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
+            { 
+                data: "sukarela", 
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
+            { 
+                data: "gaji",
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
+            { 
+                data: "plafon",
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
+            { 
+                data: "realisasi",
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return rupiah(num)
+                }
+            },
+            { data: "angsuran" },
             { 
                 data: "status", 
                 class: "text-center",

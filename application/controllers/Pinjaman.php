@@ -66,6 +66,20 @@ class Pinjaman extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function get_dt_all(){
+        $d = $this->user_model->login_check();
+        
+        $params["search"] = $this->input->post("search");
+        $params["draw"] = $this->input->post("draw");
+        $params["length"] = $this->input->post("length");
+        $params["start"] = $this->input->post("start");
+
+        $data = $this->pinjaman_model->get_dt_all($params);
+
+        ob_end_clean();
+        echo json_encode($data);
+    }
+
     private function get_input()
     {
         $person_id = $this->input->post('person');

@@ -78,6 +78,70 @@
         return $data;
     }
 
+    public function get_dt_all($p)
+    {
+        $search = $p["search"];
+
+        $this->db->start_cache();
+
+        if(!empty($search["value"])){
+			$col = ["date", "year", "month", "limit", "balance"];
+			$src = $search["value"];
+			$src_arr = explode(" ", $src);
+
+            if ($src){
+                $this->db->group_start();
+                foreach($col as $key => $val){
+                    $this->db->or_group_start();
+                    foreach($src_arr as $k => $v){
+                        $this->db->like($val, $v, 'both'); 
+                    }
+                    $this->db->group_end();
+                }
+                $this->db->group_end();
+            }
+		}
+
+        $limit = $p["length"];
+		$offset = $p["start"];
+
+        $this->db->select([
+            'pinjaman.id',
+            'pinjaman.person',
+            'person.nik',
+            'person.name',
+            'depo.name depo',
+            'pinjaman.balance pengajuan', 
+            '0 wajib',
+            '0 investasi',
+            '0 sukarela',
+            '0 gaji',
+            '0 plafon',
+            '0 realisasi',
+            'pinjaman.angsuran',
+            'pinjaman.status',
+        ])
+        ->from('pinjaman')
+        ->join('person', 'person.nik = pinjaman.person')
+        ->join('depo', 'depo.id = person.depo', 'left')
+        ->order_by('pinjaman.date', 'desc');
+        
+        $q = $this->db->get();
+        $data["recordsTotal"] = $q->num_rows();
+        $data["recordsFiltered"] = $q->num_rows();
+        
+        $this->db->stop_cache();
+
+        $this->db->limit($limit, $offset);
+        
+        $data["data"] = $this->db->get()->result_array();
+        $data["draw"] = intval($p["draw"]);
+
+        $this->db->flush_cache();
+
+        return $data;
+    }
+
     public function create($data)
     {
         $this->db->insert('pinjaman', $data);
