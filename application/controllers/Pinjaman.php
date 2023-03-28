@@ -255,4 +255,36 @@ class Pinjaman extends CI_Controller {
 		redirect('pinjaman');
 	}
 
+    public function paid()
+	{
+        $d = $this->user_model->login_check();
+        if (!check_permission('pinjaman', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+            $this->session->set_flashdata('msg', $data);  
+            redirect('home');
+        }else{
+            $id = $this->input->post('id');
+            $nd['status'] = 'Lunas';
+            $detail = $this->pinjaman_model->detail_angsuran($id);
+            if ($detail) {
+                $nd['id'] = $detail['id'];
+                if ($this->pinjaman_model->edit_angsuran($nd)) {
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Gagal menyimpan data !";
+                }
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "Invalid ID !";
+            }
+
+            $this->session->set_flashdata('msg', $data);  
+            redirect('pinjaman/detail/'.$detail['pinjaman']);
+        }
+
+	}
+
 }
