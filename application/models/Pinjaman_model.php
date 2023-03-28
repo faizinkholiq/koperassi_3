@@ -182,11 +182,20 @@
             'person.nik',
             'person.name',
             'depo.name depo',
-            '0 total',
-            '0 sisa',
+            "SUM(
+                CASE WHEN angsuran.status = 'Lunas'
+                THEN angsuran.pokok + angsuran.bunga
+                ELSE 0 END
+            ) total",
+            "SUM(
+                CASE WHEN angsuran.status = 'Belum Lunas'
+                THEN angsuran.pokok + angsuran.bunga
+                ELSE 0 END
+            ) sisa",
         ])->from('pinjaman')
         ->join('person', 'person.nik = pinjaman.person')
         ->join('depo', 'depo.id = person.depo', 'left')
+        ->join('angsuran', 'angsuran.pinjaman = pinjaman.id', 'left')
         ->where('pinjaman.id', $id)
         ->get()->row_array();
 
@@ -198,7 +207,7 @@
             '0 sisa',
             'angsuran.pokok',
             'angsuran.bunga',
-            '0 angsuran',
+            '(COALESCE(angsuran.pokok, 0) + COALESCE(angsuran.bunga, 0)) angsuran',
             'angsuran.status',
         ])
         ->from('angsuran')

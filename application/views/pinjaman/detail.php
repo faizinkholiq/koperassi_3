@@ -1,5 +1,17 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
+<?php
+    if(!empty($this->session->flashdata('msg'))):
+    $msg = $this->session->flashdata('msg');
+?>
+<div class="alert <?= ($msg['success'])? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
+    <strong><?= ($msg['success'])? $msg["message"] : $msg["error"] ?></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<?php endif; ?>
+
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
@@ -25,13 +37,13 @@
                 <div class="mb-2 row">
                     <div class="col-lg-2">Total Bayar</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= $detail['summary']['total'] ?>
+                        <?= rupiah($detail['summary']['total']) ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Sisa Pinjaman</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= $detail['summary']['sisa'] ?>
+                        <?= rupiah($detail['summary']['sisa']) ?>
                     </div>
                 </div>
             </div>
@@ -45,13 +57,13 @@
             <table style="width:100%" class="table table-bordered display nowrap" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="100" class="text-center">Bulan</th>
+                        <th width="150" class="text-center">Bulan</th>
                         <th width="100" class="text-center">Tahun</th>
-                        <th class="text-center">Bulan Ke-</th>
-                        <th width="150" class="text-center">Sisa Hutang</th>
-                        <th width="150" class="text-center">Pokok</th>
-                        <th width="150" class="text-center">Bunga</th>
-                        <th width="150" class="text-center">Angsuran</th>
+                        <th width="80" class="text-center">Bulan Ke-</th>
+                        <!-- <th width="150" class="text-center">Sisa Hutang</th> -->
+                        <th width="180" class="text-center">Pokok</th>
+                        <th width="180" class="text-center">Bunga</th>
+                        <th width="180" class="text-center">Angsuran</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -84,11 +96,10 @@
                         <tr>
                             <td><?= ($value['month'])? $month_list[$value['month']-1] : '-' ?></td>
                             <td><?= $value['year'] ?></td>
-                            <td><?= $value['month_no'] ?></td>
-                            <td><?= $value['sisa'] ?></td>
-                            <td><?= $value['pokok'] ?></td>
-                            <td><?= $value['bunga'] ?></td>
-                            <td><?= $value['angsuran'] ?></td>
+                            <td class="text-center"><?= $value['month_no'] ?></td>
+                            <td><?= rupiah($value['pokok']) ?></td>
+                            <td><?= rupiah($value['bunga']) ?></td>
+                            <td><?= rupiah($value['angsuran']) ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
                             <td class="text-center">
                                 <?php if($value['status'] != 'Lunas'): ?>
@@ -107,10 +118,9 @@
                     ?>
                         <tr class="font-weight-bold">
                             <td colspan="3">Total</td>
-                            <td><?= $sum_sisa ?></td>
-                            <td><?= $sum_pokok ?></td>
-                            <td><?= $sum_bunga ?></td>
-                            <td><?= $sum_angsuran ?></td>
+                            <td><?= rupiah($sum_pokok) ?></td>
+                            <td><?= rupiah($sum_bunga) ?></td>
+                            <td><?= rupiah($sum_angsuran) ?></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -126,10 +136,10 @@
 </div>
 
 <div class="modal fade" id="paidModal" tabindex="-1" role="dialog" aria-labelledby="paidModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="paidModalLabel"><i class="fas fa-check mr-2"></i>Setujui Perubahan Data</h5>
+                <h5 class="modal-title" id="paidModalLabel"><i class="fas fa-hand-holding-usd mr-2"></i>Bayar Angsuran</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -140,7 +150,7 @@
                         <div class="col-lg-12">
                             <input type="hidden" id="paidID" name="id" />
                             <div class="row mb-3">
-                                <div class="col-lg-3">Tanggal Bayar</div>
+                                <div class="col-lg-4">Tanggal Bayar</div>
                                 <div class="col-lg-1 text-right">:</div>
                                 <div class="col-lg-6">
                                     <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
@@ -148,17 +158,17 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-lg-3">Bulan Ke -</div>
+                                <div class="col-lg-4">Bulan Ke -</div>
                                 <div class="col-lg-1 text-right">:</div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control form-control-user" id="monthNoText" name="month_no" readonly>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-lg-3">Nominal</div>
+                            <div class="row">
+                                <div class="col-lg-4">Nominal</div>
                                 <div class="col-lg-1 text-right">:</div>
                                 <div class="col-lg-6">
-                                    <div class="input-group mb-2">
+                                    <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp</div>
                                         </div>
@@ -168,7 +178,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success mr-2" type="submit">Ya, Proses Pembayaran</button>
