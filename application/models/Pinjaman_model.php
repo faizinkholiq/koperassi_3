@@ -233,11 +233,13 @@
             'angsuran.pokok',
             'angsuran.bunga',
             'angsuran.status',
+            '0 sisa',
+            '0 angsuran',
         ])
         ->from('angsuran')
         ->join('pinjaman', 'pinjaman.id = angsuran.pinjaman')
         ->join('person', 'person.nik = pinjaman.person')
-        ->where('person.id', $person)
+        ->where('pinjaman.person', $person)
         ->group_by('angsuran.id')
         ->get()->result_array();
     }

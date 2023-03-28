@@ -7,26 +7,42 @@
                 <thead>
                     <tr>
                         <th class="text-center">Bulan</th>
-                        <th class="text-center">Tahun</th>
-                        <th class="text-center">Bulan Ke-</th>
-                        <th class="text-center">Sisa Hutang</th>
-                        <th class="text-center">Pokok</th>
-                        <th class="text-center">Bunga</th>
-                        <th class="text-center">Angsuran</th>
-                        <th class="text-center">Status</th>
+                        <th width="100" class="text-center">Tahun</th>
+                        <th width="80" class="text-center">Bulan Ke-</th>
+                        <th width="160" class="text-center">Sisa Hutang</th>
+                        <th width="160" class="text-center">Pokok</th>
+                        <th width="160" class="text-center">Bunga</th>
+                        <th width="160" class="text-center">Angsuran</th>
+                        <th width="130" class="text-center">Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if(count($data)): foreach ($data as $key => $value): ?>
+                    <?php 
+                        $month_list = [
+                            "Januari",
+                            "Februari",
+                            "Maret",
+                            "April",
+                            "Mei",
+                            "Juni",
+                            "Juli",
+                            "Agustus",
+                            "September",
+                            "Oktober",
+                            "November",
+                            "Desember"
+                        ];
+
+                        if(count($data)): foreach ($data as $key => $value): ?>
                         <tr>
-                            <td><?= $value['month'] ?></td>
+                            <td><?= $month_list[$value['month']-1] ?></td>
                             <td><?= $value['year'] ?></td>
-                            <td><?= $value['month_no'] ?></td>
-                            <td><?= $value['sisa'] ?></td>
-                            <td><?= $value['pokok'] ?></td>
-                            <td><?= $value['bunga'] ?></td>
-                            <td><?= $value['angsuran'] ?></td>
-                            <td><?= $value['status'] ?></td>
+                            <td class="text-center"><?= $value['month_no'] ?></td>
+                            <td><?= rupiah($value['sisa']) ?></td>
+                            <td><?= rupiah($value['pokok']) ?></td>
+                            <td><?= rupiah($value['bunga']) ?></td>
+                            <td><?= rupiah($value['angsuran']) ?></td>
+                            <td class="text-center"><?= $value['status'] ?></td>
                         </tr>
                     <?php endforeach; else: ?>
                         <tr>
