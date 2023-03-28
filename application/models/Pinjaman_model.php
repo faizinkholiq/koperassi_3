@@ -169,8 +169,13 @@
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
-    
+
     public function detail($id)
+    {
+        return $this->db->get_where('pinjaman', ["id" => $id])->row_array();
+    }
+    
+    public function full_detail($id)
     {
         $data["summary"] = $this->db->select([
             'pinjaman.id',
@@ -313,6 +318,13 @@
     public function detail_angsuran($id)
     {
         return $this->db->get_where('angsuran', ["id" => $id])->row_array();
+    }
+
+    public function get_by_person($person)
+    {   
+        $this->db->where('person', $person);
+        $this->db->where("status != 'Approved'");
+        return $this->db->get('pinjaman')->result_array();
     }
 
 }

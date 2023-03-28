@@ -57,7 +57,7 @@ class Pinjaman extends CI_Controller {
         if (!check_permission('pinjaman', $d['role'])){
             redirect('home');
         }else{
-            $d['detail'] = $this->pinjaman_model->detail($id);
+            $d['detail'] = $this->pinjaman_model->full_detail($id);
             $d['content_view'] = 'pinjaman/detail';
             $this->load->view('layout/template', $d);
         }
@@ -125,15 +125,21 @@ class Pinjaman extends CI_Controller {
                 $data['success'] = 0;
                 $data['error'] = "Invalid Person !";
             }else{
-                $nd['status'] = 'Pending';
-                $simpanan_id = $this->pinjaman_model->create($nd);
-
-                if ($simpanan_id) {
-                    $data['success'] = 1;
-                    $data['message'] = "Data berhasil tersimpan !";
-                } else {
+                $pinjaman_now = $this->pinjaman_model->get_by_person($nd['person']);
+                if (count($pinjaman_now) > 0) {
                     $data['success'] = 0;
-                    $data['error'] = "Gagal menyimpan data !";
+                    $data['error'] = "Pengajuan pinjaman ditolak karena masih ada pinjaman yang belum terselesaikan !";
+                } else {
+                    $nd['status'] = 'Pending';
+                    $pinjaman_id = $this->pinjaman_model->create($nd);
+    
+                    if ($pinjaman_id) {
+                        $data['success'] = 1;
+                        $data['message'] = "Data berhasil tersimpan !";
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Gagal menyimpan data !";
+                    }
                 }
             }
         }
@@ -206,9 +212,29 @@ class Pinjaman extends CI_Controller {
             $nd['status'] = 'Approved';
             $nd['real'] = $this->input->post('real');
             $detail = $this->pinjaman_model->detail($id);
+
             if ($detail) {
                 $nd['id'] = $detail['id'];
                 if ($this->pinjaman_model->edit($nd)) {
+                    $year = $detail["year"];
+                    $month = $detail["month"];
+                    $pokok = $nd['real'] / $detail["angsuran"];
+                    for ($i=1; $i <= $detail["angsuran"]; $i++) {
+                        if($month%12 == 1) $month = 1;
+
+                        $nd_angsuran["pinjaman"] = $detail["id"];
+                        $nd_angsuran["year"] = $year;
+                        $nd_angsuran["month"] = $month;
+                        $nd_angsuran["month_no"] = $i;
+                        $nd_angsuran["pokok"] = $pokok;
+                        $nd_angsuran["bunga"] = 0;
+                        $nd_angsuran["status"] = "Belum Lunas";
+
+                        $this->pinjaman_model->create_angsuran($nd_angsuran);
+                        if($i > 12) $year++;
+                        $month++;
+                    }
+
                     $data['success'] = 1;
                     $data['message'] = "Data berhasil tersimpan !";
                 } else {
@@ -266,6 +292,7 @@ class Pinjaman extends CI_Controller {
         }else{
             $id = $this->input->post('id');
             $nd['status'] = 'Lunas';
+            $nd['date'] = $this->input->post('date');
             $detail = $this->pinjaman_model->detail_angsuran($id);
             if ($detail) {
                 $nd['id'] = $detail['id'];
