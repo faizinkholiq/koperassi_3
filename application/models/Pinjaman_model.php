@@ -172,7 +172,38 @@
     
     public function detail($id)
     {
-        return $this->db->get_where('pinjaman', ["id" => $id])->row_array();
+        $data["summary"] = $this->db->select([
+            'pinjaman.id',
+            'person.nik',
+            'person.name',
+            'depo.name depo',
+            '0 total',
+            '0 sisa',
+        ])->from('pinjaman')
+        ->join('person', 'person.nik = pinjaman.person')
+        ->join('depo', 'depo.id = person.depo', 'left')
+        ->where('pinjaman.id', $id)
+        ->get()->row_array();
+
+        $data["angsuran"] = $this->db->select([
+            'angsuran.id',
+            'angsuran.year',
+            'angsuran.month',
+            'angsuran.month_no',
+            '0 sisa',
+            'angsuran.pokok',
+            'angsuran.bunga',
+            '0 angsuran',
+            'angsuran.status',
+        ])
+        ->from('angsuran')
+        ->join('pinjaman', 'pinjaman.id = angsuran.pinjaman')
+        ->join('person', 'person.nik = pinjaman.person')
+        ->where('pinjaman.id', $id)
+        ->group_by('angsuran.id')
+        ->get()->result_array();
+
+        return $data;
     }
 
     public function get_angsuran($person)

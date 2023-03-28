@@ -46,7 +46,14 @@
                         </tr>
                         <tr>
                             <td class="font-weight-bold">Realisasi :</td>
-                            <td id="appReal">-</td>
+                            <td id="appReal">
+                                <div class="input-group mb-2 col-md-8">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="realTextInput" name="real" placeholder="..." required>
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -219,12 +226,12 @@
                 class: "text-center",
                 render: function (data, type, row) {
                     let btn = '-';
-                    if (row.status == 'Pending' || row.status == 'Decline') {
+                    if (row.status == 'Pending') {
                         btn = `
                             <button type="button" onclick='doApprove(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-success" style="width: 2rem;"><i class="fas fa-check"></i></button>
                             <button type="button" onclick="doReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
                         `;
-                    }else{
+                    }else if (row.status == 'Approved'){
                         btn = `<a href="${url.site}/pinjaman/detail/${row.id}" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>`
                     }
 
@@ -241,7 +248,7 @@
 
     function doApprove(row){
         let num = parseFloat(row.pengajuan??0)
-        let span_pengajuan = (row.pengajuan > 0)? `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
+        let span_pengajuan = (row.pengajuan > 0)? `<span class='ml-3 bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
         $('#appID').val(row.id);
         $('#appPengajuan').html(span_pengajuan);
         $('#approveModal').modal('show');

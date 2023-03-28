@@ -57,14 +57,9 @@ class Pinjaman extends CI_Controller {
         if (!check_permission('pinjaman', $d['role'])){
             redirect('home');
         }else{
-            $detail_person = $this->person_model->detail($person_id);
-            if($detail_person) {
-                $d['detail'] = $this->pinjaman_model->get_angsuran($detail_person['nik']);
-                $d['content_view'] = 'pinjaman/detail';
-                $this->load->view('layout/template', $d);
-            }else{
-                redirect('home');
-            }
+            $d['detail'] = $this->pinjaman_model->detail($id);
+            $d['content_view'] = 'pinjaman/detail';
+            $this->load->view('layout/template', $d);
         }
 	}
 
@@ -209,6 +204,7 @@ class Pinjaman extends CI_Controller {
         }else{
             $id = $this->input->post('id');
             $nd['status'] = 'Approved';
+            $nd['real'] = $this->input->post('real');
             $detail = $this->pinjaman_model->detail($id);
             if ($detail) {
                 $nd['id'] = $detail['id'];
@@ -238,6 +234,7 @@ class Pinjaman extends CI_Controller {
         }else{
             $id = $this->input->post('id');
             $nd['status'] = 'Decline';
+            $nd['reason'] = $this->input->post('reason');
             $detail = $this->pinjaman_model->detail($id);
             if ($detail) {
                 $nd['id'] = $detail['id'];

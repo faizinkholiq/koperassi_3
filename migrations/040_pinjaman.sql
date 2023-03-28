@@ -13,3 +13,5 @@ ALTER TABLE `angsuran` CHANGE `status` `status` ENUM('Lunas','Belum Lunas') CHAR
 ALTER TABLE `angsuran` ADD `date` DATE NOT NULL AFTER `pinjaman`;
 
 ALTER TABLE `pinjaman` ADD `real` FLOAT NOT NULL AFTER `bunga`;
+
+ALTER TABLE `pinjaman` ADD `reason` TEXT NULL AFTER `real`;
