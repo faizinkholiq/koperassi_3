@@ -102,6 +102,10 @@
             }
 		}
 
+        if(!empty($p["status"])){
+            $this->db->having("status_angsuran", $p["status"]);
+        }
+
         $limit = $p["length"];
 		$offset = $p["start"];
 
@@ -120,6 +124,8 @@
             'pinjaman.real realisasi',
             'pinjaman.angsuran',
             'pinjaman.status',
+            "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
+            THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
         ])
         ->from('pinjaman')
         ->join('person', 'person.nik = pinjaman.person')
@@ -127,6 +133,7 @@
         ->join('simpanan_wajib wajib', 'wajib.person = person.nik', 'left')
         ->join('simpanan_investasi investasi', 'investasi.person = person.nik', 'left')
         ->join('simpanan_sukarela sukarela', 'sukarela.person = person.nik', 'left')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
         ->order_by('pinjaman.date', 'desc')
         ->group_by('pinjaman.id');
         

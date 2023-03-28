@@ -44,6 +44,7 @@ class Pinjaman extends CI_Controller {
             redirect('home');
         }else{
             $d['data'] = $this->pinjaman_model->get_angsuran($d["nik"]);
+            // $d['total'] = $this->pinjaman_model
             $this->load->view('layout/template', $d);
         }
 	}
@@ -88,6 +89,7 @@ class Pinjaman extends CI_Controller {
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
         $params["start"] = $this->input->post("start");
+        $params["status"] = $this->input->post("status");
 
         $data = $this->pinjaman_model->get_dt_all($params);
 

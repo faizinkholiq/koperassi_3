@@ -1,6 +1,7 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
 <?php
+    $status = isset($_GET['status'])? $_GET['status'] : '';
     if(!empty($this->session->flashdata('msg'))):
     $msg = $this->session->flashdata('msg');
 ?>
@@ -12,25 +13,34 @@
 </div>
 <?php endif; ?>
 
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <a href="<?= site_url('pinjaman') ?>" class="btn font-weight-bold <?= ($status == 'All' || $status == '')? 'btn-primary' : 'btn-secondary' ?>">All</a>
+        <a href="<?= site_url('pinjaman') ?>?status=Lunas" class="btn ml-1 font-weight-bold <?= ($status == 'Lunas')? 'btn-primary' : 'btn-secondary' ?>">Lunas</a>
+        <a href="<?= site_url('pinjaman') ?>?status=Belum Lunas" class="btn ml-1 font-weight-bold <?= ($status == 'Belum Lunas')? 'btn-primary' : 'btn-secondary' ?>">Belum Lunas</a>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered display nowrap" id="pinjamanTable" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="150" class="text-center">NIK</th>
-                        <th width="250" class="text-center">Nama</th>
-                        <th width="150" class="text-center">Depo</th>
-                        <th width="150" class="text-center">Pengajuan</th>
-                        <th width="150" class="text-center">Wajib</th>
-                        <th width="150" class="text-center">Investasi</th>
-                        <th width="150" class="text-center">Sukarela</th>
-                        <th width="150" class="text-center">Gaji Pokok</th>
-                        <th width="150" class="text-center">Plafon</th>
-                        <th width="150" class="text-center">Realisasi</th>
-                        <th width="100" class="text-center">Jml. Angsuran</th>
+                        <th width="100" class="text-center">NIK</th>
+                        <th width="200" class="text-center">Nama</th>
+                        <th width="120" class="text-center">Depo</th>
+                        <th width="120" class="text-center">Pengajuan</th>
+                        <th width="120" class="text-center">Wajib</th>
+                        <th width="120" class="text-center">Investasi</th>
+                        <th width="120" class="text-center">Sukarela</th>
+                        <th width="120" class="text-center">Gaji Pokok</th>
+                        <th width="120" class="text-center">Plafon</th>
+                        <th width="120" class="text-center">Realisasi</th>
+                        <th width="80" class="text-center">Jml. Angsuran</th>
                         <th width="100" class="text-center">Status</th>
-                        <th width="100" class="text-center">Aksi</th>
+                        <th width="100" class="text-center">Status Angsuran</th>
+                        <th width="80" class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -133,6 +143,7 @@
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
+    let status = '<?= $status ?>';
 
     const rupiah = (number)=>{
         return new Intl.NumberFormat("id-ID", {
@@ -146,6 +157,9 @@
         ajax: {
             url: url.site + "/pinjaman/get_dt_all",
             type: "POST",
+            data: {
+                status: status
+            }
         },
         drawCallback: function(settings) {
         },
@@ -234,6 +248,7 @@
                     return tag;
                 } 
             },
+            { data: "status_angsuran", class: "text-center" },
             { 
                 class: "text-center",
                 render: function (data, type, row) {
