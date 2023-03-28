@@ -248,7 +248,24 @@
                     return tag;
                 } 
             },
-            { data: "status_angsuran", class: "text-center" },
+            { 
+                data: "status_angsuran", 
+                class: "text-center",
+                render: function (data, type, row) {
+                    let tag = '-';
+
+                    switch(data){
+                        case "Lunas":
+                            tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>Lunas</span>";
+                            break;
+                        case "Belum Lunas":
+                            tag = "Belum Lunas";
+                            break;
+                    }
+
+                    return tag;
+                }
+            },
             { 
                 class: "text-center",
                 render: function (data, type, row) {

@@ -15,7 +15,7 @@
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-12 font-weight-bold">
+            <div class="col-lg-10 font-weight-bold">
                 <div class="mb-2 row">
                     <div class="col-lg-2">NIK</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
@@ -45,6 +45,11 @@
                     <div class="col-lg-10"><span class="mr-2">:</span> 
                         <?= rupiah($detail['summary']['sisa']) ?>
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-2 text-center">
+                <div style="font-size:1.2rem;" class="px-3 py-2 bg-success text-white rounded text-center font-weight-bold">
+                    Lunas
                 </div>
             </div>
         </div>
