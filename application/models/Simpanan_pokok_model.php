@@ -174,4 +174,21 @@
         }
     }
 
+    public function import($data)
+    {
+        $this->db->trans_begin();
+
+        foreach ($data as $key => $item) {
+            $this->db->insert('simpanan_pokok', $item);
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return false;
+        } else {
+            $this->db->trans_commit();
+            return true;
+        }
+    }
+
 }

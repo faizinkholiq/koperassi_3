@@ -13,6 +13,19 @@
 </div>
 <?php endif; ?>
 
+<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgSuccess">Proses posting berhasil !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div id="alertFailed" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgFailed">Proses posting Gagal !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
@@ -28,7 +41,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Tambah baru</a>
-                <a href="#!" class="btn btn-danger"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
+                <a href="#!" class="btn btn-danger" onclick="showImportForm()"><i class="fas fw fa-file-import mr-1"></i> Import Data</a>
             </div>
             <div class="col-lg-6 row justify-content-end p-0">
                 <select class="form-control col-lg-3" id="selectBulan" name="bulan" onchange="selectMonth()">
@@ -234,6 +247,44 @@
     </div>
 </div>
 
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel"><i class="fas fa-file-import mr-2"></i>Import Data Simpanan Pokok</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="formImport" action="#!" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+                <div class="row mb-4 mt-4" style="position: relative;">
+                    <div class="loading" style="background: rgba(255, 255, 255, 0.8);; position: absolute; width: 100%; height: 100%; display: none; align-items:center; justify-content: center; z-index: 9999;">
+                        <div class="load-3 text-center">
+                            <div class="mb-4 font-weight-bold text-lg">Mohon tunggu sebentar, proses posting sedang berjalan</div>
+                            <div class="line bg-danger"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mb-4">
+                        Silahkan pilih file yang akan di import, sesuai dengan template ini: <a href="<?= base_url('files/template/') ?>template_data_simpanan.csv" target="blank">template.csv</a>
+                    </div>
+                    <div class="col-lg-8">
+                        <input style="height: 100%;" type="file" class="form-control form-control-user" id="importFile" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnImport" class="btn btn-primary mr-2" type="submit"><i class="fas fa-upload mr-2"></i>Import Data</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -366,7 +417,67 @@
             }
         });
 
+        $("#formImport").submit(function (event) {
+            event.preventDefault();
+            showLoad();
+            $.ajax({
+                type: "POST",
+                url: url.site + "/simpanan/import/" + module,
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+            }).done(function (data) {
+                setTimeout(()=>{
+                    hideLoad();
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        alerts('success', data.message);
+                    }else{
+                        alerts('failed', data.error);
+                    }
+                    $('#importModal').modal('hide');
+                    dt.ajax.reload();
+                }, 1000);
+            }).fail(function() {
+                setTimeout(()=>{
+                    hideLoad();
+                    alerts('failed', "Proses import gagal !");
+                    $('#importModal').modal('hide');
+                }, 1000);
+            });
+        });
+
     });
+
+    function showLoad(){
+        $('.loading').css('display', 'flex');
+        $('#btnImport').addClass('disabled');
+    }
+
+    function hideLoad(){
+        $('.loading').css('display', 'none');
+        $('#btnImport').removeClass('disabled');
+    }
+
+    function alerts(type, msg){
+        switch (type) {
+            case "success":
+                $('#msgSuccess').text(msg);
+                $('#alertSuccess').fadeIn();
+                setTimeout(()=>{
+                    $('#alertSuccess').fadeOut();
+                }, 2000);
+                break;
+            case "failed":
+                $('#msgFailed').text(msg);
+                $('#alertFailed').fadeIn();
+                setTimeout(()=>{
+                    $('#alertFailed').fadeOut();
+                }, 2000);
+                break;
+        }
+    }
 
     function selectMonth(){
         month = $('#selectBulan').val();
@@ -424,6 +535,10 @@
     function doDelete(id){
         $('#delID').val(id);
         $('#deleteModal').modal('show');
+    }
+
+    function showImportForm(){
+        $('#importModal').modal('show');
     }
 
 </script>

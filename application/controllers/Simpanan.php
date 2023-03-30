@@ -1096,4 +1096,98 @@ class Simpanan extends CI_Controller {
 		redirect('simpanan/penarikan');
 	}
 
+    public function import($module)
+	{	
+        $d = $this->user_model->login_check();
+        if (!check_permission('simpanan_anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $file = $_FILES['file'];
+            $tmp_file = $file['tmp_name'];
+            $ekstensi  = explode('.', $file['name']);
+
+            if (!empty($tmp_file)){
+                if (strtolower(end($ekstensi)) === 'csv' && $file["size"] > 0) {
+                    $i = 0;
+					$handle = fopen($tmp_file, "r");
+                    $newdata = [];
+                    switch ($module) {
+                        case 'pokok':
+                            $code = $this->simpanan_pokok_model->get_code();
+                            break;
+                        case 'wajib':
+                            $code = $this->simpanan_wajib_model->get_code();
+                            break;
+                        case 'sukarela':
+                            $code = $this->simpanan_sukarela_model->get_code();
+                            break;
+                        case 'investasi':
+                            $code = $this->investasi_model->get_code();
+                            break;
+                    }
+
+					while (($row = fgetcsv($handle, 2048))) {
+						$i++;
+						if ($i == 1) continue;
+                        
+                        $item = explode(';', $row[0]);
+                        if (!empty($item[0])) {
+                            $newdata[] = [
+                                "code" => $code,
+                                'person' => $item[0],
+                                'date' => $item[1],
+                                'year' => $item[2],
+                                'month' => $item[3],
+                                'balance' => $item[4],
+                            ];
+                            $code++;
+                        }
+					}
+					fclose($handle);
+
+                    $import = false;
+                    switch ($module) {
+                        case 'pokok':
+                            $import = $this->simpanan_pokok_model->import($newdata);
+                            break;
+                        case 'wajib':
+                            $import = $this->simpanan_wajib_model->import($newdata);
+                            break;
+                        case 'sukarela':
+                            $import = $this->simpanan_sukarela_model->import($newdata);
+                            break;
+                        case 'investasi':
+                            $import = $this->investasi_model->import($newdata);
+                            break;
+                        default:
+                            $data['success'] = 0;
+                            $data['error'] = "Invalid module";
+                            
+                            echo json_encode($data);
+                            return;
+                            break;
+                    }
+
+                    if($import){
+                        $data['success'] = 1;
+                        $data['message'] = "Import Data berhasil!";
+                    }else{
+                        $data['success'] = 0;
+                        $data['error'] = "Import Data gagal!";
+                    }
+
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Format file tidak valid!";
+				}
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "No file uploaded !";
+            }
+        }
+
+		echo json_encode($data);
+    }
+
 }
