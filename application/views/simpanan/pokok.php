@@ -269,7 +269,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12 mb-4">
-                        Silahkan pilih file yang akan di import, sesuai dengan template ini: <a href="<?= base_url('files/template/') ?>template_data_simpanan.csv" target="blank">template.csv</a>
+                        Silahkan pilih file yang akan di import, sesuai dengan template ini: <a href="<?= base_url('assets/template/') ?>template_data_simpanan.csv" target="blank">template.csv</a>
                     </div>
                     <div class="col-lg-8">
                         <input style="height: 100%;" type="file" class="form-control form-control-user" id="importFile" name="file" />
