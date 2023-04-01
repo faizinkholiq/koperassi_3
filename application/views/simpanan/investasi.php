@@ -14,13 +14,13 @@
 <?php endif; ?>
 
 <div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none">
-    <strong id="msgSuccess">Proses posting berhasil !</strong>
+    <strong id="msgSuccess">Proses import berhasil !</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div id="alertFailed" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
-    <strong id="msgFailed">Proses posting Gagal !</strong>
+    <strong id="msgFailed">Proses import Gagal !</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -263,7 +263,7 @@
                 <div class="row mb-4 mt-4" style="position: relative;">
                     <div class="loading" style="background: rgba(255, 255, 255, 0.8);; position: absolute; width: 100%; height: 100%; display: none; align-items:center; justify-content: center; z-index: 9999;">
                         <div class="load-3 text-center">
-                            <div class="mb-4 font-weight-bold text-lg">Mohon tunggu sebentar, proses posting sedang berjalan</div>
+                            <div class="mb-4 font-weight-bold text-lg">Mohon tunggu sebentar, proses import sedang berjalan</div>
                             <div class="line bg-danger"></div>
                             <div class="line"></div>
                             <div class="line"></div>

@@ -12,10 +12,24 @@
 </div>
 <?php endif; ?>
 
+<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgSuccess">Proses import berhasil !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div id="alertFailed" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgFailed">Proses import Gagal !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
-    <div class="card-body">
+    <div class="card-body"> 
         <a href="<?=site_url('anggota/create').$role_params ?>" class="btn my-btn-primary"><i class="fas fw fa-user-plus mr-1"></i> <?= (isset($_GET["role"]) && $_GET["role"] == 1)? "Administrator" : "Anggota" ?></a>
+        <a href="#!" class="btn btn-danger" onclick="showImportForm()"><i class="fas fw fa-file-import mr-1"></i> Import Gaji</a>
         <hr>
         <div class="table-responsive">
             <table class="table table-bordered display nowrap" id="anggotaTable" width="100%" cellspacing="0">
@@ -161,6 +175,44 @@
     </div>
 </div>
 
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel"><i class="fas fa-file-import mr-2"></i>Import Data Gaji</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="formImport" action="#!" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+                <div class="row mb-4 mt-4" style="position: relative;">
+                    <div class="loading" style="background: rgba(255, 255, 255, 0.8);; position: absolute; width: 100%; height: 100%; display: none; align-items:center; justify-content: center; z-index: 9999;">
+                        <div class="load-3 text-center">
+                            <div class="mb-4 font-weight-bold text-lg">Mohon tunggu sebentar, proses import sedang berjalan</div>
+                            <div class="line bg-danger"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mb-4">
+                        Silahkan pilih file yang akan di import, sesuai dengan template ini: <a href="<?= base_url('assets/template/') ?>template_data_gaji.csv" target="blank">template.csv</a>
+                    </div>
+                    <div class="col-lg-8">
+                        <input style="height: 100%;" type="file" class="form-control form-control-user" id="importFile" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnImport" class="btn btn-primary mr-2" type="submit"><i class="fas fa-upload mr-2"></i>Import Data</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 
@@ -172,6 +224,13 @@
 
     let role = <?= isset($_GET['role'])? $_GET['role'] : 0 ?>;
     let role_params = '<?= $role_params ?>';
+
+    const rupiah = (number)=>{
+        return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR"
+        }).format(number);
+    }
 
     let dt = $('#anggotaTable').DataTable({
         dom: "Bfrtip",
@@ -242,7 +301,66 @@
 
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
+        $("#formImport").submit(function (event) {
+            event.preventDefault();
+            showLoad();
+            $.ajax({
+                type: "POST",
+                url: url.site + "/anggota/import_gaji",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+            }).done(function (data) {
+                setTimeout(()=>{
+                    hideLoad();
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        alerts('success', data.message);
+                    }else{
+                        alerts('failed', data.error);
+                    }
+                    $('#importModal').modal('hide');
+                    dt.ajax.reload();
+                }, 1000);
+            }).fail(function() {
+                setTimeout(()=>{
+                    hideLoad();
+                    alerts('failed', "Proses import gagal !");
+                    $('#importModal').modal('hide');
+                }, 1000);
+            });
+        });
     });
+
+    function showLoad(){
+        $('.loading').css('display', 'flex');
+        $('#btnImport').addClass('disabled');
+    }
+
+    function hideLoad(){
+        $('.loading').css('display', 'none');
+        $('#btnImport').removeClass('disabled');
+    }
+
+    function alerts(type, msg){
+        switch (type) {
+            case "success":
+                $('#msgSuccess').text(msg);
+                $('#alertSuccess').fadeIn();
+                setTimeout(()=>{
+                    $('#alertSuccess').fadeOut();
+                }, 2000);
+                break;
+            case "failed":
+                $('#msgFailed').text(msg);
+                $('#alertFailed').fadeIn();
+                setTimeout(()=>{
+                    $('#alertFailed').fadeOut();
+                }, 2000);
+                break;
+        }
+    }
 
     function DoApprove(id){
         $.get(url.site + "/anggota/get_person_temp/" + id, (data) => {
@@ -282,6 +400,10 @@
                 alert(data.error);
             }
         });
+    }
+
+    function showImportForm(){
+        $('#importModal').modal('show');
     }
 
 </script>
