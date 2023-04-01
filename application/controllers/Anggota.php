@@ -632,4 +632,55 @@ class Anggota extends CI_Controller {
         redirect('anggota');
     }
 
+    public function import_gaji()
+    {
+        $d = $this->user_model->login_check();
+        if (!check_permission('anggota', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $file = $_FILES['file'];
+            $tmp_file = $file['tmp_name'];
+            $ekstensi  = explode('.', $file['name']);
+
+            if (!empty($tmp_file)){
+                if (strtolower(end($ekstensi)) === 'csv' && $file["size"] > 0) {
+                    $i = 0;
+					$handle = fopen($tmp_file, "r");
+                    $newdata = [];
+
+                    while (($row = fgetcsv($handle, 2048))) {
+						$i++;
+						if ($i == 1) continue;
+                        
+                        $item = explode(';', $row[0]);
+                        if (!empty($item[0])) {
+                            $newdata[] = [
+                                "nik" => $item[0],
+                                'salary' => $item[1],
+                            ];
+                        }
+					}
+					fclose($handle);
+
+                    if($this->anggota_model->import_gaji($newdata)){
+                        $data['success'] = 1;
+                        $data['message'] = "Import Data berhasil!";
+                    }else{
+                        $data['success'] = 0;
+                        $data['error'] = "Import Data gagal!";
+                    }
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Format file tidak valid!";
+				}
+            } else {
+                $data['success'] = 0;
+                $data['error'] = "No file uploaded !";
+            }
+        }
+
+		echo json_encode($data);
+    }
+
 }

@@ -344,5 +344,23 @@
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
+
+    public function import_gaji($data)
+    {
+        $this->db->trans_begin();
+
+        foreach ($data as $key => $item) {
+            $this->db->where('nik', $item['nik']);
+            $this->db->update('person', ["salary" => $item["salary"]]);
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return false;
+        } else {
+            $this->db->trans_commit();
+            return true;
+        }
+    }
     
 }
