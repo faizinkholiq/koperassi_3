@@ -1,23 +1,5 @@
 <!-- Content Row -->
 <div class="row">
-    <div class="col-xl-4 col-md-6 mb-4" >
-        <div class="card shadow" style="width:100%; background:#f1c40f;">
-            <div class="card-body" style="height:7rem; color:white; font-size:1rem; font-weight:bold;">
-                <div class="row mb-1">
-                    <div class="col-lg-8"><?= $summary['wajib']['now'] ?></div>
-                    <div class="col-lg-4">Simpanan Bulan Ini</div>
-                </div>
-                <div class="row mb-1">
-                    <div class="col-lg-8"><?= $summary['wajib']['all'] ?></div>
-                    <div class="col-lg-4">Total Simpanan</div>
-                </div>
-            </div>
-            <div class="card-footer font-weight-bold" style="background:#f39c12; border:none; color:white; font-size:1.3rem;">
-                Simpanan Wajib
-                <i class="float-right fa fa-chevron-right"></i>
-            </div>
-        </div>
-    </div>
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card shadow" style="width:100%; background:#e74c3c;">
             <div class="card-body" style="height:7rem; color:white; font-size:1rem; font-weight:bold;">
@@ -32,6 +14,24 @@
             </div>
             <div class="card-footer font-weight-bold" style="background:#c0392b; border:none; color:white; font-size:1.3rem;">
                 Simpanan Pokok
+                <i class="float-right fa fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4" >
+        <div class="card shadow" style="width:100%; background:#f1c40f;">
+            <div class="card-body" style="height:7rem; color:white; font-size:1rem; font-weight:bold;">
+                <div class="row mb-1">
+                    <div class="col-lg-8"><?= $summary['wajib']['now'] ?></div>
+                    <div class="col-lg-4">Simpanan Bulan Ini</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-lg-8"><?= $summary['wajib']['all'] ?></div>
+                    <div class="col-lg-4">Total Simpanan</div>
+                </div>
+            </div>
+            <div class="card-footer font-weight-bold" style="background:#f39c12; border:none; color:white; font-size:1.3rem;">
+                Simpanan Wajib
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
         </div>
