@@ -48,6 +48,10 @@
             $this->db->where('pinjaman.person', $p['person']);
         }
 
+        if(!empty($p["status"])){
+            $this->db->having("status_angsuran", $p["status"]);
+        }
+
         $this->db->select([
             'pinjaman.id',
             'pinjaman.person',
@@ -56,10 +60,13 @@
             'pinjaman.month',
             'pinjaman.balance', 
             'pinjaman.angsuran',
-            '0 angsuran_paid',
+            'COUNT(DISTINCT angsuran.id) angsuran_paid',
             'pinjaman.status',
+            "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
+            THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
         ])
         ->from('pinjaman')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
         ->order_by('date', 'desc');
         
         $q = $this->db->get();

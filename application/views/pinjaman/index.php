@@ -1,6 +1,7 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
 <?php
+    $status = isset($_GET['status'])? $_GET['status'] : '';
     if(!empty($this->session->flashdata('msg'))):
     $msg = $this->session->flashdata('msg');
 ?>
@@ -16,11 +17,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= $summary['plafon'] ?></span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= $summary['limit'] ?></span></div>
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= rupiah($summary['plafon']) ?></span></div>
+                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= rupiah($summary['limit']) ?></span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2">Rp<?= $summary['sisa'] ?></span></div>
+                <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2"><?= rupiah($summary['sisa']) ?></span></div>
             </div>
         </div>
     </div>
@@ -32,6 +33,11 @@
             <div class="col-lg-6">
                 <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm()"><i class="fas fw fa-plus mr-1"></i> Ajukan Pinjaman</a>
             </div>
+            <div class="col-lg-6 text-right">
+                <a href="<?= site_url('pinjaman') ?>" class="btn font-weight-bold <?= ($status == 'All' || $status == '')? 'btn-primary' : 'btn-secondary' ?>">All</a>
+                <a href="<?= site_url('pinjaman') ?>?status=Lunas" class="btn ml-1 font-weight-bold <?= ($status == 'Lunas')? 'btn-primary' : 'btn-secondary' ?>">Lunas</a>
+                <a href="<?= site_url('pinjaman') ?>?status=Belum Lunas" class="btn ml-1 font-weight-bold <?= ($status == 'Belum Lunas')? 'btn-primary' : 'btn-secondary' ?>">Belum Lunas</a>
+            </div>
         </div><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="pinjamanTable" width="100%" cellspacing="0">
@@ -42,9 +48,10 @@
                         <th class="text-center">Bulan</th>
                         <th class="text-center">Limit Pinjaman</th>
                         <th class="text-center">Nilai Pinjaman</th>
-                        <th class="text-center">Jml. Angsuran</th>
-                        <th class="text-center">Total Angsur</th> 
-                        <th class="text-center">Status Pengajuan</th>
+                        <th width="100" class="text-center">Jml. Angsuran</th>
+                        <th width="100" class="text-center">Total Angsur</th> 
+                        <th width="120" class="text-center">Status Pengajuan</th>
+                        <th width="120" class="text-center">Status Angsuran</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -209,6 +216,7 @@
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
+    let status = '<?= $status ?>';
 
     const rupiah = (number)=>{
         return new Intl.NumberFormat("id-ID", {
@@ -222,6 +230,9 @@
         ajax: {
             url: url.site + "/pinjaman/get_dt",
             type: "POST",
+            data: {
+                status: status
+            }
         },
         drawCallback: function(settings) {
         },
@@ -273,6 +284,24 @@
 
                     return tag;
                 } 
+            },
+            { 
+                data: "status_angsuran", 
+                class: "text-center",
+                render: function (data, type, row) {
+                    let tag = '-';
+
+                    switch(data){
+                        case "Lunas":
+                            tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>Lunas</span>";
+                            break;
+                        case "Belum Lunas":
+                            tag = "<span class='font-weight-bold'>Belum Lunas</span>";
+                            break;
+                    }
+
+                    return tag;
+                }
             },
             { 
                 class: "text-center",

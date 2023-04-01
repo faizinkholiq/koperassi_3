@@ -259,7 +259,7 @@
                             tag = "<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>Lunas</span>";
                             break;
                         case "Belum Lunas":
-                            tag = "Belum Lunas";
+                            tag = "<span class='font-weight-bold'>Belum Lunas</span>";
                             break;
                     }
 
