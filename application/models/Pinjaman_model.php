@@ -5,8 +5,7 @@
     public function summary($person)
     {   
         $row = $this->db->select([
-            '(COALESCE(wajib.balance, 0) + COALESCE(investasi.balance, 0) + COALESCE(sukarela.balance, 0)) plafon',
-            'COALESCE(wajib.balance, 0) + COALESCE(investasi.balance, 0) + COALESCE(sukarela.balance, 0) + (COALESCE(person.salary, 0) * 2) batas',
+            'COALESCE(wajib.balance, 0) + COALESCE(investasi.balance, 0) + COALESCE(sukarela.balance, 0) + (COALESCE(person.salary, 0) * 2) plafon',
             'COALESCE(SUM(pinjaman.balance), 0) sisa',
         ])
         ->from('person')
@@ -26,7 +25,6 @@
         ->group_by('person.nik')->get()->row_array();
 
         $data['plafon'] = $row['plafon']; 
-        $data['limit'] = $row['batas']; 
         $data['sisa'] = $row['sisa'];
 
         return $data;

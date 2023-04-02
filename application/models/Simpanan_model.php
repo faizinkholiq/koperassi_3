@@ -320,46 +320,61 @@
 
     public function summary($person)
     {   
-        $data['plafon'] = 0; 
-        $data['limit'] = 0; 
-        $data['gaji'] = 0; 
-        $data['simpanan'] = $this->db->select([
-                'COALESCE(simpanan_pokok.total, 0) 
-                + COALESCE(simpanan_wajib.total, 0) 
-                + COALESCE(simpanan_sukarela.total, 0)
-                + COALESCE(simpanan_investasi.total, 0) balance',
-            ])
-            ->from('person')
-            ->join('(
-                SELECT 
-                    person, 
-                    SUM(balance) total 
-                FROM simpanan_pokok 
-                GROUP BY person
-            ) simpanan_pokok', 'person.nik = simpanan_pokok.person', 'left')
-            ->join('(
-                SELECT 
-                    person, 
-                    SUM(balance) total 
-                FROM simpanan_wajib 
-                GROUP BY person
-            ) simpanan_wajib', 'person.nik = simpanan_wajib.person', 'left')
-            ->join('(
-                SELECT 
-                    person, 
-                    SUM(balance) total 
-                FROM simpanan_sukarela 
-                GROUP BY person
-            ) simpanan_sukarela', 'person.nik = simpanan_sukarela.person', 'left')
-            ->join('(
-                SELECT 
-                    person, 
-                    SUM(balance) total 
-                FROM simpanan_investasi 
-                GROUP BY person
-            ) simpanan_investasi', 'person.nik = simpanan_investasi.person', 'left')
-            ->where('person.id', $person)
-            ->group_by('person.id')->get()->row_array()['balance'];
+        $row = $this->db->select([
+            "COALESCE(pokok.total, 0) 
+            + COALESCE(wajib.total, 0) 
+            + COALESCE(sukarela.total, 0)
+            + COALESCE(investasi.total, 0) balance",
+            "person.salary",
+            'COALESCE(wajib.total, 0) + 
+            COALESCE(investasi.total, 0) + 
+            COALESCE(sukarela.total, 0) + 
+            (COALESCE(person.salary, 0) * 2) plafon',
+        ])
+        ->from('person')
+        ->join('(
+            SELECT 
+                person, 
+                SUM(balance) total 
+            FROM simpanan_pokok 
+            GROUP BY person
+        ) pokok', 'person.nik = pokok.person', 'left')
+        ->join('(
+            SELECT 
+                person, 
+                SUM(balance) total 
+            FROM simpanan_wajib 
+            GROUP BY person
+        ) wajib', 'person.nik = wajib.person', 'left')
+        ->join('(
+            SELECT 
+                person, 
+                SUM(balance) total 
+            FROM simpanan_sukarela 
+            GROUP BY person
+        ) sukarela', 'person.nik = sukarela.person', 'left')
+        ->join('(
+            SELECT 
+                person, 
+                SUM(balance) total 
+            FROM simpanan_investasi 
+            GROUP BY person
+        ) investasi', 'person.nik = investasi.person', 'left')
+        ->join("(
+            SELECT
+                pinjaman.person,
+                MAX(pinjaman.real) balance,
+                SUM(angsuran.pokok) angsuran
+            FROM pinjaman
+            LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'
+            GROUP BY pinjaman.person
+        ) pinjaman", 'person.nik = pinjaman.person', 'left')
+        ->where('person.id', $person)
+        ->group_by('person.id')->get()->row_array();
+
+        $data['plafon'] = $row['plafon']; 
+        $data['salary'] = $row['salary']; 
+        $data['simpanan'] = $row['balance'];
 
         return $data;
     }
