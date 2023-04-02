@@ -52,7 +52,7 @@
                         <th width="100" class="text-center">Total Angsur</th> 
                         <th width="120" class="text-center">Status Pengajuan</th>
                         <th width="120" class="text-center">Status Angsuran</th>
-                        <th class="text-center">Aksi</th>
+                        <th width="150" class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -135,18 +135,16 @@
                                     </div>
                                     <input type="text" class="form-control" id="balanceTextInput" name="balance" placeholder="..." required>
                                 </div>
+                                <span id="limitValidate" class="text-danger font-weight-bold text-sm" id=""><i class="fas fa-exclamation-triangle mr-2"></i><span id="limitValidateMsg"></span></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">Total Angsuran</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <select class="form-control" id="angsuranCombo" name="angsuran">
-                                    <?php 
-                                    for($i = 1; $i <= 12; $i++):
-                                    ?>
-                                    <option value="<?= $i ?>"><?= $i ?></option>
-                                    <?php endfor; ?>
+                                <select class="form-control" id="angsuranCombo" name="angsuran">                                   
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
                                 </select>
                             </div>
                         </div>
@@ -156,7 +154,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
                 <button type="button" id="btnReset" class="btn btn-info mt-4 mb-4" onclick="resetForm()">Reset</button>
-                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit Pinjaman <i class="ml-2 fas fa-chevron-right"></i></button>
+                <button type="button" id="btnSubmit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit Pinjaman <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>
@@ -310,13 +308,13 @@
                     let btn = '-';
                     if (row.status == 'Pending' || row.status == 'Decline') {
                         btn = `
-                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></button>
+                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></a>
                             <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
                             <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
                         `;
                     }else{
                         btn = `
-                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></button>
+                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></a>
                         `;
                     }
 
@@ -329,6 +327,21 @@
 
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
+        $("#btnSubmit").click(function() {
+            if($('#formPinjaman')[0].checkValidity()){
+                let limit = summary.limit;
+                let balance = $('#balanceTextInput').val();
+                if (limit >= balance) {
+                    $('#formPinjaman').submit();
+                }else{
+                    $('#limitValidate').show();
+                    $('#limitValidateMsg').text('Nilai pengajuan tidak boleh melebihi limit');
+                }
+            }else{
+                $('#limitValidate').show();
+                $('#limitValidateMsg').text('Silahkan masukan nominal pinjaman yang akan diajukan');
+            }
+        });
     });
 
     function showForm(){
@@ -347,7 +360,8 @@
         $('#monthCombo').val(month_now);
         $('#limitTextInput').val(summary.limit);
         $('#balanceTextInput').val('');
-        $('#angsuranCombo').val(1);
+        $('#angsuranCombo').val(12);
+        $('#limitValidate').hide();
     }
 
     function doEdit(row){
