@@ -59,18 +59,20 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table style="width:100%" class="table table-bordered display nowrap" width="100%" cellspacing="0">
+            <table class="table table-bordered display nowrap" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="150" class="text-center">Bulan</th>
-                        <th width="100" class="text-center">Tahun</th>
+                        <th class="text-center">Bulan</th>
+                        <th class="text-center">Tahun</th>
                         <th width="80" class="text-center">Bulan Ke-</th>
                         <!-- <th width="150" class="text-center">Sisa Hutang</th> -->
-                        <th width="180" class="text-center">Pokok</th>
-                        <th width="180" class="text-center">Bunga</th>
-                        <th width="180" class="text-center">Angsuran</th>
-                        <th class="text-center">Status</th>
+                        <th class="text-center">Pokok</th>
+                        <th class="text-center">Bunga</th>
+                        <th class="text-center">Angsuran</th>
+                        <th width="120" class="text-center">Status</th>
+                        <?php if($role == 1): ?>
                         <th class="text-center">Aksi</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,13 +108,15 @@
                             <td><?= rupiah($value['bunga']) ?></td>
                             <td><?= rupiah($value['angsuran']) ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
-                            <td class="text-center">
-                                <?php if($value['status'] != 'Lunas'): ?>
-                                <button type="button" onclick='doPaid(<?= json_encode($value) ?>)' class="btn btn-sm btn-primary" style="width: 2rem;">
-                                    <i class="fas fa-hand-holding-usd"></i>
-                                </button>
-                                <?php else: echo '-'; endif; ?>
-                            </td>
+                            <?php if($role == 1): ?>
+                                <td class="text-center">
+                                    <?php if($value['status'] != 'Lunas'): ?>
+                                    <button type="button" onclick='doPaid(<?= json_encode($value) ?>)' class="btn btn-sm btn-primary" style="width: 2rem;">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                    </button>
+                                    <?php else: echo '-'; endif; ?>
+                                </td>
+                            <?php endif; ?>
                         </tr>
                     <?php 
                         $sum_sisa += $value['sisa'];
@@ -127,12 +131,20 @@
                             <td><?= rupiah($sum_bunga) ?></td>
                             <td><?= rupiah($sum_angsuran) ?></td>
                             <td></td>
+                            <?php if($role == 1): ?>
                             <td></td>
+                            <?php endif; ?>
                         </tr>
                     <?php else: ?>
+                        <?php if($role == 1): ?>
                         <tr>
                             <td colspan="9" class="text-center">No Rows Result Set</td>
                         </tr>
+                        <?php else: ?>
+                        <tr>
+                            <td colspan="8" class="text-center">No Rows Result Set</td>
+                        </tr>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </tbody>
             </table>

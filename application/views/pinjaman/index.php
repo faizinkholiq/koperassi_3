@@ -17,8 +17,8 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2">Rp<?= rupiah($summary['plafon']) ?></span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2">Rp<?= rupiah($summary['limit']) ?></span></div>
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2"><?= rupiah($summary['plafon']) ?></span></div>
+                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2"><?= rupiah($summary['limit']) ?></span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
                 <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2"><?= rupiah($summary['sisa']) ?></span></div>
@@ -121,7 +121,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="limitTextInput" name="limit" placeholder="...">
+                                    <input disabled type="text" class="form-control" id="limitTextInput" name="limit" placeholder="...">
                                 </div>
                             </div>
                         </div>
@@ -217,6 +217,7 @@
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
     let status = '<?= $status ?>';
+    const summary = <?= json_encode($summary) ?>;
 
     const rupiah = (number)=>{
         return new Intl.NumberFormat("id-ID", {
@@ -249,7 +250,7 @@
                 }
             },
             { 
-                data: "limit", 
+                data: "plafon", 
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
                     return rupiah(num)
@@ -309,8 +310,13 @@
                     let btn = '-';
                     if (row.status == 'Pending' || row.status == 'Decline') {
                         btn = `
+                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></button>
                             <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
                             <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
+                        `;
+                    }else{
+                        btn = `
+                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></button>
                         `;
                     }
 
@@ -339,9 +345,9 @@
         $('#tglDateInput').val(date_now);
         $('#yearCombo').val(year_now);
         $('#monthCombo').val(month_now);
-        $('#limitTextInput').val('');
+        $('#limitTextInput').val(summary.limit);
         $('#balanceTextInput').val('');
-        $('#angsuranCombo').val('');
+        $('#angsuranCombo').val(1);
     }
 
     function doEdit(row){

@@ -44,7 +44,7 @@ class Pinjaman extends CI_Controller {
             redirect('home');
         }else{
             $d['data'] = $this->pinjaman_model->get_angsuran($d["nik"]);
-            // $d['total'] = $this->pinjaman_model
+            $d['hutang'] = $this->pinjaman_model->get_hutang_now($d["nik"]);
             $this->load->view('layout/template', $d);
         }
 	}

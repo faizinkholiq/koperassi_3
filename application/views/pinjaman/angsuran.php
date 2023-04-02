@@ -7,13 +7,13 @@
                 <thead>
                     <tr>
                         <th class="text-center">Bulan</th>
-                        <th width="100" class="text-center">Tahun</th>
+                        <th class="text-center">Tahun</th>
                         <th width="80" class="text-center">Bulan Ke-</th>
-                        <th width="160" class="text-center">Sisa Hutang</th>
-                        <th width="160" class="text-center">Pokok</th>
-                        <th width="160" class="text-center">Bunga</th>
-                        <th width="160" class="text-center">Angsuran</th>
-                        <th width="130" class="text-center">Status</th>
+                        <th class="text-center">Sisa Hutang</th>
+                        <th class="text-center">Pokok</th>
+                        <th class="text-center">Bunga</th>
+                        <th class="text-center">Angsuran</th>
+                        <th width="130" class="text-center">Status</th>     
                     </tr>
                 </thead>
                 <tbody>
@@ -38,10 +38,10 @@
                             <td><?= $month_list[$value['month']-1] ?></td>
                             <td><?= $value['year'] ?></td>
                             <td class="text-center"><?= $value['month_no'] ?></td>
-                            <td><?= rupiah($value['sisa']) ?></td>
-                            <td><?= rupiah($value['pokok']) ?></td>
-                            <td><?= rupiah($value['bunga']) ?></td>
-                            <td><?= rupiah($value['angsuran']) ?></td>
+                            <td class="text-center"><?= rupiah(0) ?></td>
+                            <td class="text-center"><?= rupiah($value['pokok']) ?></td>
+                            <td class="text-center"><?= rupiah($value['bunga']) ?></td>
+                            <td class="text-center"><?= rupiah($value['angsuran']) ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
                         </tr>
                     <?php endforeach; else: ?>

@@ -3,16 +3,31 @@
  class Pinjaman_model extends CI_Model {
 
     public function summary($person)
-    {
-        $data['plafon'] = 0; 
-        $data['limit'] = 0; 
-        $data['sisa'] = $this->db->select([
-                'COALESCE(SUM(pinjaman.balance), 0) balance',
-            ])
-            ->from('person')
-            ->join('pinjaman', 'person.nik = pinjaman.person', 'left')
-            ->where('person.id', $person)
-            ->group_by('person.id')->get()->row_array()['balance'];
+    {   
+        $row = $this->db->select([
+            '(COALESCE(wajib.balance, 0) + COALESCE(investasi.balance, 0) + COALESCE(sukarela.balance, 0)) plafon',
+            'COALESCE(wajib.balance, 0) + COALESCE(investasi.balance, 0) + COALESCE(sukarela.balance, 0) + (COALESCE(person.salary, 0) * 2) batas',
+            'COALESCE(SUM(pinjaman.balance), 0) sisa',
+        ])
+        ->from('person')
+        ->join("(
+            SELECT
+                pinjaman.person,
+                MAX(pinjaman.real) balance,
+                SUM(angsuran.pokok) angsuran
+            FROM pinjaman
+            LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'
+            GROUP BY pinjaman.person
+        ) pinjaman", 'person.nik = pinjaman.person', 'left')
+        ->join('(SELECT person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) wajib', 'wajib.person = person.nik', 'left')
+        ->join('(SELECT person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) investasi', 'investasi.person = person.nik', 'left')
+        ->join('(SELECT person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) sukarela', 'sukarela.person = person.nik', 'left')
+        ->where('person.id', $person)
+        ->group_by('person.nik')->get()->row_array();
+
+        $data['plafon'] = $row['plafon']; 
+        $data['limit'] = $row['batas']; 
+        $data['sisa'] = $row['sisa'];
 
         return $data;
     }
@@ -58,6 +73,7 @@
             'pinjaman.date',
             'pinjaman.year',
             'pinjaman.month',
+            'person.wajib + person.investasi + person.sukarela + (person.salary * 2) plafon',
             'pinjaman.balance', 
             'pinjaman.angsuran',
             'COUNT(DISTINCT angsuran.id) angsuran_paid',
@@ -66,8 +82,25 @@
             THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
         ])
         ->from('pinjaman')
+        ->join('(
+            SELECT 
+                person.nik,
+                person.name,
+                person.salary,
+                depo.name depo,
+                wajib.balance wajib,
+                investasi.balance investasi,
+                sukarela.balance sukarela
+            FROM person
+            LEFT JOIN depo ON depo.id = person.depo
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) wajib ON wajib.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) investasi ON investasi.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) sukarela ON sukarela.person = person.nik
+            GROUP BY person.nik
+        ) person', 'person.nik = pinjaman.person')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
-        ->order_by('date', 'desc');
+        ->order_by('date', 'desc')
+        ->group_by('pinjaman.id');
         
         $q = $this->db->get();
         $data["recordsTotal"] = $q->num_rows();
@@ -121,13 +154,13 @@
             'pinjaman.person',
             'person.nik',
             'person.name',
-            'depo.name depo',
+            'person.depo',
             'pinjaman.balance pengajuan', 
-            'SUM(wajib.balance) wajib',
-            'SUM(investasi.balance) investasi',
-            'SUM(sukarela.balance) sukarela',
+            'person.wajib wajib',
+            'person.investasi',
+            'person.sukarela',
             'person.salary gaji',
-            '0 plafon',
+            'person.wajib + person.investasi + person.sukarela + (person.salary * 2) plafon',
             'pinjaman.real realisasi',
             'pinjaman.angsuran',
             'pinjaman.status',
@@ -135,11 +168,22 @@
             THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
         ])
         ->from('pinjaman')
-        ->join('person', 'person.nik = pinjaman.person')
-        ->join('depo', 'depo.id = person.depo', 'left')
-        ->join('simpanan_wajib wajib', 'wajib.person = person.nik', 'left')
-        ->join('simpanan_investasi investasi', 'investasi.person = person.nik', 'left')
-        ->join('simpanan_sukarela sukarela', 'sukarela.person = person.nik', 'left')
+        ->join('(
+            SELECT 
+                person.nik,
+                person.name,
+                person.salary,
+                depo.name depo,
+                wajib.balance wajib,
+                investasi.balance investasi,
+                sukarela.balance sukarela
+            FROM person
+            LEFT JOIN depo ON depo.id = person.depo
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) wajib ON wajib.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) investasi ON investasi.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) sukarela ON sukarela.person = person.nik
+            GROUP BY person.nik
+        ) person', 'person.nik = pinjaman.person')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
         ->order_by('pinjaman.date', 'desc')
         ->group_by('pinjaman.id');
@@ -247,11 +291,18 @@
             'angsuran.pokok',
             'angsuran.bunga',
             'angsuran.status',
-            '0 sisa',
-            '0 angsuran',
+            'COALESCE(angsuran.pokok, 0) + COALESCE(angsuran.bunga, 0) angsuran',
         ])
         ->from('angsuran')
-        ->join('pinjaman', 'pinjaman.id = angsuran.pinjaman')
+        ->join("(
+            SELECT 
+                pinjaman.*,
+                CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
+                THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran
+            FROM pinjaman
+            LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'
+            GROUP BY pinjaman.id
+        ) pinjaman", "pinjaman.id = angsuran.pinjaman AND pinjaman.status = 'Approved' AND pinjaman.status_angsuran = 'Belum Lunas'")
         ->join('person', 'person.nik = pinjaman.person')
         ->where('pinjaman.person', $person)
         ->group_by('angsuran.id')
@@ -350,6 +401,22 @@
         $this->db->where('person', $person);
         $this->db->where("status != 'Approved'");
         return $this->db->get('pinjaman')->result_array();
+    }
+
+    public function get_hutang_now($person)
+    {
+        $data = $this->db->select([
+            'pinjaman.id',
+            'pinjaman.balance',
+            'pinjaman.real',
+            "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
+            THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
+        ])->from('pinjaman')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
+        ->where("pinjaman.person", $person)
+        ->having("status_angsuran = 'Belum Lunas'")
+        ->get()->row_array();
+        return !empty($data)? $data["real"] : 0;
     }
 
 }
