@@ -141,6 +141,7 @@
         ->join('person', 'person.nik = simpanan_pokok.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
+        ->where('simpanan_pokok.posting', '1')
         ->get_compiled_select();
     
         $q_wajib = $this->db->select([
@@ -167,6 +168,7 @@
         ->join('person', 'person.nik = simpanan_wajib.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
+        ->where('simpanan_wajib.posting', '1')
         ->get_compiled_select();
 
         $q_sukarela = $this->db->select([
@@ -193,6 +195,7 @@
         ->join('person', 'person.nik = simpanan_sukarela.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
+        ->where('simpanan_sukarela.posting', '1')
         ->get_compiled_select();
 
         $q_investasi = $this->db->select([
@@ -219,6 +222,7 @@
         ->join('person', 'person.nik = simpanan_investasi.person')
         ->join('position', 'person.position = position.id', 'left')
         ->where('person.id', $person)
+        ->where('simpanan_investasi.posting', '1')
         ->get_compiled_select();
 
         $q_w_sukarela = $this->db->select([

@@ -841,6 +841,7 @@ class Simpanan extends CI_Controller {
             $nd['bulan'] = $this->input->post('bulan');
             $nd['tahun'] = $this->input->post('tahun');
             $nd['simpanan'] = $this->input->post('simpanan');
+            
             if($nd['simpanan']) {
                 if ($this->simpanan_model->posting($nd)) {
                     $data['success'] = 1;

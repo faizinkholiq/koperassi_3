@@ -30,12 +30,12 @@
                             <div class="col-lg-3">Bulan</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <select class="form-control col-lg-8" id="selectBulan" name="bulan" onchange="selectMonth()">
+                                <select class="form-control col-lg-8" id="selectBulan" name="bulan">
                                     <?php 
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                     foreach($months as $key => $item):
                                     ?>
-                                    <option value="<?= str_pad($key+1, 2, '0', STR_PAD_LEFT); ?>" <?= ($key+1 == (int)date('m'))? 'selected' : '' ?>><?= $item ?></option>
+                                    <option value="<?= $key+1 ?>" <?= ($key+1 == (int)date('m'))? 'selected' : '' ?>><?= $item ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -44,7 +44,7 @@
                             <div class="col-lg-3">Tahun</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-4">
-                                <select class="form-control col-lg-8" id="selectTahun" name="tahun" onchange="selectYear()">
+                                <select class="form-control col-lg-8" id="selectTahun" name="tahun">
                                     <?php 
                                     $start = 2019;
                                     for($i = $start; $i <= date('Y'); $i++):
