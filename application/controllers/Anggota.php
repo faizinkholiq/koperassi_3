@@ -397,11 +397,15 @@ class Anggota extends CI_Controller {
             redirect('home');
         }else{
             $id = $this->session->userdata('sess_data')['person_id'];
-            $d["data"] = $this->anggota_model->detail($id);
-            $d["data"]["temporary"] = false;
+            $real = $this->anggota_model->detail($id);
             if($this->anggota_model->detail_temp($id)) {
                 $d["data"] = $this->anggota_model->detail_temp($id);
+                $d["data"]["salary"] = $real["salary"];
                 $d["data"]["temporary"] = true;
+            }else{
+                $d["data"] = $real;
+                $d["data"]["temporary"] = false;
+
             }
             $d['list_depo'] = $this->anggota_model->get_list_depo();
             $d['list_position'] = $this->anggota_model->get_list_position();

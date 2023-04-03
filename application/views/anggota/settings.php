@@ -154,6 +154,13 @@
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Gaji</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <?=(isset($data["salary"]) && !empty($data["salary"]))? rupiah($data["salary"]) : '' ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr/>

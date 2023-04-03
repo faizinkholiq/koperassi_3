@@ -121,6 +121,11 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8"><?= isset($email) && !empty($email)? $email : "-" ?></div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Gaji</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-8"><?= isset($salary) && !empty($salary)? rupiah($salary) : "-" ?></div>
+                        </div>
                     </div>
                     <div class="col-lg-5">
                         <img class="img-ktp" src="<?= isset($ktp) && !empty($ktp)? base_url('files/').$ktp : "-" ?>" />

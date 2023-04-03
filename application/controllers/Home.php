@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 		$this->load->model([
             'user_model',
             'home_model',
+            'anggota_model',
         ]);
     }
 
@@ -22,7 +23,9 @@ class Home extends CI_Controller {
             $d['summary'] = $this->home_model->get_summary_admin($d['nik']);
         }else if($d['role'] == 2){
             $d['summary'] = $this->home_model->get_summary_member($d['nik']);
+            $d['salary'] = $this->anggota_model->detail($d['person_id'])['salary'];
         }
+
 
         $d['content_view'] = ($d['role'] == 1)? 'dashboard/admin' : 'dashboard/member';
         $this->load->view('layout/template', $d);
