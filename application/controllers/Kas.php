@@ -25,6 +25,7 @@ class Kas extends CI_Controller {
         if (!check_permission('kas', $d['role'])){
             redirect('home');
         }else{
+            $d['summary'] = $this->kas_model->get_summary();
             $this->load->view('layout/template', $d);
         }
 	}

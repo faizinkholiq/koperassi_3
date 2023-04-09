@@ -16,7 +16,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold">
-                <div class="text-lg mb-2">Total Simpanan Anggota: <span class="text-danger ml-2">Rp1000</span></div>
+                <div class="text-lg mb-2">Total Simpanan Anggota: <span class="text-danger ml-2"><?= isset($summary["simpanan"]) && !empty($summary["simpanan"])? rupiah($summary["simpanan"]) : 0 ?></span></div>
             </div>
         </div>
     </div>
@@ -26,10 +26,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-3 font-weight-bold border-right">
-                <div class="text-lg mb-2">Total Kas Anggota: <span class="text-danger ml-2">Rp1000</span></div>
+                <div class="text-lg mb-2">Total Kas Anggota: <span class="text-danger ml-2"><?= isset($summary["kas"]) && !empty($summary["kas"])? rupiah($summary["kas"]) : 0 ?></span></div>
             </div>
             <div class="col-lg-9">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm('Debit')"><i class="fas fw fa-plus mr-1"></i> Debit Kas</a>
+                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm('Debet')"><i class="fas fw fa-plus mr-1"></i> Debet Kas</a>
                 <a href="#!" class="btn btn-primary mr-2" onclick="showForm('Kredit')"><i class="fas fw fa-minus mr-1"></i> Kredit Kas</a>
             </div>
         </div><hr>
@@ -41,7 +41,6 @@
                         <th class="text-center">Tahun</th>
                         <th class="text-center">Debet</th>
                         <th class="text-center">Kredit</th>
-                        <th class="text-center">Total</th>
                         <th width="120" class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -56,7 +55,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> Tambah kas</h5>
+                <h5 class="modal-title" id="inputModalLabel"></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -85,7 +84,8 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="nominalTextInput" name="debet" placeholder="...">
+                                    <input type="text" class="form-control" id="debetTextInput" name="debet" placeholder="...">
+                                    <input type="text" class="form-control" id="kreditTextInput" name="kredit" placeholder="...">
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger mt-4 mb-4" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Tambah Kas <i class="ml-2 fas fa-chevron-right"></i></button>
+                <button type="submit" class="btn btn-success mt-4 mb-4 ml-2 mr-4"> Submit <i class="ml-2 fas fa-chevron-right"></i></button>
             </div>
             </form>
         </div>
@@ -151,6 +151,13 @@
         'Desember',
     ];
 
+    const rupiah = (number)=>{
+        return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR"
+        }).format(number);
+    }
+
     let dt = $('#kasTable').DataTable({
         dom: "Bfrtip",
         ajax: {
@@ -169,17 +176,16 @@
                 data: "debet",
                 class: "text-center",
                 render: function (data, type, row) {
-                    return (data)? data : '-' ;
+                    return (data != null && data != 0)? rupiah(data) : '-' ;
                 }
             },
             { 
                 data: "kredit",
                 class: "text-center",
                 render: function (data, type, row) {
-                    return (data)? data : '-' ;
+                    return (data != null && data != 0)? rupiah(data) : '-' ;
                 }
             },
-            { data: "total" },
             { 
                 class: "text-center",
                 render: function (data, type, row) {
@@ -201,8 +207,20 @@
         }
     });
 
-    function showForm(kas_id){
+    function showForm(type){
         resetForm();
+        switch (type) {
+            case 'Debet':
+                $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Debet Kas`)
+                $('#debetTextInput').show()
+                $('#kreditTextInput').hide()
+                break;
+            case 'Kredit':
+                $('#inputModalLabel').html(`<i class="mr-2 fas fa-minus"></i> Kredit Kas`)
+                $('#kreditTextInput').show()
+                $('#debetTextInput').hide()
+                break;
+        }
         $('#formkas').attr('action', url.site + "/kas/create")
         $('#inputModal').modal('show');
     }
@@ -215,11 +233,22 @@
         resetForm();
         $('#formkas').attr('action', url.site + "/kas/edit")
         $('#IDTextInput').val(row.id);
-        $('#tglDateInput').val(row.date);
-        $('#monthCombo').val(row.month);
         $('#yearCombo').val(row.year);
-        $('#tipeCombo').val(row.type);
-        $('#nominalTextInput').val(row.balance);
+
+        if (row.debet != null && row.debet != 0){
+            $('#debetTextInput').show()
+            $('#debetTextInput').val(row.debet)
+            $('#kreditTextInput').hide()
+            $('#kreditTextInput').val("")
+            $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Debet Kas`)
+        }else{
+            $('#kreditTextInput').show()
+            $('#kreditTextInput').val(row.kredit)
+            $('#debetTextInput').hide()
+            $('#debetTextInput').val("")
+            $('#inputModalLabel').html(`<i class="mr-2 fas fa-minus"></i> Kredit Kas`)
+        }
+
         $('#inputModal').modal('show');
     }
 

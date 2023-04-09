@@ -85,5 +85,38 @@
         
         return ($this->db->affected_rows() > 0) ? true : false ;
     }
+
+    public function get_summary()
+    {
+        $simpanan = $this->db->query("
+            SELECT COALESCE(SUM(simpanan.balance), 0) balance
+            FROM (
+                SELECT id, COALESCE(balance, 0) balance
+                FROM simpanan_pokok
+                WHERE posting = 1
+                UNION
+                SELECT id, COALESCE(balance, 0) balance
+                FROM simpanan_wajib
+                WHERE posting = 1
+                UNION
+                SELECT id, COALESCE(balance, 0) balance
+                FROM simpanan_sukarela
+                WHERE posting = 1
+                UNION
+                SELECT id, COALESCE(balance, 0) balance
+                FROM simpanan_investasi
+                WHERE posting = 1
+            ) simpanan")->row_array();
+        $data["simpanan"] = isset($simpanan["balance"]) && !empty($simpanan["balance"])? $simpanan["balance"] : 0;
+        
+        $kas = $this->db->query("
+            SELECT
+            SUM(COALESCE(debet, 0)) - SUM(COALESCE(kredit, 0)) total
+            FROM kas_koperasi;
+        ")->row_array();
+        $data["kas"] = isset($kas["total"]) && !empty($kas["total"])? $kas["total"] : 0;
+
+        return $data;
+    }
     
  }
