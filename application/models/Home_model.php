@@ -54,7 +54,7 @@ class Home_model extends CI_Model {
             $this->db->where('year', $p['year']);
         }
 
-        $data = $this->db->select('SUM(balance) total')->from($table)->get()->row_array();
+        $data = $this->db->select('SUM(balance) total')->from($table)->where('posting', '1')->get()->row_array();
         if (!empty($data)) {
             return $data['total'];
         }else{
