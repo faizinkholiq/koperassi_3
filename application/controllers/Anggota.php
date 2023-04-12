@@ -407,6 +407,7 @@ class Anggota extends CI_Controller {
                 $d["data"]["temporary"] = false;
 
             }
+
             $d['list_depo'] = $this->anggota_model->get_list_depo();
             $d['list_position'] = $this->anggota_model->get_list_position();
 
@@ -442,7 +443,6 @@ class Anggota extends CI_Controller {
                 $nd = $this->get_input_temp();
 
                 $detail = $this->anggota_model->detail($id);
-
                 if ($detail) {
                     $nd["person_id"] = $id;
 
