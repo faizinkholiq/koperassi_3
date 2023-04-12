@@ -355,7 +355,7 @@
         $('#tglDateInput').val(date_now);
         $('#yearCombo').val(year_now);
         $('#monthCombo').val(month_now);
-        $('#limitTextInput').val(summary.limit);
+        $('#limitTextInput').val(summary.plafon);
         $('#balanceTextInput').val('');
         $('#angsuranCombo').val(12);
         $('#limitValidate').hide();
