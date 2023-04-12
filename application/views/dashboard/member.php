@@ -1,17 +1,5 @@
 <!-- Content Row -->
 <div class="row">
-    <div class="col-xl-4 col-md-6 mb-4">
-        <div class="card shadow" style="width:100%; background:#e74c3c;">
-            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
-                Simpanan Wajib:<br/>
-                <?= $summary['wajib'] ?>
-            </div>
-            <div class="card-footer" style="background:#c0392b; border:none; color:white;">
-                Lihat Detail
-                <i class="float-right fa fa-chevron-right"></i>
-            </div>
-        </div>
-    </div>
     <div class="col-xl-4 col-md-6 mb-4" >
         <div class="card shadow" style="width:100%; background:#f1c40f;">
             <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
@@ -19,6 +7,18 @@
                 <?= $summary['pokok'] ?>
             </div>
             <div class="card-footer" style="background:#f39c12; border:none; color:white;">
+                Lihat Detail
+                <i class="float-right fa fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card shadow" style="width:100%; background:#e74c3c;">
+            <div class="card-body mb-4 font-weight-bold" style="height:7rem; color:white; font-size:2rem;">
+                Simpanan Wajib:<br/>
+                <?= $summary['wajib'] ?>
+            </div>
+            <div class="card-footer" style="background:#c0392b; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
             </div>
