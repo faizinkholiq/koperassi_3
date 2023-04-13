@@ -6,7 +6,7 @@
     {   
         $row = $this->db->select([
             'COALESCE(wajib.balance, 0) + COALESCE(investasi.balance, 0) + COALESCE(sukarela.balance, 0) + (COALESCE(person.salary, 0) * 2) plafon',
-            'COALESCE(SUM(pinjaman.balance), 0) sisa',
+            'COALESCE(SUM(pinjaman.angsuran), 0) sisa',
         ])
         ->from('person')
         ->join("(
@@ -15,7 +15,7 @@
                 MAX(pinjaman.real) balance,
                 SUM(angsuran.pokok) angsuran
             FROM pinjaman
-            LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'
+            LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'
             GROUP BY pinjaman.person
         ) pinjaman", 'person.nik = pinjaman.person', 'left')
         ->join('(SELECT person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) wajib', 'wajib.person = person.nik', 'left')
@@ -73,6 +73,7 @@
             'pinjaman.month',
             'person.wajib + person.investasi + person.sukarela + (person.salary * 2) plafon',
             'pinjaman.balance', 
+            'pinjaman.real', 
             'pinjaman.angsuran',
             'COUNT(DISTINCT angsuran.id) angsuran_paid',
             'pinjaman.status',

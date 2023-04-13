@@ -44,7 +44,8 @@
                         <th class="text-center">Tahun</th>
                         <th class="text-center">Bulan</th>
                         <th class="text-center">Limit Pinjaman</th>
-                        <th class="text-center">Nilai Pinjaman</th>
+                        <th class="text-center">Nilai Pengajuan</th>
+                        <th class="text-center">Realisasi</th>
                         <th width="100" class="text-center">Jml. Angsuran</th>
                         <th width="100" class="text-center">Total Angsur</th> 
                         <th width="120" class="text-center">Status Pengajuan</th>
@@ -258,6 +259,14 @@
                     return rupiah(num)
                 }
             },
+            { 
+                data: "real", 
+                class: "text-center",
+                render: function (data, type, row) {
+                    let num = parseFloat(data??0)
+                    return `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>`
+                }
+            },
             { data: "angsuran", class: "text-center" },
             { data: "angsuran_paid", class: "text-center" },
             { 
@@ -326,8 +335,9 @@
     $(document).ready(function() {
         $("#btnSubmit").click(function() {
             if($('#formPinjaman')[0].checkValidity()){
-                let limit = summary.limit;
-                let balance = $('#balanceTextInput').val();
+                let limit = parseFloat(summary.plafon);
+                let balance = parseFloat($('#balanceTextInput').val());
+                console.log(limit >= balance);
                 if (limit >= balance) {
                     $('#formPinjaman').submit();
                 }else{
