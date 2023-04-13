@@ -17,12 +17,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2"><?= rupiah($summary['plafon']) ?></span></div>
-                <div class="text-lg">Limit Pinjaman: <span class="text-danger ml-2"><?= rupiah($summary['limit']) ?></span></div>
+                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2"><?= isset($summary['plafon']) && !empty($summary['plafon'])? rupiah($summary['plafon']) : 0 ?></span></div>
             </div>
             <div class="col-lg-6 font-weight-bold text-right">
-                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2"><?= rupiah($summary['gaji']) ?></span></div>
-                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2"><?= rupiah($summary['simpanan']) ?></span></div>
+                <div class="text-lg mb-2">Gaji Pokok: <span class="text-danger ml-2"><?= isset($summary['salary']) && !empty($summary['salary'])? rupiah($summary['salary']) : 0 ?></span></div>
+                <div class="text-lg">Total Simpanan: <span class="text-danger ml-2"><?= isset($summary['simpanan']) && !empty($summary['simpanan'])? rupiah($summary['simpanan']) : 0 ?></span></div>
             </div>
         </div>
     </div>
