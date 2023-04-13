@@ -161,6 +161,7 @@
         return $this->db->select([
             "person.id",
             "person.user_id",
+            "person.id person_id",
             "person.no_ktp",
             "person.nik",
             "person.name",

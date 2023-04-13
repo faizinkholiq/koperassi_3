@@ -398,8 +398,7 @@ class Anggota extends CI_Controller {
         }else{
             $id = $this->session->userdata('sess_data')['person_id'];
             $real = $this->anggota_model->detail($id);
-            print_r($real);
-            exit;
+
             if($this->anggota_model->detail_temp($id)) {
                 $d["data"] = $this->anggota_model->detail_temp($id);
                 $d["data"]["salary"] = $real["salary"];
