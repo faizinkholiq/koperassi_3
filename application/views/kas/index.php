@@ -12,16 +12,6 @@
 </div>
 <?php endif; ?>
 
-<div class="card mb-4 shadow">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-lg-6 font-weight-bold">
-                <div class="text-lg mb-2">Total Simpanan Anggota: <span class="text-danger ml-2"><?= isset($summary["simpanan"]) && !empty($summary["simpanan"])? rupiah($summary["simpanan"]) : 0 ?></span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="card shadow mb-4 mt-2">
     <div class="card-body">
         <div class="row">
@@ -29,8 +19,8 @@
                 <div class="text-lg mb-2">Total Kas Anggota: <span class="text-danger ml-2"><?= isset($summary["kas"]) && !empty($summary["kas"])? rupiah($summary["kas"]) : 0 ?></span></div>
             </div>
             <div class="col-lg-9">
-                <a href="#!" class="btn my-btn-primary mr-2" onclick="showForm('Debet')"><i class="fas fw fa-plus mr-1"></i> Debet Kas</a>
-                <a href="#!" class="btn btn-primary mr-2" onclick="showForm('Kredit')"><i class="fas fw fa-minus mr-1"></i> Kredit Kas</a>
+                <a href="#!" class="btn my-btn-primary ml-4" onclick="showForm('Debet')"><i class="fas fw fa-plus mr-1"></i> Tambah Kas</a>
+                <!-- <a href="#!" class="btn btn-primary mr-2" onclick="showForm('Kredit')"><i class="fas fw fa-minus mr-1"></i> Kredit Kas</a> -->
             </div>
         </div><hr>
         <div class="table-responsive">
@@ -84,8 +74,8 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="debetTextInput" name="debet" placeholder="...">
-                                    <input type="text" class="form-control" id="kreditTextInput" name="kredit" placeholder="...">
+                                    <input type="text" class="form-control" id="nominalTextInput" name="nominal" placeholder="...">
+                                    <!-- <input type="text" class="form-control" id="kreditTextInput" name="kredit" placeholder="..."> -->
                                 </div>
                             </div>
                         </div>
@@ -114,7 +104,7 @@
                 <strong>Apakah anda yakin ingin menghapus data ini?</strong>
             </div>
             <div class="modal-footer">
-                <form method="GET" action="<?=site_url('kas/delete_ubah_kas')?>">
+                <form method="GET" action="<?=site_url('kas/delete')?>">
                     <input type="hidden" id="delID" name="id" />
                     <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -209,18 +199,21 @@
 
     function showForm(type){
         resetForm();
-        switch (type) {
-            case 'Debet':
-                $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Debet Kas`)
-                $('#debetTextInput').show()
-                $('#kreditTextInput').hide()
-                break;
-            case 'Kredit':
-                $('#inputModalLabel').html(`<i class="mr-2 fas fa-minus"></i> Kredit Kas`)
-                $('#kreditTextInput').show()
-                $('#debetTextInput').hide()
-                break;
-        }
+        $('#yearCombo').removeAttr('disabled');
+        // switch (type) {
+        //     case 'Debet':
+        //         $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Debet Kas`)
+        //         $('#debetTextInput').show()
+        //         $('#kreditTextInput').hide()
+        //         break;
+        //     case 'Kredit':
+        //         $('#inputModalLabel').html(`<i class="mr-2 fas fa-minus"></i> Kredit Kas`)
+        //         $('#kreditTextInput').show()
+        //         $('#debetTextInput').hide()
+        //         break;
+        // }
+
+        $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Tambah Kas`)
         $('#formkas').attr('action', url.site + "/kas/create")
         $('#inputModal').modal('show');
     }
@@ -232,22 +225,28 @@
     function DoEdit(row){
         resetForm();
         $('#formkas').attr('action', url.site + "/kas/edit")
+        $('#yearCombo').attr('disabled', 'true');
         $('#IDTextInput').val(row.id);
         $('#yearCombo').val(row.year);
 
-        if (row.debet != null && row.debet != 0){
-            $('#debetTextInput').show()
-            $('#debetTextInput').val(row.debet)
-            $('#kreditTextInput').hide()
-            $('#kreditTextInput').val("")
-            $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Debet Kas`)
-        }else{
-            $('#kreditTextInput').show()
-            $('#kreditTextInput').val(row.kredit)
-            $('#debetTextInput').hide()
-            $('#debetTextInput').val("")
-            $('#inputModalLabel').html(`<i class="mr-2 fas fa-minus"></i> Kredit Kas`)
-        }
+        // if (row.debet != null && row.debet != 0){
+        //     $('#debetTextInput').show()
+        //     $('#debetTextInput').val(row.debet)
+        //     $('#kreditTextInput').hide()
+        //     $('#kreditTextInput').val("")
+        //     $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Debet Kas`)
+        // }else{
+        //     $('#kreditTextInput').show()
+        //     $('#kreditTextInput').val(row.kredit)
+        //     $('#debetTextInput').hide()
+        //     $('#debetTextInput').val("")
+        //     $('#inputModalLabel').html(`<i class="mr-2 fas fa-minus"></i> Kredit Kas`)
+        // }
+
+        
+        $('#nominalTextInput').show()
+        $('#nominalTextInput').val(row.debet)
+        $('#inputModalLabel').html(`<i class="mr-2 fas fa-plus"></i> Ubah Kas`)
 
         $('#inputModal').modal('show');
     }

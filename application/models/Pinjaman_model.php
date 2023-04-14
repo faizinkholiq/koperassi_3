@@ -404,18 +404,34 @@
 
     public function get_hutang_now($person)
     {
-        $data = $this->db->select([
+        return $this->db->select([
             'pinjaman.id',
             'pinjaman.balance',
             'pinjaman.real',
+            'person.nik',
+            'person.name',
+            'person.salary',
+            'depo.name depo',
             "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
-            THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
+            THEN 'Lunas' 
+            ELSE 'Belum Lunas' 
+            END status_angsuran",
+            "SUM(
+                CASE WHEN angsuran.status = 'Lunas'
+                THEN angsuran.pokok + angsuran.bunga
+                ELSE 0 END
+            ) total",
+            "SUM(
+                CASE WHEN angsuran.status = 'Belum Lunas'
+                THEN angsuran.pokok + angsuran.bunga
+                ELSE 0 END
+            ) sisa",
         ])->from('pinjaman')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
+        ->join('person', 'person.nik = pinjaman.person')
+        ->join('depo', 'depo.id = person.depo', 'left')
         ->where("pinjaman.person", $person)
-        ->having("status_angsuran = 'Belum Lunas'")
         ->get()->row_array();
-        return !empty($data)? $data["real"] : 0;
     }
 
 }

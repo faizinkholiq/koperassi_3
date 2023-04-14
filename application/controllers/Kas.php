@@ -48,9 +48,7 @@ class Kas extends CI_Controller {
     {
         $data["date"] = date('Y-m-d');
         $data["year"] = $this->input->post('year');
-        $data["debet"] = $this->input->post('debet');
-        $data["kredit"] = $this->input->post('kredit');
-        $data["total"] = $this->input->post('debet');
+        $data["nominal"] = $this->input->post('nominal');
 
         return $data;
     }
@@ -62,11 +60,21 @@ class Kas extends CI_Controller {
             $data['success'] = 0;
             $data['error'] = "No Permission !";
         }else{
-            $nd = $this->get_input();
-            $nd['updated_by'] = $d['person_id'];
-            
-            $kas_id = $this->kas_model->create($nd);
-            if ($kas_id) {
+            $nd = $this->get_input();            
+            $detail_by_year = $this->kas_model->detail_by_year($nd['year']);
+            if($detail_by_year){
+                $nd_update['id'] = $detail_by_year['id'];
+                $nd_update['debet'] = floatval($detail_by_year['debet']) + floatval($nd['nominal']);
+                $update = $this->kas_model->edit($nd_update);
+            }else{
+                $nd_create['date'] = $nd['date'];
+                $nd_create['year'] = $nd['year'];
+                $nd_create['debet'] = $nd['nominal'];
+                $nd_create['updated_by'] = $d['person_id'];
+                $update = $this->kas_model->create($nd_create);
+            }
+
+            if ($update) {
                 $data['success'] = 1;
                 $data['message'] = "Data berhasil tersimpan !";
             } else {

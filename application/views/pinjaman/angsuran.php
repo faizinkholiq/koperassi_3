@@ -1,5 +1,44 @@
 <link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
 
+<div class="card mb-4 shadow">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-10 font-weight-bold">
+                <div class="mb-2 row">
+                    <div class="col-lg-2">NIK</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($detail['nik']) && !empty($detail['nik'])? $detail['nik'] : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Nama</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($detail['name']) && !empty($detail['name'])? $detail['name'] : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Depo</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($detail['depo']) && !empty($detail['depo'])? $detail['depo'] : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Total Bayar</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($detail['total']) && !empty($detail['total']) && $detail['status_angsuran'] == 'Belum Lunas' ? rupiah($detail['total']) : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Sisa Pinjaman</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($detail['sisa']) && !empty($detail['sisa']) && $detail['status_angsuran'] == 'Belum Lunas' ? rupiah($detail['sisa']) : '-' ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
