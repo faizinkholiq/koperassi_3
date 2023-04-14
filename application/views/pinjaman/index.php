@@ -264,7 +264,7 @@
                 class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
-                    return `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>`
+                    return (num > 0)? `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
                 }
             },
             { data: "angsuran", class: "text-center" },
