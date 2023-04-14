@@ -239,6 +239,8 @@
             'person.nik',
             'person.name',
             'depo.name depo',
+            'pinjaman.angsuran total_angsuran',
+            "SUM(CASE WHEN angsuran.status = 'Lunas' THEN 1 ELSE 0 END) angsuran_lunas",
             "SUM(
                 CASE WHEN angsuran.status = 'Lunas'
                 THEN angsuran.pokok + angsuran.bunga

@@ -19,13 +19,13 @@
                 <div class="mb-2 row">
                     <div class="col-lg-2">NIK</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= $detail['summary']['nik'] ?>
+                        <?= isset($detail['summary']['nik']) && !empty($detail['summary']['nik'])? $detail['summary']['nik'] : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Nama</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= $detail['summary']['name'] ?>
+                        <?= isset($detail['summary']['name']) && !empty($detail['summary']['name'])? $detail['summary']['name'] : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
@@ -37,20 +37,31 @@
                 <div class="mb-2 row">
                     <div class="col-lg-2">Total Bayar</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= rupiah($detail['summary']['total']) ?>
+                        <?= isset($detail['summary']['total']) && !empty($detail['summary']['total'])? rupiah($detail['summary']['total']) : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Sisa Pinjaman</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= rupiah($detail['summary']['sisa']) ?>
+                        <?= isset($detail['summary']['sisa']) && !empty($detail['summary']['sisa'])? rupiah($detail['summary']['sisa']) : '-' ?>
                     </div>
                 </div>
             </div>
             <div class="col-lg-2 text-center">
+                <?php 
+                    if(
+                        isset($detail['summary']['total_angsuran']) && 
+                        $detail['summary']['total_angsuran'] > 0 &&
+                        ($detail['summary']['total_angsuran'] == $detail['summary']['angsuran_lunas']) 
+                    ): ?>
                 <div style="font-size:1.2rem;" class="px-3 py-2 bg-success text-white rounded text-center font-weight-bold">
                     Lunas
                 </div>
+                <?php else: ?>
+                <div style="font-size:1.2rem;" class="px-3 py-2 bg-danger text-white rounded text-center font-weight-bold">
+                    Belum Lunas
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
