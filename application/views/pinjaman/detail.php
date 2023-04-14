@@ -258,7 +258,7 @@
     function doPaid(row){
         $('#paidID').val(row.id);
         $('#monthNoText').val(row.month_no)
-        $('#balanceTextInput').val(row.angsuran)
+        $('#balanceTextInput').val(Math.round(row.angsuran))
         $('#paidModal').modal('show');
     }
 

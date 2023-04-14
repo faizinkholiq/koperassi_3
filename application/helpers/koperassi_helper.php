@@ -51,3 +51,10 @@ function rupiah($num){
     }
     return $format_rupiah;
 }
+
+function PMT($interest,$num_of_payments,$PV,$FV = 0.00, $Type = 0){
+    $xp=pow((1+$interest),$num_of_payments);
+    return
+        ($PV* $interest*$xp/($xp-1)+$interest/($xp-1)*$FV)*
+        ($Type==0 ? 1 : 1/($interest+1));
+}

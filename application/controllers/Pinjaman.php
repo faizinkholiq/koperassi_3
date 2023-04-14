@@ -10,6 +10,7 @@ class Pinjaman extends CI_Controller {
             'user_model',
             'pinjaman_model',
             'person_model',
+            'kas_model',
         ]);
     }
 
@@ -204,7 +205,6 @@ class Pinjaman extends CI_Controller {
         redirect('pinjaman');
     }
 
-
     public function approve()
 	{
         $d = $this->user_model->login_check();
@@ -219,32 +219,52 @@ class Pinjaman extends CI_Controller {
 
             if ($detail) {
                 $nd['id'] = $detail['id'];
-                if ($this->pinjaman_model->edit($nd)) {
-                    $year = $detail["year"];
-                    $month = $detail["month"];
-                    $pokok = $nd['real'] / $detail["angsuran"];
-                    for ($i=1; $i <= $detail["angsuran"]; $i++) {
-                        if($month%12 == 1) $month = 1;
+                $kas_by_year = $this->kas_model->detail_by_year($detail['year']);
+                if ($kas_by_year){
+                    $nd_kas['id'] = $kas_by_year['id'];
+                    $nd_kas['kredit'] = floatval($kas_by_year['kredit']) + floatval($nd['real']);
 
-                        $nd_angsuran["pinjaman"] = $detail["id"];
-                        $nd_angsuran["year"] = $year;
-                        $nd_angsuran["month"] = $month;
-                        $nd_angsuran["month_no"] = $i;
-                        $nd_angsuran["pokok"] = $pokok;
-                        $nd_angsuran["bunga"] = 0;
-                        $nd_angsuran["status"] = "Belum Lunas";
+                    if ($this->kas_model->edit($nd_kas)) {
+                        if ($this->pinjaman_model->edit($nd)) {
+                            $year = $detail["year"];
+                            $month = $detail["month"];
+                            $mn = 12;
+                            $rate = 15.23/100;
+                            $nper = floatval($detail["angsuran"]);
+                            $sisa = floatval($nd['real']);
+                            $angsuran = round(PMT($rate / $mn, $nper, $sisa));
 
-                        $this->pinjaman_model->create_angsuran($nd_angsuran);
-                        if($i > 12) $year++;
-                        $month++;
+                            for ($i=1; $i <= $detail["angsuran"]; $i++) {
+                                if($month%12 == 1) $month = 1;
+
+                                $bunga = $sisa * $rate / $mn; 
+
+                                $nd_angsuran["pinjaman"] = $detail["id"];
+                                $nd_angsuran["year"] = $year;
+                                $nd_angsuran["month"] = $month;
+                                $nd_angsuran["month_no"] = $i;
+                                $nd_angsuran["pokok"] = $angsuran - $bunga;
+                                $nd_angsuran["bunga"] = $bunga;
+                                $nd_angsuran["status"] = "Belum Lunas";
+
+                                $sisa = $sisa - $angsuran;
+                                $this->pinjaman_model->create_angsuran($nd_angsuran);
+                                if($i > 12) $year++;
+                                $month++;
+                            }
+
+                            $data['success'] = 1;
+                            $data['message'] = "Data berhasil tersimpan !";
+                        } else {
+                            $data['success'] = 0;
+                            $data['error'] = "Gagal menyimpan data !";
+                        }
                     }
-
-                    $data['success'] = 1;
-                    $data['message'] = "Data berhasil tersimpan !";
-                } else {
+                }else{
                     $data['success'] = 0;
-                    $data['error'] = "Gagal menyimpan data !";
+                    $data['error'] = "Gagal mengupdate data kas !";
                 }
+                
             }else{
                 $data['success'] = 0;
                 $data['error'] = "Invalid ID !";
@@ -299,13 +319,33 @@ class Pinjaman extends CI_Controller {
             $nd['date'] = $this->input->post('date');
             $detail = $this->pinjaman_model->detail_angsuran($id);
             if ($detail) {
-                $nd['id'] = $detail['id'];
-                if ($this->pinjaman_model->edit_angsuran($nd)) {
-                    $data['success'] = 1;
-                    $data['message'] = "Data berhasil tersimpan !";
-                } else {
+                $detail_pinjaman = $this->pinjaman_model->detail($detail['pinjaman']);
+                if($detail_pinjaman) {
+                    $nd['id'] = $detail['id'];
+                    if ($this->pinjaman_model->edit_angsuran($nd)) {
+                        $kas_by_year = $this->kas_model->detail_by_year($detail_pinjaman['year']);
+                        if ($kas_by_year){
+                            $nd_kas['id'] = $kas_by_year['id'];
+                            $angsuran = floatval($detail['pokok']) + floatval($detail['bunga']);
+                            $nd_kas['debet'] = floatval($kas_by_year['debet']) + $angsuran;
+                            if ($this->kas_model->edit($nd_kas)) {
+                                $data['success'] = 1;
+                                $data['message'] = "Data berhasil tersimpan !";
+                            }else{
+                                $data['success'] = 0;
+                                $data['error'] = "Gagal menyimpan data !";
+                            }
+                        }else{
+                            $data['success'] = 0;
+                            $data['error'] = "Gagal Update Kas !";
+                        }
+                    } else {
+                        $data['success'] = 0;
+                        $data['error'] = "Gagal menyimpan data !";
+                    }
+                }else{
                     $data['success'] = 0;
-                    $data['error'] = "Gagal menyimpan data !";
+                    $data['error'] = "Invalid Pinjaman ID !";
                 }
             }else{
                 $data['success'] = 0;
