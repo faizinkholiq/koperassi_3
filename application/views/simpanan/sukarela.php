@@ -77,8 +77,9 @@
                         <th class="text-center">No. Telp</th>
                         <th class="text-center">Tgl. Keanggotaan</th>
                         <th class="text-center">Jml. Simpanan</th>
-                        <th class="text-center">D/K</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center" width="70">D/K</th>
+                        <th class="text-center" width="70">Posting</th>
+                        <th class="text-center" width="100">Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -376,6 +377,13 @@
                 }
             },
             { data: "dk", class: "text-center" },
+            { 
+                data: "posting", 
+                class: "text-center", 
+                render: function(data, type, row) {
+                    return (data == 1)? 'Yes' : 'No';
+                }
+            },
             { 
                 class: "text-center",
                 render: function (data, type, row) {
