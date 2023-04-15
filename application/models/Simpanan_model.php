@@ -341,6 +341,7 @@
                 person, 
                 SUM(balance) total 
             FROM simpanan_pokok 
+            WHERE posting = 1
             GROUP BY person
         ) pokok', 'person.nik = pokok.person', 'left')
         ->join('(
@@ -348,6 +349,7 @@
                 person, 
                 SUM(balance) total 
             FROM simpanan_wajib 
+            WHERE posting = 1
             GROUP BY person
         ) wajib', 'person.nik = wajib.person', 'left')
         ->join('(
@@ -355,6 +357,7 @@
                 person, 
                 SUM(balance) total 
             FROM simpanan_sukarela 
+            WHERE posting = 1
             GROUP BY person
         ) sukarela', 'person.nik = sukarela.person', 'left')
         ->join('(
@@ -362,6 +365,7 @@
                 person, 
                 SUM(balance) total 
             FROM simpanan_investasi 
+            WHERE posting = 1
             GROUP BY person
         ) investasi', 'person.nik = investasi.person', 'left')
         ->join("(
