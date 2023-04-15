@@ -404,35 +404,31 @@
         return $this->db->get('pinjaman')->result_array();
     }
 
-    public function get_hutang_now($person)
+    public function get_summary_angsuran($id)
     {
         return $this->db->select([
             'pinjaman.id',
-            'pinjaman.balance',
-            'pinjaman.real',
             'person.nik',
             'person.name',
-            'person.salary',
             'depo.name depo',
-            "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
-            THEN 'Lunas' 
-            ELSE 'Belum Lunas' 
-            END status_angsuran",
+            'pinjaman.angsuran total_angsuran',
+            "SUM(CASE WHEN angsuran.status = 'Lunas' THEN 1 ELSE 0 END) angsuran_lunas",
+            "SUM(angsuran.pokok + angsuran.bunga) total_pinjaman",
             "SUM(
                 CASE WHEN angsuran.status = 'Lunas'
                 THEN angsuran.pokok + angsuran.bunga
                 ELSE 0 END
-            ) total",
+            ) total_bayar",
             "SUM(
                 CASE WHEN angsuran.status = 'Belum Lunas'
                 THEN angsuran.pokok + angsuran.bunga
                 ELSE 0 END
-            ) sisa",
+            ) sisa_pinjaman",
         ])->from('pinjaman')
-        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
         ->join('person', 'person.nik = pinjaman.person')
         ->join('depo', 'depo.id = person.depo', 'left')
-        ->where("pinjaman.person", $person)
+        ->join('angsuran', 'angsuran.pinjaman = pinjaman.id', 'left')
+        ->where('pinjaman.id', $id)
         ->get()->row_array();
     }
 

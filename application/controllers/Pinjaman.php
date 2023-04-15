@@ -44,9 +44,9 @@ class Pinjaman extends CI_Controller {
         if (!check_permission('pinjaman', $d['role'])){
             redirect('home');
         }else{
-            $d['detail'] = $this->pinjaman_model->get_hutang_now($d["nik"]);
             $d['data'] = $this->pinjaman_model->get_angsuran($d["nik"]);
-            $d['hutang'] = $this->pinjaman_model->get_hutang_now($d["nik"]);
+            $d['summary'] = count($d['data']) > 0 ? $this->pinjaman_model->get_summary_angsuran($d["data"][0]["pinjaman_id"]) : [];
+
             $this->load->view('layout/template', $d);
         }
 	}

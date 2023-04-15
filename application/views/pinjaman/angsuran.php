@@ -7,31 +7,31 @@
                 <div class="mb-2 row">
                     <div class="col-lg-2">NIK</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['nik']) && !empty($detail['nik'])? $detail['nik'] : '-' ?>
+                        <?= !empty($nik)? $nik : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Nama</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['name']) && !empty($detail['name'])? $detail['name'] : '-' ?>
+                        <?= !empty($name)? $name : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Depo</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['depo']) && !empty($detail['depo'])? $detail['depo'] : '-' ?>
+                        <?= !empty($depo_name)? $depo_name : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Total Bayar</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['total']) && !empty($detail['total']) && $detail['status_angsuran'] == 'Belum Lunas' ? rupiah($detail['total']) : '-' ?>
+                        <?= isset($summary['total_bayar']) && !empty($summary['total_bayar']) ? rupiah($summary['total_bayar']) : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Sisa Pinjaman</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['sisa']) && !empty($detail['sisa']) && $detail['status_angsuran'] == 'Belum Lunas' ? rupiah($detail['sisa']) : '-' ?>
+                        <?= isset($summary['sisa_pinjaman']) && !empty($summary['sisa_pinjaman']) ? rupiah($summary['sisa_pinjaman']) : '-' ?>
                     </div>
                 </div>
             </div>
@@ -72,18 +72,24 @@
                             "Desember"
                         ];
 
-                        if(count($data)): foreach ($data as $key => $value): ?>
+                        if(count($data)): 
+                        $total_pinjaman = floatval($summary['total_pinjaman']);
+                        foreach ($data as $key => $value): ?>
                         <tr>
                             <td><?= $month_list[$value['month']-1] ?></td>
                             <td><?= $value['year'] ?></td>
                             <td class="text-center"><?= $value['month_no'] ?></td>
-                            <td class="text-center"><?= rupiah(0) ?></td>
+                            <td class="text-center"><?= rupiah($total_pinjaman) ?></td>
                             <td class="text-center"><?= rupiah($value['pokok']) ?></td>
                             <td class="text-center"><?= rupiah($value['bunga']) ?></td>
                             <td class="text-center"><?= rupiah($value['angsuran']) ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
                         </tr>
-                    <?php endforeach; else: ?>
+                    <?php 
+                        $total_pinjaman = $total_pinjaman - floatval($value['angsuran']);
+                        endforeach; 
+                        else: 
+                    ?>
                         <tr>
                             <td colspan="8" class="text-center">No Rows Result Set</td>
                         </tr>
