@@ -73,6 +73,11 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-8"><?=!empty($data["status"])? $data["status"] : '-'?></div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Gaji</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-8"><?=!empty($data["salary"])? rupiah($data["salary"]) : '-'?></div>
+                        </div>
                     </div>
                     <div class="col-lg-4 text-center">
                         <img class="detail-profile-photo" src="<?=base_url('files/').$data['profile_photo'] ?>" /><br/>
