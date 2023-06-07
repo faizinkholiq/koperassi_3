@@ -432,4 +432,50 @@
         ->get()->row_array();
     }
 
+    public function get_report_template()
+    {
+        $data = $this->db->select([
+            'pinjaman.id',
+            'pinjaman.person',
+            'person.name',
+            'person.email',
+            'person.acc_no',
+            'pinjaman.date',
+            'pinjaman.year',
+            'pinjaman.month',
+            'person.wajib + person.investasi + person.sukarela + (person.salary * 2) plafon',
+            'pinjaman.balance', 
+            'pinjaman.real', 
+            'pinjaman.angsuran',
+            'COUNT(DISTINCT angsuran.id) angsuran_paid',
+            'pinjaman.status',
+            "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
+            THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
+        ])
+        ->from('pinjaman')
+        ->join('(
+            SELECT 
+                person.nik,
+                person.name,
+                person.email,
+                person.salary,
+                person.acc_no,
+                depo.name depo,
+                wajib.balance wajib,
+                investasi.balance investasi,
+                sukarela.balance sukarela
+            FROM person
+            LEFT JOIN depo ON depo.id = person.depo
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) wajib ON wajib.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) investasi ON investasi.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) sukarela ON sukarela.person = person.nik
+            GROUP BY person.nik
+        ) person', 'person.nik = pinjaman.person')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
+        ->order_by('date', 'desc')
+        ->group_by('pinjaman.id')->get()->result_array();
+        
+        return $data;
+    }
+
 }

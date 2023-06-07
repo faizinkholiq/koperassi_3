@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Pinjaman extends CI_Controller {
 
 	public function __construct()
@@ -357,5 +360,126 @@ class Pinjaman extends CI_Controller {
         }
 
 	}
+
+    public function export_template()
+    {
+        // Data
+        $data = $this->pinjaman_model->get_report_template();
+        
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $rowNo = 1;
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+        
+        $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+            'fill' => [
+                'type' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => '00FF7F']
+            ]
+        ];
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'No');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(5);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Debited Acc.');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Beneficiary ID');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Credited Acc.');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Eff. Date');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Transaction Purpose');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(25);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Remark 1');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Receiver Name');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Beneficiary Email');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
+    
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
+        $rowNo++;
+        
+        $firstRow = $rowNo;
+        $no = 1;
+        foreach($data as $row)
+        {
+            $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $no++);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "2833485555");
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "001");
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['acc_no']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['real']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "");
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "");
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "Realisasi Pinjaman");
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['email']);
+            $rowNo++;
+        }
+        $rowNo--;
+
+        $allStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Report_Detail_Simpanan_'.date('YmdHis');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
 
 }

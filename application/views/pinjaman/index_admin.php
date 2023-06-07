@@ -14,10 +14,13 @@
 <?php endif; ?>
 
 <div class="row mb-3">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <a href="<?= site_url('pinjaman') ?>" class="btn font-weight-bold <?= ($status == 'All' || $status == '')? 'btn-primary' : 'btn-secondary' ?>">All</a>
         <a href="<?= site_url('pinjaman') ?>?status=Lunas" class="btn ml-1 font-weight-bold <?= ($status == 'Lunas')? 'btn-primary' : 'btn-secondary' ?>">Lunas</a>
         <a href="<?= site_url('pinjaman') ?>?status=Belum Lunas" class="btn ml-1 font-weight-bold <?= ($status == 'Belum Lunas')? 'btn-primary' : 'btn-secondary' ?>">Belum Lunas</a>
+    </div>
+    <div class="col-lg-6 text-right">
+        <a href="<?= site_url('pinjaman/export_template') ?>" target="_blank" class="btn font-weight-bold bg-success text-white"><i class="fas fa-file-excel mr-2"></i>Template Transfer</a>
     </div>
 </div>
 
