@@ -1,101 +1,56 @@
-<link href="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.css') ?>" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
-<?php
-    if(!empty($this->session->flashdata('msg'))):
-        $msg = $this->session->flashdata('msg');
-?>
-<div class="alert <?= ($msg['success'])? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show" role="alert">
-    <strong><?= ($msg['success'])? $msg["message"] : $msg["error"] ?></strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<?php endif; ?>
-
-<div class="card shadow mb-4">
-    <div class="card-body">
-        <div class="row mb-4">
-            <div class="col-lg-12 text-right">
-                <a href="<?= site_url('report/export_simpanan') ?>" target="_blank" class="btn my-btn-primary mr-2"><i class="fas fw fa-file-excel mr-1"></i> Export</a>
+<div class="row">
+    <div class="col-lg-12 mb-4">
+        <!-- Illustrations -->
+        <div class="card shadow mb-4">
+            <form action="<?= site_url('report/export_simpanan') ?>" id="exportForm" method="GET">
+            <div class="card-body">
+                <div class="row mb-4 mt-4" style="position: relative;">
+                    <div class="col-lg-8">
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Tgl. Cetak</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-4">
+                                <input type="date" class="form-control col-lg-8" name="date" value="<?= date('Y-m-d') ?>" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Bulan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-4">
+                                <select class="form-control col-lg-8" id="selectMonth" name="month">
+                                    <?php 
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    foreach($months as $key => $item):
+                                    ?>
+                                    <option value="<?= $key+1 ?>"><?= $item ?></option>
+                                    <!-- <option value="<?= str_pad($key+1, 2, '0', STR_PAD_LEFT); ?>"><?= $item ?></option> -->
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-lg-3">Tahun</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-4">
+                                <select class="form-control col-lg-8" id="selectYear" name="year">
+                                    <?php 
+                                    $start = 2019;
+                                    for($i = $start; $i <= date('Y'); $i++):
+                                    $y = (isset($parameter['year']) && !empty($parameter['year'])) ? : date('Y');
+                                    ?>
+                                    <option value="<?= $i ?>" <?= ($i == $y)? 'selected' : '' ?>><?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div><hr>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="simpananTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th rowspan="2" class="text-center">NIK</th>
-                        <th rowspan="2" class="text-center">Nama</th>
-                        <th rowspan="2" class="text-center">Depo</th>
-                        <th rowspan="2" class="text-center">Jabatan</th>
-                        <th colspan="5" class="text-center">Data Simpanan</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">Pokok</th>
-                        <th class="text-center">Wajib</th>
-                        <th class="text-center">Investasi</th>
-                        <th class="text-center">Sukarela</th>
-                        <th class="text-center">Total</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="card-footer text-right">
+                <button type="submit" id="btnPosting" class="btn btn-primary btn-md mt-2 mb-2 ml-2 mr-4"><i class="fas fw fa-file-excel mr-1"></i> Export Detail</button>
+            </div>
+            </form>
         </div>
+
     </div>
 </div>
-
-<script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
-<script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-<script>
-    const url = {
-        base: '<?=base_url() ?>',
-        site: '<?=site_url() ?>'
-    };
-
-    let month = $('#selectBulan').val();
-    let year = $('#selectTahun').val();
-
-    let dt = $('#simpananTable').DataTable({
-        dom: "Bfrtip",
-        ajax: {
-            url: url.site + "/report/get_dt_simpanan",
-            type: "POST",
-            data: function(d){
-                d.month = month;
-                d.year = year;
-            }
-        },
-        processing: true,
-        serverSide: true,
-        columns: [
-            { data: "nik" },
-            { data: "name" },
-            { data: "depo" },
-            { data: "position" },
-            { data: "pokok" },
-            { data: "wajib" },
-            { data: "investasi" },
-            { data: "sukarela" },
-            { data: "total" },
-        ],
-        ordering: false
-    });
-
-    $(document).ready(function() {
-        $('.alert').alert()
-        $('.selectpicker').selectpicker();
-    });
-
-    function selectMonth(){
-        month = $('#selectBulan').val();
-        dt.ajax.reload();
-    }
-
-    function selectYear(){
-        year = $('#selectTahun').val();
-        dt.ajax.reload();
-    }
-
-</script>

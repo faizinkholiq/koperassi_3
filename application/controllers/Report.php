@@ -20,7 +20,7 @@ class Report extends CI_Controller {
 	public function simpanan()
 	{
         $d = $this->user_model->login_check();
-        $d['title'] = "Laporan Simpanan";
+        $d['title'] = "Rekapitulasi Simpanan";
 		$d['highlight_menu'] = "report_simpanan";
 		$d['content_view'] = 'report/simpanan';
 
