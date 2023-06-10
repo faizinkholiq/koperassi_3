@@ -874,9 +874,15 @@ class Simpanan extends CI_Controller {
 		if (!check_permission('penarikan_simpanan', $d['role'])){
             redirect('home');
         }else{
-            $p['active'] = 0;
-            $p['net_off'] = true;
-			$d['person_list'] = $this->anggota_model->list($p);
+			$d['person_list_all'] = $this->anggota_model->list([
+                "active" => 1,
+            ]);
+
+			$d['person_list'] = $this->anggota_model->list([
+                "active" => 0,
+                "net_off" => true,
+            ]);
+            
             $d['summary']['simpanan'] = $this->simpanan_model->get_summary_simpanan($d['nik']);
             $d['summary']['penarikan'] = $this->simpanan_model->get_summary_penarikan($d['nik']);
 
