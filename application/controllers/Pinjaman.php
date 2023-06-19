@@ -252,7 +252,7 @@ class Pinjaman extends CI_Controller {
 
                                 $sisa = $sisa - $angsuran;
                                 $this->pinjaman_model->create_angsuran($nd_angsuran);
-                                if($i > 12) $year++;
+                                if($month >= 12) $year++;
                                 $month++;
                             }
 

@@ -124,7 +124,7 @@
         $this->db->start_cache();
 
         if(!empty($search["value"])){
-			$col = ["date", "year", "month", "limit", "balance"];
+			$col = ["person.nik", "person.name", "person.depo", "pinjaman.balance", "person.wajib", "person.investasi", "person.sukarela", "person.salary", "pinjaman.real", "pinjaman.angsuran", "pinjaman.status"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
@@ -472,6 +472,7 @@
             GROUP BY person.nik
         ) person', 'person.nik = pinjaman.person')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
+        ->where('pinjaman.status', 'Approved')
         ->order_by('date', 'desc')
         ->group_by('pinjaman.id')->get()->result_array();
         
