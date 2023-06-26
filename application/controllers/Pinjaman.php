@@ -365,7 +365,8 @@ class Pinjaman extends CI_Controller {
     public function export_template()
     {
         // Data
-        $data = $this->pinjaman_model->get_report_template();
+        $p = $_GET;
+        $data = $this->pinjaman_model->get_report_template($p);
         
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();

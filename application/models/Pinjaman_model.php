@@ -436,8 +436,17 @@
         ->get()->row_array();
     }
 
-    public function get_report_template()
+    public function get_report_template($p)
     {
+
+        if (isset($p["year"]) && !empty($p["year"])){
+            $this->db->where('pinjaman.year', $p["year"]);
+        }
+
+        if (isset($p["month"]) && !empty($p["month"])){
+            $this->db->where('pinjaman.month', $p["month"]);
+        }
+
         $data = $this->db->select([
             'pinjaman.id',
             'pinjaman.person',

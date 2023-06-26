@@ -134,23 +134,43 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" action="<?=site_url('pinjaman/export_template')?>">
+            <form method="GET" action="<?=site_url('pinjaman/export_template')?>">
                 <div class="modal-body">
                     <div class="row mb-4 mt-4">
                         <div class="col-lg-12">
                             <div class="row mb-3">
-                                <div class="col-lg-3">Tanggal Pengajuan</div>
-                                <div class="col-lg-1 text-right">:</div>
-                                <div class="col-lg-6">
-                                    <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 
-                                        value="<?= date('Y-m-d') ?>">
-                                </div>
+                            <div class="col-lg-3">Tahun</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <select class="form-control" id="yearCombo" name="year">
+                                    <?php 
+                                    $start = 2019;
+                                    for($i = $start; $i <= date('Y'); $i++):
+                                    ?>
+                                    <option value="<?= $i ?>" <?= ($i == date('Y'))? 'selected' : '' ?>><?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
                             </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-3">Bulan</div>
+                            <div class="col-lg-1 text-right">:</div>
+                            <div class="col-lg-6">
+                                <select class="form-control" id="monthCombo" name="month">
+                                    <option value="">- All -</option>
+                                    <?php 
+                                    $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    foreach($months as $key => $item):
+                                    ?>
+                                    <option value="<?= $key+1 ?>" <?= ($key+1 == date('m'))? 'selected' : '' ?>><?= $item ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="rejID" name="id" />
                     <button class="btn btn-primary mr-2" type="submit"><i class="fas fa-print mr-2"></i> Cetak</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                 </div>
