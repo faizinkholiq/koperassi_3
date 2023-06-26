@@ -475,7 +475,7 @@ class Pinjaman extends CI_Controller {
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
 
         $writer = new Xlsx($spreadsheet);
-        $filename = 'Report_Detail_Simpanan_'.date('YmdHis');
+        $filename = 'Template_BCA_'.date('YmdHis');
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 

@@ -1,3 +1,23 @@
+<style>
+    .card-link-dashboard{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border:none; 
+        color:white; 
+        font-size:1rem; 
+        width:100%;
+        padding-right: 2rem;
+        transition: padding-right 0.5s;
+        font-weight: bold;
+    }
+    .card-link-dashboard:hover{
+        text-decoration: none;
+        padding-right: 1.2rem;
+        color:white;
+        font-weight: bold;
+    }
+</style>
 <!-- Content Row -->
 <div class="row">
     <div class="col-xl-4 col-md-6 mb-4" >
@@ -6,10 +26,10 @@
                 Simpanan Pokok:<br/>
                 <?= $summary['pokok'] ?>
             </div>
-            <div class="card-footer" style="background:#f39c12; border:none; color:white;">
+            <a href="<?= site_url('simpanan'); ?>" class="card-link-dashboard card-footer" style="background:#f39c12; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
@@ -18,10 +38,10 @@
                 Simpanan Wajib:<br/>
                 <?= $summary['wajib'] ?>
             </div>
-            <div class="card-footer" style="background:#c0392b; border:none; color:white;">
+            <a href="<?= site_url('simpanan'); ?>" class="card-link-dashboard card-footer" style="background:#c0392b; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
@@ -30,10 +50,10 @@
                 Investasi:<br/>
                 <?= $summary['investasi'] ?>
             </div>
-            <div class="card-footer" style="background:#16a085; border:none; color:white;">
+            <a href="<?= site_url('simpanan'); ?>" class="card-link-dashboard card-footer" style="background:#16a085; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4 offset-2">
@@ -42,10 +62,10 @@
                 Simpanan Sukarela:<br/>
                 <?= $summary['sukarela'] ?>
             </div>
-            <div class="card-footer" style="background:#2980b9; border:none; color:white;">
+            <a href="<?= site_url('simpanan'); ?>" class="card-link-dashboard card-footer" style="background:#2980b9; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-xl-4 col-md-6 mb-4">
@@ -54,10 +74,10 @@
                 Sisa Pinjaman:<br/>
                 <?= $summary['pinjaman'] ?>
             </div>
-            <div class="card-footer" style="background:#8e44ad; border:none; color:white;">
+            <a href="<?= site_url('simpanan'); ?>" class="card-link-dashboard card-footer" style="background:#8e44ad; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
-            </div>
+            </a>
         </div>
     </div>
 
