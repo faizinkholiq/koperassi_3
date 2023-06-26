@@ -76,7 +76,7 @@
                 <div class="row mb-4 mt-4">
                     <div class="col-lg-12">
                         <div class="row mb-3">
-                            <div class="col-lg-3">Tanggal Bayar</div>
+                            <div class="col-lg-3">Tanggal Pengajuan</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <input type="date" class="form-control form-control-user" id="tglDateInput" name="date" 

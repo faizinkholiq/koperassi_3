@@ -95,6 +95,7 @@ class Pinjaman extends CI_Controller {
         $params["draw"] = $this->input->post("draw");
         $params["length"] = $this->input->post("length");
         $params["start"] = $this->input->post("start");
+        $params["status_anggaran"] = $this->input->post("status_anggaran");
         $params["status"] = $this->input->post("status");
 
         $data = $this->pinjaman_model->get_dt_all($params);

@@ -141,8 +141,12 @@
             }
 		}
 
+        if(!empty($p["status_anggaran"])){
+            $this->db->having("status_angsuran", $p["status_anggaran"]);
+        }
+
         if(!empty($p["status"])){
-            $this->db->having("status_angsuran", $p["status"]);
+            $this->db->where("pinjaman.status", $p["status"]);
         }
 
         $limit = $p["length"];
