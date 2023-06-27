@@ -296,48 +296,44 @@ class Report extends CI_Controller {
 
         $rowBefore = [];
         $mergePersonRow = 0;
+        $mergeBfPersonRow = 0;
         $mergeYearRow = 0;
         foreach($data as $row)
         {
-            if(!empty($rowBefore)){
-                if($rowBefore['nik'] == $row['nik']){
-                    $mergePersonRow++;
-                    if($rowBefore['year'] == $row['year']){
-                        $mergeYearRow++;
-                    }
+            if (!isset($rowBefore['nik'])){
+                $rowBefore['nik'] = null;
+            }
+
+            if($rowBefore['nik'] == $row['nik']){
+                $mergePersonRow++;
+                if($rowBefore['year'] == $row['year']){
+                    $mergeYearRow++;
                 }
             }else{
-                $mergePersonRow++;
-                $mergeYearRow++;
+                $mergePersonRow = 0;
+                $mergeYearRow = 0;
             }
             
             $letterCounter = $firstLtrCounter;
-            // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'BG01');
-            // $letterCounter++;
+            
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
-            if(!empty($rowBefore)){
-                if($rowBefore['nik'] != $row['nik']){
-                    if ($rowNo - $mergePersonRow < $rowNo - 1){
-                        $sheet->mergeCells("{$letters[$letterCounter]}".$rowNo - $mergePersonRow.":{$letters[$letterCounter]}".$rowNo - 1);
-                    }
+            if($rowBefore['nik'] != $row['nik']){
+                if(($rowNo-$mergeBfPersonRow-1) - ($rowNo - 1)){
+                    $sheet->mergeCells("{$letters[$letterCounter]}".($rowNo-$mergeBfPersonRow-1).":{$letters[$letterCounter]}".($rowNo - 1));
                 }
             }
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
-            if(!empty($rowBefore)){
-                if($rowBefore['nik'] != $row['nik']){
-                    if ($rowNo - $mergePersonRow < $rowNo - 1){
-                        $sheet->mergeCells("{$letters[$letterCounter]}".$rowNo - $mergePersonRow.":{$letters[$letterCounter]}".$rowNo - 1);
-                    }
+            if($rowBefore['nik'] != $row['nik']){
+                if(($rowNo-$mergeBfPersonRow-1) - ($rowNo - 1)){
+                    $sheet->mergeCells("{$letters[$letterCounter]}".($rowNo-$mergeBfPersonRow-1).":{$letters[$letterCounter]}".($rowNo - 1));
                 }
             }
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['year']);
-            if(!empty($rowBefore)){
-                if($rowBefore['nik'] != $row['nik']){
-                    if ($rowNo - $mergeYearRow < $rowNo - 1){
-                        $sheet->mergeCells("{$letters[$letterCounter]}".$rowNo - $mergeYearRow.":{$letters[$letterCounter]}".$rowNo - 1);
-                    }
+            if($rowBefore['nik'] != $row['nik']){
+                if(($rowNo-$mergeBfPersonRow-1) - ($rowNo - 1)){
+                    $sheet->mergeCells("{$letters[$letterCounter]}".($rowNo-$mergeBfPersonRow-1).":{$letters[$letterCounter]}".($rowNo - 1));
                 }
             }
             $letterCounter++;
@@ -363,16 +359,11 @@ class Report extends CI_Controller {
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $rowNo++;
 
-            if(!empty($rowBefore)){
-                if($rowBefore['nik'] != $row['nik']){
-                    $mergePersonRow = 0;
-                    $mergeYearRow = 0;
-                }
-            }
-
+            $mergeBfPersonRow = $mergePersonRow;
             $rowBefore = $row;
         }
         $rowNo--;
+        // exit;
 
         $allStyle = [
             'font' => [

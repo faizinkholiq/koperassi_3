@@ -169,11 +169,11 @@ class Report_model extends CI_Model {
         
         $where_simpanan = "";
         if(!empty($p['year'])){
-            $where_simpanan .= " AND year = '".$p['year']."'";
+            $where_simpanan .= " AND year = ".$p['year'];
         }
 
         if(!empty($p['from']) && !empty($p['to'])){
-            $where_simpanan .= " AND month BETWEEN '".$p['from']. "' AND '".$p['to']."'";
+            $where_simpanan .= " AND month BETWEEN ".$p['from']. " AND ".$p['to'];
         }
 
         $q_simpanan = $this->db->select([
@@ -245,7 +245,7 @@ class Report_model extends CI_Model {
         }
 
         if(!empty($p['from']) && !empty($p['to'])){
-            $this->db->where("month BETWEEN '".$p['from']. "' AND '".$p['to']."'");
+            $this->db->where("month BETWEEN ".$p['from']. " AND ".$p['to']);
         }
 
         $q_penarikan = $this->db->select([
