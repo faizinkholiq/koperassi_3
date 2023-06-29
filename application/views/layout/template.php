@@ -63,6 +63,7 @@ if (!isset($highlight_menu)){
                 if ($role == 2): 
                 $simpanan = in_array($highlight_menu, ["simpanan","ubah_simpanan","penarikan_simpanan"]);
                 $pinjaman = in_array($highlight_menu, ["pinjaman","angsuran"]);
+                $pinjaman_barang = in_array($highlight_menu, ["pinjaman_barang","angsuran_barang"]);
             ?>
 
             <li class="nav-item">
@@ -90,6 +91,20 @@ if (!isset($highlight_menu)){
                     <div class="my-bg-primary py-2 collapse-inner rounded">
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>" href="<?= site_url('/pinjaman') ?>">Pengajuan Pinjaman</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'angsuran' ? 'active' : '' ?>" href="<?= site_url('/pinjaman/angsuran') ?>">Tabel Angsuran</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link <?= $pinjaman_barang ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapsePinjamanBarang"
+                    aria-expanded="true" aria-controls="collapsePinjamanBarang">
+                    <i class="fas fa-fw fa-boxes  <?= $pinjaman_barang ? 'text-white' : '' ?>"></i>
+                    <span>Pinjaman Barang</span>
+                </a>
+                <div id="collapsePinjamanBarang" class="collapse <?= $pinjaman_barang ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'pinjaman_barang' ? 'active' : '' ?>" href="<?= site_url('/pinjaman_barang') ?>">Pengajuan Pinjaman</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'angsuran_barang' ? 'active' : '' ?>" href="<?= site_url('/pinjaman_barang/angsuran') ?>">Tabel Angsuran</a>
                     </div>
                 </div>
             </li>
