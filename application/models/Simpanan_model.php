@@ -631,7 +631,7 @@
         $this->db->start_cache();
 
         if(!empty($search["value"])){
-			$col = ["month", "year", "balance"];
+			$col = ["penarikan_simpanan.date", "penarikan_simpanan.month", "penarikan_simpanan.year", "person.name", "penarikan_simpanan.balance", "penarikan_simpanan.type", "penarikan_simpanan.status"];
 			$src = $search["value"];
 			$src_arr = explode(" ", $src);
 
