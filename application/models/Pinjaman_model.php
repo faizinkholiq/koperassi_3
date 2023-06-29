@@ -188,7 +188,7 @@
             GROUP BY person.nik
         ) person', 'person.nik = pinjaman.person')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
-        ->order_by('pinjaman.date', 'desc')
+        ->order_by('person.nik ASC, pinjaman.date DESC')
         ->group_by('pinjaman.id');
         
         $q = $this->db->get();
