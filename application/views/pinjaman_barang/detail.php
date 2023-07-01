@@ -25,7 +25,7 @@
                 <div class="mb-2 row">
                     <div class="col-lg-2">Nama Anggota</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['summary']['person_name']) && !empty($detail['summary']['name'])? $detail['summary']['name'] : '-' ?>
+                        <?= isset($detail['summary']['person_name']) && !empty($detail['summary']['person_name'])? $detail['summary']['person_name'] : '-' ?>
                     </div>
                 </div><hr/>
                 <div class="mb-2 row">
