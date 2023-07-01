@@ -427,7 +427,8 @@ class Report extends CI_Controller {
         $p['year'] = $this->input->get('year');
 
         // Data
-        $data = $this->report_model->get_data_simpanan($p);
+        $data = $this->report_model->get_data_pinjaman_barang($p);
+        $month_name = ["JANUARI", "PEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -442,6 +443,10 @@ class Report extends CI_Controller {
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Rincian Pinjaman Barang Anggota Koperasi');
         $rowNo+=2;
         
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'PERIODE: '. $month_name[$p['month'] - 1] .' '.$p['year']);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setBold( true );
+
+        $rowNo++;
         $firstRow = $rowNo;
         $headerStyle = [
             'font' => [
@@ -476,7 +481,24 @@ class Report extends CI_Controller {
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Harga Jual');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         $letterCounter++;
-        
+
+        $year = $p['year'];
+        $month = $p['month'];
+        $month_no = $month;
+        for ($i=1; $i <= 18; $i++) { 
+
+            if($month_no == 13) {
+                $month_no = 1;
+                $year++;
+            }
+
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", substr($month_name[$month_no-1], 0, 3));
+            $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+            $letterCounter++;
+
+            $month_no++;
+        }
+        $letterCounter--;
 
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
         $rowNo++;
@@ -487,26 +509,37 @@ class Report extends CI_Controller {
             $letterCounter = $firstLtrCounter;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['nik']);
             $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['person_name']);
+            $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['depo']);
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['position']);
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['wajib']);
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['buy']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['pokok']);
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['profit']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['sukarela']);
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['sell']);
             $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
             $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['investasi']);
-            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['total']);
-            $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+            
+            $year = $p['year'];
+            $month = $p['month'];
+            $month_no = $month;
+            for ($i=1; $i <= 18; $i++) { 
+
+                if($month_no == 13) {
+                    $month_no = 1;
+                    $year++;
+                }
+
+                $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row[$year.str_pad($month_no, 2, '0', STR_PAD_LEFT)]);
+                $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+                $letterCounter++;
+
+                $month_no++;
+            }
+            $letterCounter--;
             $rowNo++;
         }
         $rowNo--;

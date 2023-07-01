@@ -294,5 +294,51 @@ class Report_model extends CI_Model {
         return $data;
     }
 
+    public function get_data_pinjaman_barang($p = null) 
+    {   
+        $year = $p['year'];
+        $month = $p['month'];
+
+        $select_dates = [];
+
+        $month_no = $month;
+        for ($i=1; $i <= 18; $i++) { 
+
+            if($month_no == 13) {
+                $month_no = 1;
+                $year++;
+            }
+
+            $select_dates[] = " 
+                SUM(CASE WHEN angsuran_barang.year = $year AND angsuran_barang.month = $month_no AND angsuran_barang.status = 'Lunas'
+                THEN angsuran_barang.angsuran
+                ELSE 0 END) '".$year.str_pad($month_no, 2, '0', STR_PAD_LEFT)."'
+            ";
+
+            $month_no++;
+        }
+        
+        $this->db->select($select_dates);
+        $this->db->select([
+            "pinjaman_barang.id",
+            "person.nik",
+            "person.name person_name",
+            "pinjaman_barang.name",
+            "pinjaman_barang.buy",
+            "pinjaman_barang.sell",
+            "(pinjaman_barang.sell - pinjaman_barang.buy) profit",
+        ])
+        ->from('pinjaman_barang')
+        ->join('person', 'person.nik = pinjaman_barang.person')
+        ->join('angsuran_barang', 'angsuran_barang.pinjaman = pinjaman_barang.id', 'left')
+        ->where('pinjaman_barang.status', 'Approved')
+        ->group_by('pinjaman_barang.id')
+        ->order_by('person.nik', 'asc');
+        
+        $q = $this->db->get();
+        
+        return $q->result_array();
+    }
+
 }
 
