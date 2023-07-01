@@ -28,27 +28,19 @@
             <a href="<?= site_url('pinjaman').(!empty($status_anggaran)? '?status_anggaran='.$status_anggaran.'&' : '?') ?>status=Pending" class="btn ml-1 font-weight-bold <?= ($status == 'Pending')? 'btn-primary' : 'btn-warning' ?>">Pending</a> 
         </div>
     </div>
-    <div class="col-lg-3 text-right">
-        <a onclick="doExport()" class="btn font-weight-bold bg-success text-white"><i class="fas fa-file-excel mr-2"></i>Template Transfer</a>
-    </div>
 </div>
 
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered display nowrap" id="pinjamanTable" cellspacing="0">
+            <table class="table table-bordered" id="pinjamanTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th width="100" class="text-center">NIK</th>
-                        <th width="200" class="text-center">Nama</th>
-                        <th width="120" class="text-center">Depo</th>
-                        <th width="120" class="text-center">Pengajuan</th>
-                        <th width="120" class="text-center">Wajib</th>
-                        <th width="120" class="text-center">Investasi</th>
-                        <th width="120" class="text-center">Sukarela</th>
-                        <th width="120" class="text-center">Gaji Pokok</th>
-                        <th width="120" class="text-center">Plafon</th>
-                        <th width="120" class="text-center">Realisasi</th>
+                        <th width="200" class="text-center">Nama Anggota</th>
+                        <th width="200" class="text-center">Nama Barang</th>
+                        <th width="120" class="text-center">Harga Beli</th>
+                        <th width="120" class="text-center">Harga Jual</th>
                         <th width="80" class="text-center">Jml. Angsuran</th>
                         <th width="100" class="text-center">Status</th>
                         <th width="100" class="text-center">Status Angsuran</th>
@@ -71,25 +63,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" action="<?=site_url('pinjaman/approve')?>">
+            <form method="POST" action="<?=site_url('pinjaman_barang/approve')?>">
                 <div class="modal-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td class="font-weight-bold" width="30%">Pengajuan :</td>
-                            <td width="70%" id="appPengajuan">-</td>
-                        </tr>
-                        <tr>
-                            <td class="font-weight-bold">Realisasi :</td>
-                            <td id="appReal">
-                                <div class="input-group mb-2 col-md-8">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Rp</div>
-                                    </div>
-                                    <input type="text" class="form-control" id="realTextInput" name="real" placeholder="..." required>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <strong>Apakah anda yakin ingin menyetujui peminjaman barang tersebut?</strong><br/>        
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="appID" name="id" />
@@ -110,9 +86,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" action="<?=site_url('pinjaman/reject')?>">
+            <form method="POST" action="<?=site_url('pinjaman_barang/reject')?>">
                 <div class="modal-body">
-                    <strong>Apakah anda yakin ingin menolak perubahan data tersebut?</strong><br/>        
+                    <strong>Apakah anda yakin ingin menolak peminjaman barang tersebut?</strong><br/>        
                     <textarea class="form-control form-control-user mt-4" name="reason" rows="5" placeholder="Silahkan tulis alasan mengapa data tersebut ditolak"></textarea><br/>
                 </div>
                 <div class="modal-footer">
@@ -134,7 +110,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="GET" action="<?=site_url('pinjaman/export_template')?>">
+            <form method="GET" action="<?=site_url('pinjaman_barang/export_template')?>">
                 <div class="modal-body">
                     <div class="row mb-4 mt-4">
                         <div class="col-lg-12">
@@ -222,7 +198,7 @@
     let dt = $('#pinjamanTable').DataTable({
         dom: "Bfrtip",
         ajax: {
-            url: url.site + "/pinjaman/get_dt_all",
+            url: url.site + "/pinjaman_barang/get_dt_all",
             type: "POST",
             data: {
                 status_anggaran: status_anggaran,
@@ -236,18 +212,10 @@
         serverSide: true,
         columns: [
             { data: "nik" },
+            { data: "person_name" },
             { data: "name" },
-            { data: "depo" },
             { 
-                data: "pengajuan",
-                class: "text-center",
-                render: function (data, type, row) {
-                    let num = parseFloat(data??0)
-                    return (data > 0)? `<span class='bg-danger text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
-                }
-            },
-            { 
-                data: "wajib",
+                data: "buy",
                 class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
@@ -255,43 +223,11 @@
                 }
             },
             { 
-                data: "investasi",
+                data: "sell",
                 class: "text-center",
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
                     return (data > 0)? rupiah(num) : '-';
-                }
-            },
-            { 
-                data: "sukarela", 
-                class: "text-center",
-                render: function (data, type, row) {
-                    let num = parseFloat(data??0)
-                    return (data > 0)? rupiah(num) : '-';
-                }
-            },
-            { 
-                data: "gaji",
-                class: "text-center",
-                render: function (data, type, row) {
-                    let num = parseFloat(data??0)
-                    return (data > 0)? rupiah(num) : '-';
-                }
-            },
-            { 
-                data: "plafon",
-                class: "text-center",
-                render: function (data, type, row) {
-                    let num = parseFloat(data??0)
-                    return (data > 0)? rupiah(num) : '-';
-                }
-            },
-            { 
-                data: "realisasi",
-                class: "text-center",
-                render: function (data, type, row) {
-                    let num = parseFloat(data??0)
-                    return (data > 0)? `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
                 }
             },
             { data: "angsuran", class: "text-center" },
@@ -344,7 +280,7 @@
                             <button type="button" onclick="doReject(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-times"></i></button>
                         `;
                     }else if (row.status == 'Approved'){
-                        btn = `<a href="${url.site}/pinjaman/detail/${row.id}" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>`
+                        btn = `<a href="${url.site}/pinjaman_barang/detail/${row.id}" class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></a>`
                     }
 
                     return btn;
@@ -369,9 +305,5 @@
     function doReject(id){
         $('#rejID').val(id);
         $('#rejectModal').modal('show');
-    }
-
-    function doExport(){
-        $('#exportModal').modal('show');
     }
 </script>

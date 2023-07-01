@@ -21,17 +21,35 @@
                     <div class="col-lg-10"><span class="mr-2">:</span> 
                         <?= !empty($depo_name)? $depo_name : '-' ?>
                     </div>
+                </div><hr/>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Nama Barang</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= ($summary['name'])? $summary['name'] : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Tanggal Pinjam</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= ($summary['date'])? $summary['date'] : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Harga Beli</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($summary['buy']) && !empty($summary['buy'])? rupiah($summary['buy']) : '-' ?>
+                    </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Total Bayar</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($summary['total_bayar']) && !empty($summary['total_bayar']) ? rupiah($summary['total_bayar']) : '-' ?>
+                        <?= isset($summary['total_bayar']) && !empty($summary['total_bayar'])? rupiah($summary['total_bayar']) : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Sisa Pinjaman</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($summary['sisa_pinjaman']) && !empty($summary['sisa_pinjaman']) ? rupiah($summary['sisa_pinjaman']) : '-' ?>
+                        <?= isset($summary['sisa_pinjaman']) && !empty($summary['sisa_pinjaman'])? rupiah($summary['sisa_pinjaman']) : '-' ?>
                     </div>
                 </div>
             </div>
@@ -49,8 +67,6 @@
                         <th class="text-center">Tahun</th>
                         <th width="80" class="text-center">Bulan Ke-</th>
                         <th class="text-center">Sisa Hutang</th>
-                        <th class="text-center">Pokok</th>
-                        <th class="text-center">Bunga</th>
                         <th class="text-center">Angsuran</th>
                         <th width="130" class="text-center">Status</th>     
                     </tr>
@@ -80,8 +96,6 @@
                             <td><?= $value['year'] ?></td>
                             <td class="text-center"><?= $value['month_no'] ?></td>
                             <td class="text-center"><?= rupiah($total_pinjaman) ?></td>
-                            <td class="text-center"><?= rupiah($value['pokok']) ?></td>
-                            <td class="text-center"><?= rupiah($value['bunga']) ?></td>
                             <td class="text-center"><?= rupiah($value['angsuran']) ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
                         </tr>

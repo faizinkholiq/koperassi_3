@@ -13,17 +13,6 @@
 </div>
 <?php endif; ?>
 
-<div class="card mb-4 shadow">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-lg-6 font-weight-bold border-right">
-                <div class="text-lg mb-2">Plafon: <span class="text-danger ml-2"><?= rupiah($summary['plafon']) ?></span></div>
-                <div class="text-lg">Sisa Pinjaman: <span class="text-danger ml-2"><?= rupiah($summary['sisa']) ?></span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="card shadow mb-4">
     <div class="card-body">
         <div class="row">
@@ -41,11 +30,9 @@
                 <thead>
                     <tr>
                         <th class="text-center">Tanggal</th>
-                        <th class="text-center">Tahun</th>
-                        <th class="text-center">Bulan</th>
-                        <th class="text-center">Limit Pinjaman</th>
-                        <th class="text-center">Nilai Pengajuan</th>
-                        <th class="text-center">Realisasi</th>
+                        <th class="text-center">Nama Barang</th>
+                        <th class="text-center">Harga Beli</th>
+                        <th class="text-center">Harga Jual</th>
                         <th width="100" class="text-center">Jml. Angsuran</th>
                         <th width="100" class="text-center">Total Angsur</th> 
                         <th width="120" class="text-center">Status Pengajuan</th>
@@ -64,12 +51,12 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-hand-holding-usd"></i> <span id="inputModalTitle">Ajukan Pinjaman</span></h5>
+                <h5 class="modal-title" id="inputModalLabel"><i class="mr-2 fas fa-boxes"></i> <span id="inputModalTitle">Ajukan Pinjaman</span></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="formPinjaman" action="<?= site_url('pinjaman/create') ?>" method="POST" enctype="multipart/form-data">
+            <form id="formPinjaman" action="<?= site_url('pinjaman_barang/create') ?>" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="idPinjaman" name="id" /> 
             <input type="hidden" id="idPerson" name="person" value="<?= $person_id ?>"/> 
             <div class="modal-body">
@@ -106,34 +93,28 @@
                                     $months = ['Januari', 'Februari', 'Maret', 'April', 'May', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                                     foreach($months as $key => $item):
                                     ?>
-                                    <option value="<?= $key+1 ?>"><?= $item ?></option>
+                                    <option value="<?= $key+1 ?>" <?= (($key + 1) == date('m'))? 'selected' : '' ?>><?= $item ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">Limit Pinjaman</div>
+                            <div class="col-lg-3">Nama Barang</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">Rp</div>
-                                    </div>
-                                    <input disabled type="text" class="form-control" id="limitTextInput" name="limit" placeholder="...">
-                                </div>
+                                <input type="text" class="form-control" id="nameTextInput" name="name" placeholder="...">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-3">Nilai Pengajuan</div>
+                            <div class="col-lg-3">Harga Beli</div>
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <div class="input-group mb-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">Rp</div>
                                     </div>
-                                    <input type="text" class="form-control" id="balanceTextInput" name="balance" placeholder="..." required>
+                                    <input type="text" class="form-control" id="buyTextInput" name="buy" placeholder="..." required>
                                 </div>
-                                <span id="limitValidate" class="text-danger font-weight-bold text-sm" id=""><i class="fas fa-exclamation-triangle mr-2"></i><span id="limitValidateMsg"></span></span>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -142,6 +123,7 @@
                             <div class="col-lg-6">
                                 <select class="form-control" id="angsuranCombo" name="angsuran">                                   
                                     <option value="12">12</option>
+                                    <option value="18">18</option>
                                     <option value="24">24</option>
                                 </select>
                             </div>
@@ -172,7 +154,7 @@
                 <strong>Apakah anda yakin ingin menghapus data ini?</strong>
             </div>
             <div class="modal-footer">
-                <form method="GET" action="<?=site_url('pinjaman/delete/') ?>">
+                <form method="GET" action="<?=site_url('pinjaman_barang/delete/') ?>">
                     <input type="hidden" id="delID" name="id" />
                     <button class="btn btn-danger mr-2" type="submit">Ya, Hapus</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
@@ -213,7 +195,6 @@
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
     let status = '<?= $status ?>';
-    const summary = <?= json_encode($summary) ?>;
 
     const rupiah = (number)=>{
         return new Intl.NumberFormat("id-ID", {
@@ -225,7 +206,7 @@
     let dt = $('#pinjamanTable').DataTable({
         dom: "Bfrtip",
         ajax: {
-            url: url.site + "/pinjaman/get_dt",
+            url: url.site + "/pinjaman_barang/get_dt",
             type: "POST",
             data: {
                 status: status
@@ -238,33 +219,19 @@
         serverSide: true,
         columns: [
             { data: "date" },
-            { data: "year" },
+            { data: "name" },
             { 
-                data: "month", 
-                render: function (data, type, row) {
-                    return month_list[Number(data) - 1];
-                }
-            },
-            { 
-                data: "plafon", 
+                data: "buy", 
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
                     return rupiah(num)
                 }
             },
             { 
-                data: "balance", 
+                data: "sell", 
                 render: function (data, type, row) {
                     let num = parseFloat(data??0)
                     return rupiah(num)
-                }
-            },
-            { 
-                data: "real", 
-                class: "text-center",
-                render: function (data, type, row) {
-                    let num = parseFloat(data??0)
-                    return (num > 0)? `<span class='bg-success text-white font-weight-bold px-2 py-1 rounded'>${rupiah(num)}</span>` : '-';
                 }
             },
             { data: "angsuran", class: "text-center" },
@@ -314,13 +281,13 @@
                     let btn = '-';
                     if (row.status == 'Pending' || row.status == 'Decline') {
                         btn = `
-                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></a>
+                            <a href='${url.site}/pinjaman_barang/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></a>
                             <button type="button" onclick='doEdit(`+ JSON.stringify(row) + `)' class="btn btn-sm btn-primary" style="width: 2rem;"><i class="fas fa-edit"></i></button>
                             <button type="button" onclick="doDelete(${row.id})" class="btn btn-sm btn-danger" style="width: 2rem;"><i class="fas fa-trash"></i></button>
                         `;
                     }else{
                         btn = `
-                            <a href='${url.site}/pinjaman/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></a>
+                            <a href='${url.site}/pinjaman_barang/detail/${row.id}' class="btn btn-sm btn-info" style="width: 2rem;"><i class="fas fa-eye"></i></a>
                         `;
                     }
 
@@ -335,15 +302,7 @@
     $(document).ready(function() {
         $("#btnSubmit").click(function() {
             if($('#formPinjaman')[0].checkValidity()){
-                let limit = parseFloat(summary.plafon);
-                let balance = parseFloat($('#balanceTextInput').val());
-                console.log(limit >= balance);
-                if (limit >= balance) {
-                    $('#formPinjaman').submit();
-                }else{
-                    $('#limitValidate').show();
-                    $('#limitValidateMsg').text('Nilai pengajuan tidak boleh melebihi limit');
-                }
+                $('#formPinjaman').submit();
             }else{
                 $('#limitValidate').show();
                 $('#limitValidateMsg').text('Silahkan masukan nominal pinjaman yang akan diajukan');
@@ -353,8 +312,8 @@
 
     function showForm(){
         resetForm();
-        $('#inputModalTitle').text('Ajukan Pinjaman');
-        $('#formPinjaman').attr('action', url.site + "/pinjaman/create")
+        $('#inputModalTitle').text('Ajukan Pinjaman Barang');
+        $('#formPinjaman').attr('action', url.site + "/pinjaman_barang/create")
         $('#btnReset').show();
 
         $('#inputModal').modal('show');
@@ -363,24 +322,22 @@
     function resetForm() {
         $('#idPinjaman').val('');
         $('#tglDateInput').val(date_now);
-        $('#yearCombo').val(year_now);
-        $('#monthCombo').val(month_now);
-        $('#limitTextInput').val(summary.plafon);
-        $('#balanceTextInput').val('');
+        $('#nameTextInput').val('');
+        $('#buyTextInput').val('');
+        $('#sellTextInput').val('');
         $('#angsuranCombo').val(12);
         $('#limitValidate').hide();
     }
 
     function doEdit(row){
         resetForm();
-        $('#inputModalTitle').text('Ubah Pengajuan Pinjaman');
-        $('#formPinjaman').attr('action', url.site + "/pinjaman/edit")
+        $('#inputModalTitle').text('Ubah Pengajuan Pinjaman Barang');
+        $('#formPinjaman').attr('action', url.site + "/pinjaman_barang/edit")
         $('#idPinjaman').val(row.id)
         $('#tglDateInput').val(row.date);
-        $('#yearCombo').val(Number(row.year));
-        $('#monthCombo').val(Number(row.month));
-        $('#limitTextInput').val(row.limit);
-        $('#balanceTextInput').val(row.balance);
+        $('#nameTextInput').val(row.name);
+        $('#buyTextInput').val(row.buy);
+        $('#sellTextInput').val(row.sell);
         $('#angsuranCombo').val(row.angsuran);
 
         $('#btnReset').hide();

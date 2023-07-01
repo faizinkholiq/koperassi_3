@@ -30,7 +30,6 @@ class Pinjaman_barang extends CI_Controller {
                 $d['content_view'] = 'pinjaman_barang/index_admin';
             }else{
                 $d['content_view'] = 'pinjaman_barang/index';
-                $d['summary'] = $this->pinjaman_barang_model->summary($d['person_id']);
             }
 
             $this->load->view('layout/template', $d);
@@ -113,9 +112,10 @@ class Pinjaman_barang extends CI_Controller {
         if ($detail_person) {
             $data["person"] = $detail_person['nik'];
             $data["date"] = $this->input->post('date');
-            $data["year"] = $this->input->post('year');
+            $data["name"] = $this->input->post('name');
             $data["month"] = $this->input->post('month');
-            $data["balance"] = $this->input->post('balance');
+            $data["year"] = $this->input->post('year');
+            $data["buy"] = $this->input->post('buy');
             $data["angsuran"] = $this->input->post('angsuran');
         }
 
@@ -218,55 +218,37 @@ class Pinjaman_barang extends CI_Controller {
         }else{
             $id = $this->input->post('id');
             $nd['status'] = 'Approved';
-            $nd['real'] = $this->input->post('real');
             $detail = $this->pinjaman_barang_model->detail($id);
-
+            
             if ($detail) {
+                $profit = $detail["buy"] * (0.5/100) * $detail["angsuran"];
+                $nd["sell"] = $profit + $detail["buy"];
                 $nd['id'] = $detail['id'];
-                $kas_by_year = $this->kas_model->detail_by_year($detail['year']);
-                if ($kas_by_year){
-                    $nd_kas['id'] = $kas_by_year['id'];
-                    $nd_kas['kredit'] = floatval($kas_by_year['kredit']) + floatval($nd['real']);
+                if ($this->pinjaman_barang_model->edit($nd)) {
+                    $year = $detail["year"];
+                    $month = $detail["month"];
+                    $angsuran = $nd["sell"] / $detail["angsuran"];
 
-                    if ($this->kas_model->edit($nd_kas)) {
-                        if ($this->pinjaman_barang_model->edit($nd)) {
-                            $year = $detail["year"];
-                            $month = $detail["month"];
-                            $mn = 12;
-                            $rate = 15.23/100;
-                            $nper = floatval($detail["angsuran"]);
-                            $sisa = floatval($nd['real']);
-                            $angsuran = round(PMT($rate / $mn, $nper, $sisa));
+                    for ($i=1; $i <= $detail["angsuran"]; $i++) {
+                        if($month%12 == 1) $month = 1;
 
-                            for ($i=1; $i <= $detail["angsuran"]; $i++) {
-                                if($month%12 == 1) $month = 1;
+                        $nd_angsuran["pinjaman"] = $detail["id"];
+                        $nd_angsuran["year"] = $year;
+                        $nd_angsuran["month"] = $month;
+                        $nd_angsuran["month_no"] = $i;
+                        $nd_angsuran["angsuran"] = $angsuran;
+                        $nd_angsuran["status"] = "Belum Lunas";
 
-                                $bunga = $sisa * $rate / $mn; 
-
-                                $nd_angsuran["pinjaman"] = $detail["id"];
-                                $nd_angsuran["year"] = $year;
-                                $nd_angsuran["month"] = $month;
-                                $nd_angsuran["month_no"] = $i;
-                                $nd_angsuran["pokok"] = $angsuran - $bunga;
-                                $nd_angsuran["bunga"] = $bunga;
-                                $nd_angsuran["status"] = "Belum Lunas";
-
-                                $sisa = $sisa - $angsuran;
-                                $this->pinjaman_barang_model->create_angsuran($nd_angsuran);
-                                if($month >= 12) $year++;
-                                $month++;
-                            }
-
-                            $data['success'] = 1;
-                            $data['message'] = "Data berhasil tersimpan !";
-                        } else {
-                            $data['success'] = 0;
-                            $data['error'] = "Gagal menyimpan data !";
-                        }
+                        $this->pinjaman_barang_model->create_angsuran($nd_angsuran);
+                        if($month >= 12) $year++;
+                        $month++;
                     }
-                }else{
+
+                    $data['success'] = 1;
+                    $data['message'] = "Data berhasil tersimpan !";
+                } else {
                     $data['success'] = 0;
-                    $data['error'] = "Gagal mengupdate data kas !";
+                    $data['error'] = "Gagal menyimpan data !";
                 }
                 
             }else{
@@ -327,22 +309,8 @@ class Pinjaman_barang extends CI_Controller {
                 if($detail_pinjaman) {
                     $nd['id'] = $detail['id'];
                     if ($this->pinjaman_barang_model->edit_angsuran($nd)) {
-                        $kas_by_year = $this->kas_model->detail_by_year($detail_pinjaman['year']);
-                        if ($kas_by_year){
-                            $nd_kas['id'] = $kas_by_year['id'];
-                            $angsuran = floatval($detail['pokok']) + floatval($detail['bunga']);
-                            $nd_kas['debet'] = floatval($kas_by_year['debet']) + $angsuran;
-                            if ($this->kas_model->edit($nd_kas)) {
-                                $data['success'] = 1;
-                                $data['message'] = "Data berhasil tersimpan !";
-                            }else{
-                                $data['success'] = 0;
-                                $data['error'] = "Gagal menyimpan data !";
-                            }
-                        }else{
-                            $data['success'] = 0;
-                            $data['error'] = "Gagal Update Kas !";
-                        }
+                        $data['success'] = 1;
+                        $data['message'] = "Data berhasil tersimpan !";
                     } else {
                         $data['success'] = 0;
                         $data['error'] = "Gagal menyimpan data !";
@@ -361,127 +329,4 @@ class Pinjaman_barang extends CI_Controller {
         }
 
 	}
-
-    public function export_template()
-    {
-        // Data
-        $p = $_GET;
-        $data = $this->pinjaman_barang_model->get_report_template($p);
-        
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $rowNo = 1;
-        $letters = get_alphabet_list();
-        $letterCounter = 0;
-        $firstLtrCounter = $letterCounter;
-        
-        $firstRow = $rowNo;
-        $headerStyle = [
-            'font' => [
-                'bold' => true,
-            ],
-            'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-            ],
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-            ],
-            'fill' => [
-                'type' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                'startColor' => ['argb' => '00FF7F']
-            ]
-        ];
-
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'No');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(5);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Debited Acc.');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Beneficiary ID');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Credited Acc.');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Eff. Date');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Transaction Purpose');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(25);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Remark 1');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Receiver Name');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
-        $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Beneficiary Email');
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(35);
-    
-        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
-        $rowNo++;
-        
-        $firstRow = $rowNo;
-        $no = 1;
-        foreach($data as $row)
-        {
-            $letterCounter = $firstLtrCounter;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $no++);
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "2833485555");
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "001");
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['acc_no']);
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['real']);
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "");
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "");
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "Realisasi Pinjaman");
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
-            $letterCounter++;
-            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['email']);
-            $rowNo++;
-        }
-        $rowNo--;
-
-        $allStyle = [
-            'font' => [
-                'bold' => false,
-            ],
-            'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-            ],
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-            ],
-        ];
-        
-        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
-
-        $writer = new Xlsx($spreadsheet);
-        $filename = 'Template_BCA_'.date('YmdHis');
-        
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
-        header('Cache-Control: max-age=0');
-
-        $writer->save('php://output');
-    }
-
 }

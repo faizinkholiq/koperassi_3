@@ -23,15 +23,27 @@
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-2">Nama</div>
+                    <div class="col-lg-2">Nama Anggota</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= isset($detail['summary']['name']) && !empty($detail['summary']['name'])? $detail['summary']['name'] : '-' ?>
+                        <?= isset($detail['summary']['person_name']) && !empty($detail['summary']['name'])? $detail['summary']['name'] : '-' ?>
+                    </div>
+                </div><hr/>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Nama Barang</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= ($detail['summary']['name'])? $detail['summary']['name'] : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-2">Depo</div>
+                    <div class="col-lg-2">Tanggal Pinjam</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= ($detail['summary']['depo'])? $detail['summary']['depo'] : '-' ?>
+                        <?= ($detail['summary']['date'])? $detail['summary']['date'] : '-' ?>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-2">Harga Beli</div>
+                    <div class="col-lg-10"><span class="mr-2">:</span> 
+                        <?= isset($detail['summary']['buy']) && !empty($detail['summary']['buy'])? rupiah($detail['summary']['buy']) : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
@@ -76,9 +88,6 @@
                         <th class="text-center">Bulan</th>
                         <th class="text-center">Tahun</th>
                         <th width="80" class="text-center">Bulan Ke-</th>
-                        <!-- <th width="150" class="text-center">Sisa Hutang</th> -->
-                        <th class="text-center">Pokok</th>
-                        <th class="text-center">Bunga</th>
                         <th class="text-center">Angsuran</th>
                         <th width="120" class="text-center">Status</th>
                         <?php if($role == 1): ?>
@@ -115,8 +124,6 @@
                             <td><?= ($value['month'])? $month_list[$value['month']-1] : '-' ?></td>
                             <td><?= $value['year'] ?></td>
                             <td class="text-center"><?= $value['month_no'] ?></td>
-                            <td><?= rupiah($value['pokok']) ?></td>
-                            <td><?= rupiah($value['bunga']) ?></td>
                             <td><?= rupiah($value['angsuran']) ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
                             <?php if($role == 1): ?>
@@ -131,15 +138,11 @@
                         </tr>
                     <?php 
                         $sum_sisa += $value['sisa'];
-                        $sum_pokok += $value['pokok'];
-                        $sum_bunga += $value['bunga'];
                         $sum_angsuran += $value['angsuran'];
                         endforeach; 
                     ?>
                         <tr class="font-weight-bold">
                             <td colspan="3">Total</td>
-                            <td><?= rupiah($sum_pokok) ?></td>
-                            <td><?= rupiah($sum_bunga) ?></td>
                             <td><?= rupiah($sum_angsuran) ?></td>
                             <td></td>
                             <?php if($role == 1): ?>
@@ -172,7 +175,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" action="<?=site_url('pinjaman/paid')?>">
+            <form method="POST" action="<?=site_url('pinjaman_barang/paid')?>">
                 <div class="modal-body">
                     <div class="row mb-4 mt-4">
                         <div class="col-lg-12">

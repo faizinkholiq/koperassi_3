@@ -123,6 +123,7 @@ if (!isset($highlight_menu)){
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan","ubah_simpanan","penarikan_simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
                 $report = in_array($highlight_menu, ["report_simpanan", "report_simpanan_detail"]);
+                $pinjaman = in_array($highlight_menu, ["pinjaman", "pinjaman_barang"]);
             ?>
 
             <li class="nav-item <?= $highlight_menu === 'anggota' ? 'active' : '' ?>">
@@ -161,10 +162,18 @@ if (!isset($highlight_menu)){
                 </div>
             </li>
 
-            <li class="nav-item <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>">
-                <a class="nav-link" href="<?= site_url('/pinjaman') ?>">
-                    <i class="fas fa-fw fa-file-export"></i>
-                    <span>Pinjaman</span></a>
+            <li class="nav-item">
+                <a class="nav-link <?= $pinjaman ? 'text-white' : 'collapsed' ?>" href="#" data-toggle="collapse" data-target="#collapsePinjaman"
+                    aria-expanded="true" aria-controls="collapsePinjaman">
+                    <i class="fas fa-fw fa-file-invoice-dollar  <?= $pinjaman ? 'text-white' : '' ?>"></i>
+                    <span>Data Pinjaman</span>
+                </a>
+                <div id="collapsePinjaman" class="collapse <?= $pinjaman ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#collapsePinjaman">
+                    <div class="my-bg-primary py-2 collapse-inner rounded">
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'pinjaman' ? 'active' : '' ?>" href="<?= site_url('/pinjaman') ?>">Pinjaman</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'pinjaman_barang' ? 'active' : '' ?>" href="<?= site_url('/pinjaman_barang') ?>">Pinjaman Barang</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item">
