@@ -122,7 +122,7 @@
                             <div class="col-lg-1 text-right">:</div>
                             <div class="col-lg-6">
                                 <select class="form-control" id="angsuranCombo" name="angsuran">                                   
-                                    <!-- <option value="12">12</option> -->
+                                    <option value="12">12</option>
                                     <option value="18">18</option>
                                     <!-- <option value="24">24</option> -->
                                 </select>
