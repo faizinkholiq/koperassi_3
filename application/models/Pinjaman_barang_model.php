@@ -14,7 +14,7 @@
                 "pinjaman_barang.name", 
                 "pinjaman_barang.buy", 
                 "pinjaman_barang.sell", 
-                "pinjaman_barang.anguran",
+                "pinjaman_barang.angsuran",
                 "pinjaman_barang.status",
             ];
 			$src = $search["value"];
@@ -102,7 +102,7 @@
                 "pinjaman_barang.name", 
                 "pinjaman_barang.buy", 
                 "pinjaman_barang.sell", 
-                "pinjaman_barang.anguran",
+                "pinjaman_barang.angsuran",
                 "pinjaman_barang.status",
             ];
             $src = $search["value"];

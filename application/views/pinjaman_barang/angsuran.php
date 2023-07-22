@@ -25,13 +25,13 @@
                 <div class="mb-2 row">
                     <div class="col-lg-2">Nama Barang</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= ($summary['name'])? $summary['name'] : '-' ?>
+                        <?= isset($summary['name']) && !empty($summary['name'])? $summary['name'] : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-lg-2">Tanggal Pinjam</div>
                     <div class="col-lg-10"><span class="mr-2">:</span> 
-                        <?= ($summary['date'])? $summary['date'] : '-' ?>
+                        <?= isset($summary['date']) && !empty($summary['date'])? $summary['date'] : '-' ?>
                     </div>
                 </div>
                 <div class="mb-2 row">
