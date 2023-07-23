@@ -294,6 +294,54 @@ class Report_model extends CI_Model {
         return $data;
     }
 
+    public function get_data_pinjaman_uang($p = null) 
+    {   
+        $year = $p['year'];
+        $month = $p['month'];
+
+        $this->db->select([
+            'pinjaman.id',
+            'pinjaman.person',
+            'person.nik',
+            'person.name',
+            'person.depo',
+            'COALESCE(person.wajib, 0) + COALESCE(person.investasi, 0) + COALESCE(person.sukarela, 0) debit',
+            'pinjaman.real kredit',
+            'COALESCE(person.wajib, 0) + COALESCE(person.investasi, 0) + COALESCE(person.sukarela, 0) cicilan',
+            'SUM(angsuran.pokok) bayar',
+            'SUM(angsuran.bunga) bunga',
+            '0 sisa',
+            'person.salary gaji',
+        ])
+        ->from('pinjaman')
+        ->join("(
+            SELECT 
+                person.nik,
+                person.name,
+                person.salary,
+                depo.name depo,
+                wajib.balance wajib,
+                investasi.balance investasi,
+                sukarela.balance sukarela
+            FROM person
+            LEFT JOIN depo ON depo.id = person.depo
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_wajib WHERE month = $month AND year = $year GROUP BY person) wajib ON wajib.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_investasi WHERE month = $month AND year = $year GROUP BY person) investasi ON investasi.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_sukarela WHERE month = $month AND year = $year  GROUP BY person) sukarela ON sukarela.person = person.nik
+            GROUP BY person.nik
+        ) person", 'person.nik = pinjaman.person')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
+        ->where('pinjaman.status', 'Approved')
+        ->where('pinjaman.month', $month)
+        ->where('pinjaman.year', $year)
+        ->order_by('person.nik ASC, pinjaman.date DESC')
+        ->group_by('pinjaman.id');
+        
+        $q = $this->db->get();
+        
+        return $q->result_array();
+    }
+
     public function get_data_pinjaman_barang($p = null) 
     {   
         $year = $p['year'];

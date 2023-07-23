@@ -122,7 +122,7 @@ if (!isset($highlight_menu)){
                 if ($role == 1): 
                 $simpanan = in_array($highlight_menu, ["simpanan_pokok","simpanan_wajib","simpanan_sukarela", "investasi","simpanan","ubah_simpanan","penarikan_simpanan"]);
                 $master = in_array($highlight_menu, ["depo","position","simpanan_settings","parameter_sistem","kas"]);
-                $report = in_array($highlight_menu, ["report_simpanan", "report_simpanan_detail", "report_pinjaman_barang", "report_laba_rugi"]);
+                $report = in_array($highlight_menu, ["report_simpanan", "report_simpanan_detail", "report_pinjaman_uang", "report_pinjaman_barang", "report_laba_rugi"]);
                 $pinjaman = in_array($highlight_menu, ["pinjaman", "pinjaman_barang"]);
             ?>
 
@@ -190,6 +190,7 @@ if (!isset($highlight_menu)){
                         ?>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan' ? 'active' : '' ?>" href="<?= site_url('report/simpanan') ?>">Rekapitulasi Simpanan</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_simpanan_detail' ? 'active' : '' ?>" href="<?= site_url('/report/simpanan_detail') ?>">Detail Simpanan</a>
+                        <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_pinjaman_uang' ? 'active' : '' ?>" href="<?= site_url('/report/pinjaman_uang') ?>">Rekapitulasi <br>Pinjaman Uang</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_pinjaman_barang' ? 'active' : '' ?>" href="<?= site_url('/report/pinjaman_barang') ?>">Rekapitulasi <br>Pinjaman Barang</a>
                         <a class="collapse-item my-link-primary <?= $highlight_menu === 'report_laba_rugi' ? 'active' : '' ?>" href="<?= site_url('/report/laba_rugi') ?>">Rekapitulasi Laba Rugi</a>
                     </div>
