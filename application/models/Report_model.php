@@ -388,5 +388,82 @@ class Report_model extends CI_Model {
         return $q->result_array();
     }
 
+    function get_data_laba_rugi($p = null) {
+        $year = $p['year'];
+
+        $data = [];
+
+        $p_q1["month_start"] = "1";
+        $p_q1["month_end"] = "3";
+        $p_q1["year"] = $year;
+        $data["q1"] = $this->_get_sum_angsuran($p_q1);
+        $data['q1']['percent_pokok_pinjaman'] = 100;
+
+        $p_q2["month_start"] = "4";
+        $p_q2["month_end"] = "6";
+        $p_q2["year"] = $year;
+        $data["q2"] = $this->_get_sum_angsuran($p_q2);
+        $data['q2']['percent_pokok_pinjaman'] = 100;
+
+        $p_q3["month_start"] = "7";
+        $p_q3["month_end"] = "9";
+        $p_q3["year"] = $year;
+        $data["q3"] = $this->_get_sum_angsuran($p_q3);
+        $data['q3']['percent_pokok_pinjaman'] = 100;
+
+        $p_q4["month_start"] = "10";
+        $p_q4["month_end"] = "12";
+        $p_q4["year"] = $year;
+        $data["q4"] = $this->_get_sum_angsuran($p_q4);
+        $data['q4']['percent_pokok_pinjaman'] = 100;
+
+        $p_ytd["year"] = $year;
+        $data["ytd"] = $this->_get_sum_angsuran($p_ytd);
+        $data['ytd']['percent_pokok_pinjaman'] = 100;
+
+        $p_lytd["year"] = $year - 1;
+        $data["lytd"] = $this->_get_sum_angsuran($p_lytd);
+        $data['lytd']['percent_pokok_pinjaman'] = 100;
+
+        $data['variance']['total_pokok_pinjaman'] = $data['ytd']['total_pokok_pinjaman'] - $data['lytd']['total_pokok_pinjaman'];
+        $data['variance']['total_bunga_pinjaman'] = $data['ytd']['total_bunga_pinjaman'] - $data['lytd']['total_bunga_pinjaman'];
+        $data['variance']['percent_pokok_pinjaman'] = 100;
+
+        // print_r($data);
+        // exit;
+        return $data;
+    }
+    
+
+    private function _get_sum_angsuran($p = null) {
+        $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
+        $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
+        $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
+        $month_end = isset($p['month_end']) && !empty($p['month_end'])? $p['month_end'] : '' ;
+        
+        if(isset($year) && !empty($year)){
+            $this->db->where('pinjaman.year', $year);
+        }
+        
+        if(isset($mon) && !empty($mon)){
+            $this->db->where('pinjaman.mon', $mon);
+        }
+
+        if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
+            $this->db->where("pinjaman.month BETWEEN $month_start AND $month_end");
+        }
+
+        $this->db->select([
+            'ROUND(SUM(angsuran.pokok)) total_pokok_pinjaman',
+            'ROUND(SUM(angsuran.bunga)) total_bunga_pinjaman'
+        ])
+        ->from('pinjaman')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id", 'left')
+        ->where('pinjaman.status', 'Approved');
+        
+        $q = $this->db->get();
+        
+        return $q->row_array();
+    }
 }
 

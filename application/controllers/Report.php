@@ -723,5 +723,860 @@ class Report extends CI_Controller {
         $writer->save('php://output');
     }
 
+    public function export_laba_rugi()
+    {
+        // Params
+        $p['year'] = $this->input->get('year');
+        $year = substr( $p['year'], -2);
 
+        // Data
+        $data = $this->report_model->get_data_laba_rugi($p);
+
+        $month_name = ["JANUARI", "PEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $rowNo = 1;
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+
+        // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Koperasi PT. Putri Daya Usahatama');
+        // $rowNo++;
+        // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Rekapitulasi Laba Rugi');
+        // $rowNo+=2;
+        
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'PERIODE: '.$p['year']);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setBold( true );
+
+        $rowNo++;
+        $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'DESCRIPTION');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(40);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+4);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'ACTUAL');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+13]}{$rowNo}");
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL I\nJanuari - Maret '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo-=2;
+        $letterCounter++; 
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL II\nJanuari - Maret '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo-=2;
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL III\nJanuari - Maret '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo-=2;
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL IV\nJanuari - Maret '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo-=2;
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "YEAR TO DATE\n".$p["year"]);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo-=2;
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "YEAR TO DATE\n".($p["year"] - 1));
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo-=2;
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'VARIANCE');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '%');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
+        $rowNo++;
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
+        
+        $rowNo+=2;
+        $firstRow = $rowNo-1;
+
+        $baseStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $baseStyle2 = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok Pinjaman & Bunga');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+        $lastLtrCounter = $letterCounter;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Koreksi Bunga');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Pokok Pinjaman & Bunga');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok Pinjaman');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pendapatan Bunga');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '% Bunga Pinjaman');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pinjaman Beli Barang Elektronik');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Harga Pokok Pinj. Beli B. Elektronik');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Gross Profit');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Laba Bunga Pinjaman');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Laba Bunga Pinjaman Beli Elektronik');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Grand Total Laba Koperasi');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q1"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q2"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q3"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["q4"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["ytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["lytd"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["total_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $data["variance"]["percent_pokok_pinjaman"]);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Beban Operasional:');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Bunga Simpanan Sukarela');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Bunga Tabungan');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Bensin, Parkir & Transport');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Peralatan Toko');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Biaya Pengurus Koperasi');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Meeting Pengurus');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Dana Kesejahteraan Anggota');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Beban Operasional');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pendapatan Operasional');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pendapatan / Biaya Lain-lain');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Tahapan BCA');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Pajak Tahapan BCA');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Bank BCA');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '    Lain-lain');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Pendapatan / Biaya lain-lain');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pendapatan Sebelum Pajak');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pendapatan Pajak');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pendapatan Bersih Koperasi');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Retained Earning - Prior Year');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Less: Sisa Hasil Usaha - 2019');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Less: Pembagian RE - 2017-2019');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Retained Earning - Ending');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($baseStyle);
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$firstLtrCounter]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+1)]}{$firstRow}:{$letters[($firstLtrCounter+1)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+2)]}{$firstRow}:{$letters[($firstLtrCounter+2)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+3)]}{$firstRow}:{$letters[($firstLtrCounter+3)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+4)]}{$firstRow}:{$letters[($firstLtrCounter+4)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+5)]}{$firstRow}:{$letters[($firstLtrCounter+5)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+6)]}{$firstRow}:{$letters[($firstLtrCounter+6)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+7)]}{$firstRow}:{$letters[($firstLtrCounter+7)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+8)]}{$firstRow}:{$letters[($firstLtrCounter+8)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+9)]}{$firstRow}:{$letters[($firstLtrCounter+9)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+10)]}{$firstRow}:{$letters[($firstLtrCounter+10)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+11)]}{$firstRow}:{$letters[($firstLtrCounter+11)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+12)]}{$firstRow}:{$letters[($firstLtrCounter+12)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+13)]}{$firstRow}:{$letters[($firstLtrCounter+13)]}{$rowNo}")->applyFromArray($baseStyle2);
+        $sheet->getStyle("{$letters[($firstLtrCounter+14)]}{$firstRow}:{$letters[($firstLtrCounter+14)]}{$rowNo}")->applyFromArray($baseStyle2);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Report_Detail_Simpanan_'.date('YmdHis');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
 }
