@@ -396,46 +396,252 @@ class Report_model extends CI_Model {
         $p_q1["month_start"] = "1";
         $p_q1["month_end"] = "3";
         $p_q1["year"] = $year;
-        $data["q1"] = $this->_get_sum_angsuran($p_q1);
-        $data['q1']['percent_pokok_pinjaman'] = 100;
+        $data['q1']['total_pokok_pinjaman'] = $this->_get_data_pinjaman($p_q1)['total_pokok_pinjaman'];
+        $data['q1']['total_bunga_pinjaman'] = $this->_get_data_pinjaman($p_q1)['total_bunga_pinjaman'];
+        $data['q1']['total_beli_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q1)['total_beli_pinjaman_barang'];
+        $data['q1']['total_jual_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q1)['total_jual_pinjaman_barang'];
+        $data['q1']['percent_pokok_pinjaman'] = 0;
+        $data['q1']['percent_bunga_pinjaman'] = 0;
+        $data['q1']['percent_beli_pinjaman_barang'] = 0;
+        $data['q1']['percent_jual_pinjaman_barang'] = 0;
+        $data['q1']['pokok_pinjaman_bunga'] = $data['q1']['total_pokok_pinjaman'] + $data['q1']['total_bunga_pinjaman'];
+        $data['q1']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['q1']['koreksi_bunga'] = 0;
+        $data['q1']['percent_koreksi_bunga'] = 0;
+        $data['q1']['total_pokok_pinjaman_bunga'] = $data['q1']['pokok_pinjaman_bunga'] + $data['q1']['koreksi_bunga'];
+        $data['q1']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['q1']['bunga_pinjaman_percent'] = (!empty($data['q1']['total_pokok_pinjaman']) && !empty($data['q1']['total_bunga_pinjaman']))? $data['q1']['total_bunga_pinjaman'] / $data['q1']['total_pokok_pinjaman'] * 100 : 0;
+        $data['q1']['gross_profit'] = $data['q1']['total_jual_pinjaman_barang'] - $data['q1']['total_beli_pinjaman_barang'];
+        $data['q1']['percent_gross_profit'] = !empty($data['q1']['total_jual_pinjaman_barang'])? $data['q1']['gross_profit'] / $data['q1']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['q1']['grand_total_pendapatan_koperasi'] = $data['q1']['total_pokok_pinjaman_bunga'] + $data['q1']['total_jual_pinjaman_barang'];
+        $data['q1']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['q1']['grand_total_pendapatan_koperasi'])? $data['q1']['total_pokok_pinjaman_bunga'] / $data['q1']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q1']['percent_jual_pinjaman_barang_2'] = !empty($data['q1']['grand_total_pendapatan_koperasi'])? $data['q1']['total_jual_pinjaman_barang'] / $data['q1']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q1']['percent_grand_total_pendapatan_koperasi'] = $data['q1']['percent_total_pokok_pinjaman_bunga_2'] + $data['q1']['percent_jual_pinjaman_barang_2'];
+        $data['q1']['grand_total_pokok_koperasi'] = $data['q1']['total_pokok_pinjaman'] + $data['q1']['total_beli_pinjaman_barang'];
+        $data['q1']['percent_total_pokok_pinjaman_2'] = !empty($data['q1']['grand_total_pokok_koperasi'])? $data['q1']['total_pokok_pinjaman'] / $data['q1']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q1']['percent_beli_pinjaman_barang_2'] = !empty($data['q1']['grand_total_pokok_koperasi'])? $data['q1']['total_beli_pinjaman_barang'] / $data['q1']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q1']['percent_grand_total_pokok_koperasi'] = $data['q1']['percent_total_pokok_pinjaman_2'] + $data['q1']['percent_beli_pinjaman_barang_2'];
+        $data['q1']['laba_bunga_pinjaman'] = $data['q1']['total_bunga_pinjaman'];
+        $data['q1']['percent_laba_bunga_pinjaman'] = !empty($data['q1']['grand_total_pendapatan_koperasi'])? $data['q1']['laba_bunga_pinjaman'] / $data['q1']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q1']['laba_bunga_pinjaman_barang'] = $data['q1']['gross_profit'];
+        $data['q1']['percent_laba_bunga_pinjaman_barang'] = !empty($data['q1']['grand_total_pendapatan_koperasi'])? $data['q1']['laba_bunga_pinjaman_barang'] / $data['q1']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q1']['grand_total_laba_koperasi'] = $data['q1']['laba_bunga_pinjaman'] + $data['q1']['laba_bunga_pinjaman_barang'];
+        $data['q1']['percent_grand_total_laba_koperasi'] = $data['q1']['percent_laba_bunga_pinjaman'] + $data['q1']['percent_laba_bunga_pinjaman_barang'];
+
 
         $p_q2["month_start"] = "4";
         $p_q2["month_end"] = "6";
         $p_q2["year"] = $year;
-        $data["q2"] = $this->_get_sum_angsuran($p_q2);
-        $data['q2']['percent_pokok_pinjaman'] = 100;
+        $data['q2']['total_pokok_pinjaman'] = $this->_get_data_pinjaman($p_q2)['total_pokok_pinjaman'];
+        $data['q2']['total_bunga_pinjaman'] = $this->_get_data_pinjaman($p_q2)['total_bunga_pinjaman'];
+        $data['q2']['total_beli_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q2)['total_beli_pinjaman_barang'];
+        $data['q2']['total_jual_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q2)['total_jual_pinjaman_barang'];
+        $data['q2']['percent_pokok_pinjaman'] = 0;
+        $data['q2']['percent_bunga_pinjaman'] = 0;
+        $data['q2']['percent_beli_pinjaman_barang'] = 0;
+        $data['q2']['percent_jual_pinjaman_barang'] = 0;
+        $data['q2']['pokok_pinjaman_bunga'] = $data['q2']['total_pokok_pinjaman'] + $data['q2']['total_bunga_pinjaman'];
+        $data['q2']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['q2']['koreksi_bunga'] = 0;
+        $data['q2']['percent_koreksi_bunga'] = 0;
+        $data['q2']['total_pokok_pinjaman_bunga'] = $data['q2']['pokok_pinjaman_bunga'] + $data['q2']['koreksi_bunga'];
+        $data['q2']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['q2']['bunga_pinjaman_percent'] = (!empty($data['q2']['total_pokok_pinjaman']) && !empty($data['q2']['total_bunga_pinjaman']))? $data['q2']['total_bunga_pinjaman'] / $data['q2']['total_pokok_pinjaman'] * 100 : 0;
+        $data['q2']['gross_profit'] = $data['q2']['total_jual_pinjaman_barang'] - $data['q2']['total_beli_pinjaman_barang'];
+        $data['q2']['percent_gross_profit'] = !empty($data['q2']['total_jual_pinjaman_barang'])? $data['q2']['gross_profit'] / $data['q2']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['q2']['grand_total_pendapatan_koperasi'] = $data['q2']['total_pokok_pinjaman_bunga'] + $data['q2']['total_jual_pinjaman_barang'];
+        $data['q2']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['q2']['grand_total_pendapatan_koperasi'])? $data['q2']['total_pokok_pinjaman_bunga'] / $data['q2']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q2']['percent_jual_pinjaman_barang_2'] = !empty($data['q2']['grand_total_pendapatan_koperasi'])? $data['q2']['total_jual_pinjaman_barang'] / $data['q2']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q2']['percent_grand_total_pendapatan_koperasi'] = $data['q2']['percent_total_pokok_pinjaman_bunga_2'] + $data['q2']['percent_jual_pinjaman_barang_2'];
+        $data['q2']['grand_total_pokok_koperasi'] = $data['q2']['total_pokok_pinjaman'] + $data['q2']['total_beli_pinjaman_barang'];
+        $data['q2']['percent_total_pokok_pinjaman_2'] = !empty($data['q2']['grand_total_pokok_koperasi'])? $data['q2']['total_pokok_pinjaman'] / $data['q2']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q2']['percent_beli_pinjaman_barang_2'] = !empty($data['q2']['grand_total_pokok_koperasi'])? $data['q2']['total_beli_pinjaman_barang'] / $data['q2']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q2']['percent_grand_total_pokok_koperasi'] = $data['q2']['percent_total_pokok_pinjaman_2'] + $data['q2']['percent_beli_pinjaman_barang_2'];
+        $data['q2']['laba_bunga_pinjaman'] = $data['q2']['total_bunga_pinjaman'];
+        $data['q2']['percent_laba_bunga_pinjaman'] = !empty($data['q2']['grand_total_pendapatan_koperasi'])? $data['q2']['laba_bunga_pinjaman'] / $data['q2']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q2']['laba_bunga_pinjaman_barang'] = $data['q2']['gross_profit'];
+        $data['q2']['percent_laba_bunga_pinjaman_barang'] = !empty($data['q2']['grand_total_pendapatan_koperasi'])? $data['q2']['laba_bunga_pinjaman_barang'] / $data['q2']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q2']['grand_total_laba_koperasi'] = $data['q2']['laba_bunga_pinjaman'] + $data['q2']['laba_bunga_pinjaman_barang'];
+        $data['q2']['percent_grand_total_laba_koperasi'] = $data['q2']['percent_laba_bunga_pinjaman'] + $data['q2']['percent_laba_bunga_pinjaman_barang'];
+
 
         $p_q3["month_start"] = "7";
         $p_q3["month_end"] = "9";
         $p_q3["year"] = $year;
-        $data["q3"] = $this->_get_sum_angsuran($p_q3);
-        $data['q3']['percent_pokok_pinjaman'] = 100;
+        $data['q3']['total_pokok_pinjaman'] = $this->_get_data_pinjaman($p_q3)['total_pokok_pinjaman'];
+        $data['q3']['total_bunga_pinjaman'] = $this->_get_data_pinjaman($p_q3)['total_bunga_pinjaman'];
+        $data['q3']['total_beli_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q3)['total_beli_pinjaman_barang'];
+        $data['q3']['total_jual_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q3)['total_jual_pinjaman_barang'];
+        $data['q3']['percent_pokok_pinjaman'] = 0;
+        $data['q3']['percent_bunga_pinjaman'] = 0;
+        $data['q3']['percent_beli_pinjaman_barang'] = 0;
+        $data['q3']['percent_jual_pinjaman_barang'] = 0;
+        $data['q3']['pokok_pinjaman_bunga'] = $data['q3']['total_pokok_pinjaman'] + $data['q3']['total_bunga_pinjaman'];
+        $data['q3']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['q3']['koreksi_bunga'] = 0;
+        $data['q3']['percent_koreksi_bunga'] = 0;
+        $data['q3']['total_pokok_pinjaman_bunga'] = $data['q3']['pokok_pinjaman_bunga'] + $data['q3']['koreksi_bunga'];
+        $data['q3']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['q3']['bunga_pinjaman_percent'] = (!empty($data['q3']['total_pokok_pinjaman']) && !empty($data['q3']['total_bunga_pinjaman']))? $data['q3']['total_bunga_pinjaman'] / $data['q3']['total_pokok_pinjaman'] * 100 : 0;
+        $data['q3']['gross_profit'] = $data['q3']['total_jual_pinjaman_barang'] - $data['q3']['total_beli_pinjaman_barang'];
+        $data['q3']['percent_gross_profit'] = !empty($data['q3']['total_jual_pinjaman_barang'])? $data['q3']['gross_profit'] / $data['q3']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['q3']['grand_total_pendapatan_koperasi'] = $data['q3']['total_pokok_pinjaman_bunga'] + $data['q3']['total_jual_pinjaman_barang'];
+        $data['q3']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['q3']['grand_total_pendapatan_koperasi'])? $data['q3']['total_pokok_pinjaman_bunga'] / $data['q3']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q3']['percent_jual_pinjaman_barang_2'] = !empty($data['q3']['grand_total_pendapatan_koperasi'])? $data['q3']['total_jual_pinjaman_barang'] / $data['q3']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q3']['percent_grand_total_pendapatan_koperasi'] = $data['q3']['percent_total_pokok_pinjaman_bunga_2'] + $data['q3']['percent_jual_pinjaman_barang_2'];
+        $data['q3']['grand_total_pokok_koperasi'] = $data['q3']['total_pokok_pinjaman'] + $data['q3']['total_beli_pinjaman_barang'];
+        $data['q3']['percent_total_pokok_pinjaman_2'] = !empty($data['q3']['grand_total_pokok_koperasi'])? $data['q3']['total_pokok_pinjaman'] / $data['q3']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q3']['percent_beli_pinjaman_barang_2'] = !empty($data['q3']['grand_total_pokok_koperasi'])? $data['q3']['total_beli_pinjaman_barang'] / $data['q3']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q3']['percent_grand_total_pokok_koperasi'] = $data['q3']['percent_total_pokok_pinjaman_2'] + $data['q3']['percent_beli_pinjaman_barang_2'];
+        $data['q3']['laba_bunga_pinjaman'] = $data['q3']['total_bunga_pinjaman'];
+        $data['q3']['percent_laba_bunga_pinjaman'] = !empty($data['q3']['grand_total_pendapatan_koperasi'])? $data['q3']['laba_bunga_pinjaman'] / $data['q3']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q3']['laba_bunga_pinjaman_barang'] = $data['q3']['gross_profit'];
+        $data['q3']['percent_laba_bunga_pinjaman_barang'] = !empty($data['q3']['grand_total_pendapatan_koperasi'])? $data['q3']['laba_bunga_pinjaman_barang'] / $data['q3']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q3']['grand_total_laba_koperasi'] = $data['q3']['laba_bunga_pinjaman'] + $data['q3']['laba_bunga_pinjaman_barang'];
+        $data['q3']['percent_grand_total_laba_koperasi'] = $data['q3']['percent_laba_bunga_pinjaman'] + $data['q3']['percent_laba_bunga_pinjaman_barang'];
+
 
         $p_q4["month_start"] = "10";
         $p_q4["month_end"] = "12";
         $p_q4["year"] = $year;
-        $data["q4"] = $this->_get_sum_angsuran($p_q4);
-        $data['q4']['percent_pokok_pinjaman'] = 100;
+        $data['q4']['total_pokok_pinjaman'] = $this->_get_data_pinjaman($p_q4)['total_pokok_pinjaman'];
+        $data['q4']['total_bunga_pinjaman'] = $this->_get_data_pinjaman($p_q4)['total_bunga_pinjaman'];
+        $data['q4']['total_beli_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q4)['total_beli_pinjaman_barang'];
+        $data['q4']['total_jual_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q4)['total_jual_pinjaman_barang'];
+        $data['q4']['percent_pokok_pinjaman'] = 0;
+        $data['q4']['percent_bunga_pinjaman'] = 0;
+        $data['q4']['percent_beli_pinjaman_barang'] = 0;
+        $data['q4']['percent_jual_pinjaman_barang'] = 0;
+        $data['q4']['pokok_pinjaman_bunga'] = $data['q4']['total_pokok_pinjaman'] + $data['q4']['total_bunga_pinjaman'];
+        $data['q4']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['q4']['koreksi_bunga'] = 0;
+        $data['q4']['percent_koreksi_bunga'] = 0;
+        $data['q4']['total_pokok_pinjaman_bunga'] = $data['q4']['pokok_pinjaman_bunga'] + $data['q4']['koreksi_bunga'];
+        $data['q4']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['q4']['bunga_pinjaman_percent'] = (!empty($data['q4']['total_pokok_pinjaman']) && !empty($data['q4']['total_bunga_pinjaman']))? $data['q4']['total_bunga_pinjaman'] / $data['q4']['total_pokok_pinjaman'] * 100 : 0;
+        $data['q4']['gross_profit'] = $data['q4']['total_jual_pinjaman_barang'] - $data['q4']['total_beli_pinjaman_barang'];
+        $data['q4']['percent_gross_profit'] = !empty($data['q4']['total_jual_pinjaman_barang'])? $data['q4']['gross_profit'] / $data['q4']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['q4']['grand_total_pendapatan_koperasi'] = $data['q4']['total_pokok_pinjaman_bunga'] + $data['q4']['total_jual_pinjaman_barang'];
+        $data['q4']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['q4']['grand_total_pendapatan_koperasi'])? $data['q4']['total_pokok_pinjaman_bunga'] / $data['q4']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q4']['percent_jual_pinjaman_barang_2'] = !empty($data['q4']['grand_total_pendapatan_koperasi'])? $data['q4']['total_jual_pinjaman_barang'] / $data['q4']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q4']['percent_grand_total_pendapatan_koperasi'] = $data['q4']['percent_total_pokok_pinjaman_bunga_2'] + $data['q4']['percent_jual_pinjaman_barang_2'];
+        $data['q4']['grand_total_pokok_koperasi'] = $data['q4']['total_pokok_pinjaman'] + $data['q4']['total_beli_pinjaman_barang'];
+        $data['q4']['percent_total_pokok_pinjaman_2'] = !empty($data['q4']['grand_total_pokok_koperasi'])? $data['q4']['total_pokok_pinjaman'] / $data['q4']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q4']['percent_beli_pinjaman_barang_2'] = !empty($data['q4']['grand_total_pokok_koperasi'])? $data['q4']['total_beli_pinjaman_barang'] / $data['q4']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['q4']['percent_grand_total_pokok_koperasi'] = $data['q4']['percent_total_pokok_pinjaman_2'] + $data['q4']['percent_beli_pinjaman_barang_2'];
+        $data['q4']['laba_bunga_pinjaman'] = $data['q4']['total_bunga_pinjaman'];
+        $data['q4']['percent_laba_bunga_pinjaman'] = !empty($data['q4']['grand_total_pendapatan_koperasi'])? $data['q4']['laba_bunga_pinjaman'] / $data['q4']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q4']['laba_bunga_pinjaman_barang'] = $data['q4']['gross_profit'];
+        $data['q4']['percent_laba_bunga_pinjaman_barang'] = !empty($data['q4']['grand_total_pendapatan_koperasi'])? $data['q4']['laba_bunga_pinjaman_barang'] / $data['q4']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['q4']['grand_total_laba_koperasi'] = $data['q4']['laba_bunga_pinjaman'] + $data['q4']['laba_bunga_pinjaman_barang'];
+        $data['q4']['percent_grand_total_laba_koperasi'] = $data['q4']['percent_laba_bunga_pinjaman'] + $data['q4']['percent_laba_bunga_pinjaman_barang'];
+
 
         $p_ytd["year"] = $year;
-        $data["ytd"] = $this->_get_sum_angsuran($p_ytd);
-        $data['ytd']['percent_pokok_pinjaman'] = 100;
+        $data['ytd']['total_pokok_pinjaman'] = $this->_get_data_pinjaman($p_ytd)['total_pokok_pinjaman'];
+        $data['ytd']['total_bunga_pinjaman'] = $this->_get_data_pinjaman($p_ytd)['total_bunga_pinjaman'];
+        $data['ytd']['total_beli_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_ytd)['total_beli_pinjaman_barang'];
+        $data['ytd']['total_jual_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_ytd)['total_jual_pinjaman_barang'];
+        $data['ytd']['percent_pokok_pinjaman'] = 0;
+        $data['ytd']['percent_bunga_pinjaman'] = 0;
+        $data['ytd']['percent_beli_pinjaman_barang'] = 0;
+        $data['ytd']['percent_jual_pinjaman_barang'] = 0;
+        $data['ytd']['pokok_pinjaman_bunga'] = $data['ytd']['total_pokok_pinjaman'] + $data['ytd']['total_bunga_pinjaman'];
+        $data['ytd']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['ytd']['koreksi_bunga'] = 0;
+        $data['ytd']['percent_koreksi_bunga'] = 0;
+        $data['ytd']['total_pokok_pinjaman_bunga'] = $data['ytd']['pokok_pinjaman_bunga'] + $data['ytd']['koreksi_bunga'];
+        $data['ytd']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['ytd']['bunga_pinjaman_percent'] = (!empty($data['ytd']['total_pokok_pinjaman']) && !empty($data['ytd']['total_bunga_pinjaman']))? $data['ytd']['total_bunga_pinjaman'] / $data['ytd']['total_pokok_pinjaman'] * 100 : 0;
+        $data['ytd']['gross_profit'] = $data['ytd']['total_jual_pinjaman_barang'] - $data['ytd']['total_beli_pinjaman_barang'];
+        $data['ytd']['percent_gross_profit'] = !empty($data['ytd']['total_jual_pinjaman_barang'])? $data['ytd']['gross_profit'] / $data['ytd']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['ytd']['grand_total_pendapatan_koperasi'] = $data['ytd']['total_pokok_pinjaman_bunga'] + $data['ytd']['total_jual_pinjaman_barang'];
+        $data['ytd']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['ytd']['grand_total_pendapatan_koperasi'])? $data['ytd']['total_pokok_pinjaman_bunga'] / $data['ytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['ytd']['percent_jual_pinjaman_barang_2'] = !empty($data['ytd']['grand_total_pendapatan_koperasi'])? $data['ytd']['total_jual_pinjaman_barang'] / $data['ytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['ytd']['percent_grand_total_pendapatan_koperasi'] = $data['ytd']['percent_total_pokok_pinjaman_bunga_2'] + $data['ytd']['percent_jual_pinjaman_barang_2'];
+        $data['ytd']['grand_total_pokok_koperasi'] = $data['ytd']['total_pokok_pinjaman'] + $data['ytd']['total_beli_pinjaman_barang'];
+        $data['ytd']['percent_total_pokok_pinjaman_2'] = !empty($data['ytd']['grand_total_pokok_koperasi'])? $data['ytd']['total_pokok_pinjaman'] / $data['ytd']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['ytd']['percent_beli_pinjaman_barang_2'] = !empty($data['ytd']['grand_total_pokok_koperasi'])? $data['ytd']['total_beli_pinjaman_barang'] / $data['ytd']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['ytd']['percent_grand_total_pokok_koperasi'] = $data['ytd']['percent_total_pokok_pinjaman_2'] + $data['ytd']['percent_beli_pinjaman_barang_2'];
+        $data['ytd']['laba_bunga_pinjaman'] = $data['ytd']['total_bunga_pinjaman'];
+        $data['ytd']['percent_laba_bunga_pinjaman'] = !empty($data['ytd']['grand_total_pendapatan_koperasi'])? $data['ytd']['laba_bunga_pinjaman'] / $data['ytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['ytd']['laba_bunga_pinjaman_barang'] = $data['ytd']['gross_profit'];
+        $data['ytd']['percent_laba_bunga_pinjaman_barang'] = !empty($data['ytd']['grand_total_pendapatan_koperasi'])? $data['ytd']['laba_bunga_pinjaman_barang'] / $data['ytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['ytd']['grand_total_laba_koperasi'] = $data['ytd']['laba_bunga_pinjaman'] + $data['ytd']['laba_bunga_pinjaman_barang'];
+        $data['ytd']['percent_grand_total_laba_koperasi'] = $data['ytd']['percent_laba_bunga_pinjaman'] + $data['ytd']['percent_laba_bunga_pinjaman_barang'];
+
 
         $p_lytd["year"] = $year - 1;
-        $data["lytd"] = $this->_get_sum_angsuran($p_lytd);
-        $data['lytd']['percent_pokok_pinjaman'] = 100;
+        $data['lytd']['total_pokok_pinjaman'] = $this->_get_data_pinjaman($p_lytd)['total_pokok_pinjaman'];
+        $data['lytd']['total_bunga_pinjaman'] = $this->_get_data_pinjaman($p_lytd)['total_bunga_pinjaman'];
+        $data['lytd']['total_beli_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_lytd)['total_beli_pinjaman_barang'];
+        $data['lytd']['total_jual_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_lytd)['total_jual_pinjaman_barang'];
+        $data['lytd']['percent_pokok_pinjaman'] = 0;
+        $data['lytd']['percent_bunga_pinjaman'] = 0;
+        $data['lytd']['percent_beli_pinjaman_barang'] = 0;
+        $data['lytd']['percent_jual_pinjaman_barang'] = 0;
+        $data['lytd']['pokok_pinjaman_bunga'] = $data['lytd']['total_pokok_pinjaman'] + $data['lytd']['total_bunga_pinjaman'];
+        $data['lytd']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['lytd']['koreksi_bunga'] = 0;
+        $data['lytd']['percent_koreksi_bunga'] = 0;
+        $data['lytd']['total_pokok_pinjaman_bunga'] = $data['lytd']['pokok_pinjaman_bunga'] + $data['lytd']['koreksi_bunga'];
+        $data['lytd']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['lytd']['bunga_pinjaman_percent'] = (!empty($data['lytd']['total_pokok_pinjaman']) && !empty($data['lytd']['total_bunga_pinjaman']))? $data['lytd']['total_bunga_pinjaman'] / $data['lytd']['total_pokok_pinjaman'] * 100 : 0;
+        $data['lytd']['gross_profit'] = $data['lytd']['total_jual_pinjaman_barang'] - $data['lytd']['total_beli_pinjaman_barang'];
+        $data['lytd']['percent_gross_profit'] = !empty($data['lytd']['total_jual_pinjaman_barang'])? $data['lytd']['gross_profit'] / $data['lytd']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['lytd']['grand_total_pendapatan_koperasi'] = $data['lytd']['total_pokok_pinjaman_bunga'] + $data['lytd']['total_jual_pinjaman_barang'];
+        $data['lytd']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['lytd']['grand_total_pendapatan_koperasi'])? $data['lytd']['total_pokok_pinjaman_bunga'] / $data['lytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['lytd']['percent_jual_pinjaman_barang_2'] = !empty($data['lytd']['grand_total_pendapatan_koperasi'])? $data['lytd']['total_jual_pinjaman_barang'] / $data['lytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['lytd']['percent_grand_total_pendapatan_koperasi'] = $data['lytd']['percent_total_pokok_pinjaman_bunga_2'] + $data['lytd']['percent_jual_pinjaman_barang_2'];
+        $data['lytd']['grand_total_pokok_koperasi'] = $data['lytd']['total_pokok_pinjaman'] + $data['lytd']['total_beli_pinjaman_barang'];
+        $data['lytd']['percent_total_pokok_pinjaman_2'] = !empty($data['lytd']['grand_total_pokok_koperasi'])? $data['lytd']['total_pokok_pinjaman'] / $data['lytd']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['lytd']['percent_beli_pinjaman_barang_2'] = !empty($data['lytd']['grand_total_pokok_koperasi'])? $data['lytd']['total_beli_pinjaman_barang'] / $data['lytd']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['lytd']['percent_grand_total_pokok_koperasi'] = $data['lytd']['percent_total_pokok_pinjaman_2'] + $data['lytd']['percent_beli_pinjaman_barang_2'];
+        $data['lytd']['laba_bunga_pinjaman'] = $data['lytd']['total_bunga_pinjaman'];
+        $data['lytd']['percent_laba_bunga_pinjaman'] = !empty($data['lytd']['grand_total_pendapatan_koperasi'])? $data['lytd']['laba_bunga_pinjaman'] / $data['lytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['lytd']['laba_bunga_pinjaman_barang'] = $data['lytd']['gross_profit'];
+        $data['lytd']['percent_laba_bunga_pinjaman_barang'] = !empty($data['lytd']['grand_total_pendapatan_koperasi'])? $data['lytd']['laba_bunga_pinjaman_barang'] / $data['lytd']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['lytd']['grand_total_laba_koperasi'] = $data['lytd']['laba_bunga_pinjaman'] + $data['lytd']['laba_bunga_pinjaman_barang'];
+        $data['lytd']['percent_grand_total_laba_koperasi'] = $data['lytd']['percent_laba_bunga_pinjaman'] + $data['lytd']['percent_laba_bunga_pinjaman_barang'];
+
 
         $data['variance']['total_pokok_pinjaman'] = $data['ytd']['total_pokok_pinjaman'] - $data['lytd']['total_pokok_pinjaman'];
         $data['variance']['total_bunga_pinjaman'] = $data['ytd']['total_bunga_pinjaman'] - $data['lytd']['total_bunga_pinjaman'];
-        $data['variance']['percent_pokok_pinjaman'] = 100;
+        $data['variance']['total_beli_pinjaman_barang'] = $data['ytd']['total_beli_pinjaman_barang'] - $data['lytd']['total_beli_pinjaman_barang'];
+        $data['variance']['total_jual_pinjaman_barang'] = $data['ytd']['total_jual_pinjaman_barang'] - $data['lytd']['total_jual_pinjaman_barang'];
+        $data['variance']['percent_pokok_pinjaman'] = 0;
+        $data['variance']['percent_bunga_pinjaman'] = 0;
+        $data['variance']['percent_beli_pinjaman_barang'] = 0;
+        $data['variance']['percent_jual_pinjaman_barang'] = 0;
+        $data['variance']['pokok_pinjaman_bunga'] = $data['variance']['total_pokok_pinjaman'] + $data['variance']['total_bunga_pinjaman'];
+        $data['variance']['percent_pokok_pinjaman_bunga'] = 0;
+        $data['variance']['koreksi_bunga'] = 0;
+        $data['variance']['percent_koreksi_bunga'] = 0;
+        $data['variance']['total_pokok_pinjaman_bunga'] = $data['variance']['pokok_pinjaman_bunga'] + $data['variance']['koreksi_bunga'];
+        $data['variance']['percent_total_pokok_pinjaman_bunga'] = 0;
+        $data['variance']['bunga_pinjaman_percent'] = (!empty($data['variance']['total_pokok_pinjaman']) && !empty($data['variance']['total_bunga_pinjaman']))? $data['variance']['total_bunga_pinjaman'] / $data['variance']['total_pokok_pinjaman'] * 100 : 0;
+        $data['variance']['gross_profit'] = $data['variance']['total_jual_pinjaman_barang'] - $data['variance']['total_beli_pinjaman_barang'];
+        $data['variance']['percent_gross_profit'] = !empty($data['variance']['total_jual_pinjaman_barang'])? $data['variance']['gross_profit'] / $data['variance']['total_jual_pinjaman_barang'] * 100 : 0;
+        $data['variance']['grand_total_pendapatan_koperasi'] = $data['variance']['total_pokok_pinjaman_bunga'] + $data['variance']['total_jual_pinjaman_barang'];
+        $data['variance']['percent_total_pokok_pinjaman_bunga_2'] = !empty($data['variance']['grand_total_pendapatan_koperasi'])? $data['variance']['total_pokok_pinjaman_bunga'] / $data['variance']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['variance']['percent_jual_pinjaman_barang_2'] = !empty($data['variance']['grand_total_pendapatan_koperasi'])? $data['variance']['total_jual_pinjaman_barang'] / $data['variance']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['variance']['percent_grand_total_pendapatan_koperasi'] = $data['variance']['percent_total_pokok_pinjaman_bunga_2'] + $data['variance']['percent_jual_pinjaman_barang_2'];
+        $data['variance']['grand_total_pokok_koperasi'] = $data['variance']['total_pokok_pinjaman'] + $data['variance']['total_beli_pinjaman_barang'];
+        $data['variance']['percent_total_pokok_pinjaman_2'] = !empty($data['variance']['grand_total_pokok_koperasi'])? $data['variance']['total_pokok_pinjaman'] / $data['variance']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['variance']['percent_beli_pinjaman_barang_2'] = !empty($data['variance']['grand_total_pokok_koperasi'])? $data['variance']['total_beli_pinjaman_barang'] / $data['variance']['grand_total_pokok_koperasi'] * 100 : 0;
+        $data['variance']['percent_grand_total_pokok_koperasi'] = $data['variance']['percent_total_pokok_pinjaman_2'] + $data['variance']['percent_beli_pinjaman_barang_2'];
+        $data['variance']['laba_bunga_pinjaman'] = $data['variance']['total_bunga_pinjaman'];
+        $data['variance']['percent_laba_bunga_pinjaman'] = !empty($data['variance']['grand_total_pendapatan_koperasi'])? $data['variance']['laba_bunga_pinjaman'] / $data['variance']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['variance']['laba_bunga_pinjaman_barang'] = $data['variance']['gross_profit'];
+        $data['variance']['percent_laba_bunga_pinjaman_barang'] = !empty($data['variance']['grand_total_pendapatan_koperasi'])? $data['variance']['laba_bunga_pinjaman_barang'] / $data['variance']['grand_total_pendapatan_koperasi'] * 100 : 0;
+        $data['variance']['grand_total_laba_koperasi'] = $data['variance']['laba_bunga_pinjaman'] + $data['variance']['laba_bunga_pinjaman_barang'];
+        $data['variance']['percent_grand_total_laba_koperasi'] = $data['variance']['percent_laba_bunga_pinjaman'] + $data['variance']['percent_laba_bunga_pinjaman_barang'];
 
-        // print_r($data);
-        // exit;
         return $data;
     }
     
 
-    private function _get_sum_angsuran($p = null) {
+    private function _get_data_pinjaman($p = null) {
         $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
         $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
         $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
@@ -445,8 +651,8 @@ class Report_model extends CI_Model {
             $this->db->where('pinjaman.year', $year);
         }
         
-        if(isset($mon) && !empty($mon)){
-            $this->db->where('pinjaman.mon', $mon);
+        if(isset($month) && !empty($month)){
+            $this->db->where('pinjaman.month', $month);
         }
 
         if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
@@ -454,12 +660,42 @@ class Report_model extends CI_Model {
         }
 
         $this->db->select([
-            'ROUND(SUM(angsuran.pokok)) total_pokok_pinjaman',
-            'ROUND(SUM(angsuran.bunga)) total_bunga_pinjaman'
+            'COALESCE(ROUND(SUM(angsuran.pokok)), 0) total_pokok_pinjaman',
+            'COALESCE(ROUND(SUM(angsuran.bunga)), 0) total_bunga_pinjaman'
         ])
         ->from('pinjaman')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id", 'left')
         ->where('pinjaman.status', 'Approved');
+        
+        $q = $this->db->get();
+        
+        return $q->row_array();
+    }
+
+    private function _get_data_pinjaman_barang($p = null) {
+        $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
+        $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
+        $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
+        $month_end = isset($p['month_end']) && !empty($p['month_end'])? $p['month_end'] : '' ;
+        
+        if(isset($year) && !empty($year)){
+            $this->db->where('pinjaman_barang.year', $year);
+        }
+        
+        if(isset($month) && !empty($month)){
+            $this->db->where('pinjaman_barang.month', $month);
+        }
+
+        if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
+            $this->db->where("pinjaman_barang.month BETWEEN $month_start AND $month_end");
+        }
+
+        $this->db->select([
+            'COALESCE(ROUND(SUM(pinjaman_barang.buy)), 0) total_beli_pinjaman_barang',
+            'COALESCE(ROUND(SUM(pinjaman_barang.sell)), 0) total_jual_pinjaman_barang'
+        ])
+        ->from('pinjaman_barang')
+        ->where('pinjaman_barang.status', 'Approved');
         
         $q = $this->db->get();
         
