@@ -89,6 +89,20 @@ class Report extends CI_Controller {
         }
 	}
 
+    public function neraca()
+	{
+        $d = $this->user_model->login_check();
+        $d['title'] = "Neraca";
+		$d['highlight_menu'] = "neraca";
+		$d['content_view'] = 'report/neraca';
+
+		if (!check_permission('report', $d['role'])){
+            redirect('home');
+        }else{
+			$this->load->view('layout/template', $d);
+        }
+	}
+
     public function get_dt_simpanan(){
         $params["search"] = $this->input->post("search");
         $params["draw"] = $this->input->post("draw");
@@ -787,7 +801,7 @@ class Report extends CI_Controller {
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
         $rowNo-=2;
         $letterCounter++; 
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL II\nJanuari - Maret '$year");
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL II\nApril - Juni '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
         $rowNo+=2;
@@ -800,7 +814,7 @@ class Report extends CI_Controller {
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
         $rowNo-=2;
         $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL III\nJanuari - Maret '$year");
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL III\nJuli - September '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
         $rowNo+=2;
@@ -813,7 +827,7 @@ class Report extends CI_Controller {
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(10);
         $rowNo-=2;
         $letterCounter++;
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL IV\nJanuari - Maret '$year");
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL IV\nOktober - Desember '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
         $rowNo+=2;
@@ -1826,6 +1840,140 @@ class Report extends CI_Controller {
         $sheet->getStyle("{$letters[($firstLtrCounter+12)]}{$firstRow}:{$letters[($firstLtrCounter+12)]}{$rowNo}")->applyFromArray($baseStyle2);
         $sheet->getStyle("{$letters[($firstLtrCounter+13)]}{$firstRow}:{$letters[($firstLtrCounter+13)]}{$rowNo}")->applyFromArray($baseStyle2);
         $sheet->getStyle("{$letters[($firstLtrCounter+14)]}{$firstRow}:{$letters[($firstLtrCounter+14)]}{$rowNo}")->applyFromArray($baseStyle2);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Laba_Rugi_'.$p['year'].'_'.date('YmdHis');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
+    public function export_neraca()
+    {
+        // Params
+        $p['year'] = $this->input->get('year');
+        $year = substr( $p['year'], -2);
+
+        // Data
+        $data = $this->report_model->get_data_neraca($p);
+
+        $month_name = ["JANUARI", "PEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $rowNo = 1;
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+
+        // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Koperasi PT. Putri Daya Usahatama');
+        // $rowNo++;
+        // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Rekapitulasi Laba Rugi');
+        // $rowNo+=2;
+        
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'PERIODE: '.$p['year']);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setBold( true );
+
+        $rowNo++;
+        $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'DESCRIPTION');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(40);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+4);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'ACTUAL');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+7]}{$rowNo}");
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL I\nJanuari - Maret '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo-=2;
+        $letterCounter+=2; 
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL II\nApril - Juni '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo-=2;
+        $letterCounter+=2; 
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL III\nJuli - September '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo-=2;
+        $letterCounter+=2; 
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL IV\nOktober - Desember '$year");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo++;
+        $letterCounter++;
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
+
+        $rowNo+=2;
+        $firstRow = $rowNo-1;
+
+        $baseStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $baseStyle2 = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $letterCounter = $firstLtrCounter;
 
         $writer = new Xlsx($spreadsheet);
         $filename = 'Laba_Rugi_'.$p['year'].'_'.date('YmdHis');

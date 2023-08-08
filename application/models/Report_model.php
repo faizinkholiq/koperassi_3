@@ -701,5 +701,13 @@ class Report_model extends CI_Model {
         
         return $q->row_array();
     }
+
+    function get_data_neraca($p = null) {
+        $year = $p['year'];
+
+        $data = [];
+        return $data;
+    }
+
 }
 
