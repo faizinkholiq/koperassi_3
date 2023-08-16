@@ -1823,7 +1823,7 @@ class Report extends CI_Controller {
 
         $letterCounter = $firstLtrCounter;
 
-        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\cPhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$firstLtrCounter]}{$rowNo}")->applyFromArray($baseStyle2);
         $sheet->getStyle("{$letters[($firstLtrCounter+1)]}{$firstRow}:{$letters[($firstLtrCounter+1)]}{$rowNo}")->applyFromArray($baseStyle2);
@@ -1865,9 +1865,9 @@ class Report extends CI_Controller {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $rowNo = 1;
+        $rowNo = 2;
         $letters = get_alphabet_list();
-        $letterCounter = 0;
+        $letterCounter = 1;
         $firstLtrCounter = $letterCounter;
 
         // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Koperasi PT. Putri Daya Usahatama');
@@ -1875,10 +1875,23 @@ class Report extends CI_Controller {
         // $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Rekapitulasi Laba Rugi');
         // $rowNo+=2;
         
-        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'PERIODE: '.$p['year']);
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'KOPERASI KARYAWAN');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+10]}{$rowNo}");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setBold( true );
-
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setHorizontal('center');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setSize(12);
         $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'PT PUTRI DAYA USAHATAMA');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+10]}{$rowNo}");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setBold( true );
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setHorizontal('center');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getFont()->setSize(12);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Per 31 Desember '.$p['year']);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+10]}{$rowNo}");
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setHorizontal('center');
+        $rowNo+=2;
+
         $firstRow = $rowNo;
         $headerStyle = [
             'font' => [
@@ -1900,12 +1913,13 @@ class Report extends CI_Controller {
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter]}".$rowNo+4);
         $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'ACTUAL');
-        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+7]}{$rowNo}");
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+9]}{$rowNo}");
         $rowNo++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL I\nJanuari - Maret '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
+        $sheet->getColumnDimension("{$letters[$letterCounter+1]}")->setWidth(15);
         $rowNo+=2;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
@@ -1914,7 +1928,8 @@ class Report extends CI_Controller {
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL II\nApril - Juni '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
+        $sheet->getColumnDimension("{$letters[$letterCounter+1]}")->setWidth(15);
         $rowNo+=2;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
@@ -1923,7 +1938,8 @@ class Report extends CI_Controller {
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL III\nJuli - September '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
+        $sheet->getColumnDimension("{$letters[$letterCounter+1]}")->setWidth(15);
         $rowNo+=2;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
@@ -1932,7 +1948,18 @@ class Report extends CI_Controller {
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "QUARTAL IV\nOktober - Desember '$year");
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
-        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
+        $sheet->getColumnDimension("{$letters[$letterCounter+1]}")->setWidth(15);
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $rowNo-=2;
+        $letterCounter+=2; 
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", "LAST YEAR ".($p["year"] - 1));
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->getAlignment()->setWrapText(true);
+        $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
+        $sheet->getColumnDimension("{$letters[$letterCounter+1]}")->setWidth(15);
         $rowNo+=2;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Amount');
         $sheet->mergeCells("{$letters[$letterCounter]}{$rowNo}:{$letters[$letterCounter+1]}".$rowNo+1);
@@ -1940,6 +1967,8 @@ class Report extends CI_Controller {
         $letterCounter++;
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
 
+        $lastLtrCounter = $letterCounter;
+        
         $rowNo+=2;
         $firstRow = $rowNo-1;
 
@@ -1957,8 +1986,87 @@ class Report extends CI_Controller {
                 ],
             ],
         ];
+        
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'CURRENT ASSET');
+        $rowNo++;
 
-        $baseStyle2 = [
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Cash');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bank Simpanan BCA');
+        $rowNo++;
+        
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bank Simpanan BCA');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bank Simpanan BCA');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Cash & Bank');
+        $rowNo+=2;
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Account Receivable Barang');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Piutang Bunga Anggota Koperasi');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Piutang Pokok Anggota Koperasi');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Piutang Lain');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Persediaan Toko');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Current Asset');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'FIXED ASSET');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'FA Monitor & Perb. Toko');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Accum Penyusutan');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Net');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Assets');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'CURRENT LIABILITIES');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Lain-lain');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Dagang');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Pokok Anggota');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Wajib Anggota');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Investasi Anggota');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Sukarela');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Setoran Bank HS Anggota');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Free BPJS');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Anggota');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Bunga Sukarela Tahun '.$p["year"]);
+        $rowNo+=4;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Pajak Ps 25');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Pajak Ps 23');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'MODAL');
+        $rowNo++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Laba yang ditahan');
+        $rowNo+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Liabilitas & Equity');
+        $rowNo++;
+        
+        $allStyle = [
             'font' => [
                 'bold' => false,
             ],
@@ -1967,16 +2075,20 @@ class Report extends CI_Controller {
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
             ],
             'borders' => [
+                'left' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
                 'right' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                 ],
             ],
         ];
-
-        $letterCounter = $firstLtrCounter;
+        
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($allStyle);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
         $writer = new Xlsx($spreadsheet);
-        $filename = 'Laba_Rugi_'.$p['year'].'_'.date('YmdHis');
+        $filename = 'Neraca_'.$p['year'].'_'.date('YmdHis');
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
