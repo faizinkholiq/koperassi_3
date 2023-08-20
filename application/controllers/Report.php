@@ -1971,21 +1971,6 @@ class Report extends CI_Controller {
         
         $rowNo+=2;
         $firstRow = $rowNo-1;
-
-        $baseStyle = [
-            'font' => [
-                'bold' => false,
-            ],
-            'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-            ],
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-            ],
-        ];
         
         $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'CURRENT ASSET');
@@ -1993,78 +1978,640 @@ class Report extends CI_Controller {
 
         $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Cash');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
 
         $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bank Simpanan BCA');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
         
         $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bank Simpanan BCA');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
 
         $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bank Simpanan BCA');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
 
         $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Cash & Bank');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
 
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Account Receivable Barang');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Piutang Bunga Anggota Koperasi');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Piutang Pokok Anggota Koperasi');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Piutang Lain');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Persediaan Toko');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Current Asset');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'FIXED ASSET');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'FA Monitor & Perb. Toko');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Accum Penyusutan');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Net');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Assets');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'CURRENT LIABILITIES');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Lain-lain');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Dagang');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Pokok Anggota');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Wajib Anggota');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Investasi Anggota');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Simpanan Sukarela');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Setoran Bank HS Anggota');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Free BPJS');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Anggota');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Bunga Sukarela Tahun '.$p["year"]);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=4;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Pajak Ps 25');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Hutang Pajak Ps 23');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'MODAL');
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Laba yang ditahan');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
         $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total Liabilitas & Equity');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $letterCounter+=2;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'PENJELASAN NERACA');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '- Piutang anggota koperasi hingga saat ini tercatat ');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '- Perincian hutang dagang adalah sbb:');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '- Perincian hutang dagang adalah sbb:');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '* PT DDU');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+        
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '* HP BB');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '* LAIN-LAIN');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Total');
+        $rowNo+=2;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '- Hutang Outlet:');
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 0);
+        $sheet->getStyle("{$letters[$letterCounter]}{$rowNo}")->getNumberFormat()->setFormatCode('#,##0');
+        $rowNo++;
+
+        $letterCounter = $firstLtrCounter;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", '* Sampai dengan periode ini anggota koperasi sebanyak');
+        $rowNo+=2;
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         
         $allStyle = [
             'font' => [
@@ -2083,9 +2630,28 @@ class Report extends CI_Controller {
                 ],
             ],
         ];
+
+        $numStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
         
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$firstLtrCounter]}{$rowNo}")->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle("{$letters[$firstLtrCounter+1]}{$firstRow}:{$letters[$firstLtrCounter+2]}{$rowNo}")->applyFromArray($numStyle);
+        $sheet->getStyle("{$letters[$firstLtrCounter+3]}{$firstRow}:{$letters[$firstLtrCounter+4]}{$rowNo}")->applyFromArray($numStyle);
+        $sheet->getStyle("{$letters[$firstLtrCounter+5]}{$firstRow}:{$letters[$firstLtrCounter+6]}{$rowNo}")->applyFromArray($numStyle);
+        $sheet->getStyle("{$letters[$firstLtrCounter+7]}{$firstRow}:{$letters[$firstLtrCounter+8]}{$rowNo}")->applyFromArray($numStyle);
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$lastLtrCounter]}{$rowNo}")->applyFromArray($allStyle);
-        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
         $writer = new Xlsx($spreadsheet);
         $filename = 'Neraca_'.$p['year'].'_'.date('YmdHis');

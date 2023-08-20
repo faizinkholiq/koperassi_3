@@ -706,6 +706,60 @@ class Report_model extends CI_Model {
         $year = $p['year'];
 
         $data = [];
+
+        $p_q1["month_start"] = "1";
+        $p_q1["month_end"] = "3";
+        $p_q1["year"] = $year;
+        $data['q1']['receive_pinjaman_barang'] = 0;
+        $data['q1']['receive_pinjaman'] = 0;
+        $data['q1']['debt_pokok'] = 0;
+        $data['q1']['debt_wajib'] = 0;
+        $data['q1']['debt_investasi'] = 0;
+        $data['q1']['debt_sukarela'] = 0;
+        $data['q1']['debt_repayment'] = 0;
+
+        $p_q2["month_start"] = "4";
+        $p_q2["month_end"] = "6";
+        $p_q2["year"] = $year;
+        $data['q2']['receive_pinjaman_barang'] = 0;
+        $data['q2']['receive_pinjaman'] = 0;
+        $data['q2']['debt_pokok'] = 0;
+        $data['q2']['debt_wajib'] = 0;
+        $data['q2']['debt_investasi'] = 0;
+        $data['q2']['debt_sukarela'] = 0;
+        $data['q2']['debt_repayment'] = 0;
+
+        $p_q3["month_start"] = "7";
+        $p_q3["month_end"] = "9";
+        $p_q3["year"] = $year;
+        $data['q3']['receive_pinjaman_barang'] = 0;
+        $data['q3']['receive_pinjaman'] = 0;
+        $data['q3']['debt_pokok'] = 0;
+        $data['q3']['debt_wajib'] = 0;
+        $data['q3']['debt_investasi'] = 0;
+        $data['q3']['debt_sukarela'] = 0;
+        $data['q3']['debt_repayment'] = 0;
+
+        $p_q4["month_start"] = "10";
+        $p_q4["month_end"] = "12";
+        $p_q4["year"] = $year;
+        $data['q4']['receive_pinjaman_barang'] = 0;
+        $data['q4']['receive_pinjaman'] = 0;
+        $data['q4']['debt_pokok'] = 0;
+        $data['q4']['debt_wajib'] = 0;
+        $data['q4']['debt_investasi'] = 0;
+        $data['q4']['debt_sukarela'] = 0;
+        $data['q4']['debt_repayment'] = 0;
+
+        $p_ly["year"] = $year - 1;
+        $data['ly']['receive_pinjaman_barang'] = 0;
+        $data['ly']['receive_pinjaman'] = 0;
+        $data['ly']['debt_pokok'] = 0;
+        $data['ly']['debt_wajib'] = 0;
+        $data['ly']['debt_investasi'] = 0;
+        $data['ly']['debt_sukarela'] = 0;
+        $data['ly']['debt_repayment'] = 0;
+
         return $data;
     }
 
