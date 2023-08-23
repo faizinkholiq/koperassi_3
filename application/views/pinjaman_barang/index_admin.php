@@ -19,13 +19,13 @@
 <div class="row mb-3">
     <div class="col-lg-9" style="display:flex; align-items:center; gap: 1rem;">
         <div style="display:flex; align-items:center;">
-            <a href="<?= site_url('pinjaman') ?>" class="btn font-weight-bold <?= count($_GET) == 0? 'btn-primary' : 'btn-secondary' ?>">All</a>
-            <a href="<?= site_url('pinjaman').(!empty($status)? '?status='.$status.'&' : '?') ?>status_anggaran=Lunas" class="btn ml-1 font-weight-bold <?= ($status_anggaran == 'Lunas')? 'btn-primary' : 'btn-secondary' ?>">Lunas</a>
-            <a href="<?= site_url('pinjaman').(!empty($status)? '?status='.$status.'&' : '?') ?>status_anggaran=Belum Lunas" class="btn ml-1 font-weight-bold <?= ($status_anggaran == 'Belum Lunas')? 'btn-primary' : 'btn-secondary' ?>">Belum Lunas</a>
+            <a href="<?= site_url('pinjaman_barang') ?>" class="btn font-weight-bold <?= count($_GET) == 0? 'btn-primary' : 'btn-secondary' ?>">All</a>
+            <a href="<?= site_url('pinjaman_barang').(!empty($status)? '?status='.$status.'&' : '?') ?>status_anggaran=Lunas" class="btn ml-1 font-weight-bold <?= ($status_anggaran == 'Lunas')? 'btn-primary' : 'btn-secondary' ?>">Lunas</a>
+            <a href="<?= site_url('pinjaman_barang').(!empty($status)? '?status='.$status.'&' : '?') ?>status_anggaran=Belum Lunas" class="btn ml-1 font-weight-bold <?= ($status_anggaran == 'Belum Lunas')? 'btn-primary' : 'btn-secondary' ?>">Belum Lunas</a>
         </div>
         <div style="display:flex; align-items:center;">
-            <a href="<?= site_url('pinjaman').(!empty($status_anggaran)? '?status_anggaran='.$status_anggaran.'&' : '?') ?>status=Approved" class="btn ml-1 font-weight-bold <?= ($status == 'Approved')? 'btn-primary' : 'btn-success' ?>">Disetujui</a>
-            <a href="<?= site_url('pinjaman').(!empty($status_anggaran)? '?status_anggaran='.$status_anggaran.'&' : '?') ?>status=Pending" class="btn ml-1 font-weight-bold <?= ($status == 'Pending')? 'btn-primary' : 'btn-warning' ?>">Pending</a> 
+            <a href="<?= site_url('pinjaman_barang').(!empty($status_anggaran)? '?status_anggaran='.$status_anggaran.'&' : '?') ?>status=Approved" class="btn ml-1 font-weight-bold <?= ($status == 'Approved')? 'btn-primary' : 'btn-success' ?>">Disetujui</a>
+            <a href="<?= site_url('pinjaman_barang').(!empty($status_anggaran)? '?status_anggaran='.$status_anggaran.'&' : '?') ?>status=Pending" class="btn ml-1 font-weight-bold <?= ($status == 'Pending')? 'btn-primary' : 'btn-warning' ?>">Pending</a> 
         </div>
     </div>
 </div>
