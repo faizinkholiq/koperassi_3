@@ -1823,7 +1823,7 @@ class Report extends CI_Controller {
 
         $letterCounter = $firstLtrCounter;
 
-        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\cPhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$rowNo}:{$letters[$lastLtrCounter]}{$rowNo}")->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         
         $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$firstLtrCounter]}{$rowNo}")->applyFromArray($baseStyle2);
         $sheet->getStyle("{$letters[($firstLtrCounter+1)]}{$firstRow}:{$letters[($firstLtrCounter+1)]}{$rowNo}")->applyFromArray($baseStyle2);
