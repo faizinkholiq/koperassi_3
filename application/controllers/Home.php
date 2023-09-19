@@ -26,7 +26,6 @@ class Home extends CI_Controller {
             $d['salary'] = $this->anggota_model->detail($d['person_id'])['salary'];
         }
 
-
         $d['content_view'] = ($d['role'] == 1)? 'dashboard/admin' : 'dashboard/member';
         $this->load->view('layout/template', $d);
 	}

@@ -36,7 +36,7 @@ class Home_model extends CI_Model {
         $data['sukarela'] = rupiah(floatval($this->get_total_simpanan('simpanan_sukarela', $p)) - floatval($this->get_total_penarikan($p)));
         $data['investasi'] = rupiah($this->get_total_simpanan('simpanan_investasi', $p));
         $data['penarikan'] = rupiah($this->get_total_penarikan(), $p);
-        $data['pinjaman'] = 0;
+        $data['pinjaman'] = rupiah($this->get_pinjaman($p));
         
         return $data;
     }
@@ -83,6 +83,31 @@ class Home_model extends CI_Model {
         }else{
             return 0;
         }
+    }
+
+    private function get_pinjaman($p = null)
+    {   
+
+        if (isset($p['person']) && !empty($p['person'])) {
+            $this->db->where('pinjaman.person', $p['person']);
+        }
+
+        if (isset($p['month']) && !empty($p['month'])) {
+            $this->db->where('pinjaman.month', (int)$p['month']);
+        }
+
+        if (isset($p['year']) && !empty($p['year'])) {
+            $this->db->where('pinjaman.year', $p['year']);
+        }
+
+        $data = $this->db->select([
+            'COALESCE(SUM(angsuran.pokok), 0) sisa',
+        ])
+        ->from('pinjaman')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'", 'left')
+        ->group_by('pinjaman.person')->get()->row_array();
+
+        return $data['sisa'];
     }
 
 }

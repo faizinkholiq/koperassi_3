@@ -74,7 +74,7 @@
                 Sisa Pinjaman:<br/>
                 <?= $summary['pinjaman'] ?>
             </div>
-            <a href="<?= site_url('simpanan'); ?>" class="card-link-dashboard card-footer" style="background:#8e44ad; border:none; color:white;">
+            <a href="<?= site_url('pinjaman'); ?>" class="card-link-dashboard card-footer" style="background:#8e44ad; border:none; color:white;">
                 Lihat Detail
                 <i class="float-right fa fa-chevron-right"></i>
             </a>
