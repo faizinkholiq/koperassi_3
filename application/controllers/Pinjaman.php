@@ -484,4 +484,120 @@ class Pinjaman extends CI_Controller {
         $writer->save('php://output');
     }
 
+    public function export_template_angsuran($id)
+    {
+        // Data
+        $p = $_GET;
+        $data = $this->pinjaman_model->full_detail($id)['angsuran'];
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $rowNo = 1;
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+        
+        $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+            'fill' => [
+                'type' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => '00FF7F']
+            ]
+        ];
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bulan');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Tahun');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bulan Ke-');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(15);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pokok');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bunga');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Angsuran');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Status');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
+        $rowNo++;
+        
+        $firstRow = $rowNo;
+        $no = 1;
+        $month_name_list = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+        foreach($data as $row)
+        {
+            $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $month_name_list[$row['month']-1]);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['year']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['month_no']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['pokok'], 2, '.', ''));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['bunga'], 2, '.', ''));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['angsuran'], 2, '.', ''));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['status']);
+            $rowNo++;
+        }
+        $rowNo--;
+
+        $allStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+        $writer->setDelimiter(';');
+        $writer->setEnclosure('"');
+        $writer->setLineEnding("\r\n");
+        $writer->setSheetIndex(0);
+
+        $filename = 'template_angsuran_'.$id.'_'.date('YmdHis');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.csv"'); 
+        header('Cache-Control: max-age=0');
+
+
+        $writer->save('php://output');
+
+    }
+
 }

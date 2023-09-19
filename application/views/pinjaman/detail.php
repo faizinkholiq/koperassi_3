@@ -67,8 +67,16 @@
     </div>
 </div>
 
+
 <div class="card shadow mb-4">
     <div class="card-body">
+        <?php if($role == 1): ?>
+        <div class="row mb-1">
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-primary ml-1" onclick="showImportForm()"><i class="fas fw fa-file-import mr-1"></i> Import Data Angsuran</button><hr/>
+            </div>
+        </div>
+        <?php endif; ?>
         <div class="table-responsive">
             <table class="table table-bordered display nowrap" width="100%" cellspacing="0">
                 <thead>
@@ -216,6 +224,43 @@
     </div>
 </div>
 
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel"><i class="fas fa-file-import mr-2"></i>Import Data Simpanan Pokok</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="formImport" action="#!" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+                <div class="row mb-4 mt-4" style="position: relative;">
+                    <div class="loading" style="background: rgba(255, 255, 255, 0.8);; position: absolute; width: 100%; height: 100%; display: none; align-items:center; justify-content: center; z-index: 9999;">
+                        <div class="load-3 text-center">
+                            <div class="mb-4 font-weight-bold text-lg">Mohon tunggu sebentar, proses import sedang berjalan</div>
+                            <div class="line bg-danger"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mb-4">
+                        Silahkan pilih file yang akan di import, mohon gunakan template ini: <a href="<?= site_url("pinjaman/export_template_angsuran/").$detail['summary']['id'] ?>" target="blank">template.csv</a>
+                    </div>
+                    <div class="col-lg-8">
+                        <input style="height: 100%;" type="file" class="form-control form-control-user" id="importFile" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnImport" class="btn btn-primary mr-2" type="submit"><i class="fas fa-upload mr-2"></i>Import Data</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
     const url = {
@@ -260,6 +305,10 @@
         $('#monthNoText').val(row.month_no)
         $('#balanceTextInput').val(Math.round(row.angsuran))
         $('#paidModal').modal('show');
+    }
+
+    function showImportForm(){
+        $('#importModal').modal('show');
     }
 
 </script>
