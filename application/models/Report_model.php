@@ -661,10 +661,12 @@ class Report_model extends CI_Model {
 
         $this->db->select([
             'COALESCE(ROUND(SUM(angsuran.pokok)), 0) total_pokok_pinjaman',
-            'COALESCE(ROUND(SUM(angsuran.bunga)), 0) total_bunga_pinjaman'
+            'COALESCE(ROUND(SUM(angsuran.bunga)), 0) total_bunga_pinjaman',
+            'COALESCE(SUM(angsuran_receive.pokok), 0) receive_pinjaman',
         ])
         ->from('pinjaman')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id", 'left')
+        ->join('angsuran angsuran_receive', "angsuran_receive.pinjaman = pinjaman.id AND angsuran_receive.status = 'Lunas'", 'left')
         ->where('pinjaman.status', 'Approved');
         
         $q = $this->db->get();
@@ -692,10 +694,128 @@ class Report_model extends CI_Model {
 
         $this->db->select([
             'COALESCE(ROUND(SUM(pinjaman_barang.buy)), 0) total_beli_pinjaman_barang',
-            'COALESCE(ROUND(SUM(pinjaman_barang.sell)), 0) total_jual_pinjaman_barang'
+            'COALESCE(ROUND(SUM(pinjaman_barang.sell)), 0) total_jual_pinjaman_barang',
+            'COALESCE(SUM(angsuran_barang_receive.angsuran), 0) receive_pinjaman',
         ])
         ->from('pinjaman_barang')
+        ->join('angsuran_barang angsuran_barang_receive', "angsuran_barang_receive.pinjaman = pinjaman_barang.id AND angsuran_barang_receive.status = 'Lunas'")
         ->where('pinjaman_barang.status', 'Approved');
+        
+        $q = $this->db->get();
+        
+        return $q->row_array();
+    }
+
+    private function _get_data_simpanan_pokok($p = null) {
+        $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
+        $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
+        $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
+        $month_end = isset($p['month_end']) && !empty($p['month_end'])? $p['month_end'] : '' ;
+        
+        if(isset($year) && !empty($year)){
+            $this->db->where('simpanan_pokok.year', $year);
+        }
+        
+        if(isset($month) && !empty($month)){
+            $this->db->where('simpanan_pokok.month', $month);
+        }
+
+        if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
+            $this->db->where("simpanan_pokok.month BETWEEN $month_start AND $month_end");
+        }
+
+        $this->db->select([
+            'COALESCE(ROUND(SUM(simpanan_pokok.balance)), 0) total_balance',
+        ])
+        ->from('simpanan_pokok')
+        ->where('simpanan_pokok.posting', '1');
+        
+        $q = $this->db->get();
+        
+        return $q->row_array();
+    }
+
+    private function _get_data_simpanan_wajib($p = null) {
+        $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
+        $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
+        $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
+        $month_end = isset($p['month_end']) && !empty($p['month_end'])? $p['month_end'] : '' ;
+        
+        if(isset($year) && !empty($year)){
+            $this->db->where('simpanan_wajib.year', $year);
+        }
+        
+        if(isset($month) && !empty($month)){
+            $this->db->where('simpanan_wajib.month', $month);
+        }
+
+        if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
+            $this->db->where("simpanan_wajib.month BETWEEN $month_start AND $month_end");
+        }
+
+        $this->db->select([
+            'COALESCE(ROUND(SUM(simpanan_wajib.balance)), 0) total_balance',
+        ])
+        ->from('simpanan_wajib')
+        ->where('simpanan_wajib.posting', '1');
+        
+        $q = $this->db->get();
+        
+        return $q->row_array();
+    }
+
+    private function _get_data_simpanan_sukarela($p = null) {
+        $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
+        $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
+        $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
+        $month_end = isset($p['month_end']) && !empty($p['month_end'])? $p['month_end'] : '' ;
+        
+        if(isset($year) && !empty($year)){
+            $this->db->where('simpanan_sukarela.year', $year);
+        }
+        
+        if(isset($month) && !empty($month)){
+            $this->db->where('simpanan_sukarela.month', $month);
+        }
+
+        if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
+            $this->db->where("simpanan_sukarela.month BETWEEN $month_start AND $month_end");
+        }
+
+        $this->db->select([
+            'COALESCE(ROUND(SUM(simpanan_sukarela.balance)), 0) total_balance',
+        ])
+        ->from('simpanan_sukarela')
+        ->where('simpanan_sukarela.posting', '1');
+        
+        $q = $this->db->get();
+        
+        return $q->row_array();
+    }
+
+    private function _get_data_simpanan_investasi($p = null) {
+        $year = isset($p['year']) && !empty($p['year'])? $p['year'] : '' ;
+        $month = isset($p['month']) && !empty($p['month'])? $p['month'] : '' ;
+        $month_start = isset($p['month_start']) && !empty($p['month_start'])? $p['month_start'] : '' ;
+        $month_end = isset($p['month_end']) && !empty($p['month_end'])? $p['month_end'] : '' ;
+        
+        if(isset($year) && !empty($year)){
+            $this->db->where('simpanan_investasi.year', $year);
+        }
+        
+        if(isset($month) && !empty($month)){
+            $this->db->where('simpanan_investasi.month', $month);
+        }
+
+        if(isset($month_start) && !empty($month_start) && isset($month_end) && !empty($month_end)){
+            $this->db->where("simpanan_investasi.month BETWEEN $month_start AND $month_end");
+        }
+
+        $this->db->select([
+            'COALESCE(ROUND(SUM(simpanan_investasi.balance)), 0) total_balance',
+        ])
+        ->from('simpanan_investasi')
+        ->where('simpanan_investasi.posting', '1');
         
         $q = $this->db->get();
         
@@ -710,45 +830,45 @@ class Report_model extends CI_Model {
         $p_q1["month_start"] = "1";
         $p_q1["month_end"] = "3";
         $p_q1["year"] = $year;
-        $data['q1']['receive_pinjaman_barang'] = $this;
-        $data['q1']['receive_pinjaman'] = 0;
-        $data['q1']['debt_pokok'] = 0;
-        $data['q1']['debt_wajib'] = 0;
-        $data['q1']['debt_investasi'] = 0;
-        $data['q1']['debt_sukarela'] = 0;
+        $data['q1']['receive_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q1)['receive_pinjaman'];
+        $data['q1']['receive_pinjaman'] = $this->_get_data_pinjaman($p_q1)['receive_pinjaman'];
+        $data['q1']['debt_pokok'] = $this->_get_data_simpanan_pokok($p_q1)['total_balance'];
+        $data['q1']['debt_wajib'] = $this->_get_data_simpanan_wajib($p_q1)['total_balance'];
+        $data['q1']['debt_investasi'] = $this->_get_data_simpanan_investasi($p_q1)['total_balance'];
+        $data['q1']['debt_sukarela'] = $this->_get_data_simpanan_sukarela($p_q1)['total_balance'];
         $data['q1']['debt_repayment'] = 0;
 
         $p_q2["month_start"] = "4";
         $p_q2["month_end"] = "6";
         $p_q2["year"] = $year;
-        $data['q2']['receive_pinjaman_barang'] = 0;
-        $data['q2']['receive_pinjaman'] = 0;
-        $data['q2']['debt_pokok'] = 0;
-        $data['q2']['debt_wajib'] = 0;
-        $data['q2']['debt_investasi'] = 0;
-        $data['q2']['debt_sukarela'] = 0;
+        $data['q2']['receive_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q2)['receive_pinjaman'];
+        $data['q2']['receive_pinjaman'] = $this->_get_data_pinjaman($p_q2)['receive_pinjaman'];
+        $data['q2']['debt_pokok'] = $this->_get_data_simpanan_pokok($p_q2)['total_balance'];
+        $data['q2']['debt_wajib'] = $this->_get_data_simpanan_wajib($p_q2)['total_balance'];
+        $data['q2']['debt_investasi'] = $this->_get_data_simpanan_investasi($p_q2)['total_balance'];
+        $data['q2']['debt_sukarela'] = $this->_get_data_simpanan_sukarela($p_q2)['total_balance'];
         $data['q2']['debt_repayment'] = 0;
 
         $p_q3["month_start"] = "7";
         $p_q3["month_end"] = "9";
         $p_q3["year"] = $year;
-        $data['q3']['receive_pinjaman_barang'] = 0;
-        $data['q3']['receive_pinjaman'] = 0;
-        $data['q3']['debt_pokok'] = 0;
-        $data['q3']['debt_wajib'] = 0;
-        $data['q3']['debt_investasi'] = 0;
-        $data['q3']['debt_sukarela'] = 0;
+        $data['q3']['receive_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q3)['receive_pinjaman'];
+        $data['q3']['receive_pinjaman'] = $this->_get_data_pinjaman($p_q3)['receive_pinjaman'];
+        $data['q3']['debt_pokok'] = $this->_get_data_simpanan_pokok($p_q3)['total_balance'];
+        $data['q3']['debt_wajib'] = $this->_get_data_simpanan_wajib($p_q3)['total_balance'];
+        $data['q3']['debt_investasi'] = $this->_get_data_simpanan_investasi($p_q3)['total_balance'];
+        $data['q3']['debt_sukarela'] = $this->_get_data_simpanan_sukarela($p_q3)['total_balance'];
         $data['q3']['debt_repayment'] = 0;
 
         $p_q4["month_start"] = "10";
         $p_q4["month_end"] = "12";
         $p_q4["year"] = $year;
-        $data['q4']['receive_pinjaman_barang'] = 0;
-        $data['q4']['receive_pinjaman'] = 0;
-        $data['q4']['debt_pokok'] = 0;
-        $data['q4']['debt_wajib'] = 0;
-        $data['q4']['debt_investasi'] = 0;
-        $data['q4']['debt_sukarela'] = 0;
+        $data['q4']['receive_pinjaman_barang'] = $this->_get_data_pinjaman_barang($p_q4)['receive_pinjaman'];
+        $data['q4']['receive_pinjaman'] = $this->_get_data_pinjaman($p_q4)['receive_pinjaman'];
+        $data['q4']['debt_pokok'] = $this->_get_data_simpanan_pokok($p_q4)['total_balance'];
+        $data['q4']['debt_wajib'] = $this->_get_data_simpanan_wajib($p_q4)['total_balance'];
+        $data['q4']['debt_investasi'] = $this->_get_data_simpanan_investasi($p_q4)['total_balance'];
+        $data['q4']['debt_sukarela'] = $this->_get_data_simpanan_sukarela($p_q4)['total_balance'];
         $data['q4']['debt_repayment'] = 0;
 
         $p_ly["year"] = $year - 1;
@@ -762,6 +882,5 @@ class Report_model extends CI_Model {
 
         return $data;
     }
-
 }
 
