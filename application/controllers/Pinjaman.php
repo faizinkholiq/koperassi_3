@@ -518,6 +518,9 @@ class Pinjaman extends CI_Controller {
             ]
         ];
 
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'ID');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Bulan');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         $letterCounter++;
@@ -549,6 +552,8 @@ class Pinjaman extends CI_Controller {
         foreach($data as $row)
         {
             $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['id']);
+            $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $month_name_list[$row['month']-1]);
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['year']);
@@ -598,6 +603,64 @@ class Pinjaman extends CI_Controller {
 
         $writer->save('php://output');
 
+    }
+
+    public function import_angsuran($id)
+	{	
+        $d = $this->user_model->login_check();
+        if (!check_permission('pinjaman', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $file = $_FILES['file'];
+            $tmp_file = $file['tmp_name'];
+            $ekstensi  = explode('.', $file['name']);
+
+            if (!empty($tmp_file)){
+                if (strtolower(end($ekstensi)) === 'csv' && $file["size"] > 0) {
+                    $i = 0;
+					$handle = fopen($tmp_file, "r");
+
+                    $import = false;
+					while (($row = fgetcsv($handle, 2048))) {
+						$i++;
+						if ($i == 1) continue;
+                        
+                        $item = explode(';', $row[0]);
+                        if (!empty($item[0])) {
+                            $newdata = [
+                                "id" => $item[0],
+                                "status" => $item[7],
+                            ];
+
+                            if ($this->pinjaman_model->edit_angsuran($newdata)) {
+                                $import = true;
+                            }else{
+                                $import = false;
+                            }
+                        }
+					}
+					fclose($handle);
+
+                    if($import){
+                        $data['success'] = 1;
+                        $data['message'] = "Import Data berhasil!";
+                    }else{
+                        $data['success'] = 0;
+                        $data['error'] = "Import Data gagal!";
+                    }
+
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Format file tidak valid!";
+				}
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "No file uploaded !";
+            }
+        }
+
+		echo json_encode($data);
     }
 
 }

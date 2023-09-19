@@ -12,6 +12,21 @@
 </div>
 <?php endif; ?>
 
+
+<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgSuccess">Proses import berhasil !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div id="alertFailed" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgFailed">Proses import Gagal !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
@@ -288,6 +303,7 @@
     const date_now = '<?= date('Y-m-d') ?>';
     const year_now = '<?= date('Y') ?>';
     const month_now = '<?= (int)date('m') ?>';
+    const id = <?= $detail['summary']['id'] ?>; 
 
     const rupiah = (number)=>{
         return new Intl.NumberFormat("id-ID", {
@@ -298,7 +314,72 @@
 
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
+
+        $("#formImport").submit(function (event) {
+            event.preventDefault();
+            showLoad();
+            $.ajax({
+                type: "POST",
+                url: url.site + "/pinjaman/import_angsuran/"+id,
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+            }).done(function (data) {
+                setTimeout(()=>{
+                    hideLoad();
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        alerts('success', data.message);
+                    }else{
+                        alerts('failed', data.error);
+                    }
+                    $('#importModal').modal('hide');
+                    
+                    setTimeout(()=>{
+                        location.reload()                        
+                    }, 500)
+
+                }, 1000);
+            }).fail(function() {
+                setTimeout(()=>{
+                    hideLoad();
+                    alerts('failed', "Proses import gagal !");
+                    $('#importModal').modal('hide');
+                }, 1000);
+            });
+        });
+
     });
+
+    function showLoad(){
+        $('.loading').css('display', 'flex');
+        $('#btnImport').addClass('disabled');
+    }
+
+    function hideLoad(){
+        $('.loading').css('display', 'none');
+        $('#btnImport').removeClass('disabled');
+    }
+
+    function alerts(type, msg){
+        switch (type) {
+            case "success":
+                $('#msgSuccess').text(msg);
+                $('#alertSuccess').fadeIn();
+                setTimeout(()=>{
+                    $('#alertSuccess').fadeOut();
+                }, 2000);
+                break;
+            case "failed":
+                $('#msgFailed').text(msg);
+                $('#alertFailed').fadeIn();
+                setTimeout(()=>{
+                    $('#alertFailed').fadeOut();
+                }, 2000);
+                break;
+        }
+    }
 
     function doPaid(row){
         $('#paidID').val(row.id);
