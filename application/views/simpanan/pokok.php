@@ -375,7 +375,7 @@
             { 
                 data: "balance", 
                 render: function (data, type, row) {
-                    return rupiah(data)
+                    return (row.dk == 'D')? rupiah(data) : '- '+rupiah(data); 
                 }
             },
             { data: "dk", class: "text-center" },

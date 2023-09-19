@@ -710,7 +710,7 @@ class Report_model extends CI_Model {
         $p_q1["month_start"] = "1";
         $p_q1["month_end"] = "3";
         $p_q1["year"] = $year;
-        $data['q1']['receive_pinjaman_barang'] = 0;
+        $data['q1']['receive_pinjaman_barang'] = $this;
         $data['q1']['receive_pinjaman'] = 0;
         $data['q1']['debt_pokok'] = 0;
         $data['q1']['debt_wajib'] = 0;
