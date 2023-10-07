@@ -107,7 +107,7 @@ class Home_model extends CI_Model {
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'", 'left')
         ->group_by('pinjaman.person')->get()->row_array();
 
-        return $data['sisa'];
+        return (isset($data['sisa']) && !empty($data['sisa']))? $data['sisa'] : 0;
     }
 
 }

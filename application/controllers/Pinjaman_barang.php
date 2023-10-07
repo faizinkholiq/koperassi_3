@@ -221,7 +221,7 @@ class Pinjaman_barang extends CI_Controller {
             $detail = $this->pinjaman_barang_model->detail($id);
             
             if ($detail) {
-                $profit = $detail["buy"] * (0.5/100) * $detail["angsuran"];
+                $profit = $detail["buy"] * (0.5/100) * (18);
                 $nd["sell"] = $profit + $detail["buy"];
                 $nd['id'] = $detail['id'];
                 if ($this->pinjaman_barang_model->edit($nd)) {
