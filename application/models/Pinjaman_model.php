@@ -13,7 +13,7 @@
             SELECT
                 pinjaman.person,
                 MAX(pinjaman.real) balance,
-                SUM(angsuran.pokok) angsuran
+                COALESCE(SUM(angsuran.pokok), 0) + COALESCE(SUM(angsuran.bunga), 0) angsuran
             FROM pinjaman
             LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'
             GROUP BY pinjaman.person
