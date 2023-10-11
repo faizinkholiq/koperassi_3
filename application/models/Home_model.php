@@ -92,16 +92,16 @@ class Home_model extends CI_Model {
             $this->db->where('pinjaman.person', $p['person']);
         }
 
-        if (isset($p['month']) && !empty($p['month'])) {
-            $this->db->where('pinjaman.month', (int)$p['month']);
-        }
+        // if (isset($p['month']) && !empty($p['month'])) {
+        //     $this->db->where('pinjaman.month', (int)$p['month']);
+        // }
 
-        if (isset($p['year']) && !empty($p['year'])) {
-            $this->db->where('pinjaman.year', $p['year']);
-        }
+        // if (isset($p['year']) && !empty($p['year'])) {
+        //     $this->db->where('pinjaman.year', $p['year']);
+        // }
 
         $data = $this->db->select([
-            'COALESCE(SUM(angsuran.pokok), 0) sisa',
+            'COALESCE(SUM(angsuran.pokok), 0) + COALESCE(SUM(angsuran.bunga), 0) sisa',
         ])
         ->from('pinjaman')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'", 'left')
