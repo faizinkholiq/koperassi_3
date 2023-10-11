@@ -388,10 +388,14 @@
         return ($this->db->error()["code"] == 0) ? true : false;
     }
 
-    public function bulk_edit_angsuran($data)
+    public function do_lunas_by_month($data)
     {   
         $this->db->where('pinjaman', $data['pinjaman']);
+        $this->db->where('month', $data['month']);
+        $this->db->where('year', $data['year']);
         unset($data['pinjaman']);
+        unset($data['month']);
+        unset($data['year']);
         $this->db->update('angsuran', $data);
 
         return ($this->db->error()["code"] == 0) ? true : false;

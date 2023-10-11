@@ -709,6 +709,12 @@ class Pinjaman extends CI_Controller {
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Realisasi');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Month');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Year');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
         $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Status');
         $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
         
@@ -726,6 +732,10 @@ class Pinjaman extends CI_Controller {
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['pengajuan'], 2, '.', ''));
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['realisasi'], 2, '.', ''));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", date('m'));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", date('Y'));
             $letterCounter++;
             $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['status_angsuran']);
             $rowNo++;
@@ -791,10 +801,12 @@ class Pinjaman extends CI_Controller {
                         if (!empty($item[0])) {
                             $newdata = [
                                 "pinjaman" => $item[0],
-                                "status" => $item[4],
+                                "month" => $item[4],
+                                "year" => $item[5],
+                                "status" => $item[6],
                             ];
 
-                            if ($this->pinjaman_model->bulk_edit_angsuran($newdata)) {
+                            if ($this->pinjaman_model->do_lunas_by_month($newdata)) {
                                 $import = true;
                             }else{
                                 $import = false;
