@@ -663,4 +663,166 @@ class Pinjaman extends CI_Controller {
 		echo json_encode($data);
     }
 
+    public function export_template_pelunasan()
+    {
+        // Data
+        $p = $_GET;
+        $data = $this->pinjaman_model->get_all_pinjaman();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $rowNo = 1;
+        $letters = get_alphabet_list();
+        $letterCounter = 0;
+        $firstLtrCounter = $letterCounter;
+        
+        $firstRow = $rowNo;
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+            'fill' => [
+                'type' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => '00FF7F']
+            ]
+        ];
+
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'ID');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Name');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Pengajuan');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Realisasi');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        $letterCounter++;
+        $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", 'Status');
+        $sheet->getColumnDimension("{$letters[$letterCounter]}")->setWidth(20);
+        
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($headerStyle);
+        $rowNo++;
+        
+        $firstRow = $rowNo;
+        foreach($data as $row)
+        {
+            $letterCounter = $firstLtrCounter;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['id']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['name']);
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['pengajuan'], 2, '.', ''));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", number_format((float)$row['realisasi'], 2, '.', ''));
+            $letterCounter++;
+            $sheet->setCellValue("{$letters[$letterCounter]}{$rowNo}", $row['status_angsuran']);
+            $rowNo++;
+        }
+        $rowNo--;
+
+        $allStyle = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        
+        $sheet->getStyle("{$letters[$firstLtrCounter]}{$firstRow}:{$letters[$letterCounter]}{$rowNo}")->applyFromArray($allStyle);
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+        $writer->setDelimiter(';');
+        $writer->setEnclosure('"');
+        $writer->setLineEnding("\r\n");
+        $writer->setSheetIndex(0);
+
+        $filename = 'template_pelunasan_'.date('YmdHis');
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'. $filename .'.csv"'); 
+        header('Cache-Control: max-age=0');
+
+
+        $writer->save('php://output');
+
+    }
+
+    public function import_pelunasan()
+	{	
+        $d = $this->user_model->login_check();
+        if (!check_permission('pinjaman', $d['role'])){
+            $data['success'] = 0;
+            $data['error'] = "No Permission !";
+        }else{
+            $file = $_FILES['file'];
+            $tmp_file = $file['tmp_name'];
+            $ekstensi  = explode('.', $file['name']);
+
+            if (!empty($tmp_file)){
+                if (strtolower(end($ekstensi)) === 'csv' && $file["size"] > 0) {
+                    $i = 0;
+					$handle = fopen($tmp_file, "r");
+
+                    $import = false;
+					while (($row = fgetcsv($handle, 2048))) {
+						$i++;
+						if ($i == 1) continue;
+                        
+                        $item = explode(';', $row[0]);
+                        if (!empty($item[0])) {
+                            $newdata = [
+                                "pinjaman" => $item[0],
+                                "status" => $item[4],
+                            ];
+
+                            if ($this->pinjaman_model->bulk_edit_angsuran($newdata)) {
+                                $import = true;
+                            }else{
+                                $import = false;
+                            }
+                        }
+					}
+					fclose($handle);
+
+                    if($import){
+                        $data['success'] = 1;
+                        $data['message'] = "Import Data berhasil!";
+                    }else{
+                        $data['success'] = 0;
+                        $data['error'] = "Import Data gagal!";
+                    }
+
+                } else {
+                    $data['success'] = 0;
+                    $data['error'] = "Format file tidak valid!";
+				}
+            }else{
+                $data['success'] = 0;
+                $data['error'] = "No file uploaded !";
+            }
+        }
+
+		echo json_encode($data);
+    }
+
+
 }

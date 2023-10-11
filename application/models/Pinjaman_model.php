@@ -388,6 +388,15 @@
         return ($this->db->error()["code"] == 0) ? true : false;
     }
 
+    public function bulk_edit_angsuran($data)
+    {   
+        $this->db->where('pinjaman', $data['pinjaman']);
+        unset($data['pinjaman']);
+        $this->db->update('angsuran', $data);
+
+        return ($this->db->error()["code"] == 0) ? true : false;
+    }
+
     public function delete_angsuran($id)
     {
         $this->db->where('id', $id);
@@ -490,6 +499,52 @@
         ->group_by('pinjaman.id')->get()->result_array();
         
         return $data;
+    }
+
+    public function get_all_pinjaman() 
+    {
+        $this->db->select([
+            'pinjaman.id',
+            'pinjaman.person',
+            'person.nik',
+            'person.name',
+            'person.depo',
+            'pinjaman.balance pengajuan', 
+            'person.wajib wajib',
+            'person.investasi',
+            'person.sukarela',
+            'person.salary gaji',
+            'person.wajib + person.investasi + person.sukarela + (person.salary * 2) plafon',
+            'pinjaman.real realisasi',
+            'pinjaman.angsuran',
+            'pinjaman.status',
+            "CASE WHEN COUNT(DISTINCT angsuran.id) = pinjaman.angsuran 
+            THEN 'Lunas' ELSE 'Belum Lunas' END status_angsuran",
+        ])
+        ->from('pinjaman')
+        ->join('(
+            SELECT 
+                person.nik,
+                person.name,
+                person.salary,
+                depo.name depo,
+                wajib.balance wajib,
+                investasi.balance investasi,
+                sukarela.balance sukarela
+            FROM person
+            LEFT JOIN depo ON depo.id = person.depo
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_wajib GROUP BY person) wajib ON wajib.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_investasi GROUP BY person) investasi ON investasi.person = person.nik
+            LEFT JOIN (SELECT person, SUM(balance) balance FROM simpanan_sukarela GROUP BY person) sukarela ON sukarela.person = person.nik
+            GROUP BY person.nik
+        ) person', 'person.nik = pinjaman.person')
+        ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status = 'Lunas'", 'left')
+        ->order_by('person.nik ASC, pinjaman.date DESC')
+        ->where("pinjaman.status", 'Approved')
+        ->having("status_angsuran", 'Belum Lunas')
+        ->group_by('pinjaman.id');
+        
+        return $this->db->get()->result_array();
     }
 
 }

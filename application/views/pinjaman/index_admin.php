@@ -16,6 +16,19 @@
 </div>
 <?php endif; ?>
 
+<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgSuccess">Proses import berhasil !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div id="alertFailed" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
+    <strong id="msgFailed">Proses import Gagal !</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <div class="row mb-3">
     <div class="col-lg-9" style="display:flex; align-items:center; gap: 1rem;">
         <div style="display:flex; align-items:center;">
@@ -29,6 +42,7 @@
         </div>
     </div>
     <div class="col-lg-3 text-right">
+        <button type="button" class="btn btn-primary mr-2" onclick="showImportForm()"><i class="fas fw fa-file-import mr-1"></i> Import Data Pelunasan</button>
         <a onclick="doExport()" class="btn font-weight-bold bg-success text-white"><i class="fas fa-file-excel mr-2"></i>Template Transfer</a>
     </div>
 </div>
@@ -179,6 +193,45 @@
     </div>
 </div>
 
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel"><i class="fas fa-file-import mr-2"></i>Import Data Angsuran</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="formImport" action="#!" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+                <div class="row mb-4 mt-4" style="position: relative;">
+                    <div class="loading" style="background: rgba(255, 255, 255, 0.8);; position: absolute; width: 100%; height: 100%; display: none; align-items:center; justify-content: center; z-index: 9999;">
+                        <div class="load-3 text-center">
+                            <div class="mb-4 font-weight-bold text-lg">Mohon tunggu sebentar, proses import sedang berjalan</div>
+                            <div class="line bg-danger"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 mb-4">
+                        Silahkan pilih file yang akan di import, mohon gunakan template ini: <a href="<?= site_url("pinjaman/export_template_pelunasan") ?>" target="blank">template.csv</a>
+                    </div>
+                    <div class="col-lg-8">
+                        <input style="height: 100%;" type="file" class="form-control form-control-user" id="importFile" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnImport" class="btn btn-primary mr-2" type="submit"><i class="fas fa-upload mr-2"></i>Import Data</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script src="<?= base_url('assets/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -217,6 +270,75 @@
         style: "currency",
         currency: "IDR"
         }).format(number);
+    }
+
+    $(document).ready(function() {
+
+        $("#formImport").submit(function (event) {
+            event.preventDefault();
+            showLoad();
+            $.ajax({
+                type: "POST",
+                url: url.site + "/pinjaman/import_pelunasan",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+            }).done(function (data) {
+                setTimeout(()=>{
+                    hideLoad();
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        alerts('success', data.message);
+                    }else{
+                        alerts('failed', data.error);
+                    }
+                    $('#importModal').modal('hide');
+                    
+                    setTimeout(()=>{
+                        location.reload()                        
+                    }, 500)
+
+                }, 1000);
+            }).fail(function() {
+                setTimeout(()=>{
+                    hideLoad();
+                    alerts('failed', "Proses import gagal !");
+                    $('#importModal').modal('hide');
+                    $("#formImport")[0].reset(); 
+                }, 1000);
+            });
+        });
+
+    });
+
+    function showLoad(){
+        $('.loading').css('display', 'flex');
+        $('#btnImport').addClass('disabled');
+    }
+
+    function hideLoad(){
+        $('.loading').css('display', 'none');
+        $('#btnImport').removeClass('disabled');
+    }
+
+    function alerts(type, msg){
+        switch (type) {
+            case "success":
+                $('#msgSuccess').text(msg);
+                $('#alertSuccess').fadeIn();
+                setTimeout(()=>{
+                    $('#alertSuccess').fadeOut();
+                }, 2000);
+                break;
+            case "failed":
+                $('#msgFailed').text(msg);
+                $('#alertFailed').fadeIn();
+                setTimeout(()=>{
+                    $('#alertFailed').fadeOut();
+                }, 2000);
+                break;
+        }
     }
 
     let dt = $('#pinjamanTable').DataTable({
@@ -373,5 +495,9 @@
 
     function doExport(){
         $('#exportModal').modal('show');
+    }
+
+    function showImportForm(){
+        $('#importModal').modal('show');
     }
 </script>

@@ -26,7 +26,6 @@
     </button>
 </div>
 
-
 <div class="card mb-4 shadow">
     <div class="card-body">
         <div class="row">
@@ -244,7 +243,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="importModalLabel"><i class="fas fa-file-import mr-2"></i>Import Data Simpanan Pokok</h5>
+                <h5 class="modal-title" id="importModalLabel"><i class="fas fa-file-import mr-2"></i>Import Data Angsuran</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -261,7 +260,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12 mb-4">
-                        Silahkan pilih file yang akan di import, mohon gunakan template ini: <a href="<?= site_url("pinjaman/export_template_angsuran/").$detail['summary']['id'] ?>" target="blank">template.csv</a>
+                        Silahkan pilih file yang akan di import, mohon gunakan template ini: <a href="<?= site_url("pinjaman/export_template_pelunasan/") ?>" target="blank">template.csv</a>
                     </div>
                     <div class="col-lg-8">
                         <input style="height: 100%;" type="file" class="form-control form-control-user" id="importFile" name="file" />
