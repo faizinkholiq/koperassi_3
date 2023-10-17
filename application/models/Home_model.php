@@ -101,7 +101,7 @@ class Home_model extends CI_Model {
         // }
 
         $data = $this->db->select([
-            'COALESCE(SUM(angsuran.pokok), 0) + COALESCE(SUM(angsuran.bunga), 0) sisa',
+            'COALESCE(SUM(angsuran.pokok), 0) sisa',
         ])
         ->from('pinjaman')
         ->join('angsuran', "angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'", 'left')

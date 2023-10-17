@@ -1142,11 +1142,11 @@ class Simpanan extends CI_Controller {
                         if (!empty($item[0])) {
                             $newdata[] = [
                                 "code" => $code,
-                                'person' => $item[0],
-                                'date' => $item[1],
-                                'year' => $item[2],
-                                'month' => $item[3],
-                                'balance' => $item[4],
+                                'person' => intval(str_replace('"', '', $item[0])),
+                                'date' => str_replace('"', '', $item[1]),
+                                'year' => intval(str_replace('"', '', $item[2])),
+                                'month' => intval(str_replace('"', '', $item[3])),
+                                'balance' => floatval(str_replace('"', '', $item[4])),
                             ];
                             $code++;
                         }

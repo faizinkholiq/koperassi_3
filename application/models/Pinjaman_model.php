@@ -13,7 +13,7 @@
             SELECT
                 pinjaman.person,
                 MAX(pinjaman.real) balance,
-                COALESCE(SUM(angsuran.pokok), 0) + COALESCE(SUM(angsuran.bunga), 0) angsuran
+                COALESCE(SUM(angsuran.pokok), 0) angsuran
             FROM pinjaman
             LEFT JOIN angsuran ON angsuran.pinjaman = pinjaman.id AND angsuran.status != 'Lunas'
             GROUP BY pinjaman.person
@@ -247,12 +247,12 @@
             "SUM(CASE WHEN angsuran.status = 'Lunas' THEN 1 ELSE 0 END) angsuran_lunas",
             "SUM(
                 CASE WHEN angsuran.status = 'Lunas'
-                THEN angsuran.pokok + angsuran.bunga
+                THEN angsuran.pokok
                 ELSE 0 END
             ) total",
             "SUM(
                 CASE WHEN angsuran.status = 'Belum Lunas'
-                THEN angsuran.pokok + angsuran.bunga
+                THEN angsuran.pokok
                 ELSE 0 END
             ) sisa",
         ])->from('pinjaman')
@@ -397,7 +397,7 @@
         unset($data['month']);
         unset($data['year']);
         $this->db->update('angsuran', $data);
-
+        
         return ($this->db->error()["code"] == 0) ? true : false;
     }
 

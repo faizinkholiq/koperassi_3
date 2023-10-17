@@ -629,8 +629,8 @@ class Pinjaman extends CI_Controller {
                         $item = explode(';', $row[0]);
                         if (!empty($item[0])) {
                             $newdata = [
-                                "id" => $item[0],
-                                "status" => $item[7],
+                                "id" => intval(str_replace('"', '', $item[0])),
+                                "status" => str_replace('"', '', $item[7]),
                             ];
 
                             if ($this->pinjaman_model->edit_angsuran($newdata)) {
@@ -800,10 +800,10 @@ class Pinjaman extends CI_Controller {
                         $item = explode(';', $row[0]);
                         if (!empty($item[0])) {
                             $newdata = [
-                                "pinjaman" => $item[0],
-                                "month" => $item[4],
-                                "year" => $item[5],
-                                "status" => $item[6],
+                                "pinjaman" => intval(str_replace('"', '', $item[0])),
+                                "month" => intval(str_replace('"', '', $item[4])),
+                                "year" => intval(str_replace('"', '', $item[5])),
+                                "status" => str_replace('"', '', $item[6]),
                             ];
 
                             if ($this->pinjaman_model->do_lunas_by_month($newdata)) {
