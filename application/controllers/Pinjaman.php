@@ -227,7 +227,6 @@ class Pinjaman extends CI_Controller {
                 if ($kas_by_year){
                     $nd_kas['id'] = $kas_by_year['id'];
                     $nd_kas['kredit'] = floatval($kas_by_year['kredit']) + floatval($nd['real']);
-
                     if ($this->kas_model->edit($nd_kas)) {
                         if ($this->pinjaman_model->edit($nd)) {
                             $year = $detail["year"];
@@ -241,7 +240,7 @@ class Pinjaman extends CI_Controller {
                             for ($i=1; $i <= $detail["angsuran"]; $i++) {
                                 if($month%12 == 1) $month = 1;
 
-                                $bunga = $sisa * $rate / $mn; 
+                                $bunga = round($sisa * $rate / $mn); 
 
                                 $nd_angsuran["pinjaman"] = $detail["id"];
                                 $nd_angsuran["year"] = $year;
@@ -250,8 +249,7 @@ class Pinjaman extends CI_Controller {
                                 $nd_angsuran["pokok"] = $angsuran - $bunga;
                                 $nd_angsuran["bunga"] = $bunga;
                                 $nd_angsuran["status"] = "Belum Lunas";
-
-                                $sisa = $sisa - $angsuran;
+                                $sisa = $sisa - ($angsuran - $bunga);
                                 $this->pinjaman_model->create_angsuran($nd_angsuran);
                                 if($month >= 12) $year++;
                                 $month++;
@@ -274,7 +272,6 @@ class Pinjaman extends CI_Controller {
                 $data['error'] = "Invalid ID !";
             }
         }
-
 		$this->session->set_flashdata('msg', $data);  
 		redirect('pinjaman');
 	}
